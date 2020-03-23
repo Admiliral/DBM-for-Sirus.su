@@ -26,7 +26,7 @@ setmetatable(PanelPrototype, {__index = DBM_GUI})
 
 local L = DBM_GUI_Translations
 
-local usemodelframe = true		-- very beta
+local modelFrameCreated = false
 
 function DBM_GUI:ShowHide(forceshow)
 	if forceshow == true then
@@ -969,6 +969,9 @@ do
 		frame:Show();
 
 		if DBM.Options.EnableModels then
+			if not modelFrameCreated then
+				CreateAnimationFrame()
+			end
 			DBM_BossPreview.enabled = false
 			DBM_BossPreview:Hide()
 			for _, mod in ipairs(DBM.Mods) do
