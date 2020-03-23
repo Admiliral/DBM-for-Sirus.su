@@ -692,6 +692,15 @@ local function GetSharedMedia3()
 	return false
 end
 
+local function FixCameraAnimationFrame(self, elapsed)
+	if self.timer > elapsed then
+		self.timer = self.timer - elapsed
+		DBM_BossPreview:SetCamera(0)
+	else
+		self:SetScript("OnUpdate", nil)
+	end
+end
+
 local UpdateAnimationFrame
 function UpdateAnimationFrame(mod)
 	DBM_BossPreview.currentMod = mod
@@ -703,8 +712,14 @@ function UpdateAnimationFrame(mod)
 	elseif type(model) == "number" then
 		DBM_BossPreview:SetCreature(model)
 	end
-	local _, y, z = DBM_BossPreview:GetPosition()
-	DBM_BossPreview:SetPosition(0.4, y, z)
+	local modelFile = DBM_BossPreview:GetModel()
+	if modelFile and type(modelFile) == "string" and string.find(modelFile, "dragon") then
+		DBM_BossPreview.timer = .2
+		DBM_BossPreview:SetScript("OnUpdate", FixCameraAnimationFrame)
+	else
+		local _, y, z = DBM_BossPreview:GetPosition()
+		DBM_BossPreview:SetPosition(0.4, y, z)
+	end
 	if mod.modelSoundShort and DBM.Options.ModelSoundValue == "Short" then
 		DBM:PlaySoundFile(mod.modelSoundShort)
 	elseif mod.modelSoundLong and DBM.Options.ModelSoundValue == "Long" then
