@@ -1,0 +1,50 @@
+﻿## Interface: 30300
+## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Party-BC|r
+## Author: Ritual
+## LoadOnDemand: 1
+## RequiredDeps: DBM-Core
+## SavedVariablesPerCharacter: DBMPartyBC_SavedVars, DBMPartyBC_SavedStats
+## X-DBM-Mod: 1
+## X-DBM-Mod-Category: BC
+## X-DBM-Mod-SubCategories: Auchenai Crypts, Hellfire Ramparts, Mana-Tombs, The Blood Furnace, Underbog, The Steamvault, The Shattered Halls, Sethekk Halls, The Slave Pens, The Arcatraz, Shadow Labyrinth, The Botanica, The Mechanar, Old Hillsbrad Foothills, Magisters' Terrace, Black Morass
+## X-DBM-Mod-SubCategories-ruRU: Аукенайские гробницы, Бастионы Адского Пламени, Гробницы Маны, Кузня Крови, Нижетопь, Паровое подземелье, Разрушенные залы, Сетеккские залы, Узилище, Аркатрац, Темный лабиринт, Ботаника, Механар, Старые предгорья Хилсбрада, Терраса Магистров, Черные топи
+## X-DBM-Mod-Name: PartyBC
+## X-DBM-Mod-Name-ruRU: РБК
+## X-DBM-Mod-Sort: 307
+## X-DBM-Mod-LoadZone: Auchenai Crypts, Hellfire Ramparts, Mana-Tombs, The Blood Furnace, Underbog, The Steamvault, The Shattered Halls, Sethekk Halls, The Slave Pens, The Arcatraz, Shadow Labyrinth, The Botanica, The Mechanar, Old Hillsbrad Foothills, Magisters' Terrace, Black Morass
+## X-DBM-Mod-LoadZone-ruRU: Аукенайские гробницы, Бастионы Адского Пламени, Гробницы Маны, Кузня Крови, Нижетопь, Паровое подземелье, Разрушенные залы, Сетеккские залы, Узилище, Аркатрац, Темный лабиринт, Ботаника, Механар, Старые предгорья Хилсбрада, Терраса Магистров, Черные топи
+localization.ru.lua
+AuchenaiCrypts\ACTrash.lua
+AuchenaiCrypts\Shirrak.lua
+AuchenaiCrypts\Exarh.lua
+HellfireRamparts\HRTrash.lua
+HellfireRamparts\Watchkeeper.lua
+HellfireRamparts\Omor.lua
+HellfireRamparts\Vazruden.lua
+ManaTombs\MTTrash.lua
+ManaTombs\Pandemonius.lua
+ManaTombs\Tavarok.lua
+ManaTombs\Yor.lua
+ManaTombs\Shaffar.lua
+TheBloodFurnace\BFTrash.lua
+TheBloodFurnace\TheMaker.lua
+TheBloodFurnace\Broggok.lua
+TheBloodFurnace\Kelidan.lua
+Underbog\UTrash.lua
+Underbog\Hungarfen.lua
+Underbog\Ghazan.lua
+Underbog\Muselek.lua
+Underbog\BlackStalker.lua
+SethekkHalls\SHTrash.lua
+SethekkHalls\Syth.lua
+SethekkHalls\Anzu.lua
+SethekkHalls\Ikiss.lua
+TheSlavePens\SPTrash.lua
+TheSlavePens\Mennu.lua
+TheSlavePens\Rokmar.lua
+TheSlavePens\Quagmirran.lua
+TheArcatraz\ArTrash.lua
+TheArcatraz\Zereketh.lua
+TheArcatraz\Dalliah.lua
+TheArcatraz\Soccothrates.lua
+TheArcatraz\Skyriss.lua
