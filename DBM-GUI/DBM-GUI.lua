@@ -17,7 +17,7 @@
 --
 --
 
-local revision =(string.sub("20200323191746", 1, -5))
+local revision =(string.sub("20200325225516", 1, -5))
 local FrameTitle = "DBM_GUI_Option_"	-- all GUI frames get automatically a name FrameTitle..ID
 
 local PanelPrototype = {}
@@ -1302,7 +1302,7 @@ local function CreateOptionsMenu()
 
 		local maindummybar = DBM.Bars:CreateDummyBar()
 		maindummybar.frame:SetParent(BarSetup.frame)
-		maindummybar.frame:SetPoint('BOTTOM', BarSetup.frame, "TOP", 0, -65)
+		maindummybar.frame:SetPoint('BOTTOM', BarSetup.frame, "TOP", 80, -70)
 		maindummybar.frame:SetScript("OnUpdate", function(self, elapsed) maindummybar:Update(elapsed) end)
 		do 
 			-- little hook to prevent this bar from changing size/scale
@@ -1442,7 +1442,7 @@ local function CreateOptionsMenu()
 
 		local smalldummybar = DBM.Bars:CreateDummyBar()
 		smalldummybar.frame:SetParent(BarSetupSmall.frame)
-		smalldummybar.frame:SetPoint('BOTTOM', BarSetupSmall.frame, "TOP", 0, -35)
+		smalldummybar.frame:SetPoint('BOTTOM', BarSetupSmall.frame, "TOP", 0, -55)
 		smalldummybar.frame:SetScript("OnUpdate", function(self, elapsed) smalldummybar:Update(elapsed) end)
 
 		local BarWidthSlider = BarSetup:CreateSlider(L.Slider_BarWidth, 100, 325, 1)
@@ -1474,7 +1474,7 @@ local function CreateOptionsMenu()
 
 		local hugedummybar = DBM.Bars:CreateDummyBar()
 		hugedummybar.frame:SetParent(BarSetupSmall.frame)
-		hugedummybar.frame:SetPoint('BOTTOM', BarSetupHuge.frame, "TOP", 0, -50)
+		hugedummybar.frame:SetPoint('BOTTOM', BarSetupHuge.frame, "TOP", 0, -70)
 		hugedummybar.frame:SetScript("OnUpdate", function(self, elapsed) hugedummybar:Update(elapsed) end)
 		hugedummybar.enlarged = true                                
 		hugedummybar:ApplyStyle()     
