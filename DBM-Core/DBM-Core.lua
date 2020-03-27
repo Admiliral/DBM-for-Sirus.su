@@ -1271,8 +1271,8 @@ do
 			end
 			for i = 1, GetNumRaidMembers() do
 				local id = "raid"..i
-				local name, server = UnitName("raid"..i)
-				if nane ~= nil or name ~= UNKNOWN then
+				local name, server = UnitName(id)
+				if name or name ~= UNKNOWN then
 					local _, rank, subgroup, _, _, fileName = GetRaidRosterInfo(i)
 					if server and server ~= "" then
 						name = name.."-"..server
