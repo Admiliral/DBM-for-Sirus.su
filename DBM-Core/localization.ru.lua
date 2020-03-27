@@ -38,15 +38,26 @@ DBM_CORE_GENERIC_TIMER_BERSERK		= "Берсерк"
 DBM_CORE_OPTION_TIMER_BERSERK		= "Отсчет времени до $spell:26662"
 DBM_CORE_OPTION_HEALTH_FRAME		= "Отображать здоровье босса"
 
-DBM_CORE_OPTION_CATEGORY_TIMERS		= "Индикаторы"
-DBM_CORE_OPTION_CATEGORY_WARNINGS	= "Предупреждения"
-DBM_CORE_OPTION_CATEGORY_MISC		= "Прочее"
+DBM_CORE_OPTION_CATEGORY_TIMERS			= "Индикаторы"
+--Sub cats for "announce" object
+DBM_CORE_OPTION_CATEGORY_WARNINGS		= "Общие предупреждения"
+DBM_CORE_OPTION_CATEGORY_WARNINGS_YOU	= "Персональные предупреждения"
+DBM_CORE_OPTION_CATEGORY_WARNINGS_OTHER	= "Предупреждения для цели"
+DBM_CORE_OPTION_CATEGORY_WARNINGS_ROLE	= "Предупреждения для роли"
 
-DBM_CORE_AUTO_RESPONDED				= "Авто-ответ."
-DBM_CORE_STATUS_WHISPER				= "%s: %s, %d/%d человек живые"
-DBM_CORE_AUTO_RESPOND_WHISPER		= "%s сейчас не может ответить, в бою с %s (%s, %d/%d человек живые)"
-DBM_CORE_WHISPER_COMBAT_END_KILL	= "%s одержал победу над %s!"
-DBM_CORE_WHISPER_COMBAT_END_WIPE	= "%s потерпел поражение от %s"
+DBM_CORE_OPTION_CATEGORY_SOUNDS			= "Звуки"
+--Misc object broken down into sub cats
+DBM_CORE_OPTION_CATEGORY_DROPDOWNS		= "Dropdowns"--Still put in MISC sub grooup, just used for line separators since multiple of these on a fight (or even having on of these at all) is rare.
+DBM_CORE_OPTION_CATEGORY_YELLS			= "Крики"
+DBM_CORE_OPTION_CATEGORY_ICONS			= "Метки"
+
+DBM_CORE_AUTO_RESPONDED						= "Авто-ответ."
+DBM_CORE_STATUS_WHISPER						= "%s: %s, %d/%d человек живые"
+DBM_CORE_AUTO_RESPOND_WHISPER				= "%s сейчас занят, в бою против %s (%s, %d/%d человек живые)"
+DBM_CORE_WHISPER_COMBAT_END_KILL			= "%s одержал победу над %s!"
+DBM_CORE_WHISPER_COMBAT_END_KILL_STATS		= "%s одержал победу над %s! Общее количество побед у них - %d."
+DBM_CORE_WHISPER_COMBAT_END_WIPE_AT			= "%s потерпел поражение от %s на %s"
+DBM_CORE_WHISPER_COMBAT_END_WIPE_STATS_AT	= "%s потерпел поражение от %s на %s. Общее количество вайпов у них - %d."
 
 DBM_CORE_VERSIONCHECK_HEADER		= "Boss Mod - Версии"
 DBM_CORE_VERSIONCHECK_ENTRY			= "%s: %s (%s)"

@@ -36,15 +36,26 @@ DBM_CORE_GENERIC_TIMER_BERSERK		= "Berserk"
 DBM_CORE_OPTION_TIMER_BERSERK		= "Show timer for $spell:26662"
 DBM_CORE_OPTION_HEALTH_FRAME		= "Show boss health frame"
 
-DBM_CORE_OPTION_CATEGORY_TIMERS		= "Bars"
-DBM_CORE_OPTION_CATEGORY_WARNINGS	= "Announces"
-DBM_CORE_OPTION_CATEGORY_MISC		= "Miscellaneous"
+DBM_CORE_OPTION_CATEGORY_TIMERS			= "Bars"
+--Sub cats for "announce" object
+DBM_CORE_OPTION_CATEGORY_WARNINGS		= "General Announces"
+DBM_CORE_OPTION_CATEGORY_WARNINGS_YOU	= "Personal Announces"
+DBM_CORE_OPTION_CATEGORY_WARNINGS_OTHER	= "Target Announces"
+DBM_CORE_OPTION_CATEGORY_WARNINGS_ROLE	= "Role Announces"
 
-DBM_CORE_AUTO_RESPONDED				= "Auto-responded."
-DBM_CORE_STATUS_WHISPER				= "%s: %s, %d/%d people alive"
-DBM_CORE_AUTO_RESPOND_WHISPER		= "%s is busy fighting against %s (%s, %d/%d people alive)"
-DBM_CORE_WHISPER_COMBAT_END_KILL	= "%s has defeated %s!"
-DBM_CORE_WHISPER_COMBAT_END_WIPE	= "%s has wiped on %s"
+DBM_CORE_OPTION_CATEGORY_SOUNDS			= "Sounds"
+--Misc object broken down into sub cats
+DBM_CORE_OPTION_CATEGORY_DROPDOWNS		= "Dropdowns"--Still put in MISC sub grooup, just used for line separators since multiple of these on a fight (or even having on of these at all) is rare.
+DBM_CORE_OPTION_CATEGORY_YELLS			= "Yells"
+DBM_CORE_OPTION_CATEGORY_ICONS			= "Icons"
+
+DBM_CORE_AUTO_RESPONDED						= "Auto-responded."
+DBM_CORE_STATUS_WHISPER						= "%s: %s, %d/%d people alive"
+DBM_CORE_AUTO_RESPOND_WHISPER				= "%s is busy fighting against %s (%s, %d/%d people alive)"
+DBM_CORE_WHISPER_COMBAT_END_KILL			= "%s has defeated %s!"
+DBM_CORE_WHISPER_COMBAT_END_KILL_STATS		= "%s has defeated %s! They have %d total victories."
+DBM_CORE_WHISPER_COMBAT_END_WIPE_AT			= "%s has wiped on %s at %s"
+DBM_CORE_WHISPER_COMBAT_END_WIPE_STATS_AT	= "%s has wiped on %s at %s. They have %d total wipes on this difficulty."
 
 DBM_CORE_VERSIONCHECK_HEADER		= "Boss Mod - Versions"
 DBM_CORE_VERSIONCHECK_ENTRY			= "%s: %s (%s) %s"--One Boss mod
