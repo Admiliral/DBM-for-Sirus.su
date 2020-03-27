@@ -1245,7 +1245,7 @@ do
 		if not raid[playerName] then
 			raid[playerName] = {}
 			raid[playerName].name = playerName
-			raid[playerName].guid = UnitGUID("player")
+			raid[playerName].guid = UnitGUID("player") or ""
 			raid[playerName].rank = 0
 			raid[playerName].class = playerClass
 			raid[playerName].id = "player"
@@ -1373,7 +1373,7 @@ do
 			-- restore playerinfo into raid table on raidleave. (for solo raid)
 			raid[playerName] = {}
 			raid[playerName].name = playerName
-			raid[playerName].guid = UnitGUID("player")
+			raid[playerName].guid = UnitGUID("player") or ""
 			raid[playerName].rank = 0
 			raid[playerName].class = playerClass
 			raid[playerName].id = "player"
