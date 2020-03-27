@@ -1657,7 +1657,7 @@ do
 				raid[sender].version = version
 				raid[sender].displayVersion = displayVersion
 				raid[sender].locale = locale
-				if version > tonumber(DBM.Version) then
+				if revision > DBM.Revision then
 					if raid[sender].rank >= 1 then
 						enableIcons = false
 					end
