@@ -129,6 +129,7 @@ L:SetMiscLocalization({
 	Alliance 		= "Альянса",
 	Horde 			= "Орды",
 	WinBarText 		= "Победа %s",
+	Flag			= "Флаг",
 	FlagReset 		= "Флаг возвращен на базу.",
 	FlagTaken 		= "(.+) захватывает флаг!",
 	FlagCaptured	= "(.+) захватывает флаг (%w+)!",

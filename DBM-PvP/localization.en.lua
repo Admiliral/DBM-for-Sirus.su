@@ -127,6 +127,7 @@ L:SetMiscLocalization({
 	Alliance 		= "Alliance",
 	Horde 			= "Horde",
 	WinBarText 		= "%s wins",
+	Flag			= "Flag",
 	FlagReset 		= "The flag has been reset!",
 	FlagTaken 		= "(.+) has taken the flag!",
 	FlagCaptured	= "The .+ ha%w+ captured the flag!",
