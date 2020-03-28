@@ -2724,7 +2724,6 @@ do
 				vb = {},
 				modId = modId,
 				revision = 0,
-				SyncThreshold = 8,
 				localization = self:GetModLocalization(name)
 			},
 			mt
@@ -3018,10 +3017,6 @@ function bossModPrototype:SetBossHealthInfo(...)
 	self.bossHealthInfo = {...}
 end
 
-	end
-	self.inCombatOnlyEvents = {...}
-		end
-	end
 
 -----------------------
 --  Announce Object  --
@@ -3694,11 +3689,11 @@ do
 	function bossModPrototype:NewCDTimer(...)
 		return newTimer(self, "cd", ...)
 	end
-
+	
 	function bossModPrototype:NewNextTimer(...)
 		return newTimer(self, "next", ...)
 	end
-
+	
 	function bossModPrototype:NewAchievementTimer(...)
 		return newTimer(self, "achievement", ...)
 	end
@@ -3847,7 +3842,7 @@ end
 function bossModPrototype:AddTimerSpacer()
 	return self:AddOptionSpacer("timer")
 end
-
+	
 
 function bossModPrototype:SetOptionCategory(name, cat)
 	for _, options in pairs(self.optionCategories) do
@@ -3975,7 +3970,7 @@ function bossModPrototype:SendSync(event, arg)
 	local str = ("%s\t%s\t%s\t%s"):format(self.id, self.revision or 0, event, arg)
 	local spamId = self.id..event..arg
 	local time = GetTime()
-	if not modSyncSpam[spamId] or (time - modSyncSpam[spamId]) > self.SyncThreshold then
+	if not modSyncSpam[spamId] or (time - modSyncSpam[spamId]) > 2.5 then
 		self:ReceiveSync(event, arg, nil, self.revision or 0)
 		sendSync("DBMv4-Mod", str)
 	end
@@ -3984,18 +3979,14 @@ end
 function bossModPrototype:ReceiveSync(event, arg, sender, revision)
 	local spamId = self.id..event..arg
 	local time = GetTime()
-	if (not modSyncSpam[spamId] or (time - modSyncSpam[spamId]) > self.SyncThreshold) and self.OnSync and (not (self.blockSyncs and sender)) and (not sender or (not self.minSyncRevision or revision >= self.minSyncRevision)) then
+	if (not modSyncSpam[spamId] or (time - modSyncSpam[spamId]) > 2.5) and self.OnSync and (not (self.blockSyncs and sender)) and (not sender or (not self.minSyncRevision or revision >= self.minSyncRevision)) then
 		modSyncSpam[spamId] = time
 		self:OnSync(event, arg, sender)
 	end
 end
 
-	if not revision then
-		revision = DBM.Revision
 function bossModPrototype:SetMinSyncRevision(revision)
 	self.minSyncRevision = revision
-	self.minSyncRevision = (type(revision or "") == "number") and revision or parseCurseDate(revision)
-end
 end
 
 
@@ -4119,15 +4110,15 @@ do
 	local returnKey = {__index = function(t, k) return k end}
 	local defaultCatLocalization = {
 		__index = setmetatable({
+			timer		= DBM_CORE_OPTION_CATEGORY_TIMERS,
 			announce	= DBM_CORE_OPTION_CATEGORY_WARNINGS,
 			misc		= DBM_CORE_OPTION_CATEGORY_MISC
-			sound				= DBM_CORE_OPTION_CATEGORY_SOUNDS,
-			yell				= DBM_CORE_OPTION_CATEGORY_YELLS,
 		}, returnKey)
 	}
 	local defaultTimerLocalization = {
 		__index = setmetatable({
 			timer_berserk = DBM_CORE_GENERIC_TIMER_BERSERK,
+			TimerSpeedKill = DBM_CORE_ACHIEVEMENT_TIMER_SPEED_KILL
 		}, returnKey)
 	}
 	local defaultAnnounceLocalization = {
@@ -4138,13 +4129,13 @@ do
 	local defaultOptionLocalization = {
 		__index = setmetatable({
 			timer_berserk = DBM_CORE_OPTION_TIMER_BERSERK,
+			HealthFrame = DBM_CORE_OPTION_HEALTH_FRAME
 		}, returnKey)
 	}
 	local defaultMiscLocalization = {
 		__index = function(t, k)
 			return t.misc.general[k] or t.misc.options[k] or t.misc.warnings[k] or t.misc.timers[k] or t.misc.cats[k] or k
 		end
-		__index = {}
 	}
 
 	function modLocalizationPrototype:SetGeneralLocalization(t)
