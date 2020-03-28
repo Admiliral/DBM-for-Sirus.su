@@ -1270,13 +1270,9 @@ do
 				fireEvent("raidJoin", playerName)
 			end
 			for i = 1, GetNumRaidMembers() do
-				local id = "raid"..i
-				local name, server = UnitName(id)
-				if name or name ~= UNKNOWN then
-					local _, rank, subgroup, _, _, fileName = GetRaidRosterInfo(i)
-					if server and server ~= "" then
-						name = name.."-"..server
-					end
+				local name, rank, subgroup, _, _, fileName = GetRaidRosterInfo(i)
+				if name and name ~= UNKNOWN then
+					local id = "raid"..i
 					if (not raid[name]) and inRaid then
 						fireEvent("raidJoin", name)
 					end
