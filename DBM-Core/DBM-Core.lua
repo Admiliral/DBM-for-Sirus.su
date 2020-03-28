@@ -105,7 +105,6 @@ DBM.DefaultOptions = {
 	ShowKillMessage = true,
 	ShowWipeMessage = true,
 	ShowRecoveryMessage = true,
-	AutoRespond = true,
 	StatusEnabled = true,
 	WhisperStats = true,
 	HideBossEmoteFrame = false,
@@ -577,12 +576,12 @@ do
 							self.AddOns[#self.AddOns].zone[k] = (self.AddOns[#self.AddOns].zone[k]):trim()
 						end
 
-						for i = #self.AddOns[#self.AddOns].zoneId, 1, -1 do
-							local id = tonumber(self.AddOns[#self.AddOns].zoneId[i])
+						for j = #self.AddOns[#self.AddOns].zoneId, 1, -1 do
+							local id = tonumber(self.AddOns[#self.AddOns].zoneId[j])
 							if id then
-								self.AddOns[#self.AddOns].zoneId[i] = id
+								self.AddOns[#self.AddOns].zoneId[j] = id
 							else
-								table.remove(self.AddOns[#self.AddOns].zoneId, i)
+								table.remove(self.AddOns[#self.AddOns].zoneId, j)
 							end
 						end
 
@@ -760,8 +759,8 @@ do
 				v = heap[i]
 				if (not f or v.func == f) and (not mod or v.mod == mod) then
 					match = true
-					for i = 1, select("#", ...) do
-						if select(i, ...) ~= v[i] then
+					for j = 1, select("#", ...) do
+						if select(j, ...) ~= v[j] then
 							match = false
 							break
 						end
@@ -896,7 +895,7 @@ SlashCmdList["DEADLYBOSSMODS"] = function(msg)
 			return
 		end
 		local timer = tonumber(cmd:sub(6)) or 5
-		local timer = timer * 60
+		timer = timer * 60
 		local channel = ((GetNumRaidMembers() == 0) and "PARTY") or "RAID_WARNING"
 		DBM:CreatePizzaTimer(timer, DBM_CORE_TIMER_BREAK, true)
 		DBM:Unschedule(SendChatMessage)
@@ -928,7 +927,7 @@ SlashCmdList["DEADLYBOSSMODS"] = function(msg)
 			return false
 		end
 		local x, y = string.split(" ", cmd:sub(6):trim())
-		xNum, yNum = tonumber(x or ""), tonumber(y or "")
+		local xNum, yNum = tonumber(x or ""), tonumber(y or "")
 		local success
 		if xNum and yNum then
 			DBM.Arrow:ShowRunTo(xNum / 100, yNum / 100, 0)
@@ -1018,7 +1017,6 @@ do
 		end
 		local TotalUsers = #sortMe
 		local NoDBM = 0
-		local NoBigwigs = 0
 		local OldMod = 0
 		for i = #sortMe, 1, -1 do
 			if not sortMe[i].revision then
@@ -2290,8 +2288,8 @@ function DBM:OnMobKill(cId, synced)
 			end
 			v.combatInfo.killMobs[cId] = false
 			local allMobsDown = true
-			for i, v in pairs(v.combatInfo.killMobs) do
-				if v then
+			for j, k in pairs(v.combatInfo.killMobs) do
+				if k then
 					allMobsDown = false
 					break
 				end
@@ -2402,7 +2400,7 @@ end
 function DBM:SendBGTimers(target)
 	local mod
 	if IsActiveBattlefieldArena() then
-		mod = self:GetModByName("Arenas")		
+		mod = self:GetModByName("Arenas")
 	else
 		-- FIXME: this doesn't work for non-english clients
 		local zone = GetRealZoneText():gsub(" ", "")
@@ -2573,7 +2571,7 @@ do
 	end)
 end
 
-do	
+do
 	local old = RaidBossEmoteFrame:GetScript("OnEvent")
 	RaidBossEmoteFrame:SetScript("OnEvent", function(...)
 		if DBM.Options.HideBossEmoteFrame and #inCombat > 0 then
@@ -2620,7 +2618,7 @@ do
 			testWarning1 = testMod:NewAnnounce("%s", 1, "Interface\\Icons\\Spell_Nature_WispSplode")
 			testWarning2 = testMod:NewAnnounce("%s", 2, "Interface\\Icons\\Spell_Shadow_ShadesOfDarkness")
 			testWarning3 = testMod:NewAnnounce("%s", 3, "Interface\\Icons\\Spell_Fire_SelfDestruct")
-			testTimer = testMod:NewTimer(20, "%s")			
+			testTimer = testMod:NewTimer(20, "%s")
 			testSpecialWarning = testMod:NewSpecialWarning("%s")
 		end
 		testTimer:Start(20, "Pew Pew Pew...")
@@ -2675,7 +2673,7 @@ end
 --  Map Sizes  --
 -----------------
 DBM.MapSizes = {}
-	
+
 function DBM:RegisterMapSize(zone, ...)
 	if not DBM.MapSizes[zone] then
 		DBM.MapSizes[zone] = {}
@@ -3114,7 +3112,7 @@ do
 	
 	-- new constructor (auto-localized warnings and options, yay!)
 	local function newAnnounce(self, announceType, spellId, color, icon, optionDefault, optionName, castTime, preWarnTime)
-		spellName = GetSpellInfo(spellId) or "unknown"
+		local spellName = GetSpellInfo(spellId) or "unknown"
 		icon = icon or spellId
 		local text
 		if announceType == "cast" then
@@ -3316,7 +3314,7 @@ do
 	end
 
 	local function newSpecialWarning(self, announceType, spellId, stacks, optionDefault, optionName, noSound, runSound)
-		spellName = GetSpellInfo(spellId) or "unknown"
+		local spellName = GetSpellInfo(spellId) or "unknown"
 		local text = DBM_CORE_AUTO_SPEC_WARN_TEXTS[announceType]:format(spellName) 
 		local obj = setmetatable( -- todo: fix duplicate code
 			{
@@ -3474,7 +3472,7 @@ do
 			return self:Start(nil, timer, ...) -- first argument is optional!
 		end
 		if not self.option or self.mod.Options[self.option] then
-			local timer = timer and ((timer > 0 and timer) or self.timer + timer) or self.timer
+			timer = timer and ((timer > 0 and timer) or self.timer + timer) or self.timer
 			local id = self.id..pformat((("\t%s"):rep(select("#", ...))), ...)
             local icon = select(2, ...)
             self.icon = icon and ((type(icon) == "number" and ( icon <=8 and (iconFolder .. icon) or select(3, GetSpellInfo(icon)))) or icon) or self.icon
@@ -3485,7 +3483,7 @@ do
 			local msg = ""
 			if self.type and not self.text then
 				msg = pformat(self.mod:GetLocalizedTimerText(self.type, self.spellId), ...)
-			else				
+			else
 				msg = pformat(self.text, ...)
 			end
 			bar:SetText(msg)
@@ -3593,8 +3591,8 @@ do
 		end
 	end
 	
-	function bossModPrototype:NewTimer(timer, name, icon, optionDefault, optionName, r, g, b)
-		local icon = type(icon) == "number" and ( icon <=8 and (iconFolder .. icon) or select(3, GetSpellInfo(icon))) or icon
+	function bossModPrototype:NewTimer(timer, name, texture, optionDefault, optionName, r, g, b)
+		local icon = type(texture) == "number" and ( texture <=8 and (iconFolder .. texture) or select(3, GetSpellInfo(texture))) or texture
 		local obj = setmetatable(
 			{
 				text = self.localization.timers[name],
@@ -3808,7 +3806,7 @@ function bossModPrototype:AddSliderOption(name, minValue, maxValue, valueStep, d
 end
 
 function bossModPrototype:AddButton(name, onClick, cat, func)
-	cat = cat or misc
+	cat = cat or "misc"
 	self:SetOptionCategory(name, cat)
 	self.buttons = self.buttons or {}
 	self.buttons[name] = onClick
@@ -3900,9 +3898,6 @@ end
 
 -- needs to be called _AFTER_ RegisterCombat
 function bossModPrototype:RegisterKill(msgType, ...)
-	if cType then
-		cType = cType:lower()
-	end
 	if not self.combatInfo then
 		return
 	end
@@ -4107,7 +4102,7 @@ function bossModPrototype:GetLocalizedStrings()
 	return self.localization.miscStrings
 end
 
--- Not really good, needs a few updates 
+-- Not really good, needs a few updates
 do
 	local modLocalizations = {}
 	local modLocalizationPrototype = {}
