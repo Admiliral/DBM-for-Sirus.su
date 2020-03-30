@@ -152,7 +152,7 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
     if args:IsSpellID(36797) then
         if args:IsPlayer() and self.Options.RemoveWeaponOnMindControl then
-           if self:IsWeaponDependent("") then
+           if self:IsWeaponDependent("player") then
                 PickupInventoryItem(16)
                 PutItemInBackpack()
                 PickupInventoryItem(17)
