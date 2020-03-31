@@ -19,7 +19,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args.spellId == 33676 then
+	if args.IsSpellID == 33676 then
 		warnChaos:Show()
 		timerChaos:Start()
 		timerNextChaos:Start()
