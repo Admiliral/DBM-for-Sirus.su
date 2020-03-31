@@ -18,7 +18,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args.IsSpellID == 33563 then
+	if args:IsSpellID == 33563 then
 		warnTeleport:Show()
 		timerTeleport:Start()
 	end
