@@ -22,7 +22,7 @@ local soundBoom = mod:NewSound(33923)
 mod:AddBoolOption("SetIconOnTouchTarget", true)
 
 function mod:SPELL_CAST_START(args)
-	if args.IsSpellID == 33923 or args.IsSpellID == 38796 then
+	if args:IsSpellID == 33923 or args:IsSpellID == 38796 then
 		warnBoom:Show()
 		timerBoomCast:Start()
 		soundBoom:Play()
@@ -30,7 +30,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args.IsSpellID == 33711 then
+	if args:IsSpellID == 33711 then
 		warnTouch:Show(args.destName)
 		timerTouch:Start(args.destName)
 		if self.Options.SetIconOnTouchTarget then
