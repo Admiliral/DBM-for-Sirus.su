@@ -22,7 +22,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args.spellId == 33547 then
+	if args.IsSpellID == 33547 then
 		warnFear:Show()
 		timerFear:Start()
 	end
