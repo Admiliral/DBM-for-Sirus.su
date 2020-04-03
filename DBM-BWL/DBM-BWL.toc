@@ -32,3 +32,4 @@ Ebonroc.lua
 Flamegor.lua
 Chromaggus.lua
 Nefarian.lua
+MapSizes.lua

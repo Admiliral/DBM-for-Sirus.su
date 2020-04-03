@@ -33,3 +33,4 @@ Huhuran.lua
 TwinEmps.lua
 CThun.lua
 Ouro.lua
+MapSizes.lua
