@@ -65,12 +65,12 @@ DBM_SBT["Exhausted"]			= "Erschöpft";
 DBM_SBT["Kal"] = {
 	{"CoA: (.*)", "Fluch: %1"},
 	{"Next Portal #(.*)", "Nächstes Portal #%1"},
-	{"Portal #(.*)", "Portal #%1"},	
+	{"Portal #(.*)", "Portal #%1"},
 }
 
--- Brutallus 
-DBM_BRUTALLUS_NAME				= "Brutallus" 
-DBM_BRUTALLUS_DESCRIPTION		= "Zeigt Timer und Warnungen für Brutallus." 
+-- Brutallus
+DBM_BRUTALLUS_NAME				= "Brutallus"
+DBM_BRUTALLUS_DESCRIPTION		= "Zeigt Timer und Warnungen für Brutallus."
 
 DBM_BRUTALLUS_YELL_PULL			= "Ah, mehr Lämmer zum Schlachten!"
 

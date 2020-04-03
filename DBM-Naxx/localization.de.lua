@@ -164,7 +164,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	yell1 = "Flickwerk will spielen!", 
+	yell1 = "Flickwerk will spielen!",
 	yell2 = "Kel’Thuzad macht Flickwerk zu seinem Abgesandten des Kriegs!",
 	HatefulStrike = "Hasserfüllter Stoß --> %s [%s]"
 })
@@ -366,7 +366,7 @@ L:SetWarningLocalization({
 L:SetTimerLocalization({
    TimerAir            = "Flugphase",
    TimerLanding         = "Landung",
-   TimerIceBlast         = "Frostatem"   
+   TimerIceBlast         = "Frostatem"
 })
 
 ------------------

@@ -41,7 +41,7 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
     WarnAddsSoon    = "Предупреждение о скором вызове послушников",
     TimerAdds       = "Отсчет времени до следующих послушников",
-    TimerPriests    = "Отсчет времени до следующих жрецов" 
+    TimerPriests    = "Отсчет времени до следующих жрецов"
 }
 
 L:SetMiscLocalization{

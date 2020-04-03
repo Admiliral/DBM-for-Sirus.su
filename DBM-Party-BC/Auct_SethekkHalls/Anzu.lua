@@ -63,10 +63,10 @@ end
 function mod:UNIT_HEALTH(uId)
 	if not warnedbirds1 and self:GetUnitCreatureId(uId) == 23035 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.70 then
 		warnedbirds1 = true
-		warnBirds:Show()	
+		warnBirds:Show()
 	elseif not warnedbirds2 and self:GetUnitCreatureId(uId) == 23035 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.37 then
 		warnedbirds2 = true
-		warnBirds:Show()	
+		warnBirds:Show()
 	end
 end
 

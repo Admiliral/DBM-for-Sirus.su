@@ -96,12 +96,12 @@ function DBMBC:ADDON_LOADED(mod)
 				modId		= GetAddOnInfo(i),
 			})
 		end
-		for i = #DBM.AddOns[#DBM.AddOns].zoneId, 1, -1 do
-			local id = tonumber(DBM.AddOns[#DBM.AddOns].zoneId[i])
+		for j = #DBM.AddOns[#DBM.AddOns].zoneId, 1, -1 do
+			local id = tonumber(DBM.AddOns[#DBM.AddOns].zoneId[j])
 			if id then
-				DBM.AddOns[#DBM.AddOns].zoneId[i] = id
+				DBM.AddOns[#DBM.AddOns].zoneId[j] = id
 			else
-				table.remove(DBM.AddOns[#DBM.AddOns].zoneId, i)
+				table.remove(DBM.AddOns[#DBM.AddOns].zoneId, j)
 			end
 		end
 	end

@@ -21,7 +21,7 @@ Council:AddOption("WarnResAura", true, DBM_COUNCIL_OPTION_RESAURA)
 Council:AddBarOption("Enrage")
 Council:AddBarOption("Circle of Healing")
 Council:AddBarOption("Next Circle of Healing")
-Council:AddBarOption("Divine Wrath") 
+Council:AddBarOption("Divine Wrath")
 Council:AddBarOption("Reflective Shield")
 Council:AddBarOption("Vanish")
 Council:AddBarOption("Devotion Aura")
@@ -38,7 +38,7 @@ Council:RegisterEvents(
 )
 
 function Council:OnCombatStart(delay)
-	self:StartStatusBarTimer(900 - delay, "Enrage", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")	
+	self:StartStatusBarTimer(900 - delay, "Enrage", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
 	self:ScheduleAnnounce(300 - delay, DBM_GENERIC_ENRAGE_WARN:format(10, DBM_MIN), 1)
 	self:ScheduleAnnounce(600 - delay, DBM_GENERIC_ENRAGE_WARN:format(5, DBM_MIN), 1)
 	self:ScheduleAnnounce(720 - delay, DBM_GENERIC_ENRAGE_WARN:format(3, DBM_MIN), 1)
@@ -119,7 +119,7 @@ function Council:OnSync(msg)
 	if msg:sub(0, 9) == "Spellward" then
 		msg = msg:sub(10)
 		self:StartStatusBarTimer(15, "Spell Shield: "..msg, "Interface\\Icons\\Spell_Holy_SealOfRighteousness")
-		
+
 		if self.Options.WarnShieldSpell then
 			if GetLocale():sub(0, 2) ~= "en" then
 				if msg == DBM_COUNCIL_MOB_GATHIOS_EN then
@@ -134,7 +134,7 @@ function Council:OnSync(msg)
 			end
 			self:Announce(DBM_COUNCIL_WARN_SHIELD_SPELL:format(msg), 2)
 		end
-		
+
 	elseif msg == "DWCast" then
 		self:StartStatusBarTimer(2, "Divine Wrath", "Interface\\Icons\\Spell_Holy_SearingLight")
 

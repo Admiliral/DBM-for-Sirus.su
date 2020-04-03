@@ -38,8 +38,8 @@ function Brutallus:OnCombatStart(delay)
 	for i, v in pairs(icons) do
 		icons[i] = nil
 	end
-	
-	self:StartStatusBarTimer(360 - delay, "Enrage", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy") 
+
+	self:StartStatusBarTimer(360 - delay, "Enrage", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
 	self:ScheduleAnnounce(180 - delay, DBM_GENERIC_ENRAGE_WARN:format(3, DBM_MIN), 1)
 	self:ScheduleAnnounce(300 - delay, DBM_GENERIC_ENRAGE_WARN:format(1, DBM_MIN), 2)
 	self:ScheduleAnnounce(330 - delay, DBM_GENERIC_ENRAGE_WARN:format(30, DBM_SEC), 3)
@@ -70,20 +70,20 @@ function Brutallus:OnSync(msg)
 		if msg == UnitName("player") and self.Options.BurnSpecWarn then
 			self:AddSpecialWarning(DBM_BRUTALLUS_WHISP_BURN)
 		end
-		
+
 		local firstBurn = false
 		if (GetTime() - lastBurn) > 19 then
 			lastBurn = GetTime()
 			firstBurn = true
 		end
-		
+
 		if (self.Options.WarnBurn and firstBurn) or self.Options.WarnBurn2 then
 			self:Announce(DBM_BRUTALLUS_WARN_BURN:format(msg), 2)
 			self:SendHiddenWhisper(DBM_BRUTALLUS_WHISP_BURN, msg)
 		end
-		
+
 		self:ScheduleMethod(45, "DelayedBurn", msg)
-		
+
 		if firstBurn then
 			if not self.Options.DelayedBurnTimer then
 				self:StartStatusBarTimer(60, "Burn: "..msg, 46394, true)
@@ -94,7 +94,7 @@ function Brutallus:OnSync(msg)
 				self:StartStatusBarTimer(60, "Jumped Burn: "..msg, 46394, true)
 			end
 		end
-		
+
 		if self.Options.BurnIcon then
 			for i = 8, 1, -1 do
 				if icons[i] == nil then
@@ -115,7 +115,7 @@ function Brutallus:OnSync(msg)
 			self:ScheduleAnnounce(26, DBM_BRUTALLUS_WARN_STOMP_SOON, 1)
 		end
 		self:StartStatusBarTimer(31, "Next Stomp", 45185)
-	
+
 	elseif msg == "Meteor" then
 		if self.Options.WarnMeteor then
 			self:Announce(DBM_BRUTALLUS_WARN_METEOR, 3)

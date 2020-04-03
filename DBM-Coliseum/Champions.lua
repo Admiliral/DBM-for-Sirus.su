@@ -96,7 +96,7 @@ local timerBladestormCD		= mod:NewCDTimer(90, 65947)
 
 local specWarnHellfire		= mod:NewSpecialWarningMove(68147)
 local specWarnHandofProt	= mod:NewSpecialWarningDispel(66009, isDispeller)
-local specWarnDivineShield	= mod:NewSpecialWarningDispel(66010, isDispeller) 
+local specWarnDivineShield	= mod:NewSpecialWarningDispel(66010, isDispeller)
 local specWarnIceBlock		= mod:NewSpecialWarningDispel(65802, isDispeller)
 
 mod:AddBoolOption("PlaySoundOnBladestorm", mod:IsMelee())

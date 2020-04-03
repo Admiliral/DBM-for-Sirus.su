@@ -62,7 +62,6 @@ function Souls:OnEvent(event, arg1)
 		self:ScheduleSelf(27, "EnrageWarn")
 	elseif event == "EnrageWarn" then
 		self:Announce(DBM_SOULS_WARN_ENRAGE_SOON, 2)
-	
 	elseif event == "SPELL_AURA_APPLIED" then
 		if arg1.spellId == 41431 and bit.band(arg1.destFlags, COMBATLOG_OBJECT_TYPE_PLAYER) == 0 then
 			self:SendSync("Runeshield")
@@ -82,22 +81,19 @@ function Souls:OnEvent(event, arg1)
 		elseif arg1.spellId == 41303 then
 			self:SendSync("DrainCast")
 		end
-	
 	elseif event == "SPELL_DAMAGE" then
 		if arg1.spellId == 41545 then
 			self:SendSync("SoulScream")
 		end
-	
 	elseif event == "DeadenWarn" then
 		self:Announce(DBM_SOULS_WARN_DEADEN_SOON, 1)
-	
 	elseif event == "CHAT_MSG_MONSTER_YELL" and arg1 then
 		if arg1 == DBM_SOULS_YELL_DESIRE or arg1:find(DBM_SOULS_YELL_DESIRE_DEMONIC) then
 			self.mod.vb.phase = 2
 			self:Announce(DBM_SOULS_WARN_DESIRE_INC, 1)
 			self:StartStatusBarTimer(160, "Mana Drain", "Interface\\Icons\\Spell_Shadow_SiphonMana")
 			self:ScheduleSelf(140, "ManaDrainWarn")
-			
+
 			self:StartStatusBarTimer(13.5, "Rune Shield", "Interface\\Icons\\Spell_Arcane_Blast")
 			self:ScheduleSelf(10.5, "RuneShieldWarn")
 			self:StartStatusBarTimer(28, "Deaden", "Interface\\Icons\\Spell_Shadow_SoulLeech_1")

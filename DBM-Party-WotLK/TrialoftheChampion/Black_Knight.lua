@@ -36,7 +36,7 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
-do 
+do
 	local lastdesecration = 0
 	function mod:SPELL_DAMAGE(args)
 		if args:IsSpellID(67781, 67876) and args:IsPlayer() and time() - lastdesecration > 3 then		-- Desecration, MOVE!

@@ -150,7 +150,7 @@ L:SetOptionLocalization{
 	TimerAdds					= "Zeige Timer für neue Adds",
 	SpecWarnVengefulShade		= "Zeige Spezialwarnung, wenn du von Rachsüchtigen Schatten angegriffen wirst",--creatureid 38222
 	ShieldHealthFrame			= "Zeige Bossleben mit einer Leiste für $spell:70842",
-	WarnTouchInsignificance		= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(71204, GetSpellInfo(71204) or "unknown"),	
+	WarnTouchInsignificance		= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(71204, GetSpellInfo(71204) or "unknown"),
 	SetIconOnDominateMind		= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(71289),
 	SetIconOnDeformedFanatic	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(70900),
 	SetIconOnEmpoweredAdherent	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(70901)
@@ -249,7 +249,7 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	InhaledBlight		= "Zeige Warnung für $spell:71912",
 	RangeFrame			= "Zeige Abstandsfenster (8 m)",
-	WarnGastricBloat	= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(72551, GetSpellInfo(72551) or "unknown"),	
+	WarnGastricBloat	= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(72551, GetSpellInfo(72551) or "unknown"),
 	SetIconOnGasSpore	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(69279),
 	AnnounceSporeIcons	= "Verkünde Symbole für Ziele von $spell:69279 im Raidchat\n(benötigt aktivierte Ankündigungen und (L)- oder (A)-Status)"
 }
@@ -322,7 +322,7 @@ L:SetOptionLocalization{
 	UnboundPlagueIcon			= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(72856),
 	MalleableGooIcon			= "Setze Zeichen auf erstes Ziel von $spell:72295",
 	NextUnboundPlagueTargetIcon	= "Setze Zeichen auf nächstes Ziel von $spell:72856",
-	YellOnMalleableGoo			= "Schreie bei $spell:72295",	
+	YellOnMalleableGoo			= "Schreie bei $spell:72295",
 	YellOnUnbound				= "Schreie bei $spell:72856",
 	SpecWarnUnboundPlague		= "Zeige Spezialwarnung für Übertragung von $spell:72856",
 	SpecWarnNextPlageSelf		= "Zeige Spezialwarnung wenn du in der Nähe des Ziels von $spell:72856 bist"
@@ -468,7 +468,7 @@ L:SetOptionLocalization{
 	WarnChilledtotheBone	= "Zeige Warnung für deine $spell:70106-Stacks",
 	WarnMysticBuffet		= "Zeige Warnung für deine $spell:70128-Stacks",
 	AnnounceFrostBeaconIcons= "Poste Zeichen für Ziele von $spell:70126 in Raidchat\n(benötigt aktivierte Ankündigungen und (L)- oder (A)-Status)",
- 	SetIconOnFrostBeacon	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(70126),
+	SetIconOnFrostBeacon	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(70126),
 	SetIconOnUnchainedMagic	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(69762),
 	ClearIconsOnAirphase	= "Entferne alle Zeichen vor der Luftphase",
 	RangeFrame				= "Zeige Abstandsfenster (10 m normal, 20 m heroisch)\n(zeigt nur Spieler mit Raidzeichen an)"

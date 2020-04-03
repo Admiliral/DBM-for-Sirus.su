@@ -2,8 +2,8 @@
 
 local L
 
-local spell				= "%s"				
-local debuff			= "%s: >%s<"			
+local spell				= "%s"
+local debuff			= "%s: >%s<"
 local spellCD			= "Восстановление %s"
 local spellSoon			= "Скоро %s"
 local optionWarning		= "Предупреждение для %s"

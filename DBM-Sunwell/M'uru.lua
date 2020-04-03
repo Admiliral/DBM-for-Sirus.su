@@ -33,25 +33,25 @@ Muru:RegisterEvents(
 
 function Muru:OnCombatStart(delay)
 	p2 = false
-	self:StartStatusBarTimer(600 - delay, "Enrage", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy") 
+	self:StartStatusBarTimer(600 - delay, "Enrage", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
 	self:ScheduleAnnounce(300 - delay, DBM_GENERIC_ENRAGE_WARN:format(5, DBM_MIN), 1)
 	self:ScheduleAnnounce(420 - delay, DBM_GENERIC_ENRAGE_WARN:format(3, DBM_MIN), 1)
 	self:ScheduleAnnounce(540 - delay, DBM_GENERIC_ENRAGE_WARN:format(1, DBM_MIN), 2)
 	self:ScheduleAnnounce(570 - delay, DBM_GENERIC_ENRAGE_WARN:format(30, DBM_SEC), 3)
 	self:ScheduleAnnounce(590 - delay, DBM_GENERIC_ENRAGE_WARN:format(10, DBM_SEC), 4)
-	
+
 	self:StartStatusBarTimer(15 - delay, "Humanoids", "Interface\\Icons\\Spell_Holy_PrayerOfHealing")
 	self:ScheduleMethod(15 - delay, "HumanoidSpawn")
 	if self.Options.HumSoonWarn then
 		self:ScheduleAnnounce(10 - delay, DBM_MURU_WARN_HUMANOIDS_SOON, 1)
 	end
-	
+
 	if self.Options.VoidSoonWarn then
 		self:ScheduleAnnounce(31.5 - delay, DBM_MURU_WARN_VOID_SOON, 1)
 	end
 	self:ScheduleMethod(36.5 - delay, "VoidSpawn")
 	self:StartStatusBarTimer(36.5 - delay, "Void Sentinel", "Interface\\Icons\\Spell_Shadow_SummonVoidWalker")
-	
+
 	self:StartStatusBarTimer(45 - delay, "Next Darkness", 45996)
 	self:ScheduleAnnounce(40 - delay, DBM_MURU_DARKNESS_SOON, 3)
 end

@@ -172,7 +172,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	WarnPhase2Soon			= "Zeige Vorwarnung für Phase 2 (bei ~79%)",	
+	WarnPhase2Soon			= "Zeige Vorwarnung für Phase 2 (bei ~79%)",
 	WarnPhase3Soon			= "Zeige Vorwarnung für Phase 3 (bei ~54%)",
 	SoundOnConsumption		= "Spiele Sound bei Einäschern",--We use localized text for these functions
 	SetIconOnConsumption	= "Setze Zeichen auf Ziele von Einäschern"--So we can use single functions for both versions of spell."--So we can use single functions for both versions of spell.

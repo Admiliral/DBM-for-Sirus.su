@@ -50,4 +50,3 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerSiphon:Start()
 	end
 end
-		

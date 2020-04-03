@@ -22,20 +22,20 @@ mod:RegisterEvents(
 -- local warningManaBurn		= mod:NewCastAnnounce(29405, 3, nil, false)
 -- local warningGreaterHeal	= mod:NewCastAnnounce(35096, 3, nil, false)
 -- local warningHolyLight		= mod:NewCastAnnounce(29562, 3, nil, false)
--- 
+--
 -- local timerVanishCD			= mod:NewCDTimer(31, 29448)
 -- local timerGouge			= mod:NewTargetTimer(6, 29425)
 -- local timerBlind			= mod:NewTargetTimer(10, 34694)
 -- local timerMortalStrike		= mod:NewTargetTimer(5, 29572)
--- 
+--
 -- local lastVanish = 0
--- 
+--
 -- function mod:OnCombatStart(delay)
 -- 	timerVanishCD:Start(-delay)
 -- 	warningVanishSoon:Schedule(31-delay)
 -- 	lastVanish = 0
 -- end
--- 
+--
 -- function mod:SPELL_CAST_START(args)
 -- 	if args:IsSpellID(29405) then
 -- 		warningManaBurn:Show()
@@ -45,7 +45,7 @@ mod:RegisterEvents(
 -- 		warningHolyLight:Show()
 -- 	end
 -- end
--- 
+--
 -- function mod:SPELL_AURA_APPLIED(args)
 -- 	if args:IsSpellID(29448) then
 -- 		warningVanish:Show()
@@ -67,7 +67,7 @@ mod:RegisterEvents(
 -- 		end
 -- 	end
 -- end
--- 
+--
 -- function mod:SPELL_AURA_REMOVED(args)
 -- 	if args:IsSpellID(34694) then
 -- 		timerBlind:Cancel(args.destName)
@@ -124,14 +124,14 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(305470) then
-        if args:IsPlayer() then 
-             self:PlaySound("omaeva")       -- omae wa mou shindeiru... (анимэ "Кулак полярной звезды")  
+        if args:IsPlayer() then
+             self:PlaySound("omaeva")       -- omae wa mou shindeiru... (анимэ "Кулак полярной звезды")
         end
         warnDeathMark:Show(args.destName)
         timerDeathMark:Start(args.destName)
         timerDeathMarkCD:Start()
-    elseif args:IsSpellID(305478) then 
-        if args:IsPlayer() then 
+    elseif args:IsSpellID(305478) then
+        if args:IsPlayer() then
             self:PlaySound("djeban","sexgay","cigan","hardbass","upkicks") --танец
         end
 	elseif args:IsSpellID(305460) then

@@ -37,7 +37,7 @@ function mod:OnCombatStart(delay)
 	end
 end
 
-function mod:OnCombatEnd(wipe)	
+function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 15956, "Anub'Rekhan", wipe)
 end
 

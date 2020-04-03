@@ -33,11 +33,11 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnSupremeSoon:Schedule(40)
 		warnVulnerable:Show(args.spellName)
 		timerVulnerable:Show(args.spellName)
-	end	
+	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(25189) then
 		timerCyclone:Cancel(args.destName)
-	end	
+	end
 end

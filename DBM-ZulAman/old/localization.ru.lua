@@ -22,7 +22,7 @@ DBM_NALO_WARN_SILENCE			= "Молчание"
 DBM_SBT["Enrage"] 			    = "Ярость";
 DBM_SBT["Bear Form"]	        = "Форма медведя";
 DBM_SBT["Normal Form"]	        = "Обычная форма";
-    
+
 -- Akil'zon
 DBM_AKIL_NAME					= "Акил'зон"
 DBM_AKIL_DESCRIPTION			= "Объявляет звонком в мини-карте об Электрическом шторме."

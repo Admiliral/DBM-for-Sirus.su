@@ -15,7 +15,7 @@ L.TabCategory_OTHER     = "Autres Boss Mods"
 
 L.BossModLoaded 	= "%s statistiques"
 L.BossModLoad_now 	= [[Ce boss mod n'est pas chargé.
-Il sera chargé quand vous entrerez dans l'instance. 
+Il sera chargé quand vous entrerez dans l'instance.
 Vous pouvez aussi cliquer sur le bouton pour charger le mod manuellement.]]
 
 L.PosX = "Position X"

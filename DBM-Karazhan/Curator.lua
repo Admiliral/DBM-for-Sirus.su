@@ -18,14 +18,14 @@ mod:RegisterEvents(
 -- local warnEvoSoon		= mod:NewPreWarnAnnounce(30254, 10, 2)
 -- local warnEvo			= mod:NewSpellAnnounce(30254, 3)
 -- local warnArcaneInfusion= mod:NewSpellAnnounce(30403, 3)
--- 
+--
 -- local timerEvo			= mod:NewBuffActiveTimer(20, 30254)
 -- local timerNextEvo		= mod:NewNextTimer(115, 30254)
--- 
+--
 -- local berserkTimer		= mod:NewBerserkTimer(720)
--- 
+--
 -- mod:AddBoolOption("RangeFrame", true)
--- 
+--
 -- function mod:OnCombatStart(delay)
 -- 	berserkTimer:Start(-delay)
 -- 	timerNextEvo:Start(109-delay)
@@ -34,19 +34,19 @@ mod:RegisterEvents(
 -- 		DBM.RangeCheck:Show(10)
 -- 	end
 -- end
--- 
+--
 -- function mod:OnCombatEnd()
 -- 	if self.Options.RangeFrame then
 -- 		DBM.RangeCheck:Hide()
 -- 	end
 -- end
--- 
+--
 -- function mod:SPELL_AURA_APPLIED(args)
 -- 	if args:IsSpellID(30403) then
 -- 		warnArcaneInfusion:Show()
 -- 	end
 -- end
--- 
+--
 -- function mod:CHAT_MSG_MONSTER_YELL(msg)
 -- 	if msg == L.DBM_CURA_YELL_OOM then
 -- 		warnEvoSoon:Cancel()
@@ -77,7 +77,7 @@ function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 34437, "The Curator")
     for i=1,3 do
         if UnitAura("boss".. i,"Деактивация", nil, "HARMFUL") == nil then
-            if     i==3 then 
+            if     i==3 then
                 timerAnnihilationCD:Start()
                 timerCondCD:Start()
             elseif i==1 then
@@ -136,7 +136,7 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_CAST_START(args)
-    if args:IsSpellID(305296) then	
+    if args:IsSpellID(305296) then
         ter = true
         self:PlaySound("bomb_p")
         self:ScheduleMethod(6 ,"bombDefused")

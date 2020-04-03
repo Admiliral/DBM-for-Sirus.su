@@ -30,7 +30,7 @@ local warnSummonSpirit				= mod:NewSpellAnnounce(71426, 2)
 local warnReanimating				= mod:NewAnnounce("WarnReanimating", 3)
 local warnDarkTransformation		= mod:NewSpellAnnounce(70900, 4)
 local warnDarkEmpowerment			= mod:NewSpellAnnounce(70901, 4)
-local warnPhase2					= mod:NewPhaseAnnounce(2, 1)	
+local warnPhase2					= mod:NewPhaseAnnounce(2, 1)
 local warnFrostbolt					= mod:NewCastAnnounce(72007, 2)
 local warnTouchInsignificance		= mod:NewAnnounce("WarnTouchInsignificance", 2, 71204, mod:IsTank() or mod:IsHealer())
 local warnDarkMartyrdom				= mod:NewSpellAnnounce(72499, 4)
@@ -89,7 +89,7 @@ function mod:OnCombatStart(delay)
 		DBM.BossHealth:Show(L.name)
 		DBM.BossHealth:AddBoss(36855, L.name)
 		self:ScheduleMethod(0.5, "CreateShildHPFrame")
-	end		
+	end
     if self.Options.RemoveShadowResistanceBuffs then
         mod:ScheduleMethod(0.1, "RemoveBuffs")
     end
@@ -118,13 +118,13 @@ do	-- add the additional Shield Bar
 	local last = 100
 	local function getShieldPercent()
 		local guid = UnitGUID("focus")
-		if mod:GetCIDFromGUID(guid) == 36855 then 
+		if mod:GetCIDFromGUID(guid) == 36855 then
 			last = math.floor(UnitMana("focus")/UnitManaMax("focus") * 100)
 			return last
 		end
 		for i = 0, GetNumRaidMembers(), 1 do
 			local unitId = ((i == 0) and "target") or "raid"..i.."target"
-			local guid = UnitGUID(unitId)
+			guid = UnitGUID(unitId)
 			if mod:GetCIDFromGUID(guid) == 36855 then
 				last = math.floor(UnitMana(unitId)/UnitManaMax(unitId) * 100)
 				return last
@@ -169,7 +169,7 @@ function mod:TrySetTarget()
 		end
 	end
 end
-	
+
 function mod:SPELL_AURA_APPLIED(args)
     --[[if args:IsSpellID(71289) then
         dominateMindTargets[#dominateMindTargets + 1] = args.destName

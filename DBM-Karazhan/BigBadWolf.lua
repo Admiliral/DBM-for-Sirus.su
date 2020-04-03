@@ -36,6 +36,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnRRH:Show()
 		end
 		if self.Options.RRHIcon then
+			local targetname = self:GetBossTarget(17521)
 			self:SetIcon(targetname, 8, 20)
 		end
 	elseif args:IsSpellID(30752) and GetTime() - lastFear > 2 then

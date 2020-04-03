@@ -24,14 +24,14 @@ Bloodboil:AddBarOption("Arcing Smash")
 
 function Bloodboil:OnCombatStart(delay)
 	boilCounter = 0
-	
+
 	self:StartStatusBarTimer(600 - delay, "Enrage", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
 	self:ScheduleSelf(300 - delay, "EnrageWarn", 300)
 	self:ScheduleSelf(480 - delay, "EnrageWarn", 120)
 	self:ScheduleSelf(540 - delay, "EnrageWarn", 60)
 	self:ScheduleSelf(570 - delay, "EnrageWarn", 30)
 	self:ScheduleSelf(590 - delay, "EnrageWarn", 10)
-	
+
 	self:StartStatusBarTimer(57.5, "Fel Rage", "Interface\\Icons\\Spell_Fire_ElementalDevastation")
 	self:ScheduleSelf(52.5, "FelRageWarn")
 	self:StartStatusBarTimer(11.5, "Bloodboil", "Interface\\Icons\\Spell_Shadow_BloodBoil")
@@ -86,7 +86,7 @@ function Bloodboil:OnSync(msg)
 		msg = msg:sub(12)
 		self:StartStatusBarTimer(4, "Arcing Smash", "Interface\\Icons\\Ability_Warrior_Cleave")
 		if self.Options.WarnSmash then
-			self:ScheduleSelf(3, "SmashWarn")		
+			self:ScheduleSelf(3, "SmashWarn")
 			self:Announce(DBM_BLOODBOIL_WARN_SMASH, 4)
 		end
 	end

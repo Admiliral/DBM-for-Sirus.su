@@ -253,7 +253,7 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	InhaledBlight		= "Mostrar aviso para $spell:71912",
 	RangeFrame			= "Mostrar distancia (8 yardas)",
-	WarnGastricBloat	= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(72551, GetSpellInfo(72551) or "unknown"),	
+	WarnGastricBloat	= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(72551, GetSpellInfo(72551) or "unknown"),
 	SetIconOnGasSpore	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(69279),
 	AnnounceSporeIcons	= "Anunciar los iconos de los objetivos de $spell:69279 en el chat de banda\n(Necesita Anunciar habilitado y ayudante/líder de banda)",
 	AchievementCheck	= "Anunciar fallo del logro 'Sin vacunas' a la banda\n(requiere líder/ayudante)"
@@ -320,7 +320,7 @@ L:SetWarningLocalization{
 
 L:SetOptionLocalization{
 	WarnPhase2Soon			= "Mostrar pre-aviso para Fase 2 (al ~83%)",
-	WarnPhase3Soon			= "Mostrar pre-aviso para Fase 3 (al ~38%)",	
+	WarnPhase3Soon			= "Mostrar pre-aviso para Fase 3 (al ~38%)",
 	SpecWarnMalleableGoo		= "Mostrar aviso especial para Moco maleable en ti\n(Sólo funciona en el primer objetivo)",
 	SpecWarnMalleableGooNear	= "Mostrar aviso especial para Moco maleable cerca de ti\n(Sólo funciona si estás cerca del primer objetivo)",
 	WarnMutatedPlague		= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(72451, GetSpellInfo(72451) or "unknown"),
@@ -330,7 +330,7 @@ L:SetOptionLocalization{
 	MalleableGooIcon			= "Poner icono en el primero objetivo de $spell:72295",
 	NextUnboundPlagueTargetIcon	= "Poner icono en el siguiente objetivo de $spell:72856",
 	YellOnMalleableGoo			= "Gritar cuando tengas $spell:72295",
-	YellOnUnbound				= "Gritar cuando tengas $spell:72856",	
+	YellOnUnbound				= "Gritar cuando tengas $spell:72856",
 	GooArrow					= "Mostrar flecha cuando $spell:72295 esté cerca de ti",
 	SpecWarnUnboundPlague		= "Mostrar aviso especial para transferencia de $spell:72856",
 	SpecWarnNextPlageSelf		= "Mostrar aviso especial cuando seas el próximo objetivo de $spell:72856",
@@ -353,8 +353,8 @@ L:SetGeneralLocalization{
 }
 
 L:SetWarningLocalization{
-	WarnTargetSwitch		= "Cambiar objetivo a: %s",	
-	WarnTargetSwitchSoon	= "Cambiar de objetivo pronto",	
+	WarnTargetSwitch		= "Cambiar objetivo a: %s",
+	WarnTargetSwitchSoon	= "Cambiar de objetivo pronto",
 	SpecWarnVortex			= "Vórtice de choque en ti ¡Muévete!",
 	SpecWarnVortexNear		= "Vórtice de choque cerca de ti ¡Ten cuidado!"
 }

@@ -67,12 +67,12 @@ local function isTower(id)
 end
 
 local function getBasecount()
-	local alliance = 0 
+	local alliance = 0
 	local horde = 0
 	for k,v in pairs(objectives) do
-		if v == 11 then 
+		if v == 11 then
 			alliance = alliance + 1
-		elseif v == 10 then 
+		elseif v == 10 then
 			horde = horde + 1
 		end
 	end
@@ -149,7 +149,7 @@ do
 		end
 		EyeOfTheStorm:UPDATE_WORLD_STATES()
 	end
-	
+
 	local function scheduleCheck(self)
 		self:Schedule(1, checkForUpdates)
 	end
@@ -163,12 +163,12 @@ do
 					self.HordeFlag = nil
 					self:UpdateFlagDisplay()
 				end
-	
+
 			elseif string.match(arg1, L.FlagDropped) then
 				self.AllyFlag = nil
 				self.HordeFlag = nil
 				self:UpdateFlagDisplay()
-	
+
 			elseif string.match(arg1, L.FlagCaptured) then
 				flagTimer:Start()
 				self.AllyFlag = nil
@@ -188,12 +188,12 @@ do
 					self.HordeFlag = name
 					self:UpdateFlagDisplay()
 				end
-	
+
 			elseif string.match(arg1, L.FlagDropped) then
 				self.AllyFlag = nil
 				self.HordeFlag = nil
 				self:UpdateFlagDisplay()
-	
+
 			elseif string.match(arg1, L.FlagCaptured) then
 				flagTimer:Start()
 				self.AllyFlag = nil
@@ -212,7 +212,7 @@ do
 		if arg1 == L.BgStart60 then
 			startTimer:Start()
 
-		elseif arg1 == L.BgStart30  then		
+		elseif arg1 == L.BgStart30  then
 			startTimer:Update(31, 62)
 
 		elseif string.match(arg1, L.FlagReset) then
@@ -221,7 +221,7 @@ do
 			EyeOfTheStorm:UpdateFlagDisplay()
 		end
 		scheduleCheck(self)
-	end	
+	end
 end
 
 
@@ -234,18 +234,18 @@ function EyeOfTheStorm:UPDATE_WORLD_STATES()
 	-- calculate new times
 	local AllyTime = (1600 - last_alliance_score) / ResPerSec[last_alliance_bases]
 	local HordeTime = (1600 - last_horde_score) / ResPerSec[last_horde_bases]
-	
+
 	if AllyTime > 5000 then		AllyTime = 5000 end
 	if HordeTime > 5000 then	HordeTime = 5000 end
 
 	if AllyTime == HordeTime then
-		winner_is = 0 
+		winner_is = 0
 		winTimer:Stop()
 		if self.ScoreFrame1Text then
 			self.ScoreFrame1Text:SetText("")
 			self.ScoreFrame2Text:SetText("")
 		end
-		
+
 	elseif AllyTime > HordeTime then -- Horde wins
 		winner_is = 2
 		winTimer:Update(getGametime(), getGametime()+HordeTime)
@@ -272,13 +272,13 @@ function EyeOfTheStorm:UPDATE_WORLD_STATES()
 			self.ScoreFrame1Text:SetText("(1600)")
 			self.ScoreFrame2Text:SetText("("..HordePoints..")")
 			self:UpdateFlagDisplay()
-		end		
+		end
 	end
 end
 
 function EyeOfTheStorm:UpdateFlagDisplay()
 	if self.ScoreFrame1Text and self.ScoreFrame2Text then
-		
+
 		local newText
 		local oldText = self.ScoreFrame1Text:GetText()
 		if self.AllyFlag then
@@ -291,7 +291,7 @@ function EyeOfTheStorm:UpdateFlagDisplay()
 			newText = string.gsub(oldText, "%((%d+)%).*", "%(%1%)")
 		end
 		self.ScoreFrame1Text:SetText(newText)
-		
+
 		newText = nil
 		oldText = self.ScoreFrame2Text:GetText()
 		if self.HordeFlag then
@@ -304,7 +304,7 @@ function EyeOfTheStorm:UpdateFlagDisplay()
 			newText = string.gsub(oldText, "%((%d+)%).*", "%(%1%)")
 		end
 		self.ScoreFrame2Text:SetText(newText)
-		
+
 	end
 end
 

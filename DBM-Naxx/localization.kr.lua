@@ -70,7 +70,7 @@ L:SetTimerLocalization({
 L:SetOptionLocalization({
 	WarningSpidersSoon	= "거미의 입맞춤 사전 경고 보기",
 	WarningSpidersNow	= "거미의 입맞춤 경고 보기",
-	TimerSpider			= "다음 거미의 입맞춤 타이머 보기"	
+	TimerSpider			= "다음 거미의 입맞춤 타이머 보기"
 })
 
 L:SetMiscLocalization({
@@ -264,7 +264,7 @@ L:SetOptionLocalization({
 })
 
 L:SetWarningLocalization({
-	WarningShieldWallSoon	= "뼈 보호막 종료 5초 전"	
+	WarningShieldWallSoon	= "뼈 보호막 종료 5초 전"
 })
 
 ------------------------
@@ -381,7 +381,7 @@ L:SetWarningLocalization({
 L:SetTimerLocalization({
 	TimerAir				= "비행 페이즈",
 	TimerLanding			= "착지",
-	TimerIceBlast			= "냉기 숨결"	
+	TimerIceBlast			= "냉기 숨결"
 })
 
 ------------------

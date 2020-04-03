@@ -30,7 +30,7 @@ function mod:OnCombatStart(delay)
 	enraged = false
 end
 
-function mod:OnCombatEnd(wipe)	
+function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 15953, "Grand Widow Faerlina", wipe)
 end
 

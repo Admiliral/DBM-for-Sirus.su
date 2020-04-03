@@ -86,7 +86,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		warnWhelpsSoon:Cancel()
 --		preWarnDeepBreath:Cancel()
 		sndFunny:Schedule(20, "Interface\\AddOns\\DBM-Onyxia\\sounds\\now-hit-it-very-hard-and-fast.mp3")
-   		sndFunny:Schedule(35, "Interface\\AddOns\\DBM-Onyxia\\sounds\\i-dont-see-enough-dots.mp3")
+		sndFunny:Schedule(35, "Interface\\AddOns\\DBM-Onyxia\\sounds\\i-dont-see-enough-dots.mp3")
 		sndFunny:Schedule(50, "Interface\\AddOns\\DBM-Onyxia\\sounds\\hit-it-like-you-mean-it.mp3")
 		sndFunny:Schedule(65, "Interface\\AddOns\\DBM-Onyxia\\sounds\\throw-more-dots.mp3")
 	end
@@ -122,9 +122,9 @@ end
 function mod:UNIT_HEALTH(uId)
 	if self.vb.phase == 1 and not warned_preP2 and self:GetUnitCreatureId(uId) == 10184 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.67 then
 		warned_preP2 = true
-		warnPhase2Soon:Show()	
+		warnPhase2Soon:Show()
 	elseif self.vb.phase == 2 and not warned_preP3 and self:GetUnitCreatureId(uId) == 10184 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.41 then
 		warned_preP3 = true
-		warnPhase3Soon:Show()	
+		warnPhase3Soon:Show()
 	end
 end

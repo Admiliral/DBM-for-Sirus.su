@@ -87,11 +87,10 @@ function Twins:OnEvent(event, args)
 		if target then
 			self:SendSync("Conflagration"..target)
 		end
-		target = nil
 
-		local _, _, target = (args or ""):find(DBM_TWINS_EMOTE_NOVA)
-		if target then
-			self:SendSync("ShadowNova"..target)
+		local _, _, target2 = (args or ""):find(DBM_TWINS_EMOTE_NOVA)
+		if target2 then
+			self:SendSync("ShadowNova"..target2)
 		end
 	end
 end

@@ -217,7 +217,7 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	InhaledBlight		= "Montre une alerte pour le $spell:71912",
 	RangeFrame			= "Montre la fenêtre de portée (8 Mètres)",
-	WarnGastricBloat	= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(72551, GetSpellInfo(72551) or "unknown"),	
+	WarnGastricBloat	= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(72551, GetSpellInfo(72551) or "unknown"),
 	SetIconOnGasSpore	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(69279)
 }
 
@@ -284,7 +284,7 @@ L:SetOptionLocalization{
 	UnboundPlagueIcon			= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(72856),
 	MalleableGooIcon			= "Met une icone sur la première cible de $spell:72295",
 	NextUnboundPlagueTargetIcon	= "Met une icone sur la prochaine cible de $spell:72856",
-	YellOnMalleableGoo			= "Crie pour $spell:72295",	
+	YellOnMalleableGoo			= "Crie pour $spell:72295",
 	SpecWarnUnboundPlague		= "Montre une alerte spéciale pour le transfert de $spell:72856",
 	SpecWarnNextPlageSelf		= "Montre une alerte spéciale si vous êtes la cible suivante de $spell:72856"
 }

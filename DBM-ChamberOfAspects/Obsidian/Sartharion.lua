@@ -55,7 +55,7 @@ function mod:OnSync(event)
 	if event == "FireWall" then
 		timerWall:Start()
 		warnFireWall:Show()
-		
+
 		if self.Options.PlaySoundOnFireWall then
 --			PlaySoundFile("Sound\\Spells\\PVPFlagTaken.wav")
 			PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
@@ -141,7 +141,7 @@ local function sortFails2(e1, e2)
 	return (lastfire[e1] or 0) > (lastfire[e2] or 0)
 end
 
-function mod:OnCombatEnd(wipe)	
+function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 28860, "Sartharion", wipe)
 	if not self.Options.AnnounceFails then return end
 	if DBM:GetRaidRank() < 1 or not self.Options.Announce then return end
@@ -156,7 +156,7 @@ function mod:OnCombatEnd(wipe)
 	end
 	SendChatMessage(L.VoidZones:format(voids), "RAID")
 	table.wipe(sortedFails)
-	
+
 	local fire = ""
 	for k, v in pairs(lastfire) do
 		table.insert(sortedFails, k)
@@ -180,5 +180,5 @@ function mod:SPELL_DAMAGE(args)
 	if self.Options.AnnounceFails and self.Options.Announce and args:IsSpellID(59128) and DBM:GetRaidRank() >= 1 and DBM:GetRaidUnitId(args.destName) ~= "none" and args.destName then
 		lastvoids[args.destName] = (lastvoids[args.destName] or 0) + 1
 		SendChatMessage(L.VoidZoneOn:format(args.destName), "RAID")
-	end	
+	end
 end

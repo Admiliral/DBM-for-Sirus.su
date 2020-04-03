@@ -23,7 +23,7 @@ L:SetOptionLocalization{
 
 L:SetMiscLocalization{
 	WarderTrap1					= "거기... 누구냐?",
-	WarderTrap2					= "내가... 깨어난다!",	
+	WarderTrap2					= "내가... 깨어난다!",
 	WarderTrap3					= "주인님의 성소를 어지럽혔구나!"
 }
 
@@ -116,7 +116,7 @@ L:SetWarningLocalization{
 
 L:SetOptionLocalization{
 	WarnImpale				= "$spell:69062 대상 알리기",
-	AchievementBoned		= "뼈도 못 추릴라 업적 타이머 보기",	
+	AchievementBoned		= "뼈도 못 추릴라 업적 타이머 보기",
 	SetIconOnImpale			= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(69062)
 }
 
@@ -144,8 +144,8 @@ L:SetOptionLocalization{
 	WarnAddsSoon					= "이교도 추가 사전 경고 보기",
 	WarnReanimating					= "이교도를 부활을 시작 할 경우 경고 보기",								-- Reanimated Adherent/Fanatic spawning
 	TimerAdds						= "새로운 이교도 추가 타이머 보기",
-	SpecWarnVengefulShade			= "복수의 망령으로부터 공격을 받을 경우 특수 경고 보기",--creatureid 38222	
-	ShieldHealthFrame				= "$spell:70842의 방어막 바와 보스 체력바를 함께 보기",	
+	SpecWarnVengefulShade			= "복수의 망령으로부터 공격을 받을 경우 특수 경고 보기",--creatureid 38222
+	ShieldHealthFrame				= "$spell:70842의 방어막 바와 보스 체력바를 함께 보기",
 	WarnTouchInsignificance			= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(71204, GetSpellInfo(71204) or "알 수 없음"),	-- Warning isnt default (it has a count number), option is default tho (no need for translation this way)
 	SetIconOnDominateMind			= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(71289),
 	SetIconOnDeformedFanatic		= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(70900),
@@ -217,10 +217,10 @@ L:SetOptionLocalization{
 	TimerCombatStart		= "전투 시작 타이머 보기",
 	WarnFrenzySoon			= "광기 사전 경고 보기 (33% 이하)",
 	BoilingBloodIcons		= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(72441),
---	MarkCastIcon			= "$spell:72444 대상에게 공격대 징표 설정",	
+--	MarkCastIcon			= "$spell:72444 대상에게 공격대 징표 설정",
 	RangeFrame				= "거리 창 보기 (12 미터)",
 	RunePowerFrame			= "보스 체력 바와 함께 $spell:72371 바 보기",
-	BeastIcons				= "피의 괴물 공격대 징표 설정"	
+	BeastIcons				= "피의 괴물 공격대 징표 설정"
 }
 
 L:SetMiscLocalization{
@@ -245,8 +245,8 @@ L:SetWarningLocalization{
 
 L:SetOptionLocalization{
 	InhaledBlight			= "$spell:71912 경고 보기",
-	RangeFrame				= "거리 창 보기(8 미터)",	
-	WarnGastricBloat		= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(72551, GetSpellInfo(72551) or "알 수 없음"),	
+	RangeFrame				= "거리 창 보기(8 미터)",
+	WarnGastricBloat		= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(72551, GetSpellInfo(72551) or "알 수 없음"),
 	SetIconOnGasSpore		= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(69279),
 	AnnounceSporeIcons		= "$spell:69279 대상 공격대 징표 채팅으로 알리기\n(공대장 혹은 권한을 가진 사람만 사용 가능)"
 }
@@ -267,7 +267,7 @@ L:SetGeneralLocalization{
 L:SetWarningLocalization{
 	WarnOozeSpawn				= "작은 수액괴물 생성",
 	WarnUnstableOoze			= "%s : >%s< (%s)",			-- Unstable Ooze on >args.destName< (args.amount)
-	SpecWarnLittleOoze			= "작은 수액괴물의 공격! - 뛰세요!"--creatureid 36897	
+	SpecWarnLittleOoze			= "작은 수액괴물의 공격! - 뛰세요!"--creatureid 36897
 }
 
 L:SetTimerLocalization{
@@ -277,16 +277,16 @@ L:SetTimerLocalization{
 L:SetOptionLocalization{
 	NextPoisonSlimePipes		= "다음 수액 홍수 타이머 보기",
 	WarnOozeSpawn				= "작은 수액괴물 생성 경고 보기",
-	SpecWarnLittleOoze			= "작은 수액괴물로부터 공격을 받을 경우 특수 경고 보기",--creatureid 36897	
-	RangeFrame					= "거리 프레임 보기 (8 미터)",	
-	WarnUnstableOoze			= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(69558, GetSpellInfo(69558) or "알 수 없음"),	
+	SpecWarnLittleOoze			= "작은 수액괴물로부터 공격을 받을 경우 특수 경고 보기",--creatureid 36897
+	RangeFrame					= "거리 프레임 보기 (8 미터)",
+	WarnUnstableOoze			= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(69558, GetSpellInfo(69558) or "알 수 없음"),
 	InfectionIcon				= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(71224),
 	TankArrow					= "큰 수액괴물 탱커 방향 DBM 화살표 보기(테스트)"
 }
 
 L:SetMiscLocalization{
 	YellSlimePipes1				= "좋은 소식이에요, 여러분! 독성 수액 배출관을 고쳤어요!",	-- Professor Putricide
-	YellSlimePipes2				= "끝내 주는 소식이에요, 여러분! 수액이 다시 나오는군요!"	-- Professor Putricide	
+	YellSlimePipes2				= "끝내 주는 소식이에요, 여러분! 수액이 다시 나오는군요!"	-- Professor Putricide
 }
 
 ---------------------------
@@ -320,16 +320,16 @@ L:SetOptionLocalization{
 	NextUnboundPlagueTargetIcon	= "$spell:72856의 다음 대상 공격대 징표 설정하기",
 	MalleableGooIcon			= "$spell:72295 대상 공격대 징표 설정하기",
 	YellOnMalleableGoo			= "$spell:72295 외치기",
-	YellOnUnbound				= "$spell:72856 말하기",	
+	YellOnUnbound				= "$spell:72856 말하기",
 	SpecWarnUnboundPlague		= "$spell:72856 전달자 특수 경고 보기",
 	SpecWarnNextPlageSelf		= "당신이 다음 $spell:72856 대상이 될 때 특수 경고 보기",
-	BypassLatencyCheck			= "$spell:72295의 동기화를 사용하지 않거나 네트워크 체크를 하지 않습니다.\n(만약 DBM 사용에 문제가 생기면 사용하세요.)"	
+	BypassLatencyCheck			= "$spell:72295의 동기화를 사용하지 않거나 네트워크 체크를 하지 않습니다.\n(만약 DBM 사용에 문제가 생기면 사용하세요.)"
 }
 
 L:SetMiscLocalization{
 	YellPull					= "좋은 소식이에요, 여러분! 아제로스의 모든 생명체를 파괴할 역병을 완성했어요!",
 	YellMalleable				= "나에게 통통이~!",
-	YellUnbound					= "나에게 역병~! 이리오삼~!"	
+	YellUnbound					= "나에게 역병~! 이리오삼~!"
 }
 
 ----------------------------
@@ -345,7 +345,7 @@ L:SetWarningLocalization{
 	WarnTargetSwitch			= "대상 전환 : %s",		-- Ugh, no nice spellname/id to use for general localization :(
 	WarnTargetSwitchSoon		= "곧 대상 전환",			-- Spellname = Invocation of Blood   or   Spellname = Invocation of Blood (X) Move  (server side script where X indicates the first letter of the Prince name
 	SpecWarnVortex				= "당신에게 충격의 소용돌이 - 이동!",
-	SpecWarnVortexNear			= "당신 근처에 충격의 소용돌이 - 확인!"	
+	SpecWarnVortexNear			= "당신 근처에 충격의 소용돌이 - 확인!"
 }
 
 L:SetTimerLocalization{
@@ -357,11 +357,11 @@ L:SetOptionLocalization{
 	WarnTargetSwitchSoon		= "대상 전환 사전 경고 보기",-- Every ~47 secs, you have to dps a different Prince
 	TimerTargetSwitch			= "대상 전환 쿨다운 타이머 보기",
 	SpecWarnVortex				= "당신이 $spell:72037에 해당 될 경우 특수 경고 보기",
-	SpecWarnVortexNear			= "당신 주변에 $spell:72037가 있을 경우 특수 경고 보기",	
+	SpecWarnVortexNear			= "당신 주변에 $spell:72037가 있을 경우 특수 경고 보기",
 	EmpoweredFlameIcon			= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(72040),
 	ActivePrinceIcon			= "활성화 된 공작에게 공격대 징표 설정하기 (해골)",
 	RangeFrame					= "거리 창 보기 (12 m)",
-	BypassLatencyCheck			= "$spell:72037의 동기화를 사용하지 않거나 네트워크 체크를 하지 않습니다.\n(만약 DBM 사용에 문제가 생기면 사용하세요.)"	
+	BypassLatencyCheck			= "$spell:72037의 동기화를 사용하지 않거나 네트워크 체크를 하지 않습니다.\n(만약 DBM 사용에 문제가 생기면 사용하세요.)"
 }
 
 
@@ -413,7 +413,7 @@ L:SetGeneralLocalization{
 
 L:SetWarningLocalization{
 	WarnCorrosion				= "%s : >%s< (%s)",		-- Corrosion on >args.destName< (args.amount)
-	WarnPortalOpen				= "차원문 열림"	
+	WarnPortalOpen				= "차원문 열림"
 }
 
 L:SetTimerLocalization{
@@ -424,10 +424,10 @@ L:SetTimerLocalization{
 
 L:SetOptionLocalization{
 	SetIconOnBlazingSkeleton	= "타오르는 해골에게 공격대 징표 설정(해골)",
-	WarnPortalOpen				= "$spell:72483 열림 경고 보기",	
+	WarnPortalOpen				= "$spell:72483 열림 경고 보기",
 	TimerPortalsOpen			= "악몽의 차원문이 열릴 때 타이머 보기",
 	TimerBlazingSkeleton		= "타오르는 해골 다음 생성 타이머 보기",
-	TimerAbom					= "Show timer for next Gluttonous Abomination spawn (Experimental)",	
+	TimerAbom					= "Show timer for next Gluttonous Abomination spawn (Experimental)",
 	WarnCorrosion				= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(70751, GetSpellInfo(70751) or "알 수 없음")
 }
 
@@ -450,7 +450,7 @@ L:SetGeneralLocalization{
 L:SetTimerLocalization{
 	TimerNextAirphase		= "다음 공중 단계",
 	TimerNextGroundphase	= "다음 지상 단계",
-	AchievementMystic		= "신비한 아픔 업적 타이머"	
+	AchievementMystic		= "신비한 아픔 업적 타이머"
 }
 
 L:SetWarningLocalization{
@@ -459,19 +459,19 @@ L:SetWarningLocalization{
 	WarnGroundphaseSoon		= "곧 신드라고사 착륙",
 	WarnInstability			= "불안정 : >%d<",
 	WarnChilledtotheBone	= "사무치는 한기 : >%d<",
-	WarnMysticBuffet		= "신비한 강타 : >%d<"	
+	WarnMysticBuffet		= "신비한 강타 : >%d<"
 }
 
 L:SetOptionLocalization{
 	WarnAirphase				= "공중 단계 알리기",
 	WarnGroundphaseSoon			= "지상 단계 사전 경고 보기",
-	WarnPhase2soon				= "2 단계 사전 경고 보기(38% 이하)",	
+	WarnPhase2soon				= "2 단계 사전 경고 보기(38% 이하)",
 	TimerNextAirphase			= "다음 공중 단계 타이머 보기",
 	TimerNextGroundphase		= "다음 지상 단계 타이머 보기",
 	WarnInstability				= "당신의 $spell:69766 중첩 경고 보기",
 	WarnChilledtotheBone		= "당신의 $spell:70106 중첩 경고 보기",
 	WarnMysticBuffet			= "당신의 $spell:70128 중첩 경고 보기",
-	AnnounceFrostBeaconIcons	= "$spell:70126 대상 공격대 징표을 채팅으로 알리기\n(공대장 혹은 부공대장 권한이 있을 경우)",	
+	AnnounceFrostBeaconIcons	= "$spell:70126 대상 공격대 징표을 채팅으로 알리기\n(공대장 혹은 부공대장 권한이 있을 경우)",
 	SetIconOnFrostBeacon		= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(70126),
 	SetIconOnUnchainedMagic		= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(69762),
 	ClearIconsOnAirphase		= "공중 단계 전 모든 공격대 징표 제거",
@@ -481,8 +481,8 @@ L:SetOptionLocalization{
 
 L:SetMiscLocalization{
 	YellAirphase			= "여기가 끝이다! 아무도 살아남지 못하리라!",
-	YellPhase2				= "자, 주인님의 무한한 힘을 느끼고 절망에 빠져보아라!",--Now, feel my master's limitless power and despair!",	
-	BeaconIconSet			= "냉기 봉화 징표{rt%d} : %s",	
+	YellPhase2				= "자, 주인님의 무한한 힘을 느끼고 절망에 빠져보아라!",--Now, feel my master's limitless power and despair!",
+	BeaconIconSet			= "냉기 봉화 징표{rt%d} : %s",
 	YellPull				= "여기까지 오다니 너무나 어리석구나. 노스렌드의 얼음 바람이 영혼까지 삼키리라!"--You are fools to have come to this place. The icy winds of Northrend will consume your souls!"
 }
 
@@ -499,7 +499,7 @@ L:SetWarningLocalization{
 	WarnPhase2Soon				= "곧 2 단계 전환",
 	WarnPhase3Soon				= "곧 3 단계 전환",
 	ValkyrWarning				= "발키리 : >%s<",
-	SpecWarnYouAreValkd			= "발키리가 납치 중!",	
+	SpecWarnYouAreValkd			= "발키리가 납치 중!",
 	SpecWarnDefileCast			= "당신에게 파멸! - 이동!",
 	SpecWarnDefileNear			= "당신 주변에 파멸! - 이동!",
 	SpecWarnTrapNear			= "당신 주변에 암흑의 덫 - 확인!",
@@ -519,28 +519,28 @@ L:SetTimerLocalization{
 L:SetOptionLocalization{
 	TimerCombatStart			= "전투 시작 타이머 보기",
 	TimerRoleplay				= "이벤트 타이머 보기",
-	WarnNecroticPlagueJump		= "$spell:73912 이동 대상 알리기",	
-	TimerNecroticPlagueCleanse	= "$spell:73912의 첫 번째 틱 이후 지속 타이머 보기",	
-	PhaseTransition				= "다음 단계 전환 타이머 보기",	
+	WarnNecroticPlagueJump		= "$spell:73912 이동 대상 알리기",
+	TimerNecroticPlagueCleanse	= "$spell:73912의 첫 번째 틱 이후 지속 타이머 보기",
+	PhaseTransition				= "다음 단계 전환 타이머 보기",
 	WarnPhase2Soon				= "2 단계 전환 사전 경고 보기(73% 이하)",
 	WarnPhase3Soon				= "3 단계 전환 사전 경고 보기(43% 이하)",
 	ValkyrWarning				= "발키리에게 붙잡힌 사람 알리기",
 	SpecWarnYouAreValkd			= "발키리에게 붙잡혔을 때 특수 경고 보기",
-	SpecWarnHealerGrabbed		= "성기사 또는 사제(힐러)가 발키리에게 붙잡히게 될 경우 특수 경고 보기\n(힐러가 DBM을 사용할 경우)",	
+	SpecWarnHealerGrabbed		= "성기사 또는 사제(힐러)가 발키리에게 붙잡히게 될 경우 특수 경고 보기\n(힐러가 DBM을 사용할 경우)",
 	SpecWarnDefileCast			= "당신에게 $spell:72762이 시전된 경우 특수 경고 보기",
 	SpecWarnDefileNear			= "당신 주변에 $spell:72762이 시전된 경우 특수 경고 보기",
-	SpecWarnTrapNear			= "주변에 $spell:73539을 하면 특수 경고 보기",	
+	SpecWarnTrapNear			= "주변에 $spell:73539을 하면 특수 경고 보기",
 	YellOnDefile				= "$spell:72762의 대상이 됐을 때 말하기",
 	YellOnTrap					= "$spell:73539 말하기",
 	DefileIcon					= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(72762),
-	HarvestSoulIcon				= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(74327),	
+	HarvestSoulIcon				= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(74327),
 	NecroticPlagueIcon			= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(73912),
 	RagingSpiritIcon			= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(69200),
 	TrapIcon					= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(73539),
 	ValkyrIcon					= "발키리에 공격대 징표 설정",
 	DefileArrow					= "$spell:72762이 당신 주변에 생성되면 DBM 화살표 보기",
 	TrapArrow					= "주변에 $spell:73539을 할 경우 DBM 화살표 보기",
-	LKBugWorkaround				= "$spell:73539 또는 $spell:72762의 동기화를 사용하지 않거나 네트워크 체크를 하지 않습니다.\n(만약 DBM 사용에 문제가 생기면 사용하세요.)",	
+	LKBugWorkaround				= "$spell:73539 또는 $spell:72762의 동기화를 사용하지 않거나 네트워크 체크를 하지 않습니다.\n(만약 DBM 사용에 문제가 생기면 사용하세요.)",
 	AnnounceValkGrabs			= "발키리가 납치할 때 대상과 대상 공격대 아이콘으로 채팅 알리기\n(알림 권한이 있을 경우)",
 	SpecWarnValkyrLow		= "Show special warning when Valkyr is below 60% HP"
 }
@@ -548,7 +548,7 @@ L:SetMiscLocalization{
 	LKPull					= "그러니까 성스러운 빛이 자랑하던 정의가 마침내 왔다 이건가? 폴드링, 서리한을 내려놓고 자비라도 애걸하라는 건가?",
 	YellDefile				= "저에게 파멸!!!",
 	YellTrap				= "나에게 암흑의 덫!!!",
-	YellValk				= "끌려 가는 중! 살려주삼!",	
+	YellValk				= "끌려 가는 중! 살려주삼!",
 	YellKill				= "어떤 의문도 남지 않았다. 어떤 의심도 없다. 너희는 아제로스의 가장 위대한 용사들이다. 너희 앞에 놓아둔 모든 도전을 극복해 내었다. 가장 강력한 종들이 너희의 무자비한 살육 앞에 쓰러졌지... 너희가 억눌렀던 분노 앞에 말이다...",
 	LKRoleplay				= "진정으로 정의에 이끌렸단 말이냐? 궁금하구나...",
 	ValkGrabbedIcon			= "발키리 납치 : {rt%d} %s",

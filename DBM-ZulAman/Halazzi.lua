@@ -12,7 +12,7 @@ mod:RegisterEvents(
     "CHAT_MSG_MONSTER_YELL"
 )
 
-local isDispeller = select(2, UnitClass("player")) == "PRIEST" or select(2, UnitClass("player")) == "PALADIN" 
+local isDispeller = select(2, UnitClass("player")) == "PRIEST" or select(2, UnitClass("player")) == "PALADIN"
 
 local specWarnFrenzy         = mod:NewSpecialWarningDispel(41254, select(2, UnitClass("player")) == "HUNTER")
 local specWarnDispelShock    = mod:NewSpecialWarningDispel(43303, isDispeller)

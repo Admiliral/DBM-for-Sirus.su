@@ -41,10 +41,10 @@ local CHARM_TEX_COORDS = {
 	[8] = 	{ 0.75, 1,    0.25, 0.5  }
 }
 
-local hexColors = {}
+--local hexColors = {}
 local vertexColors = {}
 for k, v in pairs(RAID_CLASS_COLORS) do
-	hexColors[k] = ("|cff%02x%02x%02x"):format(v.r * 255, v.g * 255, v.b * 255)
+--	hexColors[k] = ("|cff%02x%02x%02x"):format(v.r * 255, v.g * 255, v.b * 255)
 	vertexColors[k] = { v.r, v.g, v.b }
 end
 ---------------------
@@ -58,12 +58,12 @@ end
 		frame:Hide()
 		rangeCheck:Show(frame.range, frame.filter)
 	end
-    
+
 do
 	local function setRange(self, range)
 		rangeCheck:Show(range)
 	end
-	
+
 	local sound0 = "none"
 	local sound1 = "Interface\\AddOns\\DBM-Core\\Sounds\\blip_8.ogg"
 	local sound2 = "Interface\\AddOns\\DBM-Core\\Sounds\\alarmclockbeeps.ogg"
@@ -73,7 +73,7 @@ do
 			PlaySoundFile(sound)
 		end
 	end
-	
+
 
 --	local function setSpeed(self, option)
 --		DBM.Options.RangeFrameUpdates = option
@@ -92,7 +92,7 @@ do
 			radarFrame:Hide()
 		end
 	end
-	
+
 	function initializeDropdown(dropdownFrame, level, menu)
 		local info
 		if level == 1 then
@@ -159,7 +159,7 @@ do
 					info.checked = (frame.range == 6)
 					UIDropDownMenu_AddButton(info, 2)
 				end
-				
+
 				if initRangeCheck() then
 					info = UIDropDownMenu_CreateInfo()
 					info.text = DBM_CORE_RANGECHECK_SETRANGE_TO:format(7)
@@ -168,7 +168,7 @@ do
 					info.checked = (frame.range == 7)
 					UIDropDownMenu_AddButton(info, 2)
 				end
-				
+
 				if initRangeCheck() then
 					info = UIDropDownMenu_CreateInfo()
 					info.text = DBM_CORE_RANGECHECK_SETRANGE_TO:format(8)
@@ -177,7 +177,7 @@ do
 					info.checked = (frame.range == 8)
 					UIDropDownMenu_AddButton(info, 2)
 				end
-				
+
 				if initRangeCheck() then
 					info = UIDropDownMenu_CreateInfo()
 					info.text = DBM_CORE_RANGECHECK_SETRANGE_TO:format(9)
@@ -186,7 +186,7 @@ do
 					info.checked = (frame.range == 9)
 					UIDropDownMenu_AddButton(info, 2)
 				end
-				
+
 				if initRangeCheck() then
 					info = UIDropDownMenu_CreateInfo()
 					info.text = DBM_CORE_RANGECHECK_SETRANGE_TO:format(10)
@@ -195,7 +195,7 @@ do
 					info.checked = (frame.range == 10)
 					UIDropDownMenu_AddButton(info, 2)
 				end
-				
+
 				if initRangeCheck() then
 					info = UIDropDownMenu_CreateInfo()
 					info.text = DBM_CORE_RANGECHECK_SETRANGE_TO:format(11)
@@ -213,7 +213,7 @@ do
 					info.checked = (frame.range == 12)
 					UIDropDownMenu_AddButton(info, 2)
 				end
-				
+
 				if initRangeCheck() then
 					info = UIDropDownMenu_CreateInfo()
 					info.text = DBM_CORE_RANGECHECK_SETRANGE_TO:format(13)
@@ -259,7 +259,7 @@ do
 					UIDropDownMenu_AddButton(info, 2)
 				end
 
-				
+
 			elseif menu == "sounds" then
 				info = UIDropDownMenu_CreateInfo()
 				info.text = DBM_CORE_RANGECHECK_SOUND_OPTION_1
@@ -294,7 +294,7 @@ do
 				info.func = setFrames
 				info.arg1 = "both"
 				info.checked = (DBM.Options.RangeFrameFrames == "both")
-				UIDropDownMenu_AddButton(info, 2)	
+				UIDropDownMenu_AddButton(info, 2)
 --[[			elseif menu == "speed" then
 				info = UIDropDownMenu_CreateInfo()
 				info.text = DBM_CORE_RANGECHECK_OPTION_SLOW
@@ -326,7 +326,7 @@ do
 			info.arg2 = sound0
 			info.checked = (DBM.Options[option] == sound0)
 			UIDropDownMenu_AddButton(info, 3)
-			
+
 			info = UIDropDownMenu_CreateInfo()
 			info.text = DBM_CORE_RANGECHECK_SOUND_1
 			info.func = setSound
@@ -334,7 +334,7 @@ do
 			info.arg2 = sound1
 			info.checked = (DBM.Options[option] == sound1)
 			UIDropDownMenu_AddButton(info, 3)
-			
+
 			info = UIDropDownMenu_CreateInfo()
 			info.text = DBM_CORE_RANGECHECK_SOUND_2
 			info.func = setSound
@@ -469,7 +469,7 @@ function createRadarFrame()
 	bg:SetBlendMode("BLEND")
 	bg:SetTexture(0, 0, 0, 0.3)
 	radarFrame.background = bg
-	
+
 	local circle = radarFrame:CreateTexture(nil, "ARTWORK")
 	circle:SetPoint("CENTER")
 	circle:SetTexture("Interface\\AddOns\\DBM-Core\\textures\\radar_circle.blp")
@@ -541,7 +541,7 @@ function onUpdate(self, elapsed)
 					if j >= 5 then
 						break
 					end
-				end	
+				end
 			end
 		elseif GetNumPartyMembers() > 0 then
 			for i = 1, GetNumPartyMembers() do
@@ -555,7 +555,7 @@ function onUpdate(self, elapsed)
 					if j >= 5 then
 						break
 					end
-				end	
+				end
 			end
 		end
 	else
@@ -584,9 +584,9 @@ do
 
 	local function setDotColor(id, class)
 		if class and class == dots[id].class then return end
-		
+
 		dots[id].dot:SetVertexColor(unpack(vertexColors[class]))
-		dots[id].class = class		
+		dots[id].class = class
 	end
 
 	local function setDot(id, icon, filtered)
@@ -637,7 +637,7 @@ do
 			dots[id].tooClose = true
 		else
 			dots[id].tooClose = false
-		end			
+		end
 	end
 
 	function onUpdateRadar(self, elapsed)
@@ -660,7 +660,7 @@ do
 					v.dot:Hide()
 				end
 				for i = 1, 8 do
-					charms[i]:Hide()	
+					charms[i]:Hide()
 				end
 			else
 				isInSupportedArea = true
@@ -685,13 +685,13 @@ do
 						end
 					end
 					for i=1, 8 do
-						charms[i]:Hide()	
+						charms[i]:Hide()
 					end
 				end
 				prevNumPlayers = numPlayers
 
 				local playerX, playerY = GetPlayerMapPosition("player")
-				if playerX == 0 and playerY == 0 then 
+				if playerX == 0 and playerY == 0 then
                     setFrames(self, "text")
                     print("Radar is unavailable in this location: GetPlayerMapPosition(\"player\") = 0, 0")
                 return end		-- Somehow we can't get the correct position?
@@ -748,7 +748,7 @@ do
 					v.dot:Hide()
 				end
 				for i = 1, 8 do
-					charms[i]:Hide()	
+					charms[i]:Hide()
 				end
 			end
 		end
@@ -776,7 +776,7 @@ end
 local getDistanceBetween
 do
 	local mapSizes = DBM.MapSizes
-	
+
 	function getDistanceBetween(uId, x, y)
 		local startX, startY = GetPlayerMapPosition(uId)
 		local mapName = GetMapInfo()
@@ -792,7 +792,7 @@ do
 	local function mapRangeCheck(uId, range)
 		return getDistanceBetween(uId, GetPlayerMapPosition("player")) < range
 	end
-	
+
 	function initRangeCheck(range)
 		if checkFuncs[range] ~= mapRangeCheck then
 			return true
@@ -818,7 +818,7 @@ do
 		end
 		return true -- everything ok!
 	end
-	
+
 	setmetatable(checkFuncs, {
 		__index = function(t, k)
 			return mapRangeCheck

@@ -14,7 +14,7 @@ L:SetWarningLocalization{
 	WarnWound	= "%s на >%s< (%s)"
 }
 L:SetOptionLocalization{
-	WarnWound	= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(25646, GetSpellInfo(25646) or "unknown"),	
+	WarnWound	= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(25646, GetSpellInfo(25646) or "unknown"),
 }
 ------------
 -- Rajaxx --

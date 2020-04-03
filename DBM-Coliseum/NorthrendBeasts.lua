@@ -139,10 +139,10 @@ function mod:WormsEmerge()
 	if not AcidmawDead then
 		if DreadscaleActive then
 			timerSweepCD:Start(16)
-			timerParalyticSprayCD:Start(9)			
+			timerParalyticSprayCD:Start(9)
 		else
 			timerSlimePoolCD:Start(14)
-			timerParalyticBiteCD:Start(5)			
+			timerParalyticBiteCD:Start(5)
 			timerAcidicSpewCD:Start(10)
 		end
 	end
@@ -155,7 +155,7 @@ function mod:WormsEmerge()
 			timerSweepCD:Start(16)
 			timerBurningSprayCD:Start(17)
 		end
-	end	
+	end
 	self:ScheduleMethod(45, "WormsSubmerge")
 end
 
@@ -212,7 +212,7 @@ function mod:SPELL_AURA_APPLIED_DOSE(args)
 	if args:IsSpellID(67477, 66331, 67478, 67479) then		-- Impale
 		timerNextImpale:Start()
 		warnImpaleOn:Show(args.destName)
-		if (args.amount >= 3 and not self:IsDifficulty("heroic10", "heroic25") ) or ( args.amount >= 2 and self:IsDifficulty("heroic10", "heroic25") ) then 
+		if (args.amount >= 3 and not self:IsDifficulty("heroic10", "heroic25") ) or ( args.amount >= 2 and self:IsDifficulty("heroic10", "heroic25") ) then
 			if args:IsPlayer() then
 				specWarnImpale3:Show(args.amount)
 			end

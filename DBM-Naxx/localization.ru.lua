@@ -360,7 +360,7 @@ L:SetWarningLocalization({
 L:SetTimerLocalization({
 	TimerAir		= "Воздушная фаза",
 	TimerLanding	= "Приземление",
-	TimerIceBlast	= "Ледяное дыхание"	
+	TimerIceBlast	= "Ледяное дыхание"
 })
 
 ------------------

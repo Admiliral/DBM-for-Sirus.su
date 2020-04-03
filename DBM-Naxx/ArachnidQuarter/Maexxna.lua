@@ -35,8 +35,8 @@ function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 15952, "Maexxna", wipe)
 	if not wipe then
 		if DBM.Bars:GetBar(L.ArachnophobiaTimer) then
-			DBM.Bars:CancelBar(L.ArachnophobiaTimer) 
-		end	
+			DBM.Bars:CancelBar(L.ArachnophobiaTimer)
+		end
 	end
 end
 

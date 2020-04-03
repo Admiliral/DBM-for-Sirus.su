@@ -369,7 +369,7 @@ L:SetWarningLocalization({
 L:SetTimerLocalization({
 	TimerAir				= "Fase Aerea",
 	TimerLanding			= "Aterriza en",
-	TimerIceBlast			= "Respira Hondo"	
+	TimerIceBlast			= "Respira Hondo"
 })
 
 ------------------

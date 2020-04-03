@@ -67,7 +67,7 @@ function mod:SPELL_AURA_APPLIED(args)
         end
 		timerFlameCD:Start(phaseCounter < 3 and 30 or 10)
         flameTargets[#flameTargets + 1] = args.destName
-        if #flameTargets >=2 and phaseCounter < 3 then 
+        if #flameTargets >=2 and phaseCounter < 3 then
             warnFlame:Show(table.concat(flameTargets, "<, >"))
             table.wipe(flameTargets)
         elseif phaseCounter >= 3 then
@@ -124,5 +124,5 @@ function mod:UNIT_HEALTH(uId)
         timerCallofDeadCD:Cancel()
         timerFlameCD:Start()
     end
-    
+
 end

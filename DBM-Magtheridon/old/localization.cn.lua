@@ -49,14 +49,14 @@ if (GetLocale() == "zhCN") then
 	DBM_MAULGAR_DODGED	= "闪躲";
 	DBM_MAULGAR_PARRIED	= "招架";
 	DBM_MAULGAR_MISSED	= "未击中";
-	
+
 	DBM_SBT["Next Whirlwind"]		= "下一次旋风斩";
 	DBM_SBT["Whirlwind"]			= "旋风斩";
 	DBM_SBT["Prayer of Healing"]	= "治疗祷言";
 	DBM_SBT["Heal"]					= "治疗术";
 	DBM_SBT["Felhunter"]			= "地狱犬";
 	DBM_SBT["Arcing Smash"]			= "圆弧斩";
-	
+
 	DBM_SBT["Maulgar"] = {
 		  [1] = {"Spell Shield: (.*)", "法术护盾: %1"},
 	}
@@ -90,12 +90,12 @@ if (GetLocale() == "zhCN") then
 	DBM_GRUUL_SILENCE_WARN		= "*** 沉默 ***";
 	DBM_GRUUL_SILENCE_SOON_WARN	= "*** 沉默 - 即将施放 ***";
 	DBM_GRUUL_CAVE_IN_WARN		= "洞穴震颤";
-	
+
 	DBM_SBT["Silence"]		= "沉默";
 	DBM_SBT["Ground Slam"]	= "大地冲击";
 	DBM_SBT["Shatter"]		= "碎裂";
 	DBM_SBT["Grow #1"]		= "成长 #1";
-	
+
 	DBM_SBT["Gruul"] = {
 		  [1] = {"Grow #", "成长 #"},
 	}
@@ -123,7 +123,7 @@ if (GetLocale() == "zhCN") then
 	DBM_KAZZAK_MARK_WARN		= "*** 卡扎克的印记 -> >%s< ***";
 	DBM_KAZZAK_WARN_ENRAGE		= "*** 激怒 ***";
 	DBM_KAZZAK_MARK_SPEC_WARN	= "你变成了炸弹！";
-	
+
 	DBM_SBT["Enrage"]			= "激怒";
 	DBM_SBT["Mark of Kazzak"]	= "卡扎克的印记";
 
@@ -147,7 +147,7 @@ if (GetLocale() == "zhCN") then
 	DBM_MAG_WARN_HEAL		= "*** 黑暗治愈 ***";
 	DBM_MAG_WARN_NOVA_NOW	= "*** 冲击新星 ***";
 	DBM_MAG_WARN_NOVA_SOON	= "*** 冲击新星 - 即将施放 ***";
-	
+
 	DBM_SBT["Phase 2"]		= "第二阶段";
 	DBM_SBT["Heal"]			= "治疗";
 	DBM_SBT["Blast Nova"]	= "冲击新星";
@@ -169,10 +169,10 @@ if (GetLocale() == "zhCN") then
 	DBM_DOOMW_CHARGE		= "*** 泛滥 ***";
 	DBM_DOOMW_CHARGE_SOON	= "*** 泛滥 - 即将施放 ***";
 	DBM_DOOMW_WARN_ENRAGE	= "*** 激怒 ***";
-	
+
 	DBM_SBT["Overrun Cooldown"]		= "泛滥冷却";
 	DBM_SBT["Earthquake Cooldown"]	= "地震术冷却";
 	DBM_SBT["Earthquake"]			= "地震术";
-	
+
 
 end

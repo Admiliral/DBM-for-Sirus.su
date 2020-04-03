@@ -95,7 +95,7 @@ DBM_SBT["Next Spirit Bolts"] 		= "下一次靈魂箭";
 DBM_SBT["Spirit Bolts"] 		= "靈魂箭";
 DBM_SBT["Malacrass"] = {
 	{"Siphon Soul: (.*)","虹吸靈魂: %1"},
-}; 
+};
 
 -- Zul'jin
 DBM_ZULJIN_NAME = "祖爾金"

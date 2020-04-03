@@ -28,7 +28,7 @@ function Shahraz:OnCombatStart(delay)
 	self:ScheduleSelf(540 - delay, "EnrageWarn", 60)
 	self:ScheduleSelf(570 - delay, "EnrageWarn", 30)
 	self:ScheduleSelf(590 - delay, "EnrageWarn", 10)
-	
+
 	fa = {}
 	icon = 8
 end

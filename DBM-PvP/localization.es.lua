@@ -61,7 +61,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart		= "La batalla comezara en", 
+	TimerStart		= "La batalla comezara en",
 	TimerTower		= "%s",
 	TimerGY			= "%s",
 })
@@ -101,7 +101,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart 		= "¡La batalla va Comenzar!", 
+	TimerStart 		= "¡La batalla va Comenzar!",
 	TimerCap 		= "%s",
 })
 
@@ -138,7 +138,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart 		= "¡La batalla va a Comenzar!", 
+	TimerStart 		= "¡La batalla va a Comenzar!",
 	TimerFlag 		= "Bandera Restablecida",
 })
 
@@ -163,7 +163,7 @@ L:SetMiscLocalization({
 	BgStart30 			= "La batalla por la Garganta Grito de Guerra comenzará en 30 segundos. ¡Preparaos!",
 	ZoneName 			= "Garganta Grito de Guerra",
 	Alliance 			= "Alianza",
-	Horde 				= "Horda",	
+	Horde 				= "Horda",
 	InfoErrorText 			= "The flag carrier targeting function will be restored when you are out of combat.",
 	ExprFlagPickUp 			= "¡(.+) ha cogido la bandera de la (%w+)!",
 	ExprFlagCaptured 		= "¡(.+) ha capturado la bandera de la (%w+)!",
@@ -174,7 +174,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart 			= "La batalla va comenzar", 
+	TimerStart 			= "La batalla va comenzar",
 	TimerFlag 			= "La bandera se resetea en",
 })
 
@@ -201,13 +201,13 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart		= "¡La batalla va comenzar!", 
+	TimerStart		= "¡La batalla va comenzar!",
 	TimerPOI		= "%s",
 	TimerSiegeEngine	= "Máquina de asedio Lista"
 })
 
 L:SetOptionLocalization({
-	TimerStart		= "Mostrar tiempo para que comienze la Batalla.", 
+	TimerStart		= "Mostrar tiempo para que comienze la Batalla.",
 	TimerPOI		= "Mostrar tiempo para las Capturas",
 	TimerSiegeEngine	= "Mostrar tiempo para la construcción de Máquina de asedio",
 	WarnSiegeEngine		= "Mostrar aviso cuando Máquina de asedio esté lista",

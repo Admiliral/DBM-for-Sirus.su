@@ -62,7 +62,6 @@ L:SetMiscLocalization{
     EmoteMurlocs    = "Сильный толчок землетрясения насторожил мурлоков поблизости!",
     EmoteGraves     = "%s отправляет своих врагов в водяные могилы!",
     EmoteGlobes     = "%s призывает водяные шары!"
-    
 }
 
 --Leotheras
@@ -104,7 +103,7 @@ L:SetGeneralLocalization{
 L:SetTimerLocalization{
     Submerge     = "Погружение",
     Emerge       = "Появление"
-    
+
 }
 
 L:SetWarningLocalization{

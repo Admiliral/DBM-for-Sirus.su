@@ -37,7 +37,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
-do 
+do
 	local lastConsecration = 0
 	function mod:SPELL_PERIODIC_DAMAGE(args)
 		if args:IsSpellID(38385) and args:IsPlayer() and time() - lastConsecration > 2 then

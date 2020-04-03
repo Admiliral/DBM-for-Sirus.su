@@ -241,6 +241,7 @@ function mod:OnSync(msg, target)
 		end
 	elseif msg == "ShockVortex" then
 		if not self.Options.BypassLatencyCheck then
+			local targetname = self:GetBossTarget(37970)
 			warnShockVortex:Show(target)
 			if target == UnitName("player") then
 				specWarnVortex:Show()

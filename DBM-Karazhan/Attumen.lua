@@ -76,16 +76,16 @@ function mod:SPELL_AURA_REMOVED(args)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(305258) then 
-        if cena then 
+	if args:IsSpellID(305258) then
+        if cena then
             self:PlaySound("jhoncena")
             cena = false
         end
         timerChargeCD:Start()
     elseif args:IsSpellID(305251) then
         timerInvCD:Start()
-    elseif args:IsSpellID(305263) then 
-        if cena then 
+    elseif args:IsSpellID(305263) then
+        if cena then
             self:PlaySound("jhoncena")
             cena = false
         end

@@ -51,7 +51,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(69076) then 						
+	if args:IsSpellID(69076) then
 		specWarnWhirlwind:Show()
 		timerWhirlwindCD:Start()
 		preWarnWhirlwind:Schedule(85)
@@ -81,7 +81,7 @@ function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(69057, 70826, 72088, 72089) then				-- Bone Spike Graveyard
 		warnBoneSpike:Show()
 		timerBoneSpike:Start()
-    elseif args:IsSpellID(69076) then 						
+    elseif args:IsSpellID(69076) then
         self:ScheduleMethod(1, "PlaySound", "jager")          -- Bone Storm Suffer Bitch
 	end
 end

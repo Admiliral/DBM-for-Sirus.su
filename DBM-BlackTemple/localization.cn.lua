@@ -97,7 +97,7 @@ if (GetLocale() == "zhCN") then
 	DBM_GOREFIEND_WARN_INCINERATE		= "*** 烧尽 -> >%s< ***";
 
 	DBM_GOREFIEND_SPECWARN_SOD			= "死亡之影";
-	
+
 --[[
 	DBM_SBT["TeronGorefiend"] = {
 		  [1] = {"Vengeful Spirit: (.*)", "复仇之魂 -> %1"},
@@ -185,7 +185,7 @@ if (GetLocale() == "zhCN") then
 	DBM_SOULS_SPECWARN_SPITE			= "敌意!"
 	DBM_SOULS_WARN_ANGER_INC			= "*** 愤怒精华 ***";
 	DBM_SOULS_WHISPER_SPITE				= "敌意于你!"
-	
+
 --[[
 	DBM_SBT["Enrage"]		= "激怒";
 	DBM_SBT["Next Enrage"]	= "下一次激怒";
@@ -224,7 +224,7 @@ if (GetLocale() == "zhCN") then
 	DBM_SHAHRAZ_WARN_BEAM_SINFUL		= "*** 罪孽射线 ***"
 	DBM_SHAHRAZ_WARN_BEAM_WICKED		= "*** 堕落射线 ***"
 	DBM_SHAHRAZ_WARN_BEAM_SOON			= "*** 射线 - 3秒后施放 ***"
-	
+
 --[[
 	DBM_SBT["Enrage"]		= "激怒";
 	DBM_SBT["Next Beam"]	= "下一次射线";
@@ -261,7 +261,7 @@ if (GetLocale() == "zhCN") then
 	DBM_COUNCIL_YELL_PULL4				= "逃吧，否则就来受死！"
 
 --[[
-	DBM_COUNCIL_CAST_DW					= "女公爵玛兰德开始施放神圣愤怒。" 
+	DBM_COUNCIL_CAST_DW					= "女公爵玛兰德开始施放神圣愤怒。"
 	DBM_COUNCIL_CAST_COH				= "女公爵玛兰德开始施放治疗之环。"
 	DBM_COUNCIL_HEAL_COH				= "女公爵玛兰德的治疗之环为"
 	DBM_COUNCIL_INTERRUPT_COH			= "打断了女公爵玛兰德的治疗之环"
@@ -377,7 +377,7 @@ if (GetLocale() == "zhCN") then
 	DBM_ILLIDAN_WARN_P4ENRAGE_SOON		= "5秒后激怒"
 	DBM_ILLIDAN_WARN_P4ENRAGE_NOW		= "激怒"
 	DBM_ILLIDAN_WARN_CAGED				= "伊利丹进入了陷阱"
-	
+
 	DBM_ILLIDAN_SELFWARN_SHADOWFIEND	= "寄生暗影魔"
 	DBM_ILLIDAN_SELFWARN_SHADOW			= "苦痛之焰"
 	DBM_ILLIDAN_SELFWARN_DEMONS			= "影魔"

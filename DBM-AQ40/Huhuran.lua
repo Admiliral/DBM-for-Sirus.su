@@ -64,4 +64,3 @@ function mod:UNIT_HEALTH(uId)
 		prewarn_berserk = true
 	end
 end
-		

@@ -82,9 +82,9 @@ DBM_KAL_HEALTHFRAME_TITLE		= "Дракон/Демон ХП"
 
 DBM_KAL_STATUS_MSG				= "Дракон: %d%%%% Демон: %d%%%%"
 
--- Brutallus 
-DBM_BRUTALLUS_NAME				= "Бруталл" 
-DBM_BRUTALLUS_DESCRIPTION		= "Анонс and shows timers for Burn and Enrage."  
+-- Brutallus
+DBM_BRUTALLUS_NAME				= "Бруталл"
+DBM_BRUTALLUS_DESCRIPTION		= "Анонс and shows timers for Burn and Enrage."
 
 DBM_BRUTALLUS_YELL_PULL			= "О, а вот и новые агнцы идут на заклание!"
 

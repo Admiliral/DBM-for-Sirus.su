@@ -58,7 +58,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart	= "Game starts", 
+	TimerStart	= "Game starts",
 	TimerTower	= "%s",
 	TimerGY		= "%s"
 })
@@ -98,7 +98,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart	= "Game starts", 
+	TimerStart	= "Game starts",
 	TimerCap	= "%s"
 })
 
@@ -136,7 +136,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart	= "Game starts", 
+	TimerStart	= "Game starts",
 	TimerFlag	= "Flag respawn"
 })
 
@@ -161,7 +161,7 @@ L:SetMiscLocalization({
 	BgStart30 			= "The battle for Warsong Gulch begins in 30 seconds. Prepare yourselves!",
 	ZoneName 			= "Warsong Gulch",
 	Alliance 			= "Alliance",
-	Horde 				= "Horde",	
+	Horde 				= "Horde",
 	InfoErrorText		= "The flag carrier targeting function will be restored when you are out of combat.",
 	ExprFlagPickUp		= "The (%w+) .lag was picked up by (.+)!",
 	ExprFlagCaptured	= "(.+) captured the (%w+) flag!",
@@ -172,7 +172,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart	= "Game starts", 
+	TimerStart	= "Game starts",
 	TimerFlag	= "Flag respawn"
 })
 
@@ -198,13 +198,13 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart			= "Game starts", 
+	TimerStart			= "Game starts",
 	TimerPOI			= "%s",
 	TimerSiegeEngine	= "Siege Engine ready"
 })
 
 L:SetOptionLocalization({
-	TimerStart			= "Show start timer", 
+	TimerStart			= "Show start timer",
 	TimerPOI			= "Show capture timer",
 	TimerSiegeEngine	= "Show timer for Siege Engine construction",
 	WarnSiegeEngine		= "Show warning when Siege Engine is ready",

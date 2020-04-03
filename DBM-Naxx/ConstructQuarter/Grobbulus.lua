@@ -69,7 +69,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			table.insert(mutateIcons, args.destName)
 			addIcon()
 		end
-	end	
+	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
@@ -85,5 +85,5 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(28240) then
 		warnCloud:Show()
 		timerCloud:Start()
-	end	
+	end
 end

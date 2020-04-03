@@ -67,6 +67,6 @@ end
 function mod:UNIT_HEALTH(uId)
 	if not prewarn_Phase2 and self:GetUnitCreatureId(uId) == 14507 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.53 then
 		prewarn_Phase2 = true
-		prewarnPhase2:Show()	
+		prewarnPhase2:Show()
 	end
 end

@@ -36,8 +36,8 @@ function mod:UPDATE_WORLD_STATES()
 	local text = select(3, GetWorldStateUIInfo(2))
 	if not text then return end
 	local _, _, currentPortal = string.find(text, L.PortalCheck)
-	if not currentPortal then 
-		currentPortal = 0 
+	if not currentPortal then
+		currentPortal = 0
 	end
 	currentPortal = tonumber(currentPortal)
 	lastPortal = tonumber(lastPortal)

@@ -8,7 +8,7 @@ mod:RegisterCombat("yell", L.YellPull)
 
 mod:RegisterEvents(
 	"CHAT_MSG_RAID_BOSS_EMOTE",
-	"SPELL_AURA_APPLIED" 
+	"SPELL_AURA_APPLIED"
 )
 
 local warnMurlocksSoon  = mod:NewAnnounce("WarnMurlocksSoon", 3, "Interface\\Icons\\INV_Misc_MonsterHead_02")

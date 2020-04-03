@@ -96,7 +96,7 @@ function mod:SPELL_CAST_START(args)
 		timerSlimeSpray:Start()
 		warnSlimeSpray:Show()
 		specWarnSlimeSpray:Show()
-	elseif args:IsSpellID(69774) then	    
+	elseif args:IsSpellID(69774) then
 		timerStickyOoze:Start()
 		warnStickyOoze:Show()
 	elseif args:IsSpellID(69839) then --Unstable Ooze Explosion (Big Ooze)

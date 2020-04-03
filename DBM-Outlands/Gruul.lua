@@ -27,11 +27,11 @@ Gruul:AddBarOption("Shatter")
 Gruul:AddBarOption("Silence")
 
 function Gruul:OnCombatStart(delay)
-	self.Grows = 0;	
+	self.Grows = 0;
 	self:ScheduleSelf(104 - delay, "SilenceSoon");
-	self:StartStatusBarTimer(108 - delay, "Silence", "Interface\\Icons\\Spell_Holy_ImprovedResistanceAuras");	
+	self:StartStatusBarTimer(108 - delay, "Silence", "Interface\\Icons\\Spell_Holy_ImprovedResistanceAuras");
 	self:ScheduleSelf(33 - delay, "SlamSoon");
-	self:StartStatusBarTimer(38 - delay, "Ground Slam", "Interface\\Icons\\Spell_Nature_ThunderClap");	
+	self:StartStatusBarTimer(38 - delay, "Ground Slam", "Interface\\Icons\\Spell_Nature_ThunderClap");
 	self:StartStatusBarTimer(30 - delay, "Grow #1", "Interface\\Icons\\Spell_Nature_ShamanRage", true);
 
 	if self.Options.RangeCheck then
@@ -55,13 +55,13 @@ function Gruul:OnEvent(event, arg1)
 			if self.Options.GrowWarn then
 				self:Announce(string.format(DBM_GRUUL_GROW_ANNOUNCE, self.Grows), 1);
 			end
-			
+
 			self:StartStatusBarTimer(30, "Grow #"..(self.Grows + 1), "Interface\\Icons\\Spell_Nature_ShamanRage", true);
 		elseif arg1 == DBM_GRUUL_EMOTE_SHATTER then
 			if self.Options.ShatterWarn then
 				self:Announce(DBM_GRUUL_SHATTER_WARN, 3);
 			end
-			
+
 			self:ScheduleSelf(71, "SlamSoon");
 			self:EndStatusBarTimer("Ground Slam");
 			self:StartStatusBarTimer(76, "Ground Slam", "Interface\\Icons\\Spell_Nature_ThunderClap");
@@ -73,7 +73,7 @@ function Gruul:OnEvent(event, arg1)
 			if self.Options.SilenceWarn then
 				self:Announce(DBM_GRUUL_SILENCE_WARN, 2)
 			end
-			
+
 			self:UnScheduleSelf("SilenceSoon");
 			self:EndStatusBarTimer("Silence");
 			self:ScheduleSelf(34, "SilenceSoon");

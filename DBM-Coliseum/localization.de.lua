@@ -137,7 +137,7 @@ L:SetMiscLocalization{
 	AllianceVictory    = "EHRE DER ALLIANZ!",
 	HordeVictory       = "That was just a taste of what the future brings. FOR THE HORDE!",	-- to be translated
 	YellKill           = "Ein tragischer Sieg. Wir wurden schwächer durch die heutigen Verluste. Wer außer dem Lichkönig profitiert von solchen Torheiten? Große Krieger gaben ihr Leben. Und wofür? Die wahre Bedrohung erwartet uns noch - der Lichkönig erwartet uns alle im Tod."
-} 
+}
 
 L:SetOptionLocalization{
 	PlaySoundOnBladestorm	= "Spiele Sound bei Klingensturm"

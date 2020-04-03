@@ -60,7 +60,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart			= "戰鬥開始", 
+	TimerStart			= "戰鬥開始",
 	TimerTower			= "%s",
 	TimerGY				= "%s"
 })
@@ -100,7 +100,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart 			= "戰鬥開始", 
+	TimerStart 			= "戰鬥開始",
 	TimerCap 			= "%s"
 })
 
@@ -136,7 +136,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart 			= "戰鬥開始", 
+	TimerStart 			= "戰鬥開始",
 	TimerFlag 			= "旗幟重生"
 })
 
@@ -161,7 +161,7 @@ L:SetMiscLocalization({
 	BgStart30 			= "戰歌峽谷戰鬥將在30秒鐘內開始。做好準備!",
 	ZoneName 			= "戰歌峽谷",
 	Alliance 			= "聯盟",
-	Horde 				= "部落",	
+	Horde 				= "部落",
 	InfoErrorText			= "當你離開戰鬥後，旗幟框架將會回復。",
 	ExprFlagPickUp			= "(.+)的旗幟被(.+)拔掉了!",
 	ExprFlagCaptured		= "(.+)佔據了(.+)的旗幟!",
@@ -172,7 +172,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart 			= "戰鬥開始", 
+	TimerStart 			= "戰鬥開始",
 	TimerFlag 			= "旗幟重生"
 })
 
@@ -199,13 +199,13 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart			= "戰鬥開始", 
+	TimerStart			= "戰鬥開始",
 	TimerPOI			= "%s",
 	TimerSiegeEngine		= "攻城機具修復"
 })
 
 L:SetOptionLocalization({
-	TimerStart			= "顯示開始計時器", 
+	TimerStart			= "顯示開始計時器",
 	TimerPOI			= "顯示奪取計時器",
 	TimerSiegeEngine		= "為攻城機具的修復顯示計時器",
 	WarnSiegeEngine			= "當攻城機具準備好時顯示警告",

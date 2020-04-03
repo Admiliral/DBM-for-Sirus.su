@@ -1,7 +1,7 @@
 ﻿if GetLocale() == "deDE" then
 	DBM_COILFANG = "Höhle des Schlangenschreins";
-	
-	
+
+
 	-- Hydross the Unstable
 	DBM_HYDROSS_NAME			= "Hydross der Unstete";
 	DBM_HYDROSS_DESCRIPTION		= "Sagt Mark, Phasen und Wassergrab an.";
@@ -28,7 +28,7 @@
 	DBM_HYDROSS_NATURE_PHASE	= "*** Natur Phase ***";
 
 	DBM_HYDROSS_TOMB_WARN		= "*** Wassergrab auf >%s< ***";
-	
+
 	-- Morogrim Tidewalker
 	DBM_TIDEWALKER_NAME					= "Morogrim Gezeitenwandler";
 	DBM_TIDEWALKER_DESCRIPTION			= "Sagt nasses Grab und Murlocs an.";
@@ -44,9 +44,9 @@
 	DBM_TIDEWALKER_WARN_MURLOCS_SOON	= "*** Murlocs bald ***";
 	DBM_TIDEWALKER_WARN_GRAVE			= "*** Nasses Grab auf %s ***";
 	DBM_TIDEWALKER_WARN_GLOBES			= "*** Wasserkugeln ***";
-	
+
 	DBM_SBT["Watery Grave"]				= "Nasses Grab";
-	
+
 	-- Fathom-Lord Karathress
 	DBM_FATHOMLORD_NAME					= "Tiefenlord Karathress";
 	DBM_FATHOMLORD_DESCRIPTION			= "Sagt Feuerspuckendes Totem und Welle der Heilung an.";
@@ -63,16 +63,16 @@
 	DBM_FATHOMLORD_SFTOTEM1_WARN		= "*** Feuerspuckendes Totem @ Flutvess ***";
 	DBM_FATHOMLORD_SFTOTEM2_WARN		= "*** Feuerspuckendes Totem @ Karathress ***";
 	DBM_FATHOMLORD_HEAL_WARN			= "*** Welle der Heilung ***";
-	
+
 	DBM_SBT["Healing Wave"]				= "Welle der Heilung";
-	
+
 	-- The Lurker Below
 	DBM_LURKER_NAME						= "Das Grauen aus der Tiefe";
 	DBM_LURKER_DESCRIPTION				= "Sagt Schwall, Wirbel und die Phasen an.";
 	DBM_LURKER_OPTION_WHIRL				= "Announce Whirl";
 	DBM_LURKER_OPTION_WHIRLSOON			= "Show \"Whirl soon\" warning";
 	DBM_LURKER_OPTION_SPOUT				= "Schwall ansagen";
-	
+
 	DBM_LURKER_EMOTE_SPOUT				= "%s atmet tief ein!";
 	DBM_LURKER_CAST_SPOUT				= "Das Grauen aus der Tiefes Schwall";
 	DBM_LURKER_CAST_WHIRL				= "Das Grauen aus der Tiefes Geysir";
@@ -87,12 +87,12 @@
 	DBM_LURKER_WARN_WHIRL_SOON			= "*** Wirbel bald ***";
 
 	DBM_LURKER_WARN_SUBMERGE_SOON		= "*** Untertauchen in %s Sek ***";
-	
+
 	DBM_SBT["Next Spout"]				= "Nächster Schwall";
 	DBM_SBT["Spout"]					= "Schwall";
 	DBM_SBT["Whirl"]					= "Wirbel";
 	DBM_SBT["Submerge"]					= "Untertauchen";
-	
+
 	-- Leotheras the Blind
 	DBM_LEO_NAME						= "Leotheras der Blinde";
 	DBM_LEO_DESCRIPTION					= "Sagt Wirbelwind, Innere Dämonen und seine Phasen an.";
@@ -122,13 +122,13 @@
 	DBM_LEO_WHISPER_INNER_DEMON			= "Töte deinen inneren Dämon!"
 	DBM_LEO_WARN_DEMONS_INC				= "*** Innere Dämonen incoming ***";
 	DBM_LEO_WARN_DEMONS_NOW				= "*** Innere Dämonen ***";
-	
+
 	DBM_SBT["Demon Form"]				= "Dämonen Form";
 	DBM_SBT["Next Whirlwind"]			= "Nächster Wirbelwind";
 	DBM_SBT["Normal Form"]				= "Normale Form";
 	DBM_SBT["Inner Demons"]				= "Innere Dämonen";
 	DBM_SBT["Whirlwind"]				= "Wirbelwind";
-	
+
 	-- Lady Vashj
 	DBM_VASHJ_NAME						= "Lady Vashj";
 	DBM_VASHJ_DESCRIPTION				= "Sagt Statische Aufladung, Spawns, Phasen, Besudelte Kerne, Schilde und Enrage and.";
@@ -170,7 +170,7 @@
 
 	DBM_VASHJ_WARN_PHASE3				= "*** Schild 4/4 down - Phase 3 ***";
 	DBM_VASHJ_WARN_ENRAGE				= "*** Enrage in %s %s ***";
-	
+
 	DBM_SBT["Strider"]					= "Schreiter";
 	DBM_SBT["Tainted Elemental"]		= "Besudelter Elementar";
 	DBM_SBT["Vashj"] = {

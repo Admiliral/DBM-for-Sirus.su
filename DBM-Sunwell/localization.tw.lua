@@ -76,11 +76,11 @@ DBM_SBT["Exhausted"]			= "鬼靈枯竭";
 DBM_SBT["Kal"] = {
 		 [1] = {"CoA: (.*)", "無盡痛苦詛咒: %1"},
 		 [2] = {"Next Portal #(.*)", "下一次 傳送門 #%1"},
-		 [3] = {"Portal #(.*)", "傳送門 #%1"},		
+		 [3] = {"Portal #(.*)", "傳送門 #%1"},
 }
 
--- Brutallus 
-DBM_BRUTALLUS_NAME			= "布魯托魯斯" 
+-- Brutallus
+DBM_BRUTALLUS_NAME			= "布魯托魯斯"
 DBM_BRUTALLUS_DESCRIPTION		= "提供燃燒和狂怒提示和計時器."
 
 DBM_BRUTALLUS_YELL_PULL			= "啊，更多待宰的小羊們!"

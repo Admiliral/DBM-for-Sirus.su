@@ -46,7 +46,6 @@ L:SetOptionLocalization{
     RangeFrame				= "Показывать окно проверки дистанции (12 м)",
     SetIconOnElectricStorm = "Отмечать на ком Электрическая буря",
     SayOnElectricStorm = "Говорить в чат на ком Электрическая буря",
-    RangeFrame = "Проверка дистанции",
     WarnWind = DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(43621, GetSpellInfo(43621) or "unknown")
 }
 

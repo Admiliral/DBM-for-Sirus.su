@@ -68,7 +68,7 @@ function mod:OnCombatStart(delay)
         timerAdds:Start(57-delay)
         warnAddsSoon:Schedule(52)
         self:ScheduleMethod(57, "Adds")
-        
+
         self:ScheduleMethod(78 , "PlaySound", "ispancy" )          -- Ииииспааааанцыыы!!!
 	end
 end
@@ -89,7 +89,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(71188) then
 		warnExperienced:Show(args.destName)
 	elseif args:IsSpellID(69652) then
-		warnBladestorm:Show()			
+		warnBladestorm:Show()
 	elseif args:IsSpellID(69651) then
 		warnWoundingStrike:Show(args.destName)
 	elseif args:IsSpellID(72306, 69638) and ((UnitFactionGroup("player") == "Alliance" and mod:GetCIDFromGUID(args.destGUID) == 36939) or (UnitFactionGroup("player") == "Horde" and mod:GetCIDFromGUID(args.destGUID) == 37200)) then
@@ -109,12 +109,12 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(69705) then
 		timerBelowZeroCD:Start()
-        self:ScheduleMethod(33 , "PlaySound", "ispancy" )          -- Ииииспааааанцыыы!!!	 
+        self:ScheduleMethod(33 , "PlaySound", "ispancy" )          -- Ииииспааааанцыыы!!!
 	end
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(69705) then                     
+	if args:IsSpellID(69705) then
 		warnBelowZero:Show()
 	end
 end

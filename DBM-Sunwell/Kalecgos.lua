@@ -34,7 +34,7 @@ Kal.Options.FrameY = -50
 
 
 Kal:AddOption("FrameClassColor", true, DBM_KAL_FRAME_COLORS, function()
-	Kal:UpdateColors() 
+	Kal:UpdateColors()
 end)
 Kal:AddOption("FrameUpwards", false, DBM_KAL_FRAME_UPWARDS, function()
 	Kal:ChangeFrameOrientation()
@@ -118,7 +118,7 @@ local function getUnitId(name)
 		if UnitName("raid"..i) == name then
 			return "raid"..i
 		end
-	end	
+	end
 	return "raid41" -- to avoid nil error messages
 end
 
@@ -127,7 +127,7 @@ function Kal:OnSync(msg, sender)
 		self:StartStatusBarTimer(15.5, "Frost Breath", "Interface\\Icons\\Spell_Frost_FrostBlast")
 		if self.Options.WarnBreathNew then
 			self:Announce(DBM_KAL_WARN_BREATH, 3)
-		end		
+		end
 		if self.Options.PreWarnBreathNew then
 			self:ScheduleAnnounce(12.5, DBM_KAL_WARN_BREATH_SOON, 1)
 		end
@@ -137,7 +137,7 @@ function Kal:OnSync(msg, sender)
 		if spellId then
 			spellId = tonumber(spellId)
 			local spellType = DBM_KAL_SPELLIDS_WM[spellId]
-		
+
 			if spellType == "Cast" then 	-- Casting time increased by 100%.
 				if UnitPowerType(getUnitId(name)) == 0 then
 					if self.Options.SpecWarnMagic and name == UnitName("player") then
@@ -194,7 +194,7 @@ function Kal:OnSync(msg, sender)
 					if self.Options.WhisperMagic then
 						self:SendHiddenWhisper(DBM_KAL_WHISPER_WM:format(DBM_KAL_WARN_HEAL), name)
 					end
-				end				
+				end
 			elseif spellType == "Cost" then	-- Spell and ability costs reduced by 50%.
 				if self.Options.SpecWarnMagic and name == UnitName("player") then
 					self:AddSpecialWarning(DBM_KAL_WARN_COST)
@@ -231,7 +231,7 @@ function Kal:OnSync(msg, sender)
 				break
 			end
 		end
-		
+
 		if (GetTime() - noPortWarn) > 20 then
 			noPortWarn = GetTime()
 			portCounter = portCounter + 1
@@ -244,13 +244,13 @@ function Kal:OnSync(msg, sender)
 			self:StartStatusBarTimer(25, "Next Portal #"..(portCounter + 1), "Interface\\Icons\\Spell_Arcane_PortalUnderCity")
 			self:StartStatusBarTimer(15, "Portal #"..portCounter, "Interface\\Icons\\Spell_Arcane_PortalUnderCity")
 		end
-		
+
 		if msg == UnitName("player") then
 			self:StartStatusBarTimer(60, "Ported", "Interface\\Icons\\Spell_Arcane_PortalUnderCity", true)
 			self:ScheduleMethod(60, "StartStatusBarTimer", 60, "Exhausted", "Interface\\Icons\\Spell_Shadow_Teleport", true)
-		end		
+		end
 		self:AddEntry(("%s (%d)"):format(msg, grp or 0), class)
-		
+
 	elseif msg:sub(0, 4) == "Down" then
 		msg = msg:sub(5)
 		self:RemoveIcon(msg)

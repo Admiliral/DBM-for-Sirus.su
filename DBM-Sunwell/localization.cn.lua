@@ -71,7 +71,7 @@ DBM_SUNWELL						= "太阳之井高地"
 	DBM_KAL_FRAME_TITLE				= "灵魂世界"
 	DBM_KAL_MENU_LOCK				= "锁定框体"
 	DBM_KAL_FRAME_HIDE				= "隐藏框体"
-	
+
 	DBM_KAL_HEALTHFRAME_TITLE		= "首领生命值"
 
 	DBM_KAL_STATUS_MSG				= "龙: %d%%%% 恶魔: %d%%%%"
@@ -86,15 +86,15 @@ DBM_SUNWELL						= "太阳之井高地"
 	DBM_SBT["Kal"] = {
 		  [1] = {"CoA: (.*)", "无边苦痛诅咒 -> %1"},
 		  [2] = {"Next Portal #(.*)", "下一次传送 #%1"},
-		  [3] = {"Portal #(.*)", "传送 #%1"},	
+		  [3] = {"Portal #(.*)", "传送 #%1"},
 	}
 	DBM_SBT["卡雷苟斯"] = DBM_SBT["Kal"]
 ]]
 
--- Brutallus 
-	DBM_BRUTALLUS_NAME				= "布鲁塔卢斯" 
-	DBM_BRUTALLUS_DESCRIPTION		= "警报燃烧和激怒" 
-	
+-- Brutallus
+	DBM_BRUTALLUS_NAME				= "布鲁塔卢斯"
+	DBM_BRUTALLUS_DESCRIPTION		= "警报燃烧和激怒"
+
 	DBM_BRUTALLUS_YELL_PULL			= "啊，又来了一群小绵羊！"
 
 	DBM_BRUTALLUS_OPTION_BURN		= "警报燃烧"
@@ -191,7 +191,7 @@ DBM_SUNWELL						= "太阳之井高地"
 	DBM_TWINS_WARN_BLOW				= "混乱重击"
 	DBM_TWINS_WHISPER_CONFLAG		= "燃烧！"
 	DBM_TWINS_WHISPER_NOVA			= "暗影新星！"
-	
+
 	DBM_TWINS_SPECWARN_SHADOW		= "黑暗触摸: %d"
 	DBM_TWINS_SPECWARN_FIRE			= "烈焰触摸: %d"
 

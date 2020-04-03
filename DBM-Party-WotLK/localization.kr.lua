@@ -2,8 +2,8 @@
 
 local L
 
-local spell					= "%s"				
-local debuff				= "%s: >%s<"			
+local spell					= "%s"
+local debuff				= "%s: >%s<"
 local spellCD				= "%s 쿨다운"			-- translate
 local spellSoon				= "곧 %s 사용"			-- translate
 local optionWarning			= "%s 경고 보기"		-- translate
@@ -254,7 +254,7 @@ L:SetWarningLocalization({
 
 L:SetTimerLocalization({
 	TimerWaveIn			= "다음 웨이브 (6)",
-	TimerRoleplay		= "아서스 이야기"	
+	TimerRoleplay		= "아서스 이야기"
 })
 
 L:SetOptionLocalization({
@@ -680,7 +680,7 @@ L:SetGeneralLocalization({
 L:SetWarningLocalization({
 	WarningMerge		= "융합",		-- translate
 	WarningSplitSoon	= "곧 분리",		-- translate
-	WarningSplitNow		= "분리",		-- translate	
+	WarningSplitNow		= "분리",		-- translate
 })
 
 L:SetTimerLocalization({
@@ -1130,7 +1130,7 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerPortalIn			= "포탈 #%d" , 
+	TimerPortalIn			= "포탈 #%d" ,
 })
 
 L:SetOptionLocalization({
@@ -1143,7 +1143,7 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 --	yell1 			= "요새 경비병들이여, 이제 이곳을 떠난다! 여기 모험가들이 맡아 줄 테니 어서 후퇴하라!",
-	Sealbroken		= "문을 부쉈다! 달라란으로 가는 길이 열렸다! 이제 마력 전쟁의 끝을 내자!",	
+	Sealbroken		= "문을 부쉈다! 달라란으로 가는 길이 열렸다! 이제 마력 전쟁의 끝을 내자!",
 	WavePortal		= "차원문 열림: (%d+)/18"
 })
 
@@ -1263,7 +1263,7 @@ L:SetMiscLocalization({
 --	IckPursuit			= "%s|1이;가; 당신을 쫓습니다!",
 	IckPursuit			= "당신을 쫓습니다!",
 	Barrage				= "%s|1이;가; 빠른 속도로 지뢰를 만들어냅니다!"
---	YellCombatEnd		= ""--in case removing kricks creatureid doesn't fix it thinking we wipe.	
+--	YellCombatEnd		= ""--in case removing kricks creatureid doesn't fix it thinking we wipe.
 })
 
 --------------------------
@@ -1278,21 +1278,21 @@ L:SetGeneralLocalization({
 L:SetWarningLocalization({
 	warnSaroniteRock			= "사로나이트 덩어리를 던졌습니다. - 위치 확인",
 	specWarnSaroniteRock		= "당신에게 사로나이트를 던집니다. 이동!",
-	specWarnSaroniteRockNear	= "당신 주변에 사로나이트를 던집니다. 주의하세요!",	
+	specWarnSaroniteRockNear	= "당신 주변에 사로나이트를 던집니다. 주의하세요!",
 	specWarnPermafrost			= "%s : %s"
 })
 
 L:SetOptionLocalization({
 	warnSaroniteRock			= "$spell:70851 대상 알리기",
 	specWarnSaroniteRock		= "$spell:70851의 대상이 될 경우 특수 경고 보기",
-	specWarnSaroniteRockNear	= "당신 주변에 $spell:70851 대상이 있을 경우 특수 경고 보기",	
+	specWarnSaroniteRockNear	= "당신 주변에 $spell:70851 대상이 있을 경우 특수 경고 보기",
 	specWarnPermafrost			= "$spell:70336 중첩이 많을 경우 특수 경고 보기(11 중첩)",
 	SetIconOnSaroniteRockTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(70851)
 })
 
 L:SetMiscLocalization({
 --	SaroniteRockThrow			= "%s|1이;가; 거대한 사로나이트 덩어리를 당신에게 던집니다!"
-	SaroniteRockThrow			= "거대한 사로나이트 덩어리를 당신에게 던집니다!"	
+	SaroniteRockThrow			= "거대한 사로나이트 덩어리를 당신에게 던집니다!"
 })
 
 -------------------
@@ -1318,7 +1318,7 @@ L:SetOptionLocalization({
 --	specTyrannusEngaged			= "스컬지군주 티라누스 착지 특수 경고 보기",
 	specWarnHoarfrost			= "$spell:69246의 대상이 될 경우 특수 경고 보기",
 	specWarnHoarfrostNear		= "주변에 $spell:69246 대상이 있을 경우 특수 경고 보기",
-	TimerCombatStart			= "전투 시작 타이머 보기",	
+	TimerCombatStart			= "전투 시작 타이머 보기",
 	SetIconOnHoarfrostTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(69246)
 })
 
@@ -1366,8 +1366,8 @@ L:SetWarningLocalization({
 
 L:SetOptionLocalization({
 	specwarnMirroredSoul		= "$spell:69051 딜 중지 특수 경고 보기",
-	specwarnWailingSouls		= "$spell:68899을 시전 할 경우 특수 경고 보기",	
-	SetIconOnMirroredTarget		= "$spell:69051 대상 공격대 아이콘 설정"	
+	specwarnWailingSouls		= "$spell:68899을 시전 할 경우 특수 경고 보기",
+	SetIconOnMirroredTarget		= "$spell:69051 대상 공격대 아이콘 설정"
 })
 
 -------------------------
@@ -1474,10 +1474,10 @@ L:SetMiscLocalization({
 	HCombatStart	= "그는... 너무 강하다. 영웅들이여, 어서... 이쪽으로 오라! 즉시 이곳을 떠나야 한다! 도망치는 동안 그를 잡아놓을 수 있도록 조치를 취하겠다.",
 	Ghoul			= "분노한 구울",--creature id 36940. Not sure how to use these in function above to simplify locals though. :\
 	Abom			= "육중한 누더기골렘",--creature id 37069
-	WitchDoctor		= "되살아난 의술사",--creature id 36941	
+	WitchDoctor		= "되살아난 의술사",--creature id 36941
 	Wave1			= "도망칠 방법은 없다!",
 	Wave2			= "무덤의 한기에 굴복하라.",
 	Wave3			= "또 막다른 곳이다.",
-	Wave4			= "얼마나 더 싸울 수 있겠느냐?",	
+	Wave4			= "얼마나 더 싸울 수 있겠느냐?",
 	YellCombatEnd	= "발사! 발사!"
 })

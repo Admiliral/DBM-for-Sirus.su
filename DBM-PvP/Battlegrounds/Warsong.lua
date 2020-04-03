@@ -33,7 +33,7 @@ Warsong:AddBoolOption("ShowFlagCarrier", true, nil, function()
 		Warsong:ShowFlagCarrier()
 	else
 		Warsong:HideFlagCarrier()
-	end	
+	end
 end)
 Warsong:AddBoolOption("ShowFlagCarrierErrorNote", false)
 
@@ -66,7 +66,7 @@ function Warsong:CHAT_MSG_BG_SYSTEM_NEUTRAL(arg1)
 	if not bgzone then return end
 	if arg1 == L.BgStart60 then
 		startTimer:Start()
-	elseif arg1 == L.BgStart30  then		
+	elseif arg1 == L.BgStart30  then
 		startTimer:Update(31, 62)
 	end
 end
@@ -93,7 +93,7 @@ function Warsong:ShowFlagCarrier()
 			self.FlagCarrierFrame2Text:SetAllPoints(self.FlagCarrierFrame2)
 			self.FlagCarrierFrame2Text:SetJustifyH("LEFT")
 		end
-		self.FlagCarrierFrame1:Show()		
+		self.FlagCarrierFrame1:Show()
 		self.FlagCarrierFrame2:Show()
 	end
 end
@@ -114,7 +114,7 @@ function Warsong:CreateFlagCarrierButton()
 		self.FlagCarrierFrame2Button:SetAttribute("type", "macro")
 		self.FlagCarrierFrame2Button:SetPoint("LEFT", "AlwaysUpFrame3", "RIGHT", 28, 4)
 	end
-	self.FlagCarrierFrame1Button:Show()		
+	self.FlagCarrierFrame1Button:Show()
 	self.FlagCarrierFrame2Button:Show()
 end
 
@@ -144,18 +144,18 @@ do
 		local found = false
 		for i = 1, GetNumBattlefieldScores() do
 			local name, _, _, _, _, faction, _, _, _, class = GetBattlefieldScore(i)
-	 		if (name and class and RAID_CLASS_COLORS[class]) then
+			if (name and class and RAID_CLASS_COLORS[class]) then
 				if string.match( name, "-" )  then
 					name = string.match(name, "([^%-]+)%-.+")
 				end
 				if name == carrier then
 					if faction == 0 then
-						self.FlagCarrierFrame2Text:SetTextColor(RAID_CLASS_COLORS[class].r, 
-											RAID_CLASS_COLORS[class].g, 
+						self.FlagCarrierFrame2Text:SetTextColor(RAID_CLASS_COLORS[class].r,
+											RAID_CLASS_COLORS[class].g,
 											RAID_CLASS_COLORS[class].b)
 					elseif faction == 1 then
-						self.FlagCarrierFrame1Text:SetTextColor(RAID_CLASS_COLORS[class].r, 
-											RAID_CLASS_COLORS[class].g, 
+						self.FlagCarrierFrame1Text:SetTextColor(RAID_CLASS_COLORS[class].r,
+											RAID_CLASS_COLORS[class].g,
 											RAID_CLASS_COLORS[class].b)
 					end
 					found = true
@@ -167,7 +167,7 @@ do
 			lastCarrier = carrier
 		end
 	end
-	
+
 	function Warsong:UPDATE_BATTLEFIELD_SCORE()
 		if lastCarrier then
 			self:ColorFlagCarrier(lastCarrier)
@@ -196,12 +196,12 @@ do
 					mSide = sArg1
 					mNick = sArg2
 				end
-			
+
 				if( GetLocale() == "koKR") then
 					mSide = sArg2
 					mNick = sArg1
 				end
-				
+
 				if mSide == L.Alliance then
 					FlagCarrier[2] = mNick
 					self.FlagCarrierFrame2Text:SetText(mNick)
@@ -213,7 +213,7 @@ do
 						end
 					else
 						self.FlagCarrierFrame2Button:SetAttribute( "macrotext", "/targetexact " .. mNick )
-					end					
+					end
 
 				elseif mSide == L.Horde then
 					FlagCarrier[1] = mNick
@@ -228,14 +228,14 @@ do
 						self.FlagCarrierFrame1Button:SetAttribute( "macrotext", "/targetexact " .. mNick )
 					end
 				end
-				
+
 			elseif string.match(arg1, L.ExprFlagReturn) then
 				if( GetLocale() == "ruRU") then
 					local _, _, mNick, mSide =  string.find(arg1, L.ExprFlagReturn)
 				else
 					local _, _, mSide, mNick =  string.find(arg1, L.ExprFlagReturn)
 				end
-				
+
 				if mSide == L.Alliance then
 					self.FlagCarrierFrame2:Hide()
 					FlagCarrier[2] = nil
@@ -248,7 +248,7 @@ do
 		end
 		if string.match(arg1, L.ExprFlagCaptured) then
 			flagTimer:Start()
-		
+
 			if self.FlagCarrierFrame1 and self.FlagCarrierFrame2 then
 				self.FlagCarrierFrame1:Hide()
 				self.FlagCarrierFrame2:Hide()

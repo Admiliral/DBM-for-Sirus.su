@@ -175,10 +175,8 @@ function Kil:OnSync(msg)
 --		self:AddMsg(msg)
 		msg = msg:sub(5)
 		table.insert(fire, msg)
-		local class
 		for i = 1, GetNumRaidMembers() do
 			if UnitName("raid"..i) == msg then
-				class = select(2, UnitClass("raid"..i))
 				break
 			end
 		end
@@ -201,13 +199,12 @@ function Kil:OnSync(msg)
 		if self.Options.WarnReflections then
 			self:Announce(DBM_KIL_WARN_REFLECTIONS, 3)
 		end
-		
 	elseif msg == "Darts" then
 		self:StartStatusBarTimer(20, "Flame Darts", 45740)
 		if self.Options.WarnDarts then
-			self:Announce(DBM_KIL_WARN_DARTS, 3)			
+			self:Announce(DBM_KIL_WARN_DARTS, 3)
 			self:ScheduleAnnounce(15, DBM_KIL_WARN_DARTS_SOON, 1)
-		end			
+		end
 	end
 end
 

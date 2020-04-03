@@ -55,12 +55,12 @@ function Maulgar:OnEvent(event, arg1)
 		elseif arg1.spellId == 33238 then
 			self:SendSync("WhirlWind")
 		end
-		
+
 	elseif event == "WhirlwindWarning" then
 		if self.Options.WarnWW then
 			self:Announce(DBM_MAULGAR_WARN_WW_SOON, 2);
 		end
-		
+
 	elseif event == "SPELL_CAST_START" then
 		if arg1.spellId == 33152 then
 			if self.Options.WarnPoH then
@@ -103,7 +103,7 @@ function Maulgar:OnSync(msg)
 		self:StartStatusBarTimer(48.5, "Felhunter", "Interface\\Icons\\Spell_Shadow_SummonFelHunter");
 	elseif string.sub(msg, 1, 6) == "Arcing" then
 		if self.Options.WarnSmash then
-			local _, _, target, damage = string.find(msg, "Arcing ([^%s]+) (%w+)");			
+			local _, _, target, damage = string.find(msg, "Arcing ([^%s]+) (%w+)");
 			if target and damage then
 				if string.find(damage, "MISS") then
 					damage = DBM_MAULGAR_MISSED;
@@ -113,9 +113,9 @@ function Maulgar:OnSync(msg)
 					damage = DBM_MAULGAR_PARRIED;
 				end
 				self:Announce(string.format(DBM_MAULGAR_WARN_SMASH, target, damage), 1);
-			end			
+			end
 		end
-		
+
 		self:StartStatusBarTimer(10, "Arcing Smash", "Interface\\Icons\\Ability_Warrior_Cleave");
 	end
 end

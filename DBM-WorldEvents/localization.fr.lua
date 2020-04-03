@@ -12,7 +12,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-	warnBarrel			= "Tonneau sur >%s<", 
+	warnBarrel			= "Tonneau sur >%s<",
 	specwarnDisarm		= "Désarmement. Bougez !",
 	specWarnBrew		= "Débarrassez-vous de la bière avant qu'elle ne vous en lance une autre !",
 	specWarnBrewStun	= "Vous avez reçu un coup sur la tête. La prochaine fois, videz votre verre !"

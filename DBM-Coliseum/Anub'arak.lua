@@ -2,13 +2,13 @@
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision(("$Revision: 4347 $"):sub(12, -3))
-mod:SetCreatureID(34564)  
+mod:SetCreatureID(34564)
 
 mod:RegisterCombat("yell", L.YellPull)
 
 mod:RegisterEvents(
 	"SPELL_AURA_APPLIED",
-	"SPELL_AURA_REFRESH", 	
+	"SPELL_AURA_REFRESH",
 	"SPELL_AURA_REMOVED",
 	"SPELL_CAST_START",
 	"CHAT_MSG_RAID_BOSS_EMOTE"
@@ -22,7 +22,7 @@ mod:AddBoolOption("RemoveHealthBuffsInP3", false)
 -- Adds
 local warnAdds				= mod:NewAnnounce("warnAdds", 3, 45419)
 local timerAdds				= mod:NewTimer(45, "timerAdds", 45419)
-local Burrowed				= false 
+local Burrowed				= false
 
 -- Pursue
 local warnPursue			= mod:NewTargetAnnounce(67574, 4)
@@ -66,9 +66,9 @@ local specWarnShadowStrike	= mod:NewSpecialWarning("SpecWarnShadowStrike", mod:I
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 34564, "Anub'arak")
-	Burrowed = false 
-	timerAdds:Start(10-delay) 
-	warnAdds:Schedule(10-delay) 
+	Burrowed = false
+	timerAdds:Start(10-delay)
+	warnAdds:Schedule(10-delay)
 	self:ScheduleMethod(10-delay, "Adds")
 	warnSubmergeSoon:Schedule(70-delay)
 	specWarnSubmergeSoon:Schedule(70-delay)
@@ -86,14 +86,14 @@ function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 34564, "Anub'arak", wipe)
 end
 
-function mod:Adds() 
-	if self:IsInCombat() then 
-		if not Burrowed then 
-			timerAdds:Start() 
-			warnAdds:Schedule(45) 
-			self:ScheduleMethod(45, "Adds") 
-		end 
-	end 
+function mod:Adds()
+	if self:IsInCombat() then
+		if not Burrowed then
+			timerAdds:Start()
+			warnAdds:Schedule(45)
+			self:ScheduleMethod(45, "Adds")
+		end
+	end
 end
 
 function mod:ShadowStrike()
@@ -139,7 +139,7 @@ do
 				self:SetIcon(UnitName(v), PColdIcon)
 				PColdIcon = PColdIcon - 1
 			end
-			table.wipe(PColdTargets)	
+			table.wipe(PColdTargets)
 		end
 	end
 end
@@ -155,7 +155,7 @@ function mod:SPELL_AURA_REFRESH(args)
 				self:SetPcoldIcons()--Sort and fire as early as possible once we have all targets.
 			end
 		end
-		timerPCold:Show() 
+		timerPCold:Show()
 	end
 end
 
@@ -181,7 +181,7 @@ function mod:SPELL_AURA_APPLIED(args)
 				self:SetPcoldIcons()--Sort and fire as early as possible once we have all targets.
 			end
 		end
-		timerPCold:Show() 
+		timerPCold:Show()
 	elseif args:IsSpellID(66012) then							-- Freezing Slash
 		warnFreezingSlash:Show(args.destName)
 		timerFreezingSlash:Start()
@@ -214,8 +214,8 @@ function mod:SPELL_CAST_START(args)
 			mod:ScheduleMethod(0.1, "RemoveBuffs")
 		end
 		if mod:IsDifficulty("normal10") or mod:IsDifficulty("normal25") then
-			timerAdds:Cancel() 
-			warnAdds:Cancel() 
+			timerAdds:Cancel()
+			warnAdds:Cancel()
 			self:UnscheduleMethod("Adds")
 		end
 	elseif args:IsSpellID(66134) then							-- Shadow Strike

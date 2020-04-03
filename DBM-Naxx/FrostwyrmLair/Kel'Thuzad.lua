@@ -85,7 +85,7 @@ end
 function mod:AnnounceBlastTargets()
 	warnBlastTargets:Show(table.concat(frostBlastTargets, "< >"))
 	for i = #frostBlastTargets, 1, -1 do
-		self:SetIcon(frostBlastTargets[i], 8 - i, 4.5) 
+		self:SetIcon(frostBlastTargets[i], 8 - i, 4.5)
 		frostBlastTargets[i] = nil
 	end
 end

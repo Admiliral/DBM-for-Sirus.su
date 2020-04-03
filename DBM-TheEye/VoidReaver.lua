@@ -17,7 +17,6 @@ local berserkTimer          = mod:NewBerserkTimer(600)
 
 
 function mod:OnCombatStart(delay)
-	table.wipe(beaconIconTargets)
 	DBM:FireCustomEvent("DBM_EncounterStart", 19516, "Void Reaver")
     berserkTimer:Start()
     timerNextPounding:Start()

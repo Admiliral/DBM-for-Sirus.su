@@ -100,7 +100,7 @@ function mod:SPELL_CAST_START(args)
         timerSpecialHeroic:Start()
 	elseif args:IsSpellID(305326) then
         if args.destName == UnitName("player") then
-            self:PlaySound("run")      
+            self:PlaySound("run")
             specWarnFreeze:Show()
         end
     elseif args:IsSpellID(305331) then
@@ -147,7 +147,7 @@ do
 		currentIcon = 1
 		iconsSet = 0
 	end
-	
+
 	local lastElemental = 0
 	function mod:SPELL_SUMMON(args)
 		if args:IsSpellID(29962, 37051, 37052, 37053) then -- Summon Water elementals
@@ -165,7 +165,7 @@ do
 			end
 		end
 	end
-	
+
 	mod:RegisterOnUpdateHandler(function(self)
 		if self.Options.ElementalIcons and (DBM:GetRaidRank() > 0 and not iconsSet == 4) then
 			for i = 1, GetNumRaidMembers() do
@@ -181,7 +181,7 @@ do
 	end, 1)
 end
 
-do 
+do
 	local lastBlizzard = 0
 	function mod:SPELL_PERIODIC_DAMAGE(args)
 		if args:IsSpellID(29951) and args:IsPlayer() and GetTime() - lastBlizzard > 2 then

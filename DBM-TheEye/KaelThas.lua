@@ -96,7 +96,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
         warnNextAdd:Show(L.NamesAdds["Lord Sanguinar"])
         timerNextAdd:Start(12.5, L.NamesAdds["Lord Sanguinar"])
         timerRoarCD:Start(33)
-    elseif msg == L.YellCaper then 
+    elseif msg == L.YellCaper then
         timerRoarCD:Cancel()
         warnNextAdd:Show(L.NamesAdds["Capernian"])
         timerNextAdd:Start(7, L.NamesAdds["Capernian"])

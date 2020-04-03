@@ -24,9 +24,9 @@ mod:RegisterEvents(
 -- local warningImp		= mod:NewSpellAnnounce(30066, 3)
 -- local warningSacSoon	= mod:NewSoonAnnounce(30115, 3)
 -- local warningSacrifice	= mod:NewTargetAnnounce(30115, 4)
--- 
+--
 -- local specWarnSacrifice	= mod:NewSpecialWarningYou(30115)
--- 
+--
 -- local timerWeakened		= mod:NewBuffActiveTimer(31, 30065)
 -- local timerSacrifice	= mod:NewTargetTimer(30, 30115)
 -- local timerSacrificeCD	= mod:NewNextTimer(43, 30115)
@@ -48,7 +48,7 @@ mod:AddBoolOption("HealthFrame", true)
 -- function mod:OnCombatStart(delay)
 -- 	berserkTimer:Start(-delay)
 -- end
--- 
+--
 -- function mod:SPELL_AURA_APPLIED(args)
 -- 	if args:IsSpellID(30115) then
 -- 		DBM.BossHealth:AddBoss(17248, L.DChains)
@@ -66,13 +66,13 @@ mod:AddBoolOption("HealthFrame", true)
 -- 		warningImpSoon:Schedule(26)
 -- 	end
 -- end
--- 
+--
 -- function mod:SPELL_AURA_REMOVED(args)
 -- 	if args:IsSpellID(30115) then
 -- 		timerSacrifice:Cancel(args.destName)
 -- 	end
 -- end
--- 
+--
 -- function mod:SPELL_CAST_SUCCESS(args)
 -- 	if args:IsSpellID(30066) then
 -- 		warningImpSoon:Cancel()
@@ -80,7 +80,7 @@ mod:AddBoolOption("HealthFrame", true)
 -- 		DBM.BossHealth:AddBoss(17229, L.Kilrek)
 -- 	end
 -- end
--- 
+--
 -- function mod:UNIT_DIED(args)
 -- 	local cid = self:GetCIDFromGUID(args.destGUID)
 -- 	if cid == 17229 then--Kil'rek
@@ -109,9 +109,9 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(305345) then
-        if args:IsPlayer() then 
-            self:PlaySound("fireinthe")           -- CS 1.6 (couter_terorrists_voice) 
-        end			 
+        if args:IsPlayer() then
+            self:PlaySound("fireinthe")           -- CS 1.6 (couter_terorrists_voice)
+        end
 		warningHandCast:Show()
 		timerHandCD:Start()
     end
@@ -119,7 +119,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
     if args:IsSpellID(305351) then
-        if args.sourceName == L.name then 
+        if args.sourceName == L.name then
             timerMarkCD:Start()
             WarnMark:Show(args.destName)
         elseif tolik then
@@ -127,7 +127,7 @@ function mod:SPELL_AURA_APPLIED(args)
             self:PlaySound("tolik")              -- Толик-Еболик, первый день на работе.
             self:ScheduleMethod(2, "resetTolik")
         end
-		if args:IsPlayer() then              	
+		if args:IsPlayer() then
 			specWarnMark:Show()
 		end
     elseif args:IsSpellID(305367) then
@@ -135,7 +135,7 @@ function mod:SPELL_AURA_APPLIED(args)
             specWarnDart:Show(args.amount)
 		end
     elseif args:IsSpellID(305360) then
-        if args:IsPlayer() then 
+        if args:IsPlayer() then
             specWarnSeed:Show()
         end
 	end

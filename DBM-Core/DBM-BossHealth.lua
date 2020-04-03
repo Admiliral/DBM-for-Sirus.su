@@ -175,11 +175,11 @@ do
 		local cType = bit.band(guid:sub(0, 5), 0x00F)
 		return (cType == 3 or cType == 5) and tonumber(guid:sub(9, 12), 16) or -1
 	end
-	
+
 --	local function compareBars(b1, b2)
 --		return b1.value > b2.value
 --	end
-	
+
 	function updateFrame(self, e)
 		t = t + e
 		if t >= 0.5 then
@@ -206,8 +206,8 @@ do
 						else
 							-- check target and raid/party targets
 							local uId = ((GetNumRaidMembers() == 0) and "party") or "raid"
-							for i = 0, math.max(GetNumRaidMembers(), GetNumPartyMembers()) do
-								id = (i == 0 and "target") or uId..i.."target"
+							for j = 0, math.max(GetNumRaidMembers(), GetNumPartyMembers()) do
+								id = (j == 0 and "target") or uId..j.."target"
 								if getCIDfromGUID(UnitGUID(id or "")) == v.id then
 									targetCache[v.id] = id
 									break

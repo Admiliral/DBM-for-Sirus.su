@@ -36,7 +36,7 @@ function Felmyst:OnCombatStart(delay)
 	airPhase = false
 	lastTarget = nil
 	breathCounter = 0
-	self:StartStatusBarTimer(600 - delay, "Enrage", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy") 
+	self:StartStatusBarTimer(600 - delay, "Enrage", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
 	self:ScheduleAnnounce(300 - delay, DBM_GENERIC_ENRAGE_WARN:format(5, DBM_MIN), 1)
 	self:ScheduleAnnounce(420 - delay, DBM_GENERIC_ENRAGE_WARN:format(3, DBM_MIN), 1)
 	self:ScheduleAnnounce(540 - delay, DBM_GENERIC_ENRAGE_WARN:format(1, DBM_MIN), 2)
@@ -89,14 +89,14 @@ function Felmyst:OnSync(msg)
 		end
 	elseif msg == "Air" and not airPhase then
 		airPhase = GetTime()
-		self:Announce(DBM_FELMYST_WARN_AIR, 1)		
+		self:Announce(DBM_FELMYST_WARN_AIR, 1)
 		self:EndStatusBarTimer("Next Gas Nova")
 		self:UnScheduleAnnounce(DBM_FELMYST_WARN_GAS_SOON, 1)
-		
+
 		self:ScheduleAnnounce(89, DBM_FELMYST_LAND_SOON, 1)
 		self:StartStatusBarTimer(99, "Ground Phase", "Interface\\AddOns\\DBM_API\\Textures\\CryptFiendBurrow")
 		self:ScheduleMethod(99, "SendSync", "Ground")
-		
+
 		if self.Options.BreathSoonWarn then
 			self:ScheduleAnnounce(34, DBM_FELMYST_BREATH_SOON_FMT:format(1), 1)
 		end
@@ -153,7 +153,7 @@ function Felmyst:OnUpdate(elapsed)
 			target = UnitName("raid"..i.."targettarget")
 		end
 	end
-	
+
 	if foundBoss and not hasTarget and not airPhase then
 		self:SendSync("Air")
 --	elseif foundBoss and airPhase and hasTarget and GetTime() - airPhase < 98 and target ~= lastTarget then --> useless

@@ -42,7 +42,7 @@ local gyTimer = Alterac:NewTimer(243, "TimerGY", "Interface\\Icons\\Spell_Shadow
 
 local graveyards = {}
 local function is_graveyard(id)
-	return id == 15 or id == 4 or id == 13 or id == 14 or id == 8 
+	return id == 15 or id == 4 or id == 13 or id == 14 or id == 8
 end
 local function gy_state(id)
 	if id == 15 then		return 1	-- if gy_state(id) > 2 then .. conflict state ...
@@ -54,10 +54,10 @@ local function gy_state(id)
 	end
 end
 --[[
-    15 Graveyard, held by Alliance 
-    04 Graveyard, assaulted by Alliance 
-    13 Graveyard, held by Horde 
-    14 Graveyard, assaulted by Horde 
+    15 Graveyard, held by Alliance
+    04 Graveyard, assaulted by Alliance
+    13 Graveyard, held by Horde
+    14 Graveyard, assaulted by Horde
 --]]
 
 towers = {}
@@ -74,10 +74,10 @@ local function tower_state(id)
 	end
 end
 --[[
-    10 Tower, held by Horde 
-    12 Tower, assaulted by Horde 
-    11 Tower, held by Alliance 
-    09 Tower, assaulted by Alliance 
+    10 Tower, held by Horde
+    12 Tower, assaulted by Horde
+    11 Tower, held by Alliance
+    09 Tower, assaulted by Alliance
 --]]
 
 local bgzone = false
@@ -110,7 +110,7 @@ function Alterac:CHAT_MSG_BG_SYSTEM_NEUTRAL(arg1)
 	if not bgzone then return end
 	if arg1 == L.BgStart60 then
 		startTimer:Start()
-	elseif arg1 == L.BgStart30  then		
+	elseif arg1 == L.BgStart30  then
 		startTimer:Update(31, 62)
 	end
 	schedule_check(self)
@@ -130,13 +130,13 @@ local function check_for_updates()
 				else
 					gyTimer:SetColor(hordeColor, name)
 				end
-				
+
 			elseif gy_state(textureIndex) <= 3 then
 				-- gy is now longer under conflict, remove the bars
 				gyTimer:Stop(name)
 			end
 			graveyards[k] = textureIndex
-		end		 
+		end
 	end
 	for k,v in pairs(towers) do
 		local name, _, textureIndex = GetMapLandmarkInfo(k)
@@ -158,7 +158,7 @@ local function check_for_updates()
 				towerTimer:Stop(name)
 			end
 			towers[k] = textureIndex
-		end		 
+		end
 	end
 end
 
@@ -185,7 +185,7 @@ do
 			return getglobal(tooltip:GetName().."Text"):GetText()
 		end
 	end
-	
+
 	local function loadQuests()
 		for i, v in pairs(quests) do
 			if type(v[1]) == "table" then
@@ -215,10 +215,10 @@ do
 		[13180] = {6826, 17327},
 		[13181] = {6827, 17328},
 		[13439] = {6941, 17503},
-		[13437] = {6943, 17504},	
-		[13441] = {7002, 17642},	
-	}	
-	
+		[13437] = {6943, 17504},
+		[13441] = {7002, 17642},
+	}
+
 	loadQuests() -- requests the quest information from the server
 	Alterac:Schedule(5, loadQuests) -- information should be available now....load it
 	Alterac:Schedule(15, loadQuests) -- sometimes this requires a lot more time, just to be sure!

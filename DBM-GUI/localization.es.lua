@@ -14,8 +14,8 @@ L.TabCategory_CLASSIC 	= "WoW Classic Bosses"
 L.TabCategory_OTHER     = "Otros Boss Mods"
 
 L.BossModLoaded 	= "%s estadisticas"
-L.BossModLoad_now 	= [[Este modulo no esta cargado. 
-Si no se carga al entrar en la estancia. 
+L.BossModLoad_now 	= [[Este modulo no esta cargado.
+Si no se carga al entrar en la estancia.
 Puedes pulsar en el boton para cargar el modulo manualmente.]]
 
 L.PosX = 'Posicion X'
@@ -72,7 +72,7 @@ L.RaidWarnColor_1 	= "Color 1"
 L.RaidWarnColor_2 	= "Color 2"
 L.RaidWarnColor_3 	= "Color 3"
 L.RaidWarnColor_4 	= "Color 4"
-L.InfoRaidWarning	= [[Puedes especificar la posición y los colores del cuadro de advertencia de banda. 
+L.InfoRaidWarning	= [[Puedes especificar la posición y los colores del cuadro de advertencia de banda.
 Este marco se utiliza para mensajes como "El jugador X está afectado por Y"]]
 L.ColorResetted 	= "Los ajustes de color de este campo se han reiniciado"
 L.ShowWarningsInChat 	= "Mostrar avisos en el chat"
@@ -129,7 +129,7 @@ L.BarWidth					= "Ancho de la barra: %d"
 L.Panel_SpamFilter		= "Filtro de Spam"
 L.Area_SpamFilter		= "Opciones de spam"
 L.HideBossEmoteFrame		= "Esconder lo que dice el boss"
-L.SpamBlockRaidWarning		= "Filtrar anuncios de otros Boss Mods" 
+L.SpamBlockRaidWarning		= "Filtrar anuncios de otros Boss Mods"
 L.SpamBlockBossWhispers		= "Filtrar los avisos de <DBM> mientras estas en combate"
 L.BlockVersionUpdatePopup	= "Desabilitar avisos de actualizaciones"
 L.ShowBigBrotherOnCombatStart	= "Comprobar los bufos con Big Brother al inicio del combate"

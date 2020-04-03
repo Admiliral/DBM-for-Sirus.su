@@ -6,8 +6,8 @@ if GetLocale() ~= "zhCN" then return end
 
 local L
 
-local spell		= "%s"				
-local debuff		= "%s: >%s<"			
+local spell		= "%s"
+local debuff		= "%s: >%s<"
 local spellCD		= "%s - 冷却"			-- translate
 local spellSoon		= "%s - 即将施放"			-- translate
 local optionWarning	= "显示%s警报"		-- translate
@@ -453,7 +453,7 @@ L:SetOptionLocalization({
 
 
 -----------------------
--- Drakkari Colossus --		
+-- Drakkari Colossus --
 -----------------------
 L = DBM:GetModLocalization("BloodstoneAnnihilator")
 
@@ -1316,7 +1316,7 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerPortalIn	= "Portal #%d" , 
+	TimerPortalIn	= "Portal #%d" ,
 })
 
 L:SetOptionLocalization({

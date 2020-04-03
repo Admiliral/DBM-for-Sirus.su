@@ -23,7 +23,7 @@ if (GetLocale() == "zhCN") then
 	DBM_NALO_DEBUFF_SILENCE			= "受到了震耳咆哮效果的影响"
 ]]
 	DBM_NALO_SPELLID_SILENCE		= 42398
-	
+
 	DBM_NALO_WARN_NORMAL_SOON		= "5秒后变为人形态"
 	DBM_NALO_WARN_BEAR_SOON			= "5秒后变为熊形态"
 	DBM_NALO_WARN_NORMAL			= "人形态"
@@ -115,7 +115,7 @@ if (GetLocale() == "zhCN") then
 	DBM_MALACRASS_WARN_MC			= "精神控制 -> >%s<"
 	DBM_MALACRASS_WARN_BOLTS		= "灵魂之箭"
 	DBM_MALACRASS_WARN_BOLTS_SOON	= "灵魂之箭 - 5秒后施放"
-	
+
 --[[
 	DBM_SBT["Next Spirit Bolts"]	= "下一次灵魂之箭";
 	DBM_SBT["Spirit Bolts"]			= "灵魂之箭";

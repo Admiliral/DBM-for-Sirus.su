@@ -15,13 +15,13 @@ mod:RegisterEvents(
 -- local warningRepentanceSoon	= mod:NewSoonAnnounce(29511, 2)
 -- local warningRepentance		= mod:NewSpellAnnounce(29511, 3)
 -- local warningHolyFire		= mod:NewTargetAnnounce(29522, 3)
--- 
+--
 -- local timerRepentance		= mod:NewBuffActiveTimer(12.6, 29511)
 -- local timerRepentanceCD		= mod:NewCDTimer(33, 29511)
 -- local timerHolyFire			= mod:NewTargetTimer(12, 29522)
--- 
+--
 -- mod:AddBoolOption("RangeFrame", true)
--- 
+--
 -- function mod:OnCombatStart(delay)
 -- 	timerRepentanceCD:Start(45-delay)
 -- 	warningRepentanceSoon:Schedule(40-delay)
@@ -29,13 +29,13 @@ mod:RegisterEvents(
 -- 		DBM.RangeCheck:Show(10)
 -- 	end
 -- end
--- 
+--
 -- function mod:OnCombatEnd()
 -- 	if self.Options.RangeFrame then
 -- 		DBM.RangeCheck:Hide()
 -- 	end
 -- end
--- 
+--
 -- function mod:SPELL_CAST_START(args)
 -- 	if args:IsSpellID(29511) then
 -- 		warningRepentanceSoon:Cancel()
@@ -45,14 +45,14 @@ mod:RegisterEvents(
 -- 		warningRepentanceSoon:Schedule(28)
 -- 	end
 -- end
--- 
+--
 -- function mod:SPELL_AURA_APPLIED(args)
 -- 	if args:IsSpellID(29522) then
 -- 		warningHolyFire:Show(args.destName)
 -- 		timerHolyFire:Start(args.destName)
 -- 	end
 -- end
--- 
+--
 -- function mod:SPELL_AURA_REMOVED(args)
 -- 	if args:IsSpellID(29522) then
 -- 		timerHolyFire:Cancel(args.destName)
@@ -109,9 +109,9 @@ do
 	frame:SetScript("OnEvent", function(self, event, timestamp, subEvent, sourceGUID, sourceName, sourceFlags, destGUID, destName, destFlags, ...)
 		if shieldedMob == destGUID then
 			local absorbed
-			if subEvent == "SWING_MISSED" then 
-				absorbed = select( 2, ... ) 
-			elseif subEvent == "RANGE_MISSED" or subEvent == "SPELL_MISSED" or subEvent == "SPELL_PERIODIC_MISSED" then 
+			if subEvent == "SWING_MISSED" then
+				absorbed = select( 2, ... )
+			elseif subEvent == "RANGE_MISSED" or subEvent == "SPELL_MISSED" or subEvent == "SPELL_PERIODIC_MISSED" then
 				absorbed = select( 5, ... )
 			end
 			if absorbed then
@@ -119,7 +119,7 @@ do
 			end
 		end
 	end)
-	
+
 	function showShieldHealthBar(self, mob, shieldName, absorb)
 		shieldedMob = mob
 		absorbRemaining = absorb
@@ -128,7 +128,7 @@ do
 		DBM.BossHealth:AddBoss(getShieldHP, shieldName)
 		self:Schedule(26, hideShieldHealthBar)
 	end
-	
+
 	function hideShieldHealthBar()
 		DBM.BossHealth:RemoveBoss(getShieldHP)
 	end
@@ -136,7 +136,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
     if args:IsSpellID(305271) then
-        if ground then 
+        if ground then
             timerGroundCD:Start()
             ground = false
         end

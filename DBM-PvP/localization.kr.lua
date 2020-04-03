@@ -41,7 +41,7 @@ L:SetTimerLocalization({
 
 L:SetOptionLocalization({
 	TimerStart 		= "시작 타이머 보이기",
-	TimerShadow 	= "어둠의 눈 타이머 보기"	
+	TimerShadow 	= "어둠의 눈 타이머 보기"
 })
 
 L:SetMiscLocalization({
@@ -60,7 +60,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart 	= "게임 시작", 
+	TimerStart 	= "게임 시작",
 	TimerTower	= "%s",
 	TimerGY 	= "%s"
 })
@@ -100,7 +100,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart 				= "게임 시작", 
+	TimerStart 				= "게임 시작",
 	TimerCap 				= "%s"
 })
 
@@ -137,7 +137,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart 		= "게임 시작", 
+	TimerStart 		= "게임 시작",
 	TimerFlag		= "깃발 재생성"
 })
 
@@ -162,9 +162,9 @@ L:SetMiscLocalization({
 	BgStart30 = "30초 후 전쟁노래 협곡 전투가 시작됩니다. 준비하십시오!",
 	ZoneName = "전쟁노래 협곡",
 	Alliance = "얼라이언스",
-	Horde = "호드",	
+	Horde = "호드",
 	InfoErrorText 		= "전투에서 벗어나면 깃발 운반자 타겟팅 기능이 복구됩니다.",
-	ExprFlagPickUp 		= "(.+)|1이;가; (.+) 깃발을 손에 넣었습니다!",	
+	ExprFlagPickUp 		= "(.+)|1이;가; (.+) 깃발을 손에 넣었습니다!",
 	ExprFlagCaptured 	= "(.+)|1이;가; (.+) 깃발 쟁탈에 성공했습니다!",
 	ExprFlagReturn 		= "(.+)|1이;가; (.+) 깃발을 되찾았습니다!",
 	FlagAlliance 		= "얼라이언스 깃발 :",
@@ -173,7 +173,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart 			= "게임 시작", 
+	TimerStart 			= "게임 시작",
 	TimerFlag 			= "깃발 재생성",
 })
 
@@ -200,17 +200,17 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart				= "게임 시작", 
+	TimerStart				= "게임 시작",
 	TimerPOI				= "%s",
-	TimerSiegeEngine		= "공성 전차 준비"	
+	TimerSiegeEngine		= "공성 전차 준비"
 })
 
 L:SetOptionLocalization({
-	TimerStart				= "게임 시작 타이머 보기", 
+	TimerStart				= "게임 시작 타이머 보기",
 	TimerPOI				= "획득 타이머 보기",
 	TimerSiegeEngine		= "공성 전차 제작 타이머 보기",
 	WarnSiegeEngine			= "공성 전차가 준비되었을 때 경고 알리기",
-	WarnSiegeEngineSoon		= "공성 전차가 곧 준비 될 때 경고 알리기"	
+	WarnSiegeEngineSoon		= "공성 전차가 곧 준비 될 때 경고 알리기"
 })
 
 L:SetMiscLocalization({
@@ -226,6 +226,6 @@ L:SetMiscLocalization({
 	GoblinFinishedAlliance	= "My finest work so far! This siege engine is ready for action!",
 	GoblinFinishedHorde		= "이제 이 공성 전차를 끌고 나가도 좋아!",
 	GoblinBrokenAlliance	= "It's broken already?! No worries. It's nothing I can't fix.",
-	GoblinBrokenHorde		= "It's broken again?! I'll fix it... just don't expect the warranty to cover this"	
+	GoblinBrokenHorde		= "It's broken again?! I'll fix it... just don't expect the warranty to cover this"
 })
 

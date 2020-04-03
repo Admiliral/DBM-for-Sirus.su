@@ -364,7 +364,7 @@ L:SetWarningLocalization({
 L:SetTimerLocalization({
 	TimerAir			= "空中階段",
 	TimerLanding			= "降落",
-	TimerIceBlast			= "冰息術"	
+	TimerIceBlast			= "冰息術"
 })
 
 ------------------

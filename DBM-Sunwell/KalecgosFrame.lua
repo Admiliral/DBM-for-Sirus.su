@@ -8,24 +8,24 @@ function Kal:InitializeMenu()
 	info.isTitle = 1
 	info.notCheckable = 1
 	UIDropDownMenu_AddButton(info, 1)
-	
-	local info = UIDropDownMenu_CreateInfo()
+
+	info = UIDropDownMenu_CreateInfo()
 	info.text = DBM_KAL_MENU_LOCK
 	info.value = self.Options.FrameLocked
 	info.func = function() self.Options.FrameLocked = not self.Options.FrameLocked end
 	info.checked = self.Options.FrameLocked
 	info.keepShownOnClick = 1
 	UIDropDownMenu_AddButton(info, 1)
-	
-	local info = UIDropDownMenu_CreateInfo()
+
+	info = UIDropDownMenu_CreateInfo()
 	info.text = DBM_KAL_FRAME_COLORS
 	info.value = self.Options.FrameClassColor
 	info.func = function() self.Options.FrameClassColor = not self.Options.FrameClassColor self:UpdateColors() end
 	info.checked = self.Options.FrameClassColor
 	info.keepShownOnClick = 1
 	UIDropDownMenu_AddButton(info, 1)
-	
-	local info = UIDropDownMenu_CreateInfo()
+
+	info = UIDropDownMenu_CreateInfo()
 	info.text = DBM_KAL_FRAME_UPWARDS2
 	info.value = self.Options.FrameUpwards
 	info.func = function() self.Options.FrameUpwards = not self.Options.FrameUpwards self:ChangeFrameOrientation() end
@@ -33,13 +33,13 @@ function Kal:InitializeMenu()
 	info.keepShownOnClick = 1
 	UIDropDownMenu_AddButton(info, 1)
 
-	local info = UIDropDownMenu_CreateInfo()
+	info = UIDropDownMenu_CreateInfo()
 	info.text = DBM_KAL_FRAME_HIDE
 	info.func = function() DBMKalFrameDrag:Hide() end
 	info.notCheckable = 1
 	UIDropDownMenu_AddButton(info, 1)
-	
-	local info = UIDropDownMenu_CreateInfo()
+
+	info = UIDropDownMenu_CreateInfo()
 	info.text = DBM_CLOSE
 	info.func = function() end
 	info.notCheckable = 1
@@ -75,7 +75,7 @@ local function createBar(name)
 			name = name,
 			timer = 60
 		}
-	}, 
+	},
 	{
 		__index = barMethods
 	})
@@ -83,11 +83,11 @@ local function createBar(name)
 		lastEntry.next = newEntry
 	end
 	lastEntry = newEntry
-	firstEntry = firstEntry or newEntry	
-	
+	firstEntry = firstEntry or newEntry
+
 	newEntry.data.frame.entry = newEntry
 	newEntry:Update(0)
-	
+
 	return newEntry
 end
 
@@ -104,7 +104,7 @@ function barMethods:Update(elapsed)
 		spark:ClearAllPoints()
 		spark:SetPoint("CENTER", bar, "LEFT", ((bar:GetValue() / 60) * bar:GetWidth()), 0)
 		spark:Show()
-	end	
+	end
 end
 
 function barMethods:GetNext()

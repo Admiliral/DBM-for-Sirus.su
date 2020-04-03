@@ -41,7 +41,7 @@ function Kazzak:OnEvent(event, arg1)
 			if self.Options.TwistedWarn then
 				self:Announce(string.format(DBM_KAZZAK_TWISTED_WARN, tostring(arg1.destName)))
 			end
-			
+
 		elseif arg1.spellId == 32960 then
 			local target = tostring(arg1.destName)
 			if target == UnitName("player") then
@@ -61,7 +61,7 @@ function Kazzak:OnEvent(event, arg1)
 		if arg1 == DBM_KAZZAK_YELL_PULL or arg1 == DBM_KAZZAK_YELL_PULL2 then
 			self.LastPull = GetTime();
 		end
-		
+
 	elseif event == "CHAT_MSG_MONSTER_EMOTE" then
 		if arg1 == DBM_KAZZAK_EMOTE_ENRAGE and arg2 == DBM_KAZZAK_NAME then
 			if self.Options.EnrageWarn then
@@ -69,7 +69,7 @@ function Kazzak:OnEvent(event, arg1)
 			end
 			self:ScheduleSelf(6, "NextEnrage");
 		end
-		
+
 	elseif event == "EnrageWarn" and arg1 then
 		if self.Options.EnrageWarn then
 			if arg1 == 5 then
@@ -78,7 +78,7 @@ function Kazzak:OnEvent(event, arg1)
 				self:Announce(string.format(DBM_KAZZAK_SUP_SEC, arg1));
 			end
 		end
-	
+
 	elseif event == "NextEnrage" then
 		self:StartStatusBarTimer(54, "Enrage", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy");
 		self:ScheduleSelf(9, "EnrageWarn", 45);

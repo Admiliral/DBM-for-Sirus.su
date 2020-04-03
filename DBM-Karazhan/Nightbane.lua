@@ -14,7 +14,7 @@ mod:RegisterEvents(
     "SPELL_AURA_REMOVED",
 	"CHAT_MSG_MONSTER_EMOTE",
     "UNIT_HEALTH"
-)   
+)
 
 -- local warningBone			= mod:NewSpellAnnounce(37098, 3)
 -- local warningFearSoon		= mod:NewSoonAnnounce(36922, 2)
@@ -23,22 +23,22 @@ mod:RegisterEvents(
 -- local WarnAir				= mod:NewAnnounce("DBM_NB_AIR_WARN", 2, "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendBurrow.blp")
 -- local WarnNBDown1			= mod:NewAnnounce("DBM_NB_DOWN_WARN", 2, nil, nil, false)
 -- local WarnNBDown2			= mod:NewAnnounce("DBM_NB_DOWN_WARN2", 3, nil, nil, false)
--- 
+--
 -- local specWarnCharred		= mod:NewSpecialWarningMove(30129)
--- 
+--
 -- local timerNightbane		= mod:NewTimer(34, "timerNightbane", "Interface\\Icons\\Ability_Mount_Undeadhorse")
 -- local timerAirPhase			= mod:NewTimer(57, "timerAirPhase", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendBurrow.blp")
 -- local timerFearCD			= mod:NewNextTimer(31.5, 36922)
 -- local timerFear				= mod:NewCastTimer(1.5, 36922)
--- 
+--
 -- mod:AddBoolOption("PrewarnGroundPhase", true, "announce")
--- 
+--
 -- function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 -- 	if msg == L.DBM_NB_EMOTE_PULL then
 -- 		timerNightbane:Start()
 -- 	end
 -- end
--- 
+--
 -- function mod:SPELL_CAST_START(args)
 -- 	if args:IsSpellID(36922) then
 -- 		warningFearSoon:Cancel()
@@ -48,13 +48,13 @@ mod:RegisterEvents(
 -- 		warningFearSoon:Schedule(29)
 -- 	end
 -- end
--- 
+--
 -- function mod:SPELL_CAST_SUCCESS(args)
 -- 	if args:IsSpellID(37098) then
 -- 		warningBone:Show()
 -- 	end
 -- end
--- 
+--
 -- function mod:SPELL_AURA_APPLIED(args)
 -- 	if args:IsSpellID(30129) and args:IsPlayer() then
 -- 		specWarnCharred:Show()
@@ -62,7 +62,7 @@ mod:RegisterEvents(
 -- 		warningAsh:Show(args.destName)
 -- 	end
 -- end
--- 
+--
 -- function mod:CHAT_MSG_MONSTER_YELL(msg)
 -- 	if msg == L.DBM_NB_YELL_AIR then
 -- 		WarnAir:Show()
@@ -176,14 +176,14 @@ function mod:SPELL_AURA_REMOVED(args)
         if groundPhase == alivePyromancers - 1 then
             timerGrievingFireCD:Start(35)
             timerConflCD:Start(54)
-        else 
+        else
             groundPhase = groundPhase + 1
         end
     end
 end
  function mod:CHAT_MSG_MONSTER_EMOTE(msg)
- 	if msg == L.DBM_NB_EMOTE_PULL then
+	if msg == L.DBM_NB_EMOTE_PULL then
         isStart = true
         self:PlaySound("pike")           -- (ost "Крутое пике!" аКа "Деревня дураков, Каламбур")
- 	end
+	end
  end

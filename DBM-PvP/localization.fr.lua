@@ -61,7 +61,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart		= "La bataille commence dans", 
+	TimerStart		= "La bataille commence dans",
 	TimerTower		= "%s",
 	TimerGY			= "%s",
 })
@@ -101,7 +101,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart 				= "La bataille commence dans", 
+	TimerStart 				= "La bataille commence dans",
 	TimerCap 				= "%s",
 })
 
@@ -138,7 +138,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart 			= "La bataille commence dans", 
+	TimerStart 			= "La bataille commence dans",
 	TimerFlag 			= "Respawn du drapeau",
 })
 
@@ -163,7 +163,7 @@ L:SetMiscLocalization({
 	BgStart30 					= "La bataille pour le goulet des Chanteguerres commence dans 30 secondes. Préparez-vous !",
 	ZoneName 					= "Goulet des Chanteguerres",
 	Alliance 					= "Alliance",
-	Horde 						= "Horde",	
+	Horde 						= "Horde",
 	InfoErrorText 				= "The flag carrier targeting function will be restored when you are out of combat.",
 	ExprFlagPickUp 				= "Le (%w+) .lag a été pris par (.+) !",
 	ExprFlagCaptured 			= "(.+) a capturé le (%w+) drapeau!",
@@ -174,7 +174,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart 					= "La bataille commence dans", 
+	TimerStart 					= "La bataille commence dans",
 	TimerFlag 					= "Respawn du drapeau",
 })
 
@@ -202,13 +202,13 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart			= "La bataille commence dans", 
+	TimerStart			= "La bataille commence dans",
 	TimerPOI			= "%s",
 	TimerSiegeEngine	= "Siege Engine ready"
 })
 
 L:SetOptionLocalization({
-	TimerStart			= "Montre le timer avant le début de la partie", 
+	TimerStart			= "Montre le timer avant le début de la partie",
 	TimerPOI			= "Montre le timer pour les captures",
 	TimerSiegeEngine	= "Show a timer for Siege Engine building",
 	WarnSiegeEngine		= "Warn when the Siege Engine is ready",

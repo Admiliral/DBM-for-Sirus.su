@@ -97,7 +97,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 
-do 
+do
 	local lastVoid = 0
 	function mod:SPELL_PERIODIC_DAMAGE(args)
 		if args:IsSpellID(30533) and args:IsPlayer() and GetTime() - lastVoid > 2 then

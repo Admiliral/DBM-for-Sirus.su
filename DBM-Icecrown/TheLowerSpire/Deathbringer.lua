@@ -90,13 +90,13 @@ do	-- add the additional Rune Power Bar
 	local last = 0
 	local function getRunePowerPercent()
 		local guid = UnitGUID("focus")
-		if mod:GetCIDFromGUID(guid) == 37813 then 
+		if mod:GetCIDFromGUID(guid) == 37813 then
 			last = math.floor(UnitPower("focus")/UnitPowerMax("focus") * 100)
 			return last
 		end
 		for i = 0, GetNumRaidMembers(), 1 do
 			local unitId = ((i == 0) and "target") or "raid"..i.."target"
-			local guid = UnitGUID(unitId)
+			guid = UnitGUID(unitId)
 			if mod:GetCIDFromGUID(guid) == 37813 then
 				last = math.floor(UnitPower(unitId)/UnitPowerMax(unitId) * 100)
 				return last
@@ -133,7 +133,7 @@ do
 		currentIcon = 1
 		iconsSet = 0
 	end
-	
+
 	local lastBeast = 0
 	function mod:SPELL_SUMMON(args)
 		if args:IsSpellID(72172, 72173) or args:IsSpellID(72356, 72357, 72358) then -- Summon Blood Beasts
@@ -152,7 +152,7 @@ do
 			end
 		end
 	end
-	
+
 	mod:RegisterOnUpdateHandler(function(self)
 		if self.Options.BeastIcons and (DBM:GetRaidRank() > 0 and not (iconsSet == 5 and self:IsDifficulty("normal25", "heroic25") or iconsSet == 2 and self:IsDifficulty("normal10", "heroic10"))) then
 			for i = 1, GetNumRaidMembers() do
@@ -199,7 +199,7 @@ end
 function mod:UNIT_HEALTH(uId)
 	if not warned_preFrenzy and self:GetUnitCreatureId(uId) == 37813 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.33 then
 		warned_preFrenzy = true
-		warnFrenzySoon:Show()	
+		warnFrenzySoon:Show()
 	end
 end
 

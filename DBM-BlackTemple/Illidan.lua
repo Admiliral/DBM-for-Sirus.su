@@ -60,7 +60,7 @@ function Illidan:OnCombatStart(delay)
 	phase2 = nil
 	phase4 = nil
 	delay = (delay or 0) - 7 - 33 -- 7 = time until combat starts and 33 because the timer will stop while illidan is switching from phase 1->2, 2->3 and 3->4; according to my combatlogs this should be quite accurate
-	self:StartStatusBarTimer(1500 - delay, "Enrage", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy");	
+	self:StartStatusBarTimer(1500 - delay, "Enrage", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy");
 	self:ScheduleAnnounce(900 - delay, DBM_GENERIC_ENRAGE_WARN:format(10, DBM_MIN), 1)
 	self:ScheduleAnnounce(1200 - delay, DBM_GENERIC_ENRAGE_WARN:format(5, DBM_MIN), 1)
 	self:ScheduleAnnounce(1320 - delay, DBM_GENERIC_ENRAGE_WARN:format(3, DBM_MIN), 1)
@@ -239,10 +239,10 @@ function Illidan:OnSync(msg)
 		if self.Options.WarnDemonForm then
 			self:ScheduleAnnounce(82, DBM_ILLIDAN_WARN_DEMONPHASE_SOON, 3)
 		end
-		
+
 		self:StartStatusBarTimer(71.5, "Enrage2", "Interface\\Icons\\Ability_Warrior_EndlessRage")
 		self:ScheduleAnnounce(66.5, DBM_ILLIDAN_WARN_P4ENRAGE_SOON, 3)
-		
+
 		phase4 = true
 	elseif msg == "DemonForm" then
 		flameBursts = 0

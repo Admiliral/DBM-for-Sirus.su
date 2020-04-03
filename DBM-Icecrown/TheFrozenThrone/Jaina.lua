@@ -53,18 +53,17 @@ local berserkTimer			= mod:NewBerserkTimer(1802)
 
 mod:AddBoolOption("SetIconOnExplosiveTargets", true)
 mod:AddBoolOption("RangeFrame")
-    
+
 mod.vb.phase = 1
 local explosiveTargets = {}
-local explosiveIcons = 8 
+local explosiveIcons = 8
 local wildFlameTargets = {}
 local vengerfulIceTargets = {}
 local iceMarkTargets = {}
-            
+
 function mod:OnCombat()
 	self.vb.phase = 1
     explosiveIcons = 8
-    wildFlameIcons = 8
     berserkTimer:Start()
     timerSummonElemenCD:Start(27)
     timerArcaneStormCD:Start(74)
@@ -124,14 +123,14 @@ function mod:SPELL_AURA_APPLIED(args)
         timerFirewhirlCD:Schedule(20)
         timerCollapse:Start()
         warnFirewhirl:Show()
-        if timerRaysCD:GetTime() > 0 then 
-            timerRaysCD:Update(select(1, timerRaysCD:GetTime()), select(2, timerRaysCD:GetTime()) + 20) 
-        else 
+        if timerRaysCD:GetTime() > 0 then
+            timerRaysCD:Update(select(1, timerRaysCD:GetTime()), select(2, timerRaysCD:GetTime()) + 20)
+        else
             timerRaysCD:Start(20)
         end
-        if timerMeteorCD:GetTime() > 0 then 
-            timerMeteorCD:Update(select(1, timerMeteorCD:GetTime()), select(2, timerMeteorCD:GetTime()) + 20) 
-        else 
+        if timerMeteorCD:GetTime() > 0 then
+            timerMeteorCD:Update(select(1, timerMeteorCD:GetTime()), select(2, timerMeteorCD:GetTime()) + 20)
+        else
             timerMeteorCD:Start(20)
         end
     elseif args:IsSpellID(306487) then
@@ -200,7 +199,7 @@ function mod:SPELL_CAST_SUCCESS(args)
         timerMeteorCD:Cancel()
         timerFirewhirlCD:Cancel()
         timerIceWrathCD:Start(135)
-        NewCDTimer(120, 306545)
+        self:NewCDTimer(120, 306545)
     end
 end
 

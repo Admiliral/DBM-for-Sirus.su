@@ -79,7 +79,7 @@ DBM_CORE_SLASHCMD_HELP				= {
 	"/dbm unlock: 상태 바 타이머를 움직일 수 있도록 보여줍니다.(줄임말: move)",
 	"/dbm timer <숫자> <글자>: <숫자> 초만큼 진행되는 <글자>바가 생성 됨.",
 	"/dbm broadcast timer <숫자> <글자>: <숫자> 초만큼 진행되는 <글자>바를 공격대에 알립니다.(공격대 권한이 있을 경우만 작동)",
-	"/dbm break <min>: <min>분 동안 타이머를 작동합니다.  모든 공격대원에게 DBM이 발송하는 쉬는 시간 타이머를 보냅니다.",	
+	"/dbm break <min>: <min>분 동안 타이머를 작동합니다.  모든 공격대원에게 DBM이 발송하는 쉬는 시간 타이머를 보냅니다.",
 	"/dbm help: 현재 보고 있는 도움말.",
 }
 
@@ -107,7 +107,7 @@ DBM_CORE_ACHIEVEMENT_TIMER_SPEED_KILL = "Speed Kill(업적 타이머)"
 -- Auto-generated Timer Localizations
 DBM_CORE_AUTO_TIMER_TEXTS.target		= "%s: %%s"
 DBM_CORE_AUTO_TIMER_TEXTS.cast 			= "%s"
-DBM_CORE_AUTO_TIMER_TEXTS.active 		= "%s"	
+DBM_CORE_AUTO_TIMER_TEXTS.active 		= "%s"
 DBM_CORE_AUTO_TIMER_TEXTS.cd 			= "%s 쿨다운"
 DBM_CORE_AUTO_TIMER_TEXTS.next 			= "다음 %s"
 DBM_CORE_AUTO_TIMER_TEXTS.achievement	= "%s"
@@ -139,7 +139,7 @@ DBM_CORE_AUTO_ANNOUNCE_OPTIONS.phase 	= "%d 단계 경고 보기"
 DBM_CORE_AUTO_SPEC_WARN_OPTIONS = {
 	spell 		= "$spell:%d의 특수 경고 보기",
 	dispel 		= "$spell:%d의 특수 경고 보기(해제/마법훔치기)",
-	interupt	= "$spell:%d의 특수 경고 보기(차단)",	
+	interupt	= "$spell:%d의 특수 경고 보기(차단)",
 	you 		= "$spell:%d의 영향을 받을 경우 특수 경고 보기",
 	target 		= "$spell:%d의 영향을 누군가 받을 경우 특수 경고 보기",
 	close 		= "$spell:%d의 영향을 가까운 공대원으로부터 받을 경우 특수 경고 보기",
@@ -152,7 +152,7 @@ DBM_CORE_AUTO_SPEC_WARN_OPTIONS = {
 DBM_CORE_AUTO_SPEC_WARN_TEXTS = {
 	spell 		= "%s!",
 	dispel 		= "%s : %%s - 해제!",
-	interupt 	= "%s - 차단!",	
+	interupt 	= "%s - 차단!",
 	you 		= "당신에게 %s",
 	target 		= "%s : %%s",
 	close 		= "%%s에게 가까운 당신에게 %s 시전",

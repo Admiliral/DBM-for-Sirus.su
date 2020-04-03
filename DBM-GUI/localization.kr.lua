@@ -14,7 +14,7 @@ L.TabCategory_CLASSIC 	= "오리지널"
 L.TabCategory_OTHER     = "기타 보스 모드"
 
 L.BossModLoaded 		= "%s 공략 상황"
-L.BossModLoad_now 		= [[현재 보스의 모드가 로드되지 않았습니다. 
+L.BossModLoad_now 		= [[현재 보스의 모드가 로드되지 않았습니다.
 애드온 불러오기 버튼을 클릭하여 강제적으로 보스 모드를 실행시킬 수 있습니다.
 ]]
 
@@ -71,7 +71,7 @@ L.RaidWarnColor_1 		= "색상 1"
 L.RaidWarnColor_2 		= "색상 2"
 L.RaidWarnColor_3 		= "색상 3"
 L.RaidWarnColor_4 		= "색상 4"
-L.InfoRaidWarning		= [[레이드 경고 프레임의 위치와 컬러를 수정할 수 있습니다. 
+L.InfoRaidWarning		= [[레이드 경고 프레임의 위치와 컬러를 수정할 수 있습니다.
 이것은 메세지를 위한 색상 수정 프레임이며 "Y 가 X에게 주문을 걸었습니다." 같은 메세지를 뜻합니다.]]
 L.ColorResetted 		= "현재 필드의 색상 셋팅을 초기화 합니다."
 L.ShowWarningsInChat 	= "위험 알림을 채팅 창에 보여줍니다."
@@ -128,7 +128,7 @@ L.BarWidth					= "바 길이: %d"
 L.Panel_SpamFilter				= "스팸 필터"
 L.Area_SpamFilter				= "일반 스팸 필터 옵션"
 L.HideBossEmoteFrame			= "레이드 보스가 사용하는 감정표현 숨기기"
-L.SpamBlockRaidWarning			= "다른 보스 모드가 알리는 경보 감추기" 
+L.SpamBlockRaidWarning			= "다른 보스 모드가 알리는 경보 감추기"
 L.SpamBlockBossWhispers			= "전투 중 사용되는 <DBM> 경보 귓속말 감추기"
 L.BlockVersionUpdatePopup		= "업데이트 알림 창 끄기"
 L.ShowBigBrotherOnCombatStart	= "전투가 시작되면 BigBrother 버프 체크 켜기"

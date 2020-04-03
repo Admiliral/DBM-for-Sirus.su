@@ -43,7 +43,7 @@
 	DBM_MAULGAR_DODGED	= "ausgewichen";
 	DBM_MAULGAR_PARRIED	= "pariert";
 	DBM_MAULGAR_MISSED	= "verfehlt";
-	
+
 	DBM_SBT["Arcing Smash"]			= "Bogenzerkracher";
 	DBM_SBT["Next Whirlwind"]		= "Nächster Wirbelwind";
 	DBM_SBT["Whirlwind"]			= "Wirbelwind";
@@ -55,12 +55,12 @@
 			[1]	= "Spell Shield: (.*)",
 			[2]	= "Zauberschild: %1",
 		},
-	};	
-	
+	};
+
 	-- Gruul
 	DBM_GRUUL_NAME				= "Gruul der Drachenschlächter";
 	DBM_GRUUL_DESCRIPTION		= "Sagt Zertrümmern, Wachsen, Nachklingen und Höhleneinsturz an.";
-	
+
 	DBM_GRUUL_RANGE_OPTION		= "Range Check Frame anzeigen";
 	DBM_GRUUL_GROW_OPTION		= "Wachsen ansagen";
 	DBM_GRUUL_SHATTER_OPTION	= "Zertrümmern ansagen";
@@ -75,7 +75,7 @@
 	DBM_GRUUL_SHATTER_CAST		= "Gruul der Drachenschlächter beginnt Zertrümmern zu wirken.";
 	DBM_GRUUL_SLAM_CAST			= "Gruul der Drachenschlächter beginnt Erde erschüttern zu wirken.";
 	DBM_GRUUL_SILENCE			= "Nachklingen";
-	
+
 	DBM_GRUUL_GROW_ANNOUNCE		= "*** Wachsen #%s ***";
 	DBM_GRUUL_SHATTER_WARN		= "*** Zertrümmern ***";
 	DBM_GRUUL_SHATTER_20WARN	= "*** Erde erschüttern bald ***";
@@ -83,7 +83,7 @@
 	DBM_GRUUL_SILENCE_WARN		= "*** Nachklingen ***";
 	DBM_GRUUL_SILENCE_SOON_WARN	= "*** Nachklingen bald ***";
 	DBM_GRUUL_CAVE_IN_WARN		= "Höhleneinsturz";
-	
+
 	DBM_SBT["Shatter"]			= "Zertrümmern";
 	DBM_SBT["Ground Slam"]		= "Erde erschüttern"
 	DBM_SBT["Silence"]			= "Nachklingen";
@@ -93,13 +93,13 @@
 			"Wachsen #"
 		},
 	}
-	
+
 	-- Kazzak
 	DBM_KAZZAK_NAME				= "Verdammnislord Kazzak";
 	DBM_KAZZAK_DESCRIPTION		= "Sagt Enrage und die Debuffs an.";
-	
+
 	DBM_KAZZAK_YELL_PULL		= "Für die Legion! Für Kil'Jaeden!";
-	
+
 	-- Magtheridon
 	DBM_MAG_NAME			= "Magtheridon";
 	DBM_MAG_DESCRIPTION		= "Sagt Infernos und Heilung an und zeigt Timer für Phase 2 und Drucknova an.";
@@ -120,6 +120,6 @@
 	DBM_MAG_WARN_HEAL		= "*** Heilung ***";
 	DBM_MAG_WARN_NOVA_NOW	= "*** Drucknova ***";
 	DBM_MAG_WARN_NOVA_SOON	= "*** Drucknova bald ***";
-	
+
 	DBM_SBT["Blast Nova"]	= "Drucknova";
 end

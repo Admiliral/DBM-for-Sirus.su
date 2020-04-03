@@ -435,17 +435,17 @@ do
 	local grabIcon = 2
 	local iconsSet = 0
 	local lastValk = 0
-	
+
 	local function resetValkIconState()
 		table.wipe(valkIcons)
 		currentIcon = 2
 		iconsSet = 0
 	end
-	
+
 	local function scanValkyrTargets()
 		if (time() - lastValk) < 10 then    -- scan for like 10secs
 			for i=0, GetNumRaidMembers() do        -- for every raid member check ..
-				if UnitInVehicle("raid"..i) and not valkyrTargets[i] then      -- if person #i is in a vehicle and not already announced 
+				if UnitInVehicle("raid"..i) and not valkyrTargets[i] then      -- if person #i is in a vehicle and not already announced
 					valkyrWarning:Show(UnitName("raid"..i))  -- UnitName("raid"..i) returns the name of the person who got valkyred
 					valkyrTargets[i] = true          -- this person has been announced
 					if UnitName("raid"..i) == UnitName("player") then
@@ -473,9 +473,8 @@ do
 			wipe(valkyrTargets)       -- no more valkyrs this round, so lets clear the table
 			grabIcon = 2
 		end
-	end  
-	
-	
+	end
+
 	function mod:SPELL_SUMMON(args)
 		if args:IsSpellID(69037) then -- Summon Val'kyr
 			if time() - lastValk > 15 then -- show the warning and timer just once for all three summon events
@@ -493,7 +492,7 @@ do
 			end
 		end
 	end
-	
+
 	mod:RegisterOnUpdateHandler(function(self)
 		if self.Options.ValkyrIcon and (DBM:GetRaidRank() > 0 and not (iconsSet == 3 and self:IsDifficulty("normal25", "heroic25") or iconsSet == 1 and self:IsDifficulty("normal10", "heroic10"))) then
 			for i = 1, GetNumRaidMembers() do
@@ -509,7 +508,7 @@ do
 	end, 1)
 end
 
-do 
+do
 	local lastWinter = 0
 	function mod:SPELL_DAMAGE(args)
 		if args:IsSpellID(68983, 73791, 73792, 73793) and args:IsPlayer() and time() - lastWinter > 2 then		-- Remorseless Winter
@@ -524,10 +523,10 @@ function mod:UNIT_HEALTH(uId)
 		warnedValkyrGUIDs[UnitGUID(uId)] = true
 		specWarnValkyrLow:Show()
 	end
-	if phase == 1 and not warned_preP2 and self:GetUnitCreatureId(uId) == 36597 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.73 then
+	if self.vb.phase == 1 and not warned_preP2 and self:GetUnitCreatureId(uId) == 36597 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.73 then
 		warned_preP2 = true
 		warnPhase2Soon:Show()
-	elseif phase == 2 and not warned_preP3 and self:GetUnitCreatureId(uId) == 36597 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.43 then
+	elseif self.vb.phase == 2 and not warned_preP3 and self:GetUnitCreatureId(uId) == 36597 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.43 then
 		warned_preP3 = true
 		warnPhase3Soon:Show()
 	end
@@ -601,7 +600,7 @@ function mod:OnSync(msg, target)
 		if not self.Options.LKBugWorkaround then
 			warnTrapCast:Show(target)
 			if self.Options.TrapIcon then
-				self:SetIcon(player, 8, 10)
+				self:SetIcon("player", 8, 10)
 			end
 			if target == UnitName("player") then
 				specWarnTrap:Show()

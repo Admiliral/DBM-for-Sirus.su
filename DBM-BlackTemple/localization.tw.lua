@@ -232,7 +232,7 @@ DBM_COUNCIL_YELL_PULL2				= "你們要考驗我嗎?"
 DBM_COUNCIL_YELL_PULL3				= "我還有更重要的事情要做……"
 DBM_COUNCIL_YELL_PULL4				= "不逃走就受死吧!"
 
-DBM_COUNCIL_CAST_DW				= "瑪蘭黛女士開始施放神聖之怒。" 
+DBM_COUNCIL_CAST_DW				= "瑪蘭黛女士開始施放神聖之怒。"
 DBM_COUNCIL_CAST_COH				= "瑪蘭黛女士開始施放治療之環。"
 DBM_COUNCIL_HEAL_COH				= "瑪蘭黛女士的治療之環治療了"
 DBM_COUNCIL_INTERRUPT_COH			= "打斷了瑪蘭黛女士的治療之環"

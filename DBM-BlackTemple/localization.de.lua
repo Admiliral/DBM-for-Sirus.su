@@ -12,21 +12,20 @@
 	DBM_NAJENTUS_DEBUFF_SPINE		= "([^%s]+) (%w+) von Aufspießender Stachel betroffen%.";
 	DBM_NAJENTUS_DEBUFF_SHIELD		= "Oberster Kriegsfürst Naj'entus ist von Gezeitenschild betroffen.";
 	DBM_NAJENTUS_FADE_SHIELD		= "Gezeitenschild schwindet von Oberster Kriegsfürst Naj'entus.";
-	
+
 	DBM_NAJENTUS_WARN_SPINE			= "*** Aufspießender Stachel auf >%s< ***";
 	DBM_NAJENTUS_WARN_ENRAGE		= "*** Enrage in %s %s ***";
 	DBM_NAJENTUS_WARN_SHIELD		= "*** Gezeitenschild ***";
 	DBM_NAJENTUS_WARN_SHIELD_SOON	= "*** Gezeitenschild bald ***";
-	
+
 	DBM_NAJENTUS_FRAME_TITLE			= "Naj'entus"
 	DBM_NAJENTUS_FRAME_TEXT				= "Spieler mit unter 8500 HP:"
 	DBM_NAJENTUS_SPELL_PWS				= "Machtword: Schield"
 	DBM_NAJENTUS_SPELL_FW				= "Frost Ward"
 	DBM_NAJENTUS_SPELL_FB				= "Fel Blossom"
-	
+
 	DBM_SBT["Next Tidal Shield"]		= "Nächstes Gezeitenschild"
-	
-	
+
 	-- Supremus
 	DBM_SUPREMUS_NAME					= "Supremus";
 	DBM_SUPREMUS_DESCRIPTION			= "Sagten Phasen und Ziele an.";
@@ -48,9 +47,9 @@
 	DBM_SUPREMUS_SPECWARN_FIRE			= "Feuer!";
 	DBM_SUPREMUS_SPECWARN_VOLCANO		= "Vulkan!";
 	DBM_SUPREMUS_WHISPER_RUN_AWAY		= "Lauf weg!";
-	
+
 	DBM_SBT["Tank & Spank Phase"]		= "Tank Phase"
-	
+
 	-- Shade of Akama
 	DBM_AKAMA_NAME						= "Akamas Schemen";
 	DBM_AKAMA_DESCRIPTION				= nil;
@@ -62,7 +61,7 @@
 
 	DBM_AKAMA_WARN_CHANNELER_DOWN		= "**** %s/6 Kanalisierer tot ****";
 	DBM_AKAMA_WARN_SORCERER_DOWN		= "**** %s Zauberhexer tot ****";
-	
+
 	-- Teron Gorefiend
 	DBM_GOREFIEND_NAME					= "Teron Blutschatten";
 	DBM_GOREFIEND_DESCRIPTION			= "Sagt Schatten des Todes und Verbrennen an.";
@@ -77,7 +76,7 @@
 	DBM_GOREFIEND_WARN_INCINERATE		= "*** Verbrennen: >%s< ***";
 
 	DBM_GOREFIEND_SPECWARN_SOD			= "Schatten des Todes";
-	
+
 	DBM_SBT["TeronGorefiend"]			= {
 		{
 			"Vengeful Spirit: (.*)",
@@ -88,8 +87,7 @@
 			"Schatten: %1",
 		}
 	}
-	
-	
+
 	-- Bloodboil
 	DBM_BLOODBOIL_NAME					= "Gurtogg Siedeblut";
 	DBM_BLOODBOIL_DESCRIPTION			= "Sagt Siedeblut und Teufelswut an.";
@@ -110,11 +108,11 @@
 	DBM_BLOODBOIL_WARN_NORMALPHASE		= "*** Normale Phase ***";
 	DBM_BLOODBOIL_WARN_SMASH			= "*** Bogenzerkracher ***";
 	DBM_BLOODBOIL_WARN_SMASH_SOON		= "*** Bogenzerkracher bald ***";
-	
+
 	DBM_SBT["Fel Rage"]					= "Teufelswut"
 	DBM_SBT["Bloodboil"]				= "Siedeblut"
 	DBM_SBT["Normal Phase"]				= "Normale Phase"
-	
+
 	-- Essence (Reliquary) of Souls
 	DBM_SOULS_NAME						= "Reliquiar der Verirrten"
 	DBM_SOULS_DESCRIPTION				= "Sagt Enrage, Fixieren, Seelensauger, Runenschild, Abstumpfen und Bosheit an."
@@ -159,7 +157,7 @@
 	DBM_SOULS_SPECWARN_SPITE			= "Bosheit!"
 	DBM_SOULS_WARN_ANGER_INC			= "*** Essenz des Zorns ***"
 	DBM_SOULS_WHISPER_SPITE				= "Bosheit auf dir!"
-	
+
 	DBM_SBT["Next Enrage"]				= "Nächster Enrage"
 	DBM_SBT["Mana Drain"]				= "Manasauger"
 	DBM_SBT["Rune Shield"]				= "Runenschild"
@@ -171,7 +169,7 @@
 			"Fixieren: %1",
 		}
 	}
-	
+
 	-- Mother Shahraz
 	DBM_SHAHRAZ_NAME					= "Mutter Shahraz"
 	DBM_SHAHRAZ_DESCRIPTION				= "Sagt Verhängnisvolle Affäre an und setzt Icons auf die Targets."
@@ -181,7 +179,6 @@
 	DBM_SHAHRAZ_YELL_PULL				= "Also... Geschäft oder Vergnügen?"
 	DBM_SHAHRAZ_AFFLICT_FA				= "([^%s]+) (%w+) von Verhängnisvolle Affäre betroffen."
 	DBM_SHAHRAZ_BEAM_VILE				= "von Übler Strahl betroffen"
-	
 
 	DBM_SHAHRAZ_BEAM_SINISTER			= "Mutter Shahraz%s?'s Finsterer Strahl"
 	DBM_SHAHRAZ_BEAM_SINFUL				= "Mutter Shahraz%s?'s Sündhafter Strahl"
@@ -193,9 +190,9 @@
 	DBM_SHAHRAZ_WARN_BEAM_VILE			= "*** Übler Strahl ***"
 	DBM_SHAHRAZ_WARN_BEAM_SINISTER		= "*** Finsterer Strahl ***"
 	DBM_SHAHRAZ_WARN_BEAM_SINFUL		= "*** Sündhafter Strahl ***"
-	DBM_SHAHRAZ_WARN_BEAM_WICKED		= "*** Heimtückischer Strahl ***"	
+	DBM_SHAHRAZ_WARN_BEAM_WICKED		= "*** Heimtückischer Strahl ***"
 	DBM_SHAHRAZ_WARN_BEAM_SOON			= "*** Strahl in 3 Sek ***"
-	
+
 	DBM_SBT["Next Beam"]				= "Nächster Strahl"
 
 	-- Illidari Council
@@ -217,12 +214,12 @@
 	DBM_COUNCIL_MOB_MALANDE				= "Lady Malande"
 	DBM_COUNCIL_MOB_ZEREVOR				= "Hochnethermant Zerevor"
 	DBM_COUNCIL_MOB_VERAS				= "Veras Schwarzschatten"
-	
+
 	DBM_COUNCIL_MOB_GATHIOS_EN			= "Gathios the Shatterer"
 	DBM_COUNCIL_MOB_MALANDE_EN			= "Lady Malande"
 	DBM_COUNCIL_MOB_ZEREVOR_EN			= "High Nethermancer Zerevor"
 	DBM_COUNCIL_MOB_VERAS_EN			= "Veras Darkshadow"
-	
+
 	DBM_COUNCIL_YELL_PULL1				= "Gemeinsprache... welch barbarische Zunge. Bandal!"
 	DBM_COUNCIL_YELL_PULL2				= "Wollt Ihr mich auf die Probe stellen?"
 	DBM_COUNCIL_YELL_PULL3				= "Ich habe Besseres zu tun..."
@@ -252,7 +249,7 @@
 	DBM_COUNCIL_WARN_AURA_DEV			= "Aura der Hingabe"
 	DBM_COUNCIL_WARN_AURA_RES			= "Aura des Widerstands"
 	DBM_COUNCIL_WARN_VANISHFADE_SOON	= "Veras in 5 Sec wieder da"
-	
+
 	DBM_SBT["Circle of Healing"]		= "Kreis der Heilung"
 	DBM_SBT["Next Circle of Healing"]	= "Nächster Kreis der Heilung"
 	DBM_SBT["Reflective Shield"]		= "Reflektierender Schild"
@@ -269,8 +266,7 @@
 			"Meleeschild: %1",
 		},
 	}
-	
-	
+
 	-- Illidan Stormrage
 	DBM_ILLIDAN_NAME					= "Illidan Sturmgrimm"
 	DBM_ILLIDAN_DESCRIPTION				= "Sagt Phasen, Abscheren, Schattengeister, Sperrfeuer, Eye Blast, Peinigende Flammen, Schattendämonen, Flammenexplosion und Enrage an."
@@ -331,7 +327,7 @@
 	DBM_ILLIDAN_SELFWARN_SHADOWFIEND	= "Schädlicher Schattengeist"
 	DBM_ILLIDAN_SELFWARN_SHADOW			= "Peinigende Flammen"
 	DBM_ILLIDAN_SELFWARN_DEMONS			= "Schattendämon"
-	
+
 	DBM_SBT["Next Dark Barrage"]		= "Nächstes Sperrfeuer"
 	DBM_SBT["Demon Phase"]				= "Dämonen Phase"
 	DBM_SBT["Normal Phase"]				= "Normale Phase"

@@ -60,7 +60,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart = "Spiel startet in", 
+	TimerStart = "Spiel startet in",
 	TimerTower = "%s",
 	TimerGY = "%s",
 })
@@ -100,7 +100,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart = "Spiel startet in", 
+	TimerStart = "Spiel startet in",
 	TimerCap = "%s",
 })
 
@@ -137,7 +137,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart = "Spiel startet in", 
+	TimerStart = "Spiel startet in",
 	TimerFlag = "Flaggenrespawn"
 })
 
@@ -162,7 +162,7 @@ L:SetMiscLocalization({
 	BgStart30 = "Der Kampf um die Kriegshymnenschlucht beginnt in 30 Sekunden. Haltet Euch bereit!",
 	ZoneName = "Kriegshymnenschlucht",
 	Alliance = "Allianz",
-	Horde = "Horde",	
+	Horde = "Horde",
 	InfoErrorText = "Die Zielauswahlfunktion für den Flaggenträger wird bei Kampfende wiederhergestellt.",
 	ExprFlagPickUp = "(.*) hat die Flagge der (%w+) aufgenommen!",
 	ExprFlagCaptured = "(.+) hat die Flagge der (%w+) errungen!",
@@ -173,7 +173,7 @@ L:SetMiscLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart = "Spiel startet in", 
+	TimerStart = "Spiel startet in",
 	TimerFlag = "Flaggen-Respawn"
 })
 
@@ -199,13 +199,13 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerStart		= "Spiel startet in", 
+	TimerStart		= "Spiel startet in",
 	TimerPOI		= "%s",
 	TimerSiegeEngine	= "Belagerungsmaschine"
 })
 
 L:SetOptionLocalization({
-	TimerStart		= "Zeige Starttimer", 
+	TimerStart		= "Zeige Starttimer",
 	TimerPOI		= "Zeige Timer für Eroberungen",
 	TimerSiegeEngine	= "Zeige Timer für Belagerungsmaschine",
 	WarnSiegeEngine		= "Zeige Warnung wenn Belagerungsmaschine bereit ist",

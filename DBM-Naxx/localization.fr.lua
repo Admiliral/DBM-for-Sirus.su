@@ -362,7 +362,7 @@ L:SetWarningLocalization({
 L:SetTimerLocalization({
 	TimerAir		   		  = "Envol",
 	TimerLanding			  = "Atterrissage dans",
-	TimerIceBlast			  = "Souffle de givre"	
+	TimerIceBlast			  = "Souffle de givre"
 })
 
 ------------------

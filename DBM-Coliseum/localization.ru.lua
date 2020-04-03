@@ -135,23 +135,23 @@ L:SetMiscLocalization{
 	Harkzog				= "Харкзог <Чернокнижник>",			-- 34450
 	Narrhok				= "Наррок Крушитель Стали <Воин>",		-- 34453
 	Tyrius				= "Тирий Клинок Сумерек <Рыцарь смерти>",	-- 34461, Allience
- 	Kavina				= "Кавина Песня Рощи <Друид>",			-- 34460, Allience
- 	Melador				= "Меладор Дальний Гонец <Друид>",		-- 34469, Allience
- 	Alyssia 			= "Алисса Лунопард <Охотница>",			-- 34467, Allience
- 	Noozle				= "Нуззл Чудодей <Маг>",			-- 34468, Allience
- 	Baelnor 			= "Бельнор Светоносный <Паладин>",		-- 34471, Allience
- 	Velanaa				= "Веланаа <Паладин>", 				-- 34465, Allience
- 	Anthar				= "Антар Очистительный Горн <Жрец>",		-- 34466, Allience
- 	Brienna				= "Бриенна Приход Ночи <Жрица>",		-- 34473, Allience
- 	Irieth				= "Ириэт Шаг Сквозь Тень <Разбойница>",		-- 34472, Allience
- 	Saamul				= "Саамул <Шаман>", 				-- 34470, Allience
- 	Shaabad				= "Шаабад <Шаман>", 				-- 34463, Allience
- 	Serissa				= "Серисса Мрачная Кропильщица <Чернокнижница>",-- 34474, Allience
- 	Shocuul				= "Шокул <Воин>",				-- 34475, Allience
+	Kavina				= "Кавина Песня Рощи <Друид>",			-- 34460, Allience
+	Melador				= "Меладор Дальний Гонец <Друид>",		-- 34469, Allience
+	Alyssia 			= "Алисса Лунопард <Охотница>",			-- 34467, Allience
+	Noozle				= "Нуззл Чудодей <Маг>",			-- 34468, Allience
+	Baelnor 			= "Бельнор Светоносный <Паладин>",		-- 34471, Allience
+	Velanaa				= "Веланаа <Паладин>", 				-- 34465, Allience
+	Anthar				= "Антар Очистительный Горн <Жрец>",		-- 34466, Allience
+	Brienna				= "Бриенна Приход Ночи <Жрица>",		-- 34473, Allience
+	Irieth				= "Ириэт Шаг Сквозь Тень <Разбойница>",		-- 34472, Allience
+	Saamul				= "Саамул <Шаман>", 				-- 34470, Allience
+	Shaabad				= "Шаабад <Шаман>", 				-- 34463, Allience
+	Serissa				= "Серисса Мрачная Кропильщица <Чернокнижница>",-- 34474, Allience
+	Shocuul				= "Шокул <Воин>",				-- 34475, Allience
 	AllianceVictory		= "СЛАВА АЛЬЯНСУ!",
 	HordeVictory		= "That was just a taste of what the future brings. FOR THE HORDE!",
 	YellKill			= "Пустая и горькая победа. После сегодняшних потерь мы стали слабее как целое. Кто еще, кроме Короля-лича, выиграет от подобной глупости? Пали великие воины. И ради чего? Истинная опасность еще впереди – нас ждет битва с  Королем-личом."
-} 
+}
 
 L:SetOptionLocalization{
 	PlaySoundOnBladestorm	= "Звуковой сигнал при Вихре клинков"
@@ -167,7 +167,7 @@ L:SetGeneralLocalization{
 }
 
 L:SetTimerLocalization{
-	TimerSpecialSpell	= "Следующая спец-способность"	
+	TimerSpecialSpell	= "Следующая спец-способность"
 }
 
 L:SetWarningLocalization{
@@ -247,7 +247,7 @@ L:SetOptionLocalization{
 	PlaySoundOnPursue		= "Звуковой сигнал, если вас преследуют",
 	PursueIcon				= "Устанавливать метки на преследуемых",
 	SpecWarnShadowStrike	= "Спец-предупреждение для $spell:66134 (для прерывания)",
-	RemoveHealthBuffsInP3	= "Удалять усиления здоровья в начале фазы 3", 
+	RemoveHealthBuffsInP3	= "Удалять усиления здоровья в начале фазы 3",
 	SetIconsOnPCold         = "Устанавливать метки на цели заклинания $spell:68510",
 	AnnouncePColdIcons		= "Объявлять метки целей заклинания $spell:68510 в рейд-чат\n(требуются права лидера или помощника)",
 	AnnouncePColdIconsRemoved	= "Объявлять также о снятии меток с целей заклинания $spell:68510\n(требуется предыдущая опция)"

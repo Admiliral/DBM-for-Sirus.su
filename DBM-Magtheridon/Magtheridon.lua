@@ -79,7 +79,7 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(305166) then
         handTargets[#handTargets + 1] = args.destName
-        if #handTargets >= 3 then 
+        if #handTargets >= 3 then
             warnHandOfMagt:Show(table.concat(handTargets, ">, <"))
             table.wipe(handTargets)
         end

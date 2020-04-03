@@ -358,7 +358,7 @@ L:SetWarningLocalization({
 L:SetTimerLocalization({
 	TimerAir		= "Air phase",
 	TimerLanding	= "Landing",
-	TimerIceBlast	= "Frost Breath"	
+	TimerIceBlast	= "Frost Breath"
 })
 
 ------------------

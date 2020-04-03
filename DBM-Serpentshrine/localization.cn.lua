@@ -44,7 +44,7 @@ if (GetLocale() == "zhCN") then
 --[[
 	DBM_SBT["Enrage"]		= "激怒";
 	DBM_SBT["Water Tomb"]	= "水之墓";
-	
+
 	DBM_SBT["Hydross"] = {
 		  [1] = {"Mark of Hydross #", "海度斯印记 #"},
 		  [2] = {"Mark of Corruption #", "腐蚀印记 #"},
@@ -224,7 +224,7 @@ if (GetLocale() == "zhCN") then
 	DBM_SBT["Strider"]				= "盘牙巡逻者";
 	DBM_SBT["Tainted Elemental"]	= "被污染的元素";
 	DBM_SBT["Naga"]					= "盘牙精英";
-	
+
 	DBM_SBT["Vashj"] = {
 		  [1] = {"Static Charge: (.*)", "静电充能 -> %1"},
 	}

@@ -46,18 +46,18 @@ mod:AddBoolOption("WarnFlamePillar", true)
 
 local function IsMeleeZ(uId)
 	return select(2, UnitClass(uId)) == "ROGUE"
-			or select(2, UnitClass(uId)) == "WARRIOR" 
-			or select(2, UnitClass(uId)) == "DEATHKNIGHT"
-			or (select(2, UnitClass(uId)) == "PALADIN" and select(3, GetTalentTabInfo(3)) >= 51)
-     		or (select(2, UnitClass(uId)) == "SHAMAN" and select(3, GetTalentTabInfo(2)) >= 31)
-			or (select(2, UnitClass(uId)) == "DRUID" and select(3, GetTalentTabInfo(2)) >= 51)
+		or select(2, UnitClass(uId)) == "WARRIOR"
+		or select(2, UnitClass(uId)) == "DEATHKNIGHT"
+		or (select(2, UnitClass(uId)) == "PALADIN" and select(3, GetTalentTabInfo(3)) >= 51)
+		or (select(2, UnitClass(uId)) == "SHAMAN" and select(3, GetTalentTabInfo(2)) >= 31)
+		or (select(2, UnitClass(uId)) == "DRUID" and select(3, GetTalentTabInfo(2)) >= 51)
 end
 
 local function IsTankZ(uId)
 	return  (select(2, UnitClass(uId)) == "WARRIOR" and select(3, GetTalentTabInfo(3)) >= 13)
-			or (select(2, UnitClass(uId)) == "DEATHKNIGHT" and UnitAura(uId, L.FrostPresence))
-			or (select(2, UnitClass(uId)) == "PALADIN" and select(3, GetTalentTabInfo(2)) >= 51)
-			or (select(2, UnitClass(uId)) == "DRUID" and UnitAura(uId, L.DriudBearForm))
+		or (select(2, UnitClass(uId)) == "DEATHKNIGHT" and UnitAura(uId, L.FrostPresence))
+		or (select(2, UnitClass(uId)) == "PALADIN" and select(3, GetTalentTabInfo(2)) >= 51)
+		or (select(2, UnitClass(uId)) == "DRUID" and UnitAura(uId, L.DriudBearForm))
 end
 
 function mod:tPillar()
@@ -89,7 +89,7 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
     if args:IsSpellID(43095) then
         timerParalysis:Show()
-    elseif args:IsSpellID(43215) then 
+    elseif args:IsSpellID(43215) then
         timerBreath:Start()
     elseif args:IsSpellID(43213) then
         timerFlameWhirl:Start()
@@ -135,7 +135,7 @@ function mod:UNIT_TARGET(uId)
             specWarnFlamePillar:Show()
         end
         if IsMeleeZ("player") and IsMeleeZ("targettarget") and not IsTankZ("targettarget") then
-            self:PlaySound("run")		
+            self:PlaySound("run")
             specWarnFlamePillarMelee:Show()
         end
     end
@@ -144,14 +144,14 @@ end
 function mod:UNIT_HEALTH(uId)
 	if (self:GetUnitCreatureId(uId) == 23863 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.81 and phaseCounter == 1) then
 		phaseCounter = phaseCounter + 1
-		warnNextPhaseSoon:Show(L.Bear)	
+		warnNextPhaseSoon:Show(L.Bear)
     elseif (self:GetUnitCreatureId(uId) == 23863 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.61 and phaseCounter == 2) then
 		phaseCounter = phaseCounter + 1
         timerParalysis:Cancel()
-		warnNextPhaseSoon:Show(L.Hawk)	
+		warnNextPhaseSoon:Show(L.Hawk)
     elseif (self:GetUnitCreatureId(uId) == 23863 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.41 and phaseCounter == 3) then
 		phaseCounter = phaseCounter + 1
-		warnNextPhaseSoon:Show(L.Lynx)	
+		warnNextPhaseSoon:Show(L.Lynx)
     elseif (self:GetUnitCreatureId(uId) == 23863 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.21 and phaseCounter == 4) then
 		phaseCounter = phaseCounter + 1
 		warnNextPhaseSoon:Show(L.Dragon)

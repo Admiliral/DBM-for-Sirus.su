@@ -37,10 +37,10 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L.YellBear then 
-	                 self:PlaySound("bearform","kakebnut","palku")    -- Не лезь блядь, дебил сука ебаный... (*RRMV*)
+	if msg == L.YellBear then
+		self:PlaySound("bearform","kakebnut","palku")    -- Не лезь блядь, дебил сука ебаный... (*RRMV*)
         timerNextSilence:Start()
         timerNextTrollForm:Start()
-        timerNextBearForm:Schedule(23.5)        
+        timerNextBearForm:Schedule(23.5)
 	end
 end

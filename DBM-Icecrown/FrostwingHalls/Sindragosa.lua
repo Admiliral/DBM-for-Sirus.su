@@ -147,7 +147,7 @@ function mod:SPELL_CAST_START(args)
 		warnFrostBreath:Show()
 		timerNextFrostBreath:Start()
 	end
-end	
+end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(70126) then
@@ -207,7 +207,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			timerInstability:Start()
 			if (mod:IsDifficulty("normal25", "normal10") and ((args.amount or 1) >= 10)) or (mod:IsDifficulty("heroic25", "heroic10") and ((args.amount or 1) >= 2)) then
 				specWarnInstability:Show(args.amount)
-            end 
+            end
 		end
 	elseif args:IsSpellID(70127, 72528, 72529, 72530) then	--Mystic Buffet (phase 3 - everyone)
 		if args:IsPlayer() then
@@ -248,7 +248,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerNextBlisteringCold:Start()
 		soundBlisteringCold:Play()
 	end
-end	
+end
 
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(69762) then
@@ -276,7 +276,7 @@ end
 function mod:UNIT_HEALTH(uId)
 	if not warned_P2 and self:GetUnitCreatureId(uId) == 36853 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.38 then
 		warned_P2 = true
-		warnPhase2soon:Show()	
+		warnPhase2soon:Show()
 	end
 end
 

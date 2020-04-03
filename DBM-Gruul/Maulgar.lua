@@ -41,8 +41,8 @@ end
 function mod:SPELL_CAST_START(args)
     if args:IsSpellID(305221) then
         specWarnKickCleanse:Show(args.spellName)
-	elseif args:IsSpellID(305231) then 
-	    self:PlaySound("resist")           -- Вероятность резиста крайне мала!     
+	elseif args:IsSpellID(305231) then
+	    self:PlaySound("resist")           -- Вероятность резиста крайне мала!
     end
 end
 
@@ -56,7 +56,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(305216) then
         local activeIcon
         for i = 1,40 do
-            if UnitName("raid" .. i .. "target") == L.name then 
+            if UnitName("raid" .. i .. "target") == L.name then
                 activeIcon = GetRaidTargetIndex("raid" .. i .. "targettarget")
             end
         end

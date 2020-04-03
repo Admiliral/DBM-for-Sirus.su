@@ -12,7 +12,7 @@ L:SetWarningLocalization{
 	WarnWound	= "%s on >%s< (%s)"
 }
 L:SetOptionLocalization{
-	WarnWound	= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(25646, GetSpellInfo(25646) or "unknown"),	
+	WarnWound	= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(25646, GetSpellInfo(25646) or "unknown"),
 }
 ------------
 -- Rajaxx --
@@ -65,7 +65,7 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	WarnPursue		= "Announce pursue targets",
 	SpecWarnPursue	= "Show special warning when you are being pursued",
-	WarnDismember	= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(96, GetSpellInfo(96) or "unknown"),	
+	WarnDismember	= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(96, GetSpellInfo(96) or "unknown"),
 }
 L:SetMiscLocalization{
 	PursueEmote 	= "%s sets eyes on %s!"

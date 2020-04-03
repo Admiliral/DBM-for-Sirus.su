@@ -31,7 +31,7 @@ function Supremus:OnCombatStart(delay)
 	self:ScheduleAnnounce(840 - delay, DBM_GENERIC_ENRAGE_WARN:format(1, DBM_MIN), 2)
 	self:ScheduleAnnounce(870 - delay, DBM_GENERIC_ENRAGE_WARN:format(30, DBM_SEC), 3)
 	self:ScheduleAnnounce(890 - delay, DBM_GENERIC_ENRAGE_WARN:format(10, DBM_SEC), 4)
-	
+
 	self:StartStatusBarTimer(60 - delay, "Kite Phase", "Interface\\Icons\\Spell_Fire_BurningSpeed")
 	self:ScheduleSelf(50 - delay, "PhaseWarn", 2)
 	lastIcon = nil
@@ -65,7 +65,7 @@ function Supremus:OnEvent(event, arg1)
 			phase2 = true
 		elseif phase2 and arg1:find(DBM_SUPREMUS_EMOTE_NEWTARGET) then -- he sometimes uses this emote just after switching in phase 2 since 2.2
 			self:ScheduleMethod(0.5, "NewTarget")
-		end		
+		end
 	elseif event == "PhaseWarn" and arg1 then
 		self:Announce(getglobal("DBM_SUPREMUS_WARN_PHASE_"..tostring(arg1).."_SOON"), 1)
 	elseif event == "SPELL_AURA_APPLIED" then
@@ -82,7 +82,7 @@ function Supremus:NewTarget()
 			target = UnitName("raid"..i.."targettarget")
 			break
 		end
-	end	
+	end
 	if target then
 		if self.Options.WarnKiteTarget then
 			self:Announce(DBM_SUPREMUS_WARN_KITE_TARGET:format(target), 2)

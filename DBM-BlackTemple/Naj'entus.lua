@@ -17,16 +17,16 @@ Najentus:AddOption("Icon", false, DBM_NAJENTUS_OPTION_ICON)
 Najentus:AddBarOption("Enrage")
 Najentus:AddBarOption("Next Tidal Shield")
 
-function Najentus:OnCombatStart(delay)	
+function Najentus:OnCombatStart(delay)
 	self:StartStatusBarTimer(480 - delay, "Enrage", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
 	self:ScheduleSelf(180 - delay, "EnrageWarn", 300)
 	self:ScheduleSelf(360 - delay, "EnrageWarn", 120)
 	self:ScheduleSelf(420 - delay, "EnrageWarn", 60)
 	self:ScheduleSelf(450 - delay, "EnrageWarn", 30)
-	self:ScheduleSelf(470 - delay, "EnrageWarn", 10)	
+	self:ScheduleSelf(470 - delay, "EnrageWarn", 10)
 	self:StartStatusBarTimer(60 - delay, "Next Tidal Shield", "Interface\\Icons\\Spell_Nature_CrystalBall")
 	self:ScheduleSelf(50 - delay, "ShieldWarn")
-	
+
 	if self.Options.RangeCheck then
 		DBM_Gui_DistanceFrame_Show()
 	end
