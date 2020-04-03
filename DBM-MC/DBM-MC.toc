@@ -34,3 +34,4 @@ Sulfuron.lua
 Golemagg.lua
 Majordomo.lua
 Ragnaros.lua
+MapSizes.lua

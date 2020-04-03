@@ -1,1 +1,1 @@
-DBM:RegisterMapSize("TheObsidianSanctum", 0, 1162.4967, 775) -- The Obsidian Sanctum
+DBM:RegisterMapSize("TheObsidianSanctum", 0, 1162.4999179840088, 775.0) -- The Obsidian Sanctum

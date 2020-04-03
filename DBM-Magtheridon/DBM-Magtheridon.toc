@@ -16,3 +16,4 @@
 ## X-DBM-Mod-LoadZone-ruRU: Логово Магтеридона
 localization.ru.lua
 Magtheridon.lua
+MapSizes.lua
