@@ -161,7 +161,7 @@ L:SetTimerLocalization({
 L:SetOptionLocalization({
 	WarnAdds		= "새로운 추가몹 알리기",
 	TimerAdds		= "새로운 추가몹 타이머 보기",
-	warnCleaveArmor	= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(74367, GetSpellInfo(74367) or "알 수 없음")	
+	warnCleaveArmor	= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(74367, GetSpellInfo(74367) or "알 수 없음")
 })
 
 L:SetMiscLocalization({
@@ -185,12 +185,12 @@ L:SetWarningLocalization({
 L:SetOptionLocalization({
 	WarnPhase2Soon			= "2 단계 사전 경고 보기 (79% 전)",
 	WarnPhase3Soon			= "3 단계 사전 경고 보기 (54% 전)",
-	TwilightCutterCast		= "$spell:77844을 시전할 때 경고 보기",	
+	TwilightCutterCast		= "$spell:77844을 시전할 때 경고 보기",
 	AnnounceAlternatePhase	= "해당 위치에 없을 경우에도 모든 단계의 경고/타이머 보기",
 	SoundOnConsumption		= "$spell:74562 또는 $spell:74792 소리 재생",--We use localized text for these functions
 	SetIconOnConsumption	= "$spell:74562 또는 $spell:74792 대상 공격대 아이콘 설정",--So we can use single functions for both versions of spell.
 	YellOnConsumption		= "$spell:74562 또는 $spell:74792 외치기",
-	WhisperOnConsumption	= "$spell:74562 또는 $spell:74792의 대상에게 귓속말 보내기"	
+	WhisperOnConsumption	= "$spell:74562 또는 $spell:74792의 대상에게 귓속말 보내기"
 })
 
 L:SetMiscLocalization({
@@ -199,8 +199,8 @@ L:SetMiscLocalization({
 	Phase3					= "나는 빛이자 어둠이다! 필멸자들어, 데스윙의 사자 앞에 무릎 꿇어라!",
 	twilightcutter			= "주위를 회전하는 구슬들이 고동치며 어둠의 기운을 내뿜습니다!",
 	YellCombustion			= "나에게 맹렬한 발화!",
-	WhisperCombustion		= "당신에게 맹렬한 발화! 외곽으로 뛰셈!",	
+	WhisperCombustion		= "당신에게 맹렬한 발화! 외곽으로 뛰셈!",
 	YellConsumption			= "나에게 영혼 소진!",
-	WhisperConsumption		= "당신에게 영혼 소진! 외곽으로 뛰셈!",	
+	WhisperConsumption		= "당신에게 영혼 소진! 외곽으로 뛰셈!",
 	Kill					= "필멸자들아, 승리를 만끽해라. 그것이 마지막일 테니. 주인님이 돌아오시면 이 세상은 불타버리리라!"
 })

@@ -146,7 +146,7 @@ L:SetOptionLocalization{
 	TimerAdds			= "為新的小怪顯示計時器",
 	SpecWarnVengefulShade		= "當你被復仇的暗影盯上時顯示特別警告",
 	ShieldHealthFrame		= "為$spell:70842顯示首領血量框架",
-	WarnTouchInsignificance		= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(71204, GetSpellInfo(71204) or "unknown"),	
+	WarnTouchInsignificance		= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(71204, GetSpellInfo(71204) or "unknown"),
 	SetIconOnDominateMind		= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(71289),
 	SetIconOnDeformedFanatic	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(70900),
 	SetIconOnEmpoweredAdherent	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(70901)
@@ -324,8 +324,6 @@ L:SetOptionLocalization{
 	SpecWarnUnboundPlague		= "為$spell:72856的轉移顯示特別警告",
 	SpecWarnNextPlageSelf		= "當你是下一個$spell:72856的目標時顯示特別警告",
 	BypassLatencyCheck		= "不對$spell:72295使用同步延遲查詢\n(只有出現問題時才使用這個)"
-	
-
 }
 
 L:SetMiscLocalization{
