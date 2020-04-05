@@ -66,7 +66,6 @@ function mod:SPELL_AURA_APPLIED(args)
         specWarnDecurse:Show(args.destName)
     elseif args:IsSpellID(43440) then
         if args:IsPlayer() then
-            self:PlaySound("rain")                 -- (It's Raining Man - Мужицкий дождь)
             specWarnMove:Show(args.spellName)
         end
     elseif args:IsSpellID(305658) then

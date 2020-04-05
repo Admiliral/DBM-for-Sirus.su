@@ -124,7 +124,6 @@ end
 function mod:OnSync(event, arg)
 	if event == "Goo" then
 		if time() - lastGoo > 5 then
-            self:PlaySound("fireinthe")
 			warnGoo:Show()
 			specWarnGoo:Show()
 			if mod:IsDifficulty("heroic25") then

@@ -199,7 +199,6 @@ end
 function mod:SPELL_DAMAGE(args)
 	if (args:IsSpellID(75952, 75951, 75950, 75949) or args:IsSpellID(75948, 75947)) and args:IsPlayer() and GetTime() - lastflame > 2 then
 		specWarnMeteorStrike:Show()
-        self:ScheduleMethod(0, "PlaySound", "fear2") -- ,БЕГИ СУКА БЕГИ
 		lastflame = GetTime()
 	elseif args:IsSpellID(75483, 75484, 75485, 75486) and args:IsPlayer() then
 		lastshroud = GetTime()--keeps a time stamp for twilight realm damage to determin if you're still there or not for bosshealth frame.
@@ -235,7 +234,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L.MeteorCast or msg:find(L.MeteorCast) then--There is no CLEU cast trigger for meteor, only yell
 		if not self.Options.AnnounceAlternatePhase then
 			warningMeteor:Show()
-        self:ScheduleMethod(0, "PlaySound", "run") -- ,БЕГИ СУКА БЕГИ
 			timerMeteorCast:Start()--7 seconds from boss yell the meteor impacts.
 			timerMeteorCD:Start()
 		end

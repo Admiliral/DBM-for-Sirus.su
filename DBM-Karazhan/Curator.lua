@@ -11,7 +11,6 @@ mod:RegisterEvents(
 	"SPELL_AURA_APPLIED",
     "SPELL_AURA_REMOVED",
     "SPELL_CAST_START",
-    "SPELL_CAST_SUCCESS",
     "SPELL_INTERRUPT"
 )
 
@@ -67,12 +66,7 @@ local specWarnRunes              = mod:NewSpecialWarningRun(305296)
 local warnUnstableTar            = mod:NewAnnounce("WarnUnstableTar", 3, 305309)
 
 local unstableTargets = {}
-local ter = true
-local isinCombat = false
 
-function mod:bombDefused()
-    self:PlaySound("bomb_d")
-end
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 34437, "The Curator")
     for i=1,3 do
@@ -85,18 +79,16 @@ function mod:OnCombatStart(delay)
             end
         end
     end
-    isinCombat = true
-    ter = true
     table.wipe(unstableTargets)
 end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 34437, "The Curator", wipe)
+	isinCombat = false
 end
 
 function mod:SPELL_AURA_REMOVED(args)
     if args:IsSpellID(305313) then
-        if isinCombat then self:PlaySound("tobecon","dramatic") end
         for i=1,3 do
             if UnitAura("boss".. i,"Деактивация", nil, "HARMFUL") == nil then
                 if     i==3 then
@@ -137,28 +129,10 @@ end
 
 function mod:SPELL_CAST_START(args)
     if args:IsSpellID(305296) then
-        ter = true
-        self:PlaySound("bomb_p")
-        self:ScheduleMethod(6 ,"bombDefused")
         specWarnRunes:Show()
         timerRunesCD:Start()
         timerRunesBam:Start()
     elseif args:IsSpellID(305312) then
-	    self:PlaySound("optics_online")    -- optics online, let's go kill something (starcraft_cyclon_unit_sound)
         timerAnnihilationCD:Start()
     end
-end
-
-function mod:SPELL_CAST_SUCCESS(args)
-    if args:IsSpellID(305298) then
-        self:UnscheduleMethod("bombDefused")
-        if ter then
-            self:PlaySound("terror_wins")
-            ter = false
-        end
-    end
-end
-
-function mod:OnCombatEnd()
-    isinCombat = false
 end

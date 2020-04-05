@@ -57,7 +57,6 @@ function mod:OnCombatStart(delay)
 		warnAddsSoon:Schedule(57)
 		self:ScheduleMethod(62, "Adds")
 		timerBelowZeroCD:Start(75-delay)
-        self:ScheduleMethod(73 , "PlaySound", "ispancy" )          -- Ииииспааааанцыыы!!!
 	else
 		DBM:FireCustomEvent("DBM_EncounterStart", 37540, "Icecrown Gunship Battle")
 		if mod:IsDifficulty("heroic10") then
@@ -68,8 +67,6 @@ function mod:OnCombatStart(delay)
         timerAdds:Start(57-delay)
         warnAddsSoon:Schedule(52)
         self:ScheduleMethod(57, "Adds")
-
-        self:ScheduleMethod(78 , "PlaySound", "ispancy" )          -- Ииииспааааанцыыы!!!
 	end
 end
 
@@ -109,7 +106,6 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(69705) then
 		timerBelowZeroCD:Start()
-        self:ScheduleMethod(33 , "PlaySound", "ispancy" )          -- Ииииспааааанцыыы!!!
 	end
 end
 

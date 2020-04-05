@@ -83,7 +83,6 @@ end
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(306464) then
         specWarnArcaneStorm:Show() -- Шторм
-        self:ScheduleMethod(0, "PlaySound", "omaeva") -- ,БЕГИ СУКА БЕГИ
     elseif args:IsSpellID(306468) then
         specWarnUnstableMagic:Show()
         timerUnstableMagicCD:Start()
@@ -103,13 +102,10 @@ function mod:SPELL_CAST_START(args)
     elseif args:IsSpellID(306485) then
         timerRaysCD:Start()
         specWarnRays:Show()
-        self:ScheduleMethod(2, "PlaySound", "misha") -- лучи
     elseif args:IsSpellID(306491) then
         timerMeteorCD:Start() -- Метеор
-        self:ScheduleMethod(4, "PlaySound", "suffer_bitch") -- САФФА БИЧ!
     elseif args:IsSpellID(306531) then
         specWarnIceRush:Show() -- Натиск
-        self:ScheduleMethod(0, "PlaySound", "fear2") -- Беги
     elseif args:IsSpellID(306545) then  -- Dome phase
         specWarnIceWrath:Show()
     end
@@ -137,7 +133,6 @@ function mod:SPELL_AURA_APPLIED(args)
         explosiveTargets[#explosiveTargets + 1] = args.destName
         if args:IsPlayer() then
             specWarnExplosive:Show()
-        self:ScheduleMethod(0, "PlaySound", "fear2") -- ,БЕГИ СУКА БЕГИ
         end
         if self.Options.SetIconOnExplosiveTargets then
 			self:SetIcon(args.destName, explosiveIcons, 6)
@@ -151,7 +146,6 @@ function mod:SPELL_AURA_APPLIED(args)
     elseif args:IsSpellID(306502) then -- дикое пламя
         if args:IsPlayer() then
             specWarnWildFlame:Show()
-			self:ScheduleMethod(0, "PlaySound", "fear2") -- ,БЕГИ СУКА БЕГИ
         else
             local uId = DBM:GetRaidUnitId(args.destName)
             if uId then

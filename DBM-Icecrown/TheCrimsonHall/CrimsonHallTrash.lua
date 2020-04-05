@@ -44,9 +44,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			self:Schedule(0.3, warnBloodMirrorTargets)
 		end
 	elseif args:IsSpellID(70432) then
-	    if args:IsPlayer() then
-	        self:PlaySound("cheeki-breeki")
-		end
 		warnBloodSap:Show(args.destName)
 		timerBloodSap:Start(args.destName)
 	elseif args:IsSpellID(70645) then

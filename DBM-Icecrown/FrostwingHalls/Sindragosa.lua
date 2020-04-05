@@ -62,7 +62,6 @@ mod:AddBoolOption("RangeFrame")
 local beaconTargets		= {}
 local beaconIconTargets	= {}
 local unchainedTargets	= {}
-local freezedTargets = 0
 local warned_P2 = false
 local warnedfailed = false
 local unchainedIcons = 7
@@ -102,13 +101,6 @@ local function warnUnchainedTargets()
 	unchainedIcons = 7
 end
 
-function mod:resetFreezed()
-    if (self.vb.phase == 2 and freezedTargets > 1)  or (mod:IsDifficulty("normal25") and freezedTargets > 5) or (mod:IsDifficulty("heroic25") and freezedTargets > 6) or (mod:IsDifficulty("normal10", "heroic10") and freezedTargets > 2) then
-        self:PlaySound("netmozga", "baklazhan", "kaban", "50dkpminus")
-    end
-    freezedTargets = 0
-end
-
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 36853, "Sindragosa")
 	berserkTimer:Start(-delay)
@@ -141,9 +133,6 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(69649, 71056, 71057, 71058) or args:IsSpellID(73061, 73062, 73063, 73064) then  --Frost Breath
-        if self:IsTank() or self:IsHealer() then
-            self:PlaySound("orgasm", "AAAAA", "AAAA_lew")     -- (*guchi muchi orgasm sound*)
-        end
 		warnFrostBreath:Show()
 		timerNextFrostBreath:Start()
 	end
@@ -153,7 +142,6 @@ function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(70126) then
 		beaconTargets[#beaconTargets + 1] = args.destName
 		if args:IsPlayer() then
-            self:PlaySound("kakashka")
 			specWarnFrostBeacon:Show()
 		end
 		if self.vb.phase == 1 and self.Options.SetIconOnFrostBeacon then
@@ -180,7 +168,6 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(69762) then
 		unchainedTargets[#unchainedTargets + 1] = args.destName
 		if args:IsPlayer() then
-            self:PlaySound("dpsslowly")
 			specWarnUnchainedMagic:Show()
 		end
 		if self.Options.SetIconOnUnchainedMagic then
@@ -231,10 +218,6 @@ function mod:SPELL_AURA_APPLIED(args)
 				end
 			end
 		end
-	elseif args:IsSpellID(70157) then
-        freezedTargets = freezedTargets + 1
-        self:UnscheduleMethod("resetFreezed")
-        self:ScheduleMethod(0.2 , "resetFreezed")
 	end
 end
 
@@ -282,7 +265,6 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.YellAirphase or msg:find(L.YellAirphase) then
-        self:PlaySound("naher", "moredots")                           -- Ну нахер... (х\ф "Оч. Страшное кино 2")
 		if self.Options.ClearIconsOnAirphase then
 			self:ClearIcons()
 		end
@@ -294,7 +276,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerNextGroundphase:Start()
 		warnGroundphaseSoon:Schedule(40)
 		activeBeacons = true
-        freezedTargets = 0
 	elseif msg == L.YellPhase2 or msg:find(L.YellPhase2) then
 		self.vb.phase = self.vb.phase + 1
 		warnPhase2:Show()

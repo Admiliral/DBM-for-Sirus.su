@@ -214,7 +214,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif args:IsSpellID(72855, 72856, 70911) then
 		timerUnboundPlagueCD:Start()
 -- 	elseif args:IsSpellID(72615, 72295, 74280, 74281, 70852, 72296) then
---         self:PlaySound("fireinthe")
 -- 		warnMalleableGoo:Show()
 -- 		specWarnMalleableGooCast:Show()
 -- 		if mod:IsDifficulty("heroic10") or mod:IsDifficulty("heroic25") then
@@ -232,7 +231,6 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
     if msg == L.EmoteMalleable then
-        self:PlaySound("fireinthe")
 		warnMalleableGoo:Show()
 		specWarnMalleableGooCast:Show()
         timerMalleableGooCD:Start()

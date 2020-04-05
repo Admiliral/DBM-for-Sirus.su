@@ -294,8 +294,6 @@ function mod:SPELL_CAST_START(args)
 		end
 		warnDefileSoon:Cancel()
 		warnDefileSoon:Schedule(27)
-        self:PlaySound("podalshe")
-        self:ScheduleMethod(27, "PlaySound", "othodi")
 		timerDefileCD:Start()
 	elseif args:IsSpellID(73539) then -- Shadow Trap (Heroic)
 		timerTrapCD:Start()
@@ -372,7 +370,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 			self:SetIcon(args.destName, 7, 5)
 		end
 	elseif args:IsSpellID(68980, 74325, 74326, 74327) then -- Harvest Soul
-		self:PlaySound("talala", "virgin", "leviosa")                    -- ...touch me talala...
 		warnHarvestSoul:Show(args.destName)
 		timerHarvestSoul:Start(args.destName)
 		timerHarvestSoulCD:Start()
@@ -547,14 +544,12 @@ function mod:NextPhase()
 		timerSummonValkyr:Start(20)
 		timerSoulreaperCD:Start(40)
 		timerDefileCD:Start(38)
-        self:ScheduleMethod(33, "PlaySound", "othodi")
 		timerInfestCD:Start(14)
 		warnDefileSoon:Schedule(33)
 	elseif self.vb.phase == 3 then
 		timerVileSpirit:Start(20)
 		timerSoulreaperCD:Start(40)
 		timerDefileCD:Start(38)
-        self:ScheduleMethod(33, "PlaySound", "othodi")
 		timerHarvestSoulCD:Start(14)
 		warnDefileSoon:Schedule(33)
 	end

@@ -97,6 +97,7 @@ mod:AddBoolOption("AnnouncePyromancerIcons", true)
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 17225, "Nightbane")
     if mod:IsDifficulty("normal10") then
+
     elseif mod:IsDifficulty("heroic10") and isStart then
         timerGrievingFireCD:Start()
         timerConflCD:Start()
@@ -117,7 +118,6 @@ function mod:SPELL_CAST_START(args)
     if args:IsSpellID(305375) then
         timerGrievingFireCD:Start()
     elseif args:IsSpellID(305377) then
-	    self:PlaySound("orgasm", "AAAAA", "AAAA_lew")             -- AAAAAAAAAA!!!
         if conflCount <=1 then
             timerConflCD:Start()
             conflCount = conflCount + 1
@@ -147,7 +147,6 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(305382) then
         if args:IsPlayer() then
-		      self:PlaySound("welcome")      -- Welcome to the club buddy... *fucking slap*
             specWarnPyromancer:Show()
         end
         pyromancerTargets[#pyromancerTargets + 1] = args.destName
@@ -184,6 +183,5 @@ end
  function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L.DBM_NB_EMOTE_PULL then
         isStart = true
-        self:PlaySound("pike")           -- (ost "Крутое пике!" аКа "Деревня дураков, Каламбур")
 	end
  end

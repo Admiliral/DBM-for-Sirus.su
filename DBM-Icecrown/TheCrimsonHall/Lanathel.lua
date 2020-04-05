@@ -74,10 +74,8 @@ function mod:OnCombatStart(delay)
 		DBM.RangeCheck:Show(8)
 	end
 	if mod:IsDifficulty("normal10") or mod:IsDifficulty("heroic10") then
-        self:ScheduleMethod(122, "PlaySound", "djeep")
 		timerNextInciteTerror:Start(124-delay)
 	else
-        self:ScheduleMethod(125, "PlaySound", "djeep")
 		timerNextInciteTerror:Start(127-delay)
 	end
 end
@@ -127,7 +125,6 @@ function mod:SPELL_AURA_APPLIED(args)
         warnEssenceoftheBloodQueen:Show(args.destName)
 		if args:IsPlayer() then
             specWarnEssenceoftheBloodQueen:Show()
-		    self:PlaySound("welcome")                -- welcome to the club, buddy... *fucking slap*
         end
         if mod:IsDifficulty("normal10") or mod:IsDifficulty("heroic10") then
             timerEssenceoftheBloodQueen:Start(75)--75 seconds on 10 man
@@ -137,9 +134,6 @@ function mod:SPELL_AURA_APPLIED(args)
             --warnBloodthirstSoon:Schedule(55)
         end
 	elseif args:IsSpellID(70923) then
-	    if args:IsPlayer() then
-            self:PlaySound("ohshit")                  -- "oh shit, i'm sorry"
-        end
 		warnMindControlled:Show(args.destName)
 		specWarnMindConrolled:Show(args.destName)
 	elseif args:IsSpellID(71772) then
@@ -171,10 +165,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerNextSwarmingShadows:Start()--This resets the swarming shadows timer
 		timerNextPactDarkfallen:Start(25)--and the Pact timer also reset -5 seconds
 		if mod:IsDifficulty("normal10") or mod:IsDifficulty("heroic10") then
-            self:ScheduleMethod(118, "PlaySound", "djeep")
 			timerNextInciteTerror:Start(120)--120 seconds in between first and second on 10 man
 		else
-            self:ScheduleMethod(98, "PlaySound", "djeep")
 			timerNextInciteTerror:Start()--100 seconds in between first and second on 25 man
 		end
 	end
@@ -203,7 +195,6 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)
 		warnSwarmingShadows:Show(target)
 		timerNextSwarmingShadows:Start()
 		if target == UnitName("player") then
-            self:PlaySound("run")                         -- run
             specWarnSwarmingShadows:Show()
             soundSwarmingShadows:Play()
 		end

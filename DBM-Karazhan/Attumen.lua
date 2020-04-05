@@ -30,13 +30,11 @@ local warnPhase2Soon        = mod:NewAnnounce("WarnPhase2Soon", 1)
 local Phase	= 1
 local lastCurse = 0
 local phaseCounter = true
-local cena = true
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 34972, "Attumen the Huntsman")
 	Phase = 1
     phaseCounter = true
-    cena = true
     if mod:IsDifficulty("heroic10") then
         timerInvCD:Start(20)
     end
@@ -77,18 +75,10 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(305258) then
-        if cena then
-            self:PlaySound("jhoncena")
-            cena = false
-        end
         timerChargeCD:Start()
     elseif args:IsSpellID(305251) then
         timerInvCD:Start()
     elseif args:IsSpellID(305263) then
-        if cena then
-            self:PlaySound("jhoncena")
-            cena = false
-        end
         timerCharge2CD:Start()
     elseif args:IsSpellID(305259) then
         timerSufferingCD:Start()
@@ -106,7 +96,6 @@ end
 
 function mod:UNIT_HEALTH(uId)
 	if (self:GetUnitCreatureId(uId) == 15550 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.52 and phaseCounter) then
-        self:PlaySound("idisuda")
 		phaseCounter = false
 		warnPhase2Soon:Show()
     end

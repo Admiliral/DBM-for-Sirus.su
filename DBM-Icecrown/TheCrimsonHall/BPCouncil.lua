@@ -148,7 +148,6 @@ function mod:SPELL_CAST_START(args)
 		warnEmpoweredShockVortex:Show()
 		specWarnEmpoweredShockV:Show()
 		timerShockVortex:Start()
-        self:ScheduleMethod(2, "PlaySound", "suffer_bitch") -- САФФА БИЧ!
 	elseif args:IsSpellID(71718) then	-- Conjure Flames
 		warnConjureFlames:Show()
 		timerConjureFlamesCD:Start()

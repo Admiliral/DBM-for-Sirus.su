@@ -83,11 +83,7 @@ local timerPierceCD             = mod:NewCDTimer(10, 305464)
 local timerWoundCD              = mod:NewCDTimer(10, 305463)
 local timerDeathMark            = mod:NewTargetTimer(10, 305470)
 local timerDeathMarkCD			= mod:NewCDTimer(25, 305470)
-local ora = true
 local phase2 = false
-function mod:resetOra()
-    ora = true
-end
 
 function mod:phase2warn()
     phase2 = true
@@ -98,7 +94,6 @@ end
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 15687, "Moroes")
     if mod:IsDifficulty("heroic10") then
-	    self:PlaySound("ya_vas_ne_zval")
         phase2 = false
         timerDanceCD:Start()
         timerPhase2:Start()
@@ -112,10 +107,8 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(305464) and phase2 then
-        self:PlaySound("taa")
         timerPierceCD:Start()
     elseif args:IsSpellID(305463) and phase2 then
-        self:PlaySound("sha")
         timerWoundCD:Start()
     elseif args:IsSpellID(305472) then
         timerDanceCD:Start()
@@ -124,21 +117,8 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(305470) then
-        if args:IsPlayer() then
-             self:PlaySound("omaeva")       -- omae wa mou shindeiru... (анимэ "Кулак полярной звезды")
-        end
         warnDeathMark:Show(args.destName)
         timerDeathMark:Start(args.destName)
         timerDeathMarkCD:Start()
-    elseif args:IsSpellID(305478) then
-        if args:IsPlayer() then
-            self:PlaySound("djeban","sexgay","cigan","hardbass","upkicks") --танец
-        end
-	elseif args:IsSpellID(305460) then
-        if ora then
-            self:PlaySound("ora", "muda", "atata")           -- ОРА-ОРА-ОРА-ОРА-ОРА-ОРА (JoJo)
-            ora = false
-            self:ScheduleMethod(5, "resetOra")
-        end
     end
 end

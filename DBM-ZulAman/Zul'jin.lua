@@ -94,7 +94,6 @@ function mod:SPELL_CAST_SUCCESS(args)
     elseif args:IsSpellID(43213) then
         timerFlameWhirl:Start()
     elseif args:IsSpellID(43093) then
-        self:PlaySound("boom_reload","dmg","vnoge", "mp_scratch")   --бросок
         timerThrow:Start()
     end
 end
@@ -107,7 +106,6 @@ function mod:SPELL_AURA_APPLIED(args)
             bleedTargets[#bleedTargets + 1] = args.destName
         end
         if notBleedWarned then
-		    self:PlaySound("sheep_scream")  -- *sheep_scream*
             self:ScheduleMethod(1.5, "tBleed")
             notBleedWarned = false
         end
@@ -116,7 +114,6 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.YellBearZul then
-	    self:PlaySound("kakebnut")     -- Да как ей ебнуть блядь дебил сука...
         timerWhirlwind:Cancel()
         timerThrow:Cancel()
         timerParalysis:Start()
@@ -135,7 +132,6 @@ function mod:UNIT_TARGET(uId)
             specWarnFlamePillar:Show()
         end
         if IsMeleeZ("player") and IsMeleeZ("targettarget") and not IsTankZ("targettarget") then
-            self:PlaySound("run")
             specWarnFlamePillarMelee:Show()
         end
     end

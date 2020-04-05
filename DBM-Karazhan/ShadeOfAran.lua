@@ -91,20 +91,15 @@ function mod:SPELL_CAST_START(args)
 		timerBlizzad:Schedule(3.7)                 --may need tweaking
 		timerSpecial:Start()
 	elseif args:IsSpellID(305338) then
-        self:PlaySound("stop")
         specWarnDontMove:Show()
         timerSpecialHeroic:Start()
 	elseif args:IsSpellID(305329) then
-        self:PlaySound("primo")                -- (Sabaton - Primo Victoria)
         specWarnWinter:Show()
         timerSpecialHeroic:Start()
 	elseif args:IsSpellID(305326) then
         if args.destName == UnitName("player") then
-            self:PlaySound("run")
             specWarnFreeze:Show()
         end
-    elseif args:IsSpellID(305331) then
-        self:PlaySound("tobecon","dramatic")              -- to be continued (Yes - Roundabout)
 	end
 end
 

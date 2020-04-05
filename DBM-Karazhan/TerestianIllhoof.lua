@@ -15,8 +15,7 @@ mod:RegisterCombat("combat", 15688)
 mod:RegisterEvents(
 	"SPELL_AURA_APPLIED",
 	"SPELL_CAST_START",
-    "SPELL_CAST_SUCCESS",
-    "SPELL_CAST_FAILED"
+    "SPELL_CAST_SUCCESS"
 )
 
 -- local warningWeakened	= mod:NewTargetAnnounce(30065, 2)
@@ -40,8 +39,6 @@ local specWarnSeed	            = mod:NewSpecialWarningSpell(305360, mod:IsTank()
 local specWarnDart		        = mod:NewSpecialWarningStack(305367, nil, 7)
 
 local berserkTimer		        = mod:NewBerserkTimer(600)
-
-local tolik = true
 
 mod:AddBoolOption("HealthFrame", true)
 
@@ -96,8 +93,8 @@ end
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 15688, "Terestian Illhoof")
     if mod:IsDifficulty("normal10") then
+
     elseif mod:IsDifficulty("heroic10") then
-        tolik = true
         timerHandCD:Start()
         timerMarkCD:Start()
     end
@@ -109,9 +106,6 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(305345) then
-        if args:IsPlayer() then
-            self:PlaySound("fireinthe")           -- CS 1.6 (couter_terorrists_voice)
-        end
 		warningHandCast:Show()
 		timerHandCD:Start()
     end
@@ -122,10 +116,6 @@ function mod:SPELL_AURA_APPLIED(args)
         if args.sourceName == L.name then
             timerMarkCD:Start()
             WarnMark:Show(args.destName)
-        elseif tolik then
-            tolik = false
-            self:PlaySound("tolik")              -- Толик-Еболик, первый день на работе.
-            self:ScheduleMethod(2, "resetTolik")
         end
 		if args:IsPlayer() then
 			specWarnMark:Show()
@@ -139,10 +129,4 @@ function mod:SPELL_AURA_APPLIED(args)
             specWarnSeed:Show()
         end
 	end
-end
-
-function mod:SPELL_CAST_FAILED(args)
-    if args.sourceName == L.name then
-        self:PlaySound("noice")                  -- Slurp.Klick.Noice
-    end
 end

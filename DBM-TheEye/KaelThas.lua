@@ -162,9 +162,6 @@ function mod:SPELL_CAST_SUCCESS(args)
                 PutItemInBackpack()
             end
         end
-        if args:IsPlayer() then
-            self:ScheduleMethod(30, "PlaySound", "disarm_2")
-        end
         dominateMindTargets[#dominateMindTargets + 1] = args.destName
         if self.Options.SetIconOnDominateMind then
             self:SetIcon(args.destName, dominateMindIcon, 12)

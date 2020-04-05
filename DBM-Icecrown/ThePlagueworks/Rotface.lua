@@ -102,12 +102,10 @@ function mod:SPELL_CAST_START(args)
 	elseif args:IsSpellID(69839) then --Unstable Ooze Explosion (Big Ooze)
 		if GetTime() - spamOoze < 4 then --This will prevent spam but breaks if there are 2 oozes. GUID work is required
 			specWarnOozeExplosion:Cancel()
-            self:UnscheduleMethod("PlaySound")
 		end
 		if GetTime() - spamOoze < 4 or GetTime() - spamOoze > 5 then --Attempt to ignore a cast that may fire as an ooze is already exploding.
 			timerOozeExplosion:Start()
 			specWarnOozeExplosion:Schedule(4)
-            self:ScheduleMethod(4, "PlaySound", "fireinthe")
 		end
 		spamOoze = GetTime()
 	end

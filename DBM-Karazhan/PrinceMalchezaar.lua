@@ -8,8 +8,7 @@ mod:RegisterCombat("combat", 15690)
 mod:RegisterEvents(
 	"SPELL_CAST_START",
 	"SPELL_AURA_APPLIED",
-    "UNIT_HEALTH",
-	"SPELL_AURA_REMOVED"
+    "UNIT_HEALTH"
 )
 
 local warningNovaCast			= mod:NewCastAnnounce(30852, 3)
@@ -62,9 +61,6 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
     if args:IsSpellID(305433) then
-        if args:IsPlayer() then
-            self:PlaySound("impruved")              -- Иммолэйт импрувед!
-        end
 		timerFlameCD:Start(phaseCounter < 3 and 30 or 10)
         flameTargets[#flameTargets + 1] = args.destName
         if #flameTargets >=2 and phaseCounter < 3 then
@@ -79,15 +75,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
     elseif args:IsSpellID(305435) then
 		timerCurseCD:Start(phaseCounter == 2 and 30 or 20)
-        if args:IsPlayer() then
-            self:PlaySound("bomb_p")              -- CS 1.6 "bomb has been planted"
-        end
-	end
-end
-
-function mod:SPELL_AURA_REMOVED(args)
-    if args:IsSpellID(305435) and args:IsPlayer() then
-        self:PlaySound("bomb_d")             -- CS 1.6 "bomb has been defused"
 	end
 end
 
@@ -103,21 +90,18 @@ function mod:UNIT_HEALTH(uId)
         timerCurseCD:Cancel()
         timerNovaCD:Cancel()
         timerFlameCD:Start(10)
-        self:PlaySound("w_rice")
     elseif phaseCounter == 3 and self:GetUnitCreatureId(uId) == 15690 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.3 then
 		phaseCounter = phaseCounter + 1
 		warnNextPhaseSoon:Show(L.IceWorld)
         timerFlameCD:Cancel()
         timerIceSpikeCD:Start()
         timerCurseCD:Start(20)
-        self:PlaySound("w_rice")
     elseif phaseCounter == 4 and self:GetUnitCreatureId(uId) == 15690 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.2 then
 		phaseCounter = phaseCounter + 1
 		warnNextPhaseSoon:Show(L.BlackForest)
         timerCurseCD:Cancel()
         timerIceSpikeCD:Cancel()
         timerCallofDeadCD:Start()
-        self:PlaySound("w_rice")
     elseif phaseCounter == 5 and self:GetUnitCreatureId(uId) == 15690 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.1 then
 		phaseCounter = phaseCounter + 1
 		warnNextPhaseSoon:Show(L.LastPhase)

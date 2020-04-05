@@ -89,7 +89,6 @@ end
 
 function mod:SPELL_CAST_START(args)
     if args:IsSpellID(305286) then
-	             self:PlaySound("pokaysya","greshnik") -- покайся грешник!
         timerRepentanceCD:Start()
         timerGroundCD:Start(30)
         ground = true
@@ -141,7 +140,6 @@ function mod:SPELL_AURA_APPLIED(args)
             ground = false
         end
 		if args:IsPlayer() then
-                self:PlaySound("bochok")    -- Ярик! Бочок потiк.
 	        specWarnGround:Show()
 		end
     elseif args:IsSpellID(305285) then

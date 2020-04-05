@@ -81,8 +81,6 @@ function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(69057, 70826, 72088, 72089) then				-- Bone Spike Graveyard
 		warnBoneSpike:Show()
 		timerBoneSpike:Start()
-    elseif args:IsSpellID(69076) then
-        self:ScheduleMethod(1, "PlaySound", "jager")          -- Bone Storm Suffer Bitch
 	end
 end
 
@@ -115,8 +113,5 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 36612, "Lord Marrowgar", wipe)
-    if UnitExists("boss1") and (not UnitIsDead("boss1")) then
-	    self:PlaySound("misha","Mission_F")
-	end
 	DBM.BossHealth:Clear()
 end

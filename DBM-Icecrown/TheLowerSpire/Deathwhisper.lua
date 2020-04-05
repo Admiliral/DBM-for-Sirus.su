@@ -78,7 +78,6 @@ local function showDominateMindWarning()
     warnDominateMind:Show(table.concat(dominateMindTargets, "<, >"))
     timerDominateMind:Start()
     timerDominateMindCD:Start()
-    mod:ScheduleMethod(37, "PlaySound", "disarm")
     table.wipe(dominateMindTargets)
     dominateMindIcon = 6
 end
@@ -108,9 +107,6 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 36855, "Lady Deathwhisper", wipe)
-    if UnitExists("boss1") and (not UnitIsDead("boss1")) then
-	    self:PlaySound("misha","Mission_F")
-	end
 	DBM.BossHealth:Clear()
 end
 
@@ -141,12 +137,10 @@ function mod:addsTimer()
 	timerAdds:Cancel()
 	warnAddsSoon:Cancel()
     if mod:IsDifficulty("heroic10", "heroic25") then
-        self:PlaySound("FBI","enemy_spot","ispancy")                                 -- FBI open up!
 		warnAddsSoon:Schedule(40)	-- 5 secs prewarning
 		self:ScheduleMethod(45, "addsTimer")
 		timerAdds:Start(45)
 	else
-        self:PlaySound("FBI","enemy_spot","ispancy")                                 -- FBI open up!
 		warnAddsSoon:Schedule(55)	-- 5 secs prewarning
 		self:ScheduleMethod(60, "addsTimer")
 		timerAdds:Start()
@@ -222,9 +216,6 @@ function mod:SPELL_CAST_SUCCESS(args)
                 PutItemInBackpack()
             end
         end
-        if args:IsPlayer() then
-            self:ScheduleMethod(13, "PlaySound", "disarm_2")
-        end
         dominateMindTargets[#dominateMindTargets + 1] = args.destName
         if self.Options.SetIconOnDominateMind then
             self:SetIcon(args.destName, dominateMindIcon, 12)
@@ -282,7 +273,6 @@ local lastSpirit = 0
 function mod:SPELL_SUMMON(args)
 	if args:IsSpellID(71426) then -- Summon Vengeful Shade
 		if time() - lastSpirit > 5 then
-            self:PlaySound("surprise")                -- surprise motherfucker!
 			warnSummonSpirit:Show()
 			timerSummonSpiritCD:Start()
 			lastSpirit = time()

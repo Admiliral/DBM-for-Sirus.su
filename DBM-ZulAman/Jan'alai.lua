@@ -39,11 +39,9 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.YellBombs then
-        self:ScheduleMethod(10, "PlaySound", "wtf_boom" )    -- what the fuck!? *BOOOOOOOOM*
         timerExplosion:Start()
         timerBombs:Start()
     elseif msg == L.YellHatcher then
-        self:PlaySound("ispancy")     -- Испаааанцы! (?)
         timerHatchers:Start()
 	end
 end

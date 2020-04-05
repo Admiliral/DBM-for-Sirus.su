@@ -205,10 +205,8 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L.PullAlliance, 1, true) then
-        self:ScheduleMethod(48, "PlaySound", "swamp")             -- what are you doing in MY SWAMP! (c) Shrek
 		timerCombatStart:Start()
 	elseif msg:find(L.PullHorde, 1, true) then
-        self:ScheduleMethod(78, "PlaySound", "swamp")             -- what are you doing in MY SWAMP! (c) Shrek
 		timerCombatStart:Start(79)
 	end
 end

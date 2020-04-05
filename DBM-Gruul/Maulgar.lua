@@ -41,8 +41,8 @@ end
 function mod:SPELL_CAST_START(args)
     if args:IsSpellID(305221) then
         specWarnKickCleanse:Show(args.spellName)
-	elseif args:IsSpellID(305231) then
-	    self:PlaySound("resist")           -- Вероятность резиста крайне мала!
+--	elseif args:IsSpellID(305231) then
+
     end
 end
 

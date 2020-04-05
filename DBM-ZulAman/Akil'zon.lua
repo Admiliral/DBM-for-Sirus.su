@@ -70,9 +70,6 @@ end
 
 function mod:SPELL_CAST_START(args)
     if args:IsSpellID(43622) and disruptCounter ~= 3 then
-	    if mod:IsMelee() then
-		    self:PlaySound("run")
-	    end
         timerNextDisrupt:Start()
         disruptCounter = disruptCounter + 1
     end
@@ -80,7 +77,6 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
     if args:IsSpellID(43621) then
-        self:PlaySound("ebany_rot")   -- Ну че ебаный рот, погнали нахуй (*RRMV*)
         warnWind:Show(args.destName)
     end
 end
