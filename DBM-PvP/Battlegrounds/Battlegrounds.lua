@@ -77,7 +77,7 @@ hooksecurefunc("WorldStateScoreFrame_Update", function() --re-color the players 
 		local name, _, _, _, _, faction, _, _, _, class = GetBattlefieldScore(index)
 		if (name ~= UnitName("player")) and class and RAID_CLASS_COLORS[class] and getglobal("WorldStateScoreButton"..i.."NameText") then
 			getglobal("WorldStateScoreButton"..i.."NameText"):SetTextColor(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
-			local playerName = getglobal("WorldStateScoreButton"..i.."NameText"):GetText()
+			local playerName, playerServer = getglobal("WorldStateScoreButton"..i.."NameText"):GetText()
 			if playerName then
 				_, _, playerName, playerServer = string.find(playerName, "([^%-]+)%-(.+)")
 				if playerServer and playerName then

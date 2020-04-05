@@ -230,10 +230,11 @@ do
 				end
 
 			elseif string.match(arg1, L.ExprFlagReturn) then
+				local _, _, _, mSide
 				if( GetLocale() == "ruRU") then
-					local _, _, mNick, mSide =  string.find(arg1, L.ExprFlagReturn)
+					_, _, _, mSide =  string.find(arg1, L.ExprFlagReturn)
 				else
-					local _, _, mSide, mNick =  string.find(arg1, L.ExprFlagReturn)
+					_, _, mSide =  string.find(arg1, L.ExprFlagReturn)
 				end
 
 				if mSide == L.Alliance then

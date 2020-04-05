@@ -60,7 +60,7 @@ end
     14 Graveyard, assaulted by Horde
 --]]
 
-towers = {}
+local towers = {}
 local function is_tower(id)
 	return id == 10 or id == 12 or id == 11 or id == 9 or id == 6
 end

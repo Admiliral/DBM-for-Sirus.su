@@ -99,7 +99,7 @@ local function rebuildSpellIDIndex()
 end
 
 -- functions
-local addDefaultOptions
+local addDefaultOptions, clearAllSpellBars
 do
 	local function creategui()
 		local createnewentry
