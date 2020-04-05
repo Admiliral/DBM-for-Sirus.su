@@ -154,6 +154,10 @@ function proxy:AddBarOption(bar, default)
 	end
 end
 
+function proxy:AddSetIconOption(...)
+	self.mod:AddSetIconOption(...)
+end
+
 function proxy:IsWipe()
 	local dead = 0
 	for i = 1, GetNumRaidMembers() do

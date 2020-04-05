@@ -14,8 +14,8 @@ mod:RegisterEvents(
 
 local timerWoundCD		        = mod:NewCDTimer(10, 38801)
 local timerSpitCD		        = mod:NewCDTimer(14, 35008)
-local specWarnWound             = mod:NewSpecialWarningTarget(38801, mod:IsTank() or mod:IsHealer())
-local specWarnSpit              = mod:NewSpecialWarningInterupt(35008)
+local specWarnWound             = mod:NewSpecialWarningTarget(38801, "Tank|Healer")
+local specWarnSpit              = mod:NewSpecialWarningInterrupt(35008)
 
 function mod:OnCombatStart(delay)
     timerSpitCD:Start()

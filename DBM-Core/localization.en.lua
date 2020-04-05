@@ -1,3 +1,9 @@
+DBM_DEADLY_BOSS_MODS				= "Deadly Boss Mods"
+DBM_DBM								= "DBM"
+
+DBM_HOW_TO_USE_MOD					= "Welcome to "..DBM_DBM..". Type /dbm help for a list of supported commands. To access options type /dbm in your chat to begin configuration. Load specific zones manually to configure any boss specific settings to your liking as well. DBM will setup defaults for your spec, but you may want to fine tune these."
+DBM_SILENT_REMINDER					= "Reminder: "..DBM_DBM.." is still in silent mode."
+
 DBM_CORE_UPDATEREMINDER_URL			= "https://forum.sirus.su/threads/dbm-dlja-sirusa.89486/"
 
 DBM_COPY_URL_DIALOG					= "Copy URL"
@@ -20,21 +26,66 @@ DBM_CORE_COMBAT_ENDED_AT			= "Combat against %s (%s) ended after %s."
 DBM_CORE_COMBAT_ENDED_AT_LONG		= "Combat against %s (%s) ended after %s. You have %d total wipes on this difficulty."
 DBM_CORE_GUILD_COMBAT_ENDED_AT		= "Guild has wiped on %s (%s) after %s."
 
-DBM_CORE_TIMER_FORMAT_SECS			= "%d |4second:seconds;"
+DBM_CORE_AFK_WARNING				= "You are AFK and in combat (%d percent health remaining), firing sound alert. If you are not AFK, clear your AFK flag or disable this option in 'extra features'."
+
+DBM_CORE_COMBAT_STARTED_AI_TIMER	= "My CPU is a neural net processor; a learning computer. (This fight will use the new timer AI feature to generate timer approximations)"
+
+DBM_CORE_PROFILE_NOT_FOUND			= "<Deadly Boss Mods> Your current profile is corrupted. Deadly Boss Mods will load 'Default' profile."
+DBM_CORE_PROFILE_CREATED			= "'%s' profile created."
+DBM_CORE_PROFILE_CREATE_ERROR		= "Create profile failed. Invalid profile name."
+DBM_CORE_PROFILE_CREATE_ERROR_D		= "Create profile failed. '%s' profile already exists."
+DBM_CORE_PROFILE_APPLIED			= "'%s' profile applied."
+DBM_CORE_PROFILE_APPLY_ERROR		= "Apply profile failed. '%s' profile does not exist."
+DBM_CORE_PROFILE_COPIED				= "'%s' profile copied."
+DBM_CORE_PROFILE_COPY_ERROR			= "Copy profile failed. '%s' profile does not exist."
+DBM_CORE_PROFILE_COPY_ERROR_SELF	= "Cannot copy profile to itself."
+DBM_CORE_PROFILE_DELETED			= "'%s' profile deleted. 'Default' profile will be applied."
+DBM_CORE_PROFILE_DELETE_ERROR		= "Delete profile failed. '%s' profile does not exist."
+DBM_CORE_PROFILE_CANNOT_DELETE		= "Cannot delete 'Default' profile."
+DBM_CORE_MPROFILE_COPY_SUCCESS		= "%s's (%d spec) mod settings have been copied."
+DBM_CORE_MPROFILE_COPY_SELF_ERROR	= "Cannot copy character settings to itself"
+DBM_CORE_MPROFILE_COPY_S_ERROR		= "Source is corrupted. Settings not copied or partly copied. Copy failed."
+DBM_CORE_MPROFILE_COPYS_SUCCESS		= "%s's (%d spec) mod sound or note settings have been copied."
+DBM_CORE_MPROFILE_COPYS_SELF_ERROR	= "Cannot copy character sound or note settings to itself"
+DBM_CORE_MPROFILE_COPYS_S_ERROR		= "Source is corrupted. Sound or note settings not copied or partly copied. Copy failed."
+DBM_CORE_MPROFILE_DELETE_SUCCESS	= "%s's (%d spec) mod settings deleted."
+DBM_CORE_MPROFILE_DELETE_SELF_ERROR	= "Cannot delete mod settings currently in use."
+DBM_CORE_MPROFILE_DELETE_S_ERROR	= "Source is corrupted. Settings not deleted or partly deleted. Delete failed."
+
+DBM_CORE_NOTE_SHARE_SUCCESS			= "%s has shared their note for %s"
+DBM_CORE_NOTE_SHARE_FAIL			= "%s attempted to share note text with you for %s. However, mod associated with this ability is not uninstalled or is not loaded. If you need this note, make sure you load the mod they are sharing notes for and ask them to share again"
+
+DBM_CORE_NOTEHEADER					= "Enter your note text here for %s. Enclosing a players name with >< class colors it. For alerts with multiple counts, separate notes with '/'"
+DBM_CORE_NOTEFOOTER					= "Press 'Okay' to accept changes or 'Cancel' to decline changes"
+DBM_CORE_NOTESHAREDHEADER			= "%s has shared below note text for %s. If you accept it, it will overwrite your existing note"
+DBM_CORE_NOTESHARED					= "Your note has been sent to the group"
+DBM_CORE_NOTESHAREERRORSOLO			= "Lonely? Shouldn't be passing notes to yourself"
+DBM_CORE_NOTESHAREERRORBLANK		= "Cannot share blank notes"
+DBM_CORE_NOTESHAREERRORGROUPFINDER	= "Notes cannot be shared in BGs, LFR, or LFG"
+DBM_CORE_NOTESHAREERRORALREADYOPEN	= "Cannot open a shared note link while note editor is already open, to prevent you from losing the note you are currently editing"
+
+DBM_CORE_ALLMOD_DEFAULT_LOADED		= "Default options for all mods in this instance have been loaded."
+DBM_CORE_ALLMOD_STATS_RESETED		= "All mod stats have been reset."
+DBM_CORE_MOD_DEFAULT_LOADED			= "Default options for this fight have been loaded."
+DBM_CORE_SOUNDKIT_MIGRATION			= "One or more of your warning/special warning sounds were reset to defaults do to incompatability media type or invalid sound path. DBM now only supports sound files residing your addons folder, or SoundKit IDs for playing media"
+
+DBM_CORE_TIMER_FORMAT_SECS			= "%.2f |4second:seconds;"
 DBM_CORE_TIMER_FORMAT_MINS			= "%d |4minute:minutes;"
-DBM_CORE_TIMER_FORMAT				= "%d |4minute:minutes; and %d |4second:seconds;"
+DBM_CORE_TIMER_FORMAT				= "%d |4minute:minutes; and %.2f |4second:seconds;"
 
 DBM_CORE_MIN						= "min"
 DBM_CORE_MIN_FMT					= "%d min"
 DBM_CORE_SEC						= "sec"
-DBM_CORE_SEC_FMT					= "%d sec"
-DBM_CORE_DEAD						= "dead"
-DBM_CORE_OK							= "Okay"
+DBM_CORE_SEC_FMT					= "%s sec"
 
+DBM_CORE_GENERIC_WARNING_OTHERS		= "and one other"
+DBM_CORE_GENERIC_WARNING_OTHERS2	= "and %d others"
 DBM_CORE_GENERIC_WARNING_BERSERK	= "Berserk in %s %s"
 DBM_CORE_GENERIC_TIMER_BERSERK		= "Berserk"
 DBM_CORE_OPTION_TIMER_BERSERK		= "Show timer for $spell:26662"
-DBM_CORE_OPTION_HEALTH_FRAME		= "Show boss health frame"
+DBM_CORE_GENERIC_TIMER_COMBAT		= "Combat starts"
+DBM_CORE_OPTION_TIMER_COMBAT		= "Show timer for combat start"
+DBM_CORE_BAD						= "Bad"
 
 DBM_CORE_OPTION_CATEGORY_TIMERS			= "Bars"
 --Sub cats for "announce" object
@@ -125,84 +176,263 @@ DBM_CORE_HORDE						= "Horde"
 
 DBM_CORE_UNKNOWN					= "unknown"
 
-DBM_CORE_BREAK_START				= "Break starting now -- you have %s minute(s)!"
+DBM_CORE_BREAK_USAGE				= "Break timer cannot be longer than 60 minutes. Make sure you're inputting time in minutes and not seconds."
+DBM_CORE_BREAK_START				= "Break starting now -- you have %s! (Sent by %s)"
 DBM_CORE_BREAK_MIN					= "Break ends in %s minute(s)!"
 DBM_CORE_BREAK_SEC					= "Break ends in %s seconds!"
 DBM_CORE_TIMER_BREAK				= "Break time!"
-DBM_CORE_ANNOUNCE_BREAK_OVER		= "Break time is over"
+DBM_CORE_ANNOUNCE_BREAK_OVER		= "Break has ended at %s"
 
 DBM_CORE_TIMER_PULL					= "Pull in"
-DBM_CORE_ANNOUNCE_PULL				= "Pull in %d sec"
+DBM_CORE_ANNOUNCE_PULL				= "Pull in %d sec. (Sent by %s)"
 DBM_CORE_ANNOUNCE_PULL_NOW			= "Pull now!"
+DBM_CORE_ANNOUNCE_PULL_TARGET		= "Pulling %s in %d sec. (Sent by %s)"
+DBM_CORE_ANNOUNCE_PULL_NOW_TARGET	= "Pulling %s now!"
+DBM_CORE_GEAR_WARNING_WEAPON		= "Warning: Check if your weapon is correctly equipped."
+DBM_CORE_GEAR_FISHING_POLE			= "Fishing Pole"
 
 DBM_CORE_ACHIEVEMENT_TIMER_SPEED_KILL = "Speed Kill"
 
--- Auto-generated Timer Localizations
-DBM_CORE_AUTO_TIMER_TEXTS = {
-	target = "%s: %%s",
-	cast = "%s",
-	active = "%s",
-	cd = "%s CD",
-	next = "Next %s",
-	achievement = "%s",
-}
-
-DBM_CORE_AUTO_TIMER_OPTIONS = {
-	target = "Show timer for |cff71d5ff|Hspell:%d|h%s|h|r debuff",
-	cast = "Show timer for |cff71d5ff|Hspell:%d|h%s|h|r cast",
-	active = "Show timer for |cff71d5ff|Hspell:%d|h%s|h|r duration",
-	cd = "Show timer for |cff71d5ff|Hspell:%d|h%s|h|r cooldown",
-	next = "Show timer for next |cff71d5ff|Hspell:%d|h%s|h|r",
-	achievement = "Show timer for %s",
-}
-
 -- Auto-generated Warning Localizations
 DBM_CORE_AUTO_ANNOUNCE_TEXTS = {
-	target = "%s on >%%s<",
-	spell = "%s",
-	cast = "Casting %s: %.1f sec",
-	soon = "%s soon",
-	prewarn = "%s in %s",
-	phase = "Phase %d",
+	you			= "%s on YOU",
+	target		= "%s on >%%s<",
+	targetsource= ">%%s< cast %s on >%%s<",
+	targetcount	= "%s (%%s) on >%%s<",
+	spell		= "%s",
+	ends 		= "%s ended",
+	endtarget	= "%s ended: >%%s<",
+	fades		= "%s faded",
+	adds		= "%s remaining: %%d",
+	cast		= "Casting %s: %.1f sec",
+	soon		= "%s soon",
+	sooncount	= "%s (%%s) soon",
+	countdown	= "%s in %%ds",
+	prewarn		= "%s in %s",
+	bait		= "%s soon - bait now",
+	stage		= "Stage %s",
+	prestage	= "Stage %s soon",
+	count		= "%s (%%s)",
+	stack		= "%s on >%%s< (%%d)",
+	moveto		= "%s - move to >%%s<"
 }
 
-local prewarnOption = "Show pre-warning for |cff71d5ff|Hspell:%d|h%s|h|r"
+local prewarnOption = "Show pre-warning for $spell:%s"
 DBM_CORE_AUTO_ANNOUNCE_OPTIONS = {
-	target = "Announce |cff71d5ff|Hspell:%d|h%s|h|r targets",
-	spell = "Show warning for |cff71d5ff|Hspell:%d|h%s|h|r",
-	cast = "Show warning when |cff71d5ff|Hspell:%d|h%s|h|r is being cast",
-	soon = prewarnOption,
-	prewarn = prewarnOption,
-	phase = "Announce Phase %d"
-}
-
-
--- Auto-generated Special Warning Localizations
-DBM_CORE_AUTO_SPEC_WARN_OPTIONS = {
-	spell 		= "Show special warning for $spell:%d",
-	dispel 		= "Show special warning to dispel/spellsteal \n $spell:%d",
-	interupt	= "Show special warning to interupt $spell:%d",
-	you 		= "Show special warning when you are affected by \n $spell:%d",
-	target 		= "Show special warning when someone is affected by \n $spell:%d",
-	close 		= "Show special warning when someone close to you is \n affected by $spell:%d",
-	move 		= "Show special warning when you are affected by \n $spell:%d",
-	run 		= "Show special warning for $spell:%d",
-	cast 		= "Show special warning for $spell:%d cast",
-	stack 		= "Show special warning for >=%d stacks of \n $spell:%d"
+	you			= "Announce when $spell:%s on you",
+	target		= "Announce $spell:%s targets",
+	targetsource= "Announce $spell:%s targets (with source)",
+	targetcount	= "Announce $spell:%s targets (with count)",
+	spell		= "Show warning for $spell:%s",
+	ends		= "Show warning when $spell:%s has ended",
+	endtarget	= "Show warning when $spell:%s has ended",
+	fades		= "Show warning when $spell:%s has faded",
+	adds		= "Announce how many $spell:%s remain",
+	cast		= "Show warning when $spell:%s is being cast",
+	soon		= prewarnOption,
+	sooncount	= prewarnOption,
+	countdown	= "Show pre-warning countdown spam for $spell:%s",
+	prewarn 	= prewarnOption,
+	bait		= "Show pre-warning (to bait) for $spell:%s",
+	stage		= "Announce Stage %s",
+	stagechange	= "Announce stage changes",
+	prestage	= "Show a prewarning for Stage %s",
+	count		= "Show warning for $spell:%s (with count)",
+	stack		= "Announce $spell:%s stacks",
+	moveto		= "Show warning to move to someone or some place for $spell:%s"
 }
 
 DBM_CORE_AUTO_SPEC_WARN_TEXTS = {
-	spell = "%s!",
-	dispel = "%s on %%s - dispel now",
-	interupt = "%s - interupt now",
-	you = "%s on you",
-	target = "%s on %%s",
-	close = "%s on %%s near you",
-	move = "%s - move away",
-	run = "%s - run away",
-	cast = "%s - stop casting",
-	stack = "%s (%%d)"
+	spell			= "%s!",
+	ends			= "%s ended",
+	fades			= "%s faded",
+	soon			= "%s soon",
+	sooncount		= "%s (%%s) soon",
+	bait			= "%s soon - bait now",
+	prewarn			= "%s in %s",
+	dispel			= "%s on >%%s< - dispel now",
+	interrupt		= "%s - interrupt >%%s<!",
+	interruptcount	= "%s - interrupt >%%s<! (%%d)",
+	you				= "%s on you",
+	youcount		= "%s (%%s) on you",
+	youpos			= "%s (Position: %%s) on you",
+	soakpos			= "%s (Soak Position: %%s)",
+	target			= "%s on >%%s<",
+	targetcount		= "%s (%%s) on >%%s< ",
+	defensive		= "%s - defensive",
+	taunt			= "%s on >%%s< - taunt now",
+	close			= "%s on >%%s< near you",
+	move			= "%s - move away",
+	keepmove		= "%s - keep moving",
+	stopmove		= "%s - stop moving",
+	dodge			= "%s - dodge attack",
+	dodgecount		= "%s (%%s) - dodge attack",
+	dodgeloc		= "%s - dodge from %%s",
+	moveaway		= "%s - move away from others",
+	moveawaycount	= "%s (%%s) - move away from others",
+	moveto			= "%s - move to >%%s<",
+	soak			= "%s - soak it",
+	jump			= "%s - jump",
+	run				= "%s - run away",
+	cast			= "%s - stop casting",
+	lookaway		= "%s on %%s - look away",
+	reflect			= "%s on >%%s< - stop attacking",
+	count			= "%s! (%%s)",
+	stack			= "%%d stacks of %s on you",
+	switch			= "%s - switch targets",
+	switchcount		= "%s - switch targets (%%s)",
+	gtfo			= "%%s under you - move away",
+	adds			= "Incoming Adds - switch targets",
+	addscustom		= "Incoming Adds - %%s",
+	targetchange	= "Target Change - switch to %%s"
 }
+
+-- Auto-generated Special Warning Localizations
+DBM_CORE_AUTO_SPEC_WARN_OPTIONS = {
+	spell 			= "Show special warning for $spell:%s",
+	ends 			= "Show special warning when $spell:%s has ended",
+	fades 			= "Show special warning when $spell:%s has faded",
+	soon 			= "Show pre-special warning for $spell:%s",
+	sooncount		= "Show pre-special warning (with count) for $spell:%s",
+	bait			= "Show pre-special warning (to bait) for $spell:%s",
+	prewarn 		= "Show pre-special warning %s seconds before $spell:%s",
+	dispel 			= "Show special warning to dispel/spellsteal $spell:%s",
+	interrupt		= "Show special warning to interrupt $spell:%s",
+	interruptcount	= "Show special warning (with count) to interrupt $spell:%s",
+	you 			= "Show special warning when you are affected by $spell:%s",
+	youcount		= "Show special warning (with count) when you are affected by $spell:%s",
+	youpos			= "Show special warning (with position) when you are affected by $spell:%s",
+	soakpos			= "Show special warning (with position) to help soak others affected by $spell:%s",
+	target 			= "Show special warning when someone is affected by $spell:%s",
+	targetcount 	= "Show special warning (with count) when someone is affected by $spell:%s",
+	defensive 		= "Show special warning to use defensive abilites for $spell:%s",
+	taunt 			= "Show special warning to taunt when other tank affected by $spell:%s",
+	close 			= "Show special warning when someone close to you is affected by $spell:%s",
+	move 			= "Show special warning to move out from $spell:%s",
+	keepmove 		= "Show special warning to keep moving for $spell:%s",
+	stopmove 		= "Show special warning to stop moving for $spell:%s",
+	dodge 			= "Show special warning to dodge $spell:%s",
+	dodgecount		= "Show special warning (with count) to dodge $spell:%s",
+	dodgeloc		= "Show special warning (with location) to dodge $spell:%s",
+	moveaway		= "Show special warning to move away from others for $spell:%s",
+	moveawaycount	= "Show special warning (with count) to move away from others for $spell:%s",
+	moveto			= "Show special warning to move to someone or some place for $spell:%s",
+	soak			= "Show special warning to soak for $spell:%s",
+	jump			= "Show special warning to move to jump for $spell:%s",
+	run 			= "Show special warning to run away from $spell:%s",
+	cast 			= "Show special warning to stop casting for $spell:%s",--Spell Interrupt
+	lookaway		= "Show special warning to look away for $spell:%s",
+	reflect 		= "Show special warning to stop attacking $spell:%s",--Spell Reflect
+	count 			= "Show special warning (with count) for $spell:%s",
+	stack 			= "Show special warning when you are affected by >=%d stacks of $spell:%s",
+	switch			= "Show special warning to switch targets for $spell:%s",
+	switchcount		= "Show special warning (with count) to switch targets for $spell:%s",
+	gtfo 			= "Show special warning to move out of bad stuff on ground",
+	adds			= "Show special warning to switch targets for incoming adds",
+	addscustom		= "Show special warning for incoming adds",
+	targetchange	= "Show special warning for priority target changes"
+}
+
+-- Auto-generated Timer Localizations
+DBM_CORE_AUTO_TIMER_TEXTS = {
+	target			= "%s: %%s",
+	cast			= "%s",
+	castshort		= "%s ",--if short timers enabled, cast and next are same timer text, this is a conflict. the space resolves it
+	castcount		= "%s (%%s)",
+	castcountshort	= "%s (%%s) ",--Resolve short timer conflict with next timers
+	castsource		= "%s: %%s",
+	castsourceshort	= "%s: %%s ",--Resolve short timer conflict with next timers
+	active			= "%s ends",--Buff/Debuff/event on boss
+	fades			= "%s fades",--Buff/Debuff on players
+	ai				= "%s AI",
+	cd				= "%s CD",
+	cdshort			= "~%s",
+	cdcount			= "%s CD (%%s)",
+	cdcountshort	= "~%s (%%s)",
+	cdsource		= "%s CD: >%%s<",
+	cdsourceshort	= "~%s: >%%s<",
+	cdspecial		= "Special CD",
+	cdspecialshort	= "~Special",
+	next			= "Next %s",
+	nextshort		= "%s",
+	nextcount		= "Next %s (%%s)",
+	nextcountshort	= "%s (%%s)",
+	nextsource		= "Next %s: %%s",
+	nextsourceshort	= "%s: %%s",
+	nextspecial		= "Next Special",
+	nextspecialshort= "Special",
+	achievement		= "%s",
+	stage			= "Next Stage",
+	stageshort		= "Stage",
+	adds			= "Incoming Adds",
+	addsshort		= "Adds",
+	addscustom		= "Incoming Adds (%%s)",
+	addscustomshort	= "Adds (%%s)",
+	roleplay		= GUILD_INTEREST_RP
+}
+
+DBM_CORE_AUTO_TIMER_OPTIONS = {
+	target		= "Show timer for $spell:%s debuff",
+	cast		= "Show timer for $spell:%s cast",
+	castcount	= "Show timer (with count) for $spell:%s cast",
+	castsource	= "Show timer (with source) for $spell:%s cast",
+	active		= "Show timer for $spell:%s duration",
+	fades		= "Show timer for when $spell:%s fades from players",
+	ai			= "Show AI timer for $spell:%s cooldown",
+	cd			= "Show timer for $spell:%s cooldown",
+	cdcount		= "Show timer for $spell:%s cooldown",
+	cdsource	= "Show timer (with source) for $spell:%s cooldown",--Maybe better wording?
+	cdspecial	= "Show timer for special ability cooldown",
+	next		= "Show timer for next $spell:%s",
+	nextcount	= "Show timer for next $spell:%s",
+	nextsource	= "Show timer (with source) for next $spell:%s",--Maybe better wording?
+	nextspecial	= "Show timer for next special ability",
+	achievement	= "Show timer for %s",
+	stage		= "Show timer for next stage",
+	adds		= "Show timer for incoming adds",
+	addscustom	= "Show timer for incoming adds",
+	roleplay	= "Show timer for roleplay duration"--This does need localizing though.
+}
+
+
+DBM_CORE_AUTO_ICONS_OPTION_TEXT			= "Set icons on $spell:%s targets"
+DBM_CORE_AUTO_ICONS_OPTION_TEXT2		= "Set icons on $spell:%s"
+DBM_CORE_AUTO_ARROW_OPTION_TEXT			= "Show Deadly Boss Mods Arrow to move toward target affected by $spell:%s"
+DBM_CORE_AUTO_ARROW_OPTION_TEXT2		= "Show Deadly Boss Mods Arrow to move away from target affected by $spell:%s"
+DBM_CORE_AUTO_ARROW_OPTION_TEXT3		= "Show Deadly Boss Mods Arrow to move toward specific location for $spell:%s"
+DBM_CORE_AUTO_YELL_OPTION_TEXT = {
+	shortyell		= "Yell when you are affected by $spell:%s",
+	yell			= "Yell (with player name) when you are affected by $spell:%s",
+	count			= "Yell (with count) when you are affected by $spell:%s",
+	fade			= "Yell (with countdown and spell name) when $spell:%s is fading",
+	shortfade		= "Yell (with countdown) when $spell:%s is fading",
+	iconfade		= "Yell (with countdown and icon) when $spell:%s is fading",
+	position		= "Yell (with position) when you are affected by $spell:%s",
+	combo			= "Yell (with custom text) when you are affected by $spell:%s and other spells at same time"
+}
+DBM_CORE_AUTO_YELL_ANNOUNCE_TEXT = {
+	shortyell		= "%s",
+	yell			= "%s on " .. UnitName("player"),
+	count			= "%s on " .. UnitName("player") .. " (%%d)",
+	fade			= "%s fading in %%d",
+	shortfade		= "%%d",
+	iconfade		= "{rt%%2$d}%%1$d",
+	position 		= "%s %%s on {rt%%d}"..UnitName("player").."{rt%%d}",
+	combo			= "%s and %%s"--Spell name (from option, plus spellname given in arg)
+}
+DBM_CORE_AUTO_YELL_CUSTOM_POSITION		= "{rt%d}%s"--Doesn't need translating. Has no strings
+DBM_CORE_AUTO_YELL_CUSTOM_POSITION2		= "{rt%d}%s{rt%d}"--Doesn't need translating. Has no strings
+DBM_CORE_AUTO_YELL_CUSTOM_FADE			= "%s faded"
+DBM_CORE_AUTO_HUD_OPTION_TEXT			= "Show HudMap for $spell:%s (Retired)"
+DBM_CORE_AUTO_HUD_OPTION_TEXT_MULTI		= "Show HudMap for various mechanics (Retired)"
+DBM_CORE_AUTO_NAMEPLATE_OPTION_TEXT		= "Show Nameplate Auras for $spell:%s"
+DBM_CORE_AUTO_RANGE_OPTION_TEXT			= "Show range frame (%s) for $spell:%s"--string used for range so we can use things like "5/2" as a value for that field
+DBM_CORE_AUTO_RANGE_OPTION_TEXT_SHORT	= "Show range frame (%s)"--For when a range frame is just used for more than one thing
+DBM_CORE_AUTO_RRANGE_OPTION_TEXT		= "Show reverse range frame (%s) for $spell:%s"--Reverse range frame (green when players in range, red when not)
+DBM_CORE_AUTO_RRANGE_OPTION_TEXT_SHORT	= "Show reverse range frame (%s)"
+DBM_CORE_AUTO_INFO_FRAME_OPTION_TEXT	= "Show info frame for $spell:%s"
+DBM_CORE_AUTO_INFO_FRAME_OPTION_TEXT2	= "Show info frame for encounter overview"
+DBM_CORE_AUTO_READY_CHECK_OPTION_TEXT	= "Play ready check sound when boss is pulled (even if it's not targeted)"
 
 
 DBM_CORE_AUTO_ICONS_OPTION_TEXT		= "Set icons on $spell:%d targets"
@@ -210,6 +440,8 @@ DBM_CORE_AUTO_SOUND_OPTION_TEXT		= "Play sound on $spell:%d"
 
 
 -- New special warnings
+DBM_CORE_MOVE_WARNING_BAR			= "Announce movable"
+DBM_CORE_MOVE_WARNING_MESSAGE		= "Thanks for using Deadly Boss Mods"
 DBM_CORE_MOVE_SPECIAL_WARNING_BAR	= "Special warning movable"
 DBM_CORE_MOVE_SPECIAL_WARNING_TEXT	= "Special Warning"
 
@@ -225,6 +457,31 @@ DBM_ARROW_ERROR_USAGE	= {
 	"/dbm arrow hide  hides the arrow",
 	"/dbm arrow move  makes the arrow movable",
 }
+
+--Role Icons
+DBM_CORE_TANK_ICON			= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:20:20:0:0:255:66:6:21:7:27|t"
+DBM_CORE_DAMAGE_ICON		= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:20:20:0:0:255:66:39:55:7:27|t"
+DBM_CORE_HEALER_ICON		= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:20:20:0:0:255:66:70:86:7:27|t"
+
+DBM_CORE_TANK_ICON_SMALL	= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:12:12:0:0:255:66:6:21:7:27|t"
+DBM_CORE_DAMAGE_ICON_SMALL	= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:12:12:0:0:255:66:39:55:7:27|t"
+DBM_CORE_HEALER_ICON_SMALL	= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:12:12:0:0:255:66:70:86:7:27|t"
+--Importance Icons
+DBM_CORE_HEROIC_ICON		= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:22:22:0:0:255:66:102:118:7:27|t"
+DBM_CORE_DEADLY_ICON		= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:22:22:0:0:255:66:133:153:7:27|t"
+DBM_CORE_IMPORTANT_ICON		= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:20:20:0:0:255:66:168:182:7:27|t"
+DBM_CORE_MYTHIC_ICON		= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:22:22:0:0:255:66:133:153:40:58|t"
+
+DBM_CORE_HEROIC_ICON_SMALL	= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:14:14:0:0:255:66:102:118:7:27|t"
+DBM_CORE_DEADLY_ICON_SMALL	= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:14:14:0:0:255:66:133:153:7:27|t"
+DBM_CORE_IMPORTANT_ICON_SMALL= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:12:12:0:0:255:66:168:182:7:27|t"
+--Type Icons
+DBM_CORE_INTERRUPT_ICON		= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:20:20:0:0:255:66:198:214:7:27|t"
+DBM_CORE_MAGIC_ICON			= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:20:20:0:0:255:66:229:247:7:27|t"
+DBM_CORE_CURSE_ICON			= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:20:20:0:0:255:66:6:21:40:58|t"
+DBM_CORE_POISON_ICON		= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:20:20:0:0:255:66:39:55:40:58|t"
+DBM_CORE_DISEASE_ICON		= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:20:20:0:0:255:66:70:86:40:58|t"
+DBM_CORE_ENRAGE_ICON		= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:20:20:0:0:255:66:102:118:40:58|t"
 
 --LDB
 DBM_LDB_TOOLTIP_HELP1	= "Click to open DBM"

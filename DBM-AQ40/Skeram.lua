@@ -19,7 +19,7 @@ local warnSummonSoon	= mod:NewSoonAnnounce(747, 2)
 
 local timerMindControl	= mod:NewBuffActiveTimer(20, 785)
 
-mod:AddBoolOption("SetIconOnMC", true)
+mod:AddSetIconOption("SetIconOnMC", 785, true, true)
 
 local split1
 local split2

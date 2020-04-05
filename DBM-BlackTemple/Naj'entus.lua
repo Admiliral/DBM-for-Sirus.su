@@ -14,6 +14,8 @@ Najentus:RegisterEvents(
 Najentus:AddOption("RangeCheck", true, DBM_NAJENTUS_OPTION_RANGECHECK)
 Najentus:AddOption("Icon", false, DBM_NAJENTUS_OPTION_ICON)
 
+Najentus:AddSetIconOption("Icon", 39837, false, true)
+
 Najentus:AddBarOption("Enrage")
 Najentus:AddBarOption("Next Tidal Shield")
 

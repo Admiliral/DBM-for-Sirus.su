@@ -99,7 +99,7 @@ local specWarnHandofProt	= mod:NewSpecialWarningDispel(66009, isDispeller)
 local specWarnDivineShield	= mod:NewSpecialWarningDispel(66010, isDispeller)
 local specWarnIceBlock		= mod:NewSpecialWarningDispel(65802, isDispeller)
 
-mod:AddBoolOption("PlaySoundOnBladestorm", mod:IsMelee())
+mod:AddBoolOption("PlaySoundOnBladestorm", "Melee")
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(65816, 68145, 68146, 68147) then		-- Warlock Hellfire

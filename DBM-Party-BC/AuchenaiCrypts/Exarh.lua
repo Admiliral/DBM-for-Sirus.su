@@ -17,7 +17,7 @@ mod:RegisterEvents(
 local timerScreamCD		= mod:NewCDTimer(33, 32421)
 local timerSoulCD		= mod:NewCDTimer(25, 32346)
 local timerMortalCD		= mod:NewCDTimer(30, 16856)
-local timerMortal		= mod:NewTargetTimer(5, 16856, nil, mod:IsTank() or mod:IsHealer())
+local timerMortal		= mod:NewTargetTimer(5, 16856, nil, "Tank|Healer")
 local specWarnSoul      = mod:NewSpecialWarningYou(32346)
 local warnSoul          = mod:NewAnnounce("WarnSoul", 32346)
 local avatar = 0

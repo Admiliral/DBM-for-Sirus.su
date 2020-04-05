@@ -20,7 +20,7 @@ local warnTenebron          = mod:NewAnnounce("WarningTenebron", 2, 61248, false
 local warnShadron           = mod:NewAnnounce("WarningShadron", 2, 58105, false)
 local warnVesperon          = mod:NewAnnounce("WarningVesperon", 2, 61251, false)
 
-local warnFireWall			= mod:NewSpecialWarning("WarningFireWall", nil, nil, true)
+local warnFireWall			= mod:NewSpecialWarning("WarningFireWall")
 local warnVesperonPortal	= mod:NewSpecialWarning("WarningVesperonPortal", false)
 local warnTenebronPortal	= mod:NewSpecialWarning("WarningTenebronPortal", false)
 local warnShadronPortal		= mod:NewSpecialWarning("WarningShadronPortal", false)

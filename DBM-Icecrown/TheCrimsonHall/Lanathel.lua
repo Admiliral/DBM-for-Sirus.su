@@ -17,7 +17,7 @@ mod:RegisterEvents(
 )
 
 local warnPactDarkfallen			= mod:NewTargetAnnounce(71340, 4)
-local warnBloodMirror				= mod:NewTargetAnnounce(71510, 3, nil, mod:IsTank() or mod:IsHealer())
+local warnBloodMirror				= mod:NewTargetAnnounce(71510, 3, nil, "Tank|Healer")
 local warnSwarmingShadows			= mod:NewTargetAnnounce(71266, 4)
 local warnInciteTerror				= mod:NewSpellAnnounce(73070, 3)
 local warnVampricBite				= mod:NewTargetAnnounce(71727, 2)
@@ -31,7 +31,7 @@ local specWarnPactDarkfallen		= mod:NewSpecialWarningYou(71340)
 local specWarnEssenceoftheBloodQueen= mod:NewSpecialWarningYou(71473)
 local specWarnBloodthirst			= mod:NewSpecialWarningYou(71474)
 local specWarnSwarmingShadows		= mod:NewSpecialWarningMove(71266)
-local specWarnMindConrolled			= mod:NewSpecialWarningTarget(70923, mod:IsTank())
+local specWarnMindConrolled			= mod:NewSpecialWarningTarget(70923, "Tank")
 
 local timerNextInciteTerror			= mod:NewNextTimer(100, 73070)
 local timerFirstBite				= mod:NewCastTimer(15, 71727)

@@ -29,7 +29,7 @@ local warnVolatileExperiment		= mod:NewSpellAnnounce(72840, 4)		-- Phase transit
 local warnMalleableGoo				= mod:NewSpellAnnounce(72295, 2)		-- Phase 2 ability (Вязкая гадость)
 local warnChokingGasBomb			= mod:NewSpellAnnounce(71255, 3)		-- Phase 2 ability
 local warnPhase3Soon				= mod:NewAnnounce("WarnPhase3Soon", 2)
-local warnMutatedPlague				= mod:NewAnnounce("WarnMutatedPlague", 2, 72451, mod:IsTank() or mod:IsHealer()) -- Phase 3 ability
+local warnMutatedPlague				= mod:NewAnnounce("WarnMutatedPlague", 2, 72451, "Tank|Healer") -- Phase 3 ability
 local warnUnboundPlague				= mod:NewTargetAnnounce(72856, 3)			-- Heroic Ability
 
 local specWarnVolatileOozeAdhesive	= mod:NewSpecialWarningYou(70447)
@@ -38,12 +38,12 @@ local specWarnVolatileOozeOther		= mod:NewSpecialWarningTarget(70447, false)
 local specWarnGaseousBloatOther		= mod:NewSpecialWarningTarget(70672, false)
 local specWarnMalleableGoo			= mod:NewSpecialWarning("SpecWarnMalleableGoo")
 local specWarnMalleableGooNear		= mod:NewSpecialWarning("SpecWarnMalleableGooNear")
-local specWarnChokingGasBomb		= mod:NewSpecialWarningSpell(71255, mod:IsTank())
+local specWarnChokingGasBomb		= mod:NewSpecialWarningSpell(71255, "Tank")
 local specWarnMalleableGooCast		= mod:NewSpecialWarningSpell(72295, false)
 local specWarnOozeVariable			= mod:NewSpecialWarningYou(70352)		-- Heroic Ability
 local specWarnGasVariable			= mod:NewSpecialWarningYou(70353)		-- Heroic Ability
 local specWarnUnboundPlague			= mod:NewSpecialWarningYou(72856)		-- Heroic Ability
-local specWarnMutatedPlague         = mod:NewSpecialWarning("SpecWarnMutatedPlague", mod:IsTank() or IsRaidLeader())
+local specWarnMutatedPlague         = mod:NewSpecialWarning("SpecWarnMutatedPlague", "Tank|Healer")
 
 local timerGaseousBloat				= mod:NewTargetTimer(20, 70672)			-- Duration of debuff
 local timerSlimePuddleCD			= mod:NewCDTimer(35, 70341)				-- Approx

@@ -3,7 +3,8 @@
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Цитадель Ледяной Короны|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
-## SavedVariablesPerCharacter: DBMIcecrown_SavedVars, DBMIcecrown_SavedStats
+## SavedVariables: DBMIcecrown_AllSavedVars
+## SavedVariablesPerCharacter: DBMIcecrown_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Category: WotLK
 ## X-DBM-Mod-SubCategories: The Lower Spire, The Plagueworks, The Crimson Hall, Frostwing Halls, The Frozen Throne

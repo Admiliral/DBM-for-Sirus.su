@@ -17,11 +17,11 @@ local isDispeller = select(2, UnitClass("player")) == "PRIEST" or select(2, Unit
 local timerWhirlCD                   = mod:NewCDTimer(55, 33238)
 local timerWhirl                     = mod:NewTimer(15, "TimerWhirl", 33238)
 local timerIntimidateCD              = mod:NewCDTimer(16, 16508)
-local specWarnMelee                  = mod:NewSpecialWarningMove(33238, mod:IsMelee())
+local specWarnMelee                  = mod:NewSpecialWarningMove(33238, "Melee")
 local timerMight                     = mod:NewTargetTimer(60, 305216, "timerActive")
 local timerMightCD                   = mod:NewCDTimer(80, 305216)
 local specWarnShield                 = mod:NewSpecialWarningDispel(305247, isDispeller)
-local specWarnKickCleanse            = mod:NewSpecialWarning("KickNow", not mod:IsMelee())
+local specWarnKickCleanse            = mod:NewSpecialWarning("KickNow", "-Melee")
 local warnMight                      = mod:NewAnnounce("WarnMight", 2)
 
 mod:AddBoolOption("WarnMight",true)

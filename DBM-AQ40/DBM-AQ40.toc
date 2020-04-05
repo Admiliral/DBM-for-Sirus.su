@@ -3,7 +3,8 @@
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Храм Ан'Киража|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
-## SavedVariablesPerCharacter: DBMAQ40_SavedVars, DBMAQ40_SavedStats
+## SavedVariables: DBMAQ40__AllSavedVars
+## SavedVariablesPerCharacter: DBMAQ40_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Category: Classic
 ## X-DBM-Mod-Has-Heroic-Mode: 0

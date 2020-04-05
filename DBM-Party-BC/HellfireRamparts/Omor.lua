@@ -14,7 +14,7 @@ mod:RegisterEvents(
 )
 
 local timerTreach			    = mod:NewTargetTimer(15, 37566)
-local specWarnKickTreach        = mod:NewSpecialWarningInterupt(37566)
+local specWarnKickTreach        = mod:NewSpecialWarningInterrupt(37566)
 local specWarnTreach            = mod:NewSpecialWarningYou(37566)
 local timerWall 			    = mod:NewTargetTimer(10, 31901)
 local iconsTreach = 8

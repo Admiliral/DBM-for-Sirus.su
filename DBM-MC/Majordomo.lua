@@ -15,7 +15,7 @@ local warnMagicReflect	= mod:NewSpellAnnounce(20619)
 local warnDamageShield	= mod:NewSpellAnnounce(21075)
 local warnTeleport		= mod:NewTargetAnnounce(20534)
 
-local specWarnMagicReflect		= mod:NewSpecialWarningSpell(20619, not mod:IsMelee())
+local specWarnMagicReflect		= mod:NewSpecialWarningSpell(20619, "-Melee")
 
 local timerMagicReflect	= mod:NewBuffActiveTimer(10, 20619)
 local timerDamageShield	= mod:NewBuffActiveTimer(10, 21075)

@@ -4,7 +4,8 @@
 ## Author: Nitram/Tandanu
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
-## SavedVariablesPerCharacter: DBMVoA_SavedVars
+## SavedVariables: DBMVoA_AllSavedVars
+## SavedVariablesPerCharacter: DBMVoA_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Category: WotLK
 ## X-DBM-Mod-Name: Vault of Archavon

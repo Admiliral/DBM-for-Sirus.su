@@ -2,7 +2,8 @@
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Gruul|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
-## SavedVariablesPerCharacter: DBMGruul_SavedVars, DBMGruul_SavedStats
+## SavedVariables: DBMGruul_AllSavedVars
+## SavedVariablesPerCharacter: DBMGruul_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Category: BC
 ## X-DBM-Mod-Name: Gruul

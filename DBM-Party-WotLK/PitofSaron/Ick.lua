@@ -22,13 +22,13 @@ local warnPursuit				= mod:NewAnnounce("warnPursuit", 4, 68987)
 local specWarnToxic				= mod:NewSpecialWarningMove(70436)
 local specWarnMines				= mod:NewSpecialWarningRun(69015)
 local specWarnPursuit			= mod:NewSpecialWarning("specWarnPursuit")
-local specWarnPoisonNova		= mod:NewSpecialWarningRun(68989, mod:IsMelee())
+local specWarnPoisonNova		= mod:NewSpecialWarningRun(68989, "Melee")
 
 local timerPursuitCast			= mod:NewCastTimer(5, 68987)
 local timerPursuitConfusion		= mod:NewBuffActiveTimer(12, 69029)
 local timerPoisonNova			= mod:NewCastTimer(5, 68989)
 
-local soundPoisonNova	= mod:NewSound(68989, nil, mod:IsMelee())
+local soundPoisonNova	= mod:NewSound(68989, nil, "Melee")
 local soundPursuit		= mod:NewSound(68987)
 mod:AddBoolOption("SetIconOnPursuitTarget", true)
 

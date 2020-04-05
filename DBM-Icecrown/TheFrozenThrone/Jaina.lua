@@ -46,8 +46,8 @@ local specWarnWildFlameNear = mod:NewSpecialWarning("SpecWarnWildFlameNear", 306
 local specWarnVengefulIce   = mod:NewSpecialWarningMove(306535)
 local specWarnIceWrath      = mod:NewSpecialWarning("SpecWarnIceWrath")
 local specWarnIceMark       = mod:NewSpecialWarningRun(306523)
-local specWarnIceRush       = mod:NewSpecialWarningMove(306531, mod:IsMelee())
-local specWarnIceSpears     = mod:NewSpecialWarningSpell(306537, mod:IsRanged())
+local specWarnIceRush       = mod:NewSpecialWarningMove(306531, "Melee")
+local specWarnIceSpears     = mod:NewSpecialWarningSpell(306537, "Ranged")
 
 local berserkTimer			= mod:NewBerserkTimer(1802)
 

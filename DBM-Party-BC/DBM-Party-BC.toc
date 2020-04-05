@@ -4,7 +4,8 @@
 ## Author: Ritual
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
-## SavedVariablesPerCharacter: DBMPartyBC_SavedVars, DBMPartyBC_SavedStats
+## SavedVariables: DBMPartyBC_AllSavedVars
+## SavedVariablesPerCharacter: DBMPartyBC_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Category: BC
 ## X-DBM-Mod-SubCategories: Auchenai Crypts, Hellfire Ramparts, Mana-Tombs, The Blood Furnace, Underbog, The Steamvault, The Shattered Halls, Sethekk Halls, The Slave Pens, The Arcatraz, Shadow Labyrinth, The Botanica, The Mechanar, Old Hillsbrad Foothills, Magisters' Terrace, Black Morass

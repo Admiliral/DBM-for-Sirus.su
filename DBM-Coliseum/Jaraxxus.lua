@@ -30,7 +30,7 @@ local warnFelFireball			= mod:NewCastAnnounce(66532, 2)
 local warnPortalSoon			= mod:NewSoonAnnounce(67900, 3)
 local warnVolcanoSoon			= mod:NewSoonAnnounce(67901, 3)
 local warnFlame					= mod:NewTargetAnnounce(68123, 4)
-local warnFlesh					= mod:NewTargetAnnounce(66237, 4, nil, mod:IsHealer())
+local warnFlesh					= mod:NewTargetAnnounce(66237, 4, nil, "Healer")
 local warnNetherPower			= mod:NewAnnounce("WarnNetherPower", 4, 67009)
 
 local specWarnFlame				= mod:NewSpecialWarningRun(67072)
@@ -47,7 +47,7 @@ local timerFlame 				= mod:NewTargetTimer(8, 68123)--There are 8 debuff Ids. Sin
 local timerFlameCD				= mod:NewCDTimer(30, 68125)
 local timerNetherPowerCD		= mod:NewCDTimer(42, 67009)
 local timerFlesh				= mod:NewTargetTimer(12, 67049)
-local timerFleshCD				= mod:NewCDTimer(23, 67051) 
+local timerFleshCD				= mod:NewCDTimer(23, 67051)
 local timerPortalCD				= mod:NewCDTimer(120, 67900)
 local timerVolcanoCD			= mod:NewCDTimer(120, 67901)
 

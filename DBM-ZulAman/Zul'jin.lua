@@ -30,7 +30,7 @@ local timerFlameWhirl       = mod:NewCDTimer(12, 43213)
 local timerFlamePillar      = mod:NewCDTimer(10, 43216)
 
 local specWarnFlamePillar	    = mod:NewSpecialWarningRun(43216)
-local specWarnFlamePillarMelee  = mod:NewSpecialWarningRun(43216, mod:IsMelee())
+local specWarnFlamePillarMelee  = mod:NewSpecialWarningRun(43216, "Melee")
 local warnFlamePillar           = mod:NewAnnounce("WarnFlamePillar", 4, 43216)
 
 local berserkTimer          = mod:NewBerserkTimer(600)

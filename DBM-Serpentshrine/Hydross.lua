@@ -16,7 +16,7 @@ local warnMarkOfCorruption  = mod:NewAnnounce("WarnMarkOfCorruption", 3, 38219)
 local warnWaterTomb         = mod:NewTargetAnnounce(38235, 3)
 local warnVileSludge        = mod:NewTargetAnnounce(38246, 3)
 
-local specWarnThreatReset   = mod:NewSpecialWarning("SpecWarnThreatReset", not (mod:IsTank() or mod:IsHealer()))
+local specWarnThreatReset   = mod:NewSpecialWarning("SpecWarnThreatReset", "-Tank|-Healer")
 
 local timerMarkOfHydross    = mod:NewTimer(15, "TimerMarkOfHydross", 38215)
 local timerMarkOfCorruption = mod:NewTimer(15, "TimerMarkOfCorruption", 38219)

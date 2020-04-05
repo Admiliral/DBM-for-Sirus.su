@@ -35,7 +35,7 @@ local timerHandCD				= mod:NewCDTimer(15, 305345)
 local timerMarkCD			    = mod:NewCDTimer(33, 305351)
 local WarnMark		            = mod:NewTargetAnnounce(305351, 3)
 local specWarnMark			    = mod:NewSpecialWarningYou(305351)
-local specWarnSeed	            = mod:NewSpecialWarningSpell(305360, mod:IsTank())
+local specWarnSeed	            = mod:NewSpecialWarningSpell(305360, "Tank")
 local specWarnDart		        = mod:NewSpecialWarningStack(305367, nil, 7)
 
 local berserkTimer		        = mod:NewBerserkTimer(600)

@@ -15,7 +15,7 @@ mod:RegisterEvents(
 
 local timerScreamCD		        = mod:NewCDTimer(21, 22686)
 local timerFireCD		        = mod:NewCDTimer(12, 36921)
-local warnScreamKick            = mod:NewSpecialWarningInterupt(22686)
+local warnScreamKick            = mod:NewSpecialWarningInterrupt(22686)
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(22686) then

@@ -40,7 +40,7 @@ local timerEmerge			= mod:NewTimer(60, "TimerEmerge", "Interface\\AddOns\\DBM-Co
 -- Submerge
 local warnSubmerge			= mod:NewAnnounce("WarnSubmerge", 3, "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendBurrow.blp")
 local warnSubmergeSoon		= mod:NewAnnounce("WarnSubmergeSoon", 1, "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendBurrow.blp")
-local specWarnSubmergeSoon	= mod:NewSpecialWarning("specWarnSubmergeSoon", mod:IsTank())
+local specWarnSubmergeSoon	= mod:NewSpecialWarning("specWarnSubmergeSoon", "Tank")
 local timerSubmerge			= mod:NewTimer(75, "TimerSubmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendBurrow.blp")
 
 -- Phases
@@ -55,14 +55,14 @@ mod:AddBoolOption("AnnouncePColdIcons", false)
 mod:AddBoolOption("AnnouncePColdIconsRemoved", false)
 
 -- Freezing Slash
-local warnFreezingSlash		= mod:NewTargetAnnounce(66012, 2, nil, mod:IsHealer() or mod:IsTank())
-local timerFreezingSlash	= mod:NewCDTimer(20, 66012, nil, mod:IsHealer() or mod:IsTank())
+local warnFreezingSlash		= mod:NewTargetAnnounce(66012, 2, nil, "Tank|Healer")
+local timerFreezingSlash	= mod:NewCDTimer(20, 66012, nil, "Tank|Healer")
 
 -- Shadow Strike
 local timerShadowStrike		= mod:NewNextTimer(30.5, 66134)
 local preWarnShadowStrike	= mod:NewSoonAnnounce(66134, 3)
 local warnShadowStrike		= mod:NewSpellAnnounce(66134, 4)
-local specWarnShadowStrike	= mod:NewSpecialWarning("SpecWarnShadowStrike", mod:IsTank())
+local specWarnShadowStrike	= mod:NewSpecialWarning("SpecWarnShadowStrike", "Tank")
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 34564, "Anub'arak")

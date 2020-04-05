@@ -14,7 +14,7 @@ mod:RegisterEvents(
 local warnBarrel			= mod:NewTargetAnnounce(51413, 4)
 local timerBarrel			= mod:NewTargetTimer(8, 51413)
 
-local specWarnDisarm		= mod:NewSpecialWarningRun(47310, mod:IsMelee())
+local specWarnDisarm		= mod:NewSpecialWarningRun(47310, "Melee")
 local specWarnBrew			= mod:NewSpecialWarning("specWarnBrew")
 local specWarnBrewStun		= mod:NewSpecialWarning("specWarnBrewStun")
 

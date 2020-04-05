@@ -4,7 +4,8 @@
 ## Author: Ritual
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
-## SavedVariablesPerCharacter: DBMSerpentshrine_SavedVars, DBMSerpentshrine_SavedStats
+## SavedVariables: DBMSerpentshrine_AllSavedVars
+## SavedVariablesPerCharacter: DBMSerpentshrine_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Category: BC
 ## X-DBM-Mod-Name: Serpentshrine Cavern

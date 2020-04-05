@@ -21,10 +21,10 @@ local warnShadowpower       = mod:NewSpellAnnounce(35322)
 local timerShadowpower      = mod:NewBuffActiveTimer(15, 35322)
 local timerJackhammer       = mod:NewBuffActiveTimer(8, 39194)
 local WarnJackHammer		= mod:NewSpellAnnounce(39194)
-local specWarnJackHammer	= mod:NewSpecialWarningRun(39194, mod:IsMelee())
+local specWarnJackHammer	= mod:NewSpecialWarningRun(39194, "Melee")
 local specWarnShadowpower   = mod:NewSpecialWarningDispel(35322, isDispeller)
 
-local soundJackhammer = mod:NewSound(39194, nil, mod:IsMelee())
+local soundJackhammer = mod:NewSound(39194, nil, "Melee")
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(39193, 35322) and not args:IsDestTypePlayer() and self:IsInCombat() then     --Shadow Power

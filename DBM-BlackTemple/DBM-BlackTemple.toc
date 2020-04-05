@@ -2,7 +2,8 @@
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Black Temple|r
 ## Author: Tandanu
 ## RequiredDeps: DBM-Core, DBM-BurningCrusade
-## SavedVariablesPerCharacter: DBMBlackTemple_SavedVars, DBMBlackTemple_SavedStats
+## SavedVariables: DBMBlackTemple__AllSavedVars
+## SavedVariablesPerCharacter: DBMBlackTemple_SavedStats
 ## DefaultState: Enabled
 ## LoadOnDemand: 1
 ## X-DBM-Mod: 1

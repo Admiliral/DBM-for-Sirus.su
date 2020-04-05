@@ -3,7 +3,8 @@
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Логово Крыла Тьмы|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
-## SavedVariablesPerCharacter: DBMBWL_SavedVars, DBMBWL_SavedStats
+## SavedVariables: DBMBWL_AllSavedVars
+## SavedVariablesPerCharacter: DBMBWL_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Category: Classic
 ## X-DBM-Mod-Has-Heroic-Mode: 0

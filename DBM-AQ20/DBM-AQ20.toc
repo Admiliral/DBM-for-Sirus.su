@@ -3,7 +3,8 @@
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Руины Ан'Киража|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
-## SavedVariablesPerCharacter: DBMAQ20_SavedVars, DBMAQ20_SavedStats
+## SavedVariables: DBMAQ20__AllSavedVars
+## SavedVariablesPerCharacter: DBMAQ20_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Category: Classic
 ## X-DBM-Mod-Has-Heroic-Mode: 0

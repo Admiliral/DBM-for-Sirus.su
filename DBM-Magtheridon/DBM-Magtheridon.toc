@@ -3,7 +3,8 @@
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Магтеридон|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
-## SavedVariablesPerCharacter: DBMMagtheridon_SavedVars, DBMMagtheridon_SavedStats
+## SavedVariables: DBMMagtheridon_AllSavedVars
+## SavedVariablesPerCharacter: DBMMagtheridon_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Category: BC
 ## X-DBM-Mod-Name: Magtheridon

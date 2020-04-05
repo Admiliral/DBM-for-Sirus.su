@@ -31,11 +31,11 @@ local specWarnMutatedInfection	= mod:NewSpecialWarningYou(71224)
 local specWarnStickyOoze		= mod:NewSpecialWarningMove(69774)
 local specWarnOozeExplosion		= mod:NewSpecialWarningMove(69839)
 local specWarnSlimeSpray		= mod:NewSpecialWarningSpell(69508, false)--For people that need a bigger warning to move
-local specWarnRadiatingOoze		= mod:NewSpecialWarningSpell(69760, not mod:IsTank())
+local specWarnRadiatingOoze		= mod:NewSpecialWarningSpell(69760, "-Tank")
 local specWarnLittleOoze		= mod:NewSpecialWarning("SpecWarnLittleOoze")
 local specWarnVileGas			= mod:NewSpecialWarningYou(72272)
 
-local timerStickyOoze			= mod:NewNextTimer(16, 69774, nil, mod:IsTank())
+local timerStickyOoze			= mod:NewNextTimer(16, 69774, nil, "Tank")
 local timerWallSlime			= mod:NewTimer(20, "NextPoisonSlimePipes", 69789)
 local timerSlimeSpray			= mod:NewNextTimer(21, 69508)
 local timerMutatedInfection		= mod:NewTargetTimer(12, 71224)
@@ -43,7 +43,7 @@ local timerOozeExplosion		= mod:NewCastTimer(4, 69839)
 local timerVileGasCD			= mod:NewNextTimer(30, 72272)
 
 local soundMutatedInfection		= mod:NewSound(71224)
-mod:AddBoolOption("RangeFrame", mod:IsRanged())
+mod:AddBoolOption("RangeFrame", "Ranged")
 mod:AddBoolOption("InfectionIcon", true)
 mod:AddBoolOption("TankArrow")
 

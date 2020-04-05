@@ -26,8 +26,8 @@ local warnChilledtotheBone		= mod:NewAnnounce("WarnChilledtotheBone", 2, 70106, 
 local warnMysticBuffet			= mod:NewAnnounce("WarnMysticBuffet", 2, 70128, false)
 local warnFrostBeacon			= mod:NewTargetAnnounce(70126, 4)
 local warnBlisteringCold		= mod:NewSpellAnnounce(70123, 3)
-local warnFrostBreath			= mod:NewSpellAnnounce(71056, 2, nil, mod:IsTank() or mod:IsHealer())
-local warnUnchainedMagic		= mod:NewTargetAnnounce(69762, 2, nil, not mod:IsMelee())
+local warnFrostBreath			= mod:NewSpellAnnounce(71056, 2, nil, "Tank|Healer")
+local warnUnchainedMagic		= mod:NewTargetAnnounce(69762, 2, nil, "-Melee")
 
 local specWarnUnchainedMagic	= mod:NewSpecialWarningYou(69762)
 local specWarnFrostBeacon		= mod:NewSpecialWarningYou(70126)
@@ -38,7 +38,7 @@ local specWarnBlisteringCold	= mod:NewSpecialWarningRun(70123)
 
 local timerNextAirphase			= mod:NewTimer(110, "TimerNextAirphase", 43810)
 local timerNextGroundphase		= mod:NewTimer(45, "TimerNextGroundphase", 43810)
-local timerNextFrostBreath		= mod:NewNextTimer(22, 71056, nil, mod:IsTank() or mod:IsHealer())
+local timerNextFrostBreath		= mod:NewNextTimer(22, 71056, nil, "Tank|Healer")
 local timerNextBlisteringCold	= mod:NewCDTimer(67, 70123)
 local timerNextBeacon			= mod:NewNextTimer(16, 70126)
 local timerBlisteringCold		= mod:NewCastTimer(6, 70123)
@@ -111,7 +111,6 @@ function mod:OnCombatStart(delay)
 	table.wipe(beaconTargets)
 	table.wipe(beaconIconTargets)
 	table.wipe(unchainedTargets)
-    freezedTargets = 0
 	unchainedIcons = 7
 	self.vb.phase = 1
 	activeBeacons = false

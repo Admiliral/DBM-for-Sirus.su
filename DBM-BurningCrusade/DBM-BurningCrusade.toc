@@ -1,6 +1,7 @@
 ## Interface: 30300
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Burning Crusade|r
-## SavedVariablesPerCharacter: DBMBurningCrusade_SavedModOptions
+## SavedVariables: DBMBurningCrusade__AllSavedVars
+## SavedVariablesPerCharacter: DBMBurningCrusade_SavedStats
 ## LoadOnDemand: 0
 ## RequiredDeps: DBM-Core
 ## DefaultState: enabled

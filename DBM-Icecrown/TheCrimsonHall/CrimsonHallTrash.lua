@@ -9,11 +9,11 @@ mod:RegisterEvents(
 	"SPELL_AURA_REMOVED"
 )
 
-local warnBloodMirror		= mod:NewTargetAnnounce(70451, 3, nil, mod:IsHealer())
+local warnBloodMirror		= mod:NewTargetAnnounce(70451, 3, nil, "Healer")
 local warnBloodSap			= mod:NewTargetAnnounce(70432, 4)
 local warnChainsofShadow	= mod:NewTargetAnnounce(70645, 3)
 
-local timerBloodMirror		= mod:NewTargetTimer(30, 70451, nil, mod:IsHealer())
+local timerBloodMirror		= mod:NewTargetTimer(30, 70451, nil, "Healer")
 local timerBloodSap			= mod:NewTargetTimer(8, 70432)
 local timerChainsofShadow	= mod:NewTargetTimer(10, 70645)
 

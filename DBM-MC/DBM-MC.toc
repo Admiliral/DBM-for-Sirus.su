@@ -3,7 +3,8 @@
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Огненные Недра|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
-## SavedVariablesPerCharacter: DBMMC_SavedVars, DBMMC_SavedStats
+## SavedVariables: DBMMC_AllSavedVars
+## SavedVariablesPerCharacter: DBMMC_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Category: Classic
 ## X-DBM-Mod-Has-Heroic-Mode: 0

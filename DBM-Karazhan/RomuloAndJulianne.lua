@@ -22,7 +22,7 @@ local warnPhase3		= mod:NewPhaseAnnounce(3)
 local warningHeal		= mod:NewCastAnnounce(30878, 4)
 local warningDaring		= mod:NewTargetAnnounce(30841, 3)
 local warningDevotion	= mod:NewTargetAnnounce(30887, 3)
-local warningPosion		= mod:NewAnnounce("warningPosion", 2, 30830, mod:IsHealer() or mod:IsTank())
+local warningPosion		= mod:NewAnnounce("warningPosion", 2, 30830, "Tank|Healer")
 
 local timerHeal			= mod:NewCastTimer(2.5, 30878)
 local timerDaring		= mod:NewTargetTimer(8, 30841)

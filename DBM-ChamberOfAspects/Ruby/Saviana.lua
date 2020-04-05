@@ -18,12 +18,12 @@ local warningWarnEnrage		= mod:NewSpellAnnounce(78722, 3)
 local warningWarnBreath		= mod:NewSpellAnnounce(74404, 3)
 
 local specWarnBeacon		= mod:NewSpecialWarningYou(74453)--Target scanning may not even work since i haven't done encounter yet it's just a guess.
-local specWarnTranq			= mod:NewSpecialWarning("SpecialWarningTranq", mod:CanRemoveEnrage())
+local specWarnTranq			= mod:NewSpecialWarning("SpecialWarningTranq", "RemoveEnrage")
 
 local timerBeacon			= mod:NewBuffActiveTimer(5, 74453)
 local timerConflag			= mod:NewBuffActiveTimer(5, 74456)
 local timerConflagCD		= mod:NewNextTimer(50, 74452)
-local timerBreath			= mod:NewCDTimer(25, 74404, nil, mod:IsTank() or mod:IsHealer())
+local timerBreath			= mod:NewCDTimer(25, 74404, nil, "Tank|Healer")
 local timerEnrage			= mod:NewBuffActiveTimer(10, 78722)
 
 mod:AddBoolOption("RangeFrame")
