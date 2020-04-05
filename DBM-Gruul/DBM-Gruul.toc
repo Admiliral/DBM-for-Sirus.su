@@ -7,14 +7,12 @@
 ## X-DBM-Mod-Category: BC
 ## X-DBM-Mod-Name: Gruul
 ## X-DBM-Mod-Name-ruRU: Груул
-## X-DBM-Mod-Name-zhTW: кек
-## X-DBM-Mod-Name-zhCN: кек
 ## X-DBM-Mod-Sort: 307
 ## X-DBM-Mod-LoadZone: Blade's Edge Mountains,Gruul's Lair
-## X-DBM-Mod-LoadZone-zhTW: кек
-## X-DBM-Mod-LoadZone-zhCN: кек
 ## X-DBM-Mod-LoadZone-ruRU: Острогорье,Логово Груула
+
 localization.ru.lua
+
 Gruul.lua
 Maulgar.lua
 MapSizes.lua

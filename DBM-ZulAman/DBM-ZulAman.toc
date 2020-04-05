@@ -1,5 +1,6 @@
 ﻿## Interface: 30300
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Zul'Aman|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Зул'Аман|r
 ## Author: Ritual
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
@@ -11,7 +12,10 @@
 ## X-DBM-Mod-Sort: 305
 ## X-DBM-Mod-LoadZone: Zul'Aman
 ## X-DBM-Mod-LoadZone-ruRU: Зул'Аман
+
+localization.en.lua
 localization.ru.lua
+
 Nalorakk.lua
 Akil'zon.lua
 Jan'alai.lua

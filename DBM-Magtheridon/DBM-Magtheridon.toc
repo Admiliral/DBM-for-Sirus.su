@@ -1,5 +1,6 @@
 ﻿## Interface: 30300
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Magtheridon|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Магтеридон|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
 ## SavedVariablesPerCharacter: DBMMagtheridon_SavedVars, DBMMagtheridon_SavedStats
@@ -7,13 +8,12 @@
 ## X-DBM-Mod-Category: BC
 ## X-DBM-Mod-Name: Magtheridon
 ## X-DBM-Mod-Name-ruRU: Магтеридон
-## X-DBM-Mod-Name-zhTW: кек
-## X-DBM-Mod-Name-zhCN: кек
 ## X-DBM-Mod-Sort: 307
 ## X-DBM-Mod-LoadZone: Magtheridon's Lair
-## X-DBM-Mod-LoadZone-zhTW: кек
-## X-DBM-Mod-LoadZone-zhCN: кек
 ## X-DBM-Mod-LoadZone-ruRU: Логово Магтеридона
+
+localization.en.lua
 localization.ru.lua
+
 Magtheridon.lua
 MapSizes.lua

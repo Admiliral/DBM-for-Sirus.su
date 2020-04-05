@@ -1,5 +1,6 @@
 ﻿## Interface: 30300
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Party-BC|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Групповые подземелья-BC|r
 ## Author: Ritual
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
@@ -9,11 +10,14 @@
 ## X-DBM-Mod-SubCategories: Auchenai Crypts, Hellfire Ramparts, Mana-Tombs, The Blood Furnace, Underbog, The Steamvault, The Shattered Halls, Sethekk Halls, The Slave Pens, The Arcatraz, Shadow Labyrinth, The Botanica, The Mechanar, Old Hillsbrad Foothills, Magisters' Terrace, Black Morass
 ## X-DBM-Mod-SubCategories-ruRU: Аукенайские гробницы, Бастионы Адского Пламени, Гробницы Маны, Кузня Крови, Нижетопь, Паровое подземелье, Разрушенные залы, Сетеккские залы, Узилище, Аркатрац, Темный лабиринт, Ботаника, Механар, Старые предгорья Хилсбрада, Терраса Магистров, Черные топи
 ## X-DBM-Mod-Name: PartyBC
-## X-DBM-Mod-Name-ruRU: РБК
+## X-DBM-Mod-Name-ruRU: Групповые подземелья
 ## X-DBM-Mod-Sort: 307
 ## X-DBM-Mod-LoadZone: Auchenai Crypts, Hellfire Ramparts, Mana-Tombs, The Blood Furnace, Underbog, The Steamvault, The Shattered Halls, Sethekk Halls, The Slave Pens, The Arcatraz, Shadow Labyrinth, The Botanica, The Mechanar, Old Hillsbrad Foothills, Magisters' Terrace, Black Morass
 ## X-DBM-Mod-LoadZone-ruRU: Аукенайские гробницы, Бастионы Адского Пламени, Гробницы Маны, Кузня Крови, Нижетопь, Паровое подземелье, Разрушенные залы, Сетеккские залы, Узилище, Аркатрац, Темный лабиринт, Ботаника, Механар, Старые предгорья Хилсбрада, Терраса Магистров, Черные топи
+
+localization.en.lua
 localization.ru.lua
+
 AuchenaiCrypts\ACTrash.lua
 AuchenaiCrypts\Shirrak.lua
 AuchenaiCrypts\Exarh.lua
