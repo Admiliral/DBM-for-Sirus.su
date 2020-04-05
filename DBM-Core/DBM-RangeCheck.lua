@@ -3,6 +3,84 @@
 -- **                                               **
 -- ***************************************************
 
+DBM.MapSizes = {
+	Arathi = {3599.78645678886,2399.85763785924},
+	Ogrimmar = {1402.563051365538,935.042034243692},
+	Undercity = {959.3140238076666,639.5426825384444},
+	Barrens = {10132.98626357964,6755.32417571976},
+	Darnassis = {1058.300884213672,705.5339228091146},
+	AzuremystIsle = {4070.691916244019, 2713.794610829346},
+	UngoroCrater = {3699.872808671186,2466.581872447457},
+	BurningSteppes = {2928.988452241535,1952.658968161023},
+	Wetlands = {4135.166184805389,2756.777456536926},
+	Winterspring = {7099.756078049357,4733.170718699571},
+	Dustwallow = {5249.824712249077,3499.883141499384},
+	Darkshore = {6549.780280774227,4366.520187182819},
+	LochModan = {2758.158752877019,1838.772501918013},
+	BladesEdgeMountains = {5424.84803598309,3616.56535732206},
+	Durotar = {5287.285801274457,3524.857200849638},
+	Silithus = {3483.224287356748,2322.149524904499},
+	ShattrathCity = {1306.210386847456,870.8069245649707},
+	Ashenvale = {5766.471113365881,3844.314075577254},
+	Nagrand = {5524.827295176373,3683.218196784248},
+	TerokkarForest = {5399.832305361811,3599.888203574541},
+	EversongWoods = {4924.70470173181,3283.136467821207},
+	SilvermoonCity = {1211.384457945605,807.5896386304033},
+	Tanaris = {6899.765399158026,4599.843599438685},
+	Stormwind = {1344.138055148283,896.092036765522},
+	SwampOfSorrows = {2293.606089974149,1529.070726649433},
+	EasternPlaguelands = {3870.596078314358,2580.397385542905},
+	BlastedLands = {3349.808966078055,2233.20597738537},
+	Elwynn = {3470.62593362794,2313.750622418627},
+	DeadwindPass = {2499.848163715574,1666.565442477049},
+	DunMorogh = {4924.664537147015,3283.109691431343},
+	TheExodar = {1056.732317707213,704.4882118048087},
+	Felwood = {5749.8046476606,3833.2030984404},
+	Silverpine = {4199.739879721531,2799.826586481021},
+	ThunderBluff = {1043.762849319158,695.8418995461053},
+	Hinterlands = {3849.77134323942,2566.51422882628},
+	StonetalonMountains = {4883.173287670144,3255.448858446763},
+	Mulgore = {5137.32138887616,3424.88092591744},
+	Hellfire = {5164.421615455519,3442.947743637013},
+	Ironforge = {790.5745810546713,527.0497207031142},
+	ThousandNeedles = {4399.86408093722,2933.242720624814},
+	Stranglethorn = {6380.866711475876,4253.911140983918},
+	Badlands = {2487.343589680943,1658.229059787295},
+	Teldrassil = {5091.467863261982,3394.311908841321},
+	Moonglade = {2308.253559286662,1538.835706191108},
+	ShadowmoonValley = {5499.827432644566,3666.551621763044},
+	Tirisfal = {4518.469744413802,3012.313162942535},
+	Aszhara = {5070.669448432522,3380.446298955014},
+	Redridge = {2170.704876735185,1447.136584490123},
+	BloodmystIsle = {3262.385067990556,2174.92337866037},
+	WesternPlaguelands = {4299.7374000546,2866.4916000364},
+	Alterac = {2799.820894040741,1866.547262693827},
+	Westfall = {3499.786489780177,2333.190993186784},
+	Duskwood = {2699.837284973949,1799.891523315966},
+	Netherstorm = {5574.82788866266,3716.551925775107},
+	Ghostlands = {3299.755735439147,2199.837156959431},
+	Zangarmarsh = {5026.925554043871,3351.283702695914},
+	Desolace = {4495.726850591814,2997.151233727876},
+	SearingGorge = {2231.119799153945,1487.413199435963},
+	Feralas = {6949.760203962193,4633.173469308129},
+	Hilsbrad = {3199.802496078764,2133.201664052509},
+	Sunwell = {3327.0830078125,2218.7490234375},
+	Northrend = {17751.3984375,11834.2650146484},
+	BoreanTundra = {5764.5830088,3843.749878},
+	Dragonblight = {5608.33312988281,3739.58337402344},
+	GrizzlyHills = {5249.999878,3499.999878},
+	HowlingFjord = {6045.83288574219,4031.24981689453},
+	IcecrownGlacier = {6270.83331298828, 4181.25},
+	SholazarBasin = {4356.25,2904.166504},
+	TheStormPeaks = {7112.49963378906,4741.666015625},
+	ZulDrak = {4993.75,3329.166504},
+	LakeWintergrasp = {2974.99987792969,1983.33325195312},
+	ScarletEnclave = {3162.5,2108.333374},
+	CrystalsongForest = {2722.91662597656,1814.5830078125},
+	LakeWintergrasp = {2974.99987792969,1983.33325195312},
+	StrandoftheAncients = {1743.74993896484,1162.49993896484},
+	Dalaran = {667,768},
+}
 
 ---------------
 --  Globals  --
@@ -651,7 +729,7 @@ do
 			end
 
 			local mapName = GetMapInfo()
-			local dims  = DBM.MapSizes[mapName] and DBM.MapSizes[mapName][GetCurrentMapDungeonLevel()]
+			local dims  = DBM.MapSizes[mapName] or DBM.MapSizes[mapName] and DBM.MapSizes[mapName][GetCurrentMapDungeonLevel()]
 			if not dims then -- This ALWAYS happens when leaving a zone that has a map and moving into one that does not.
 				if select(3, radarFrame.circle:GetVertexColor()) < 0.5 then
 					radarFrame.circle:SetVertexColor(1,1,1)
@@ -780,7 +858,7 @@ do
 	function getDistanceBetween(uId, x, y)
 		local startX, startY = GetPlayerMapPosition(uId)
 		local mapName = GetMapInfo()
-		local dims  = mapSizes[mapName] and mapSizes[mapName][GetCurrentMapDungeonLevel()]
+		local dims = mapSizes[mapName] or mapSizes[mapName] and mapSizes[mapName][GetCurrentMapDungeonLevel()]
 		if not dims then
 			return
 		end
@@ -812,6 +890,8 @@ do
 			dims = levels[GetCurrentMapDungeonLevel()] -- try again
 			if not dims then -- there is actually a level 0 in this zone but we don't know about it...too bad :(
 				return false
+			elseif levels then
+				return true
 			end
 		elseif not dims then
 			return false
@@ -860,7 +940,7 @@ function rangeCheck:Show(range, filter)
 		frame:SetOwner(UIParent, "ANCHOR_PRESERVE")
 		onUpdate(frame, 0)
 	end
-	if (DBM.Options.RangeFrameFrames == "radar" or DBM.Options.RangeFrameFrames == "both") and (DBM.MapSizes[GetMapInfo()] and DBM.MapSizes[mapName][GetCurrentMapDungeonLevel()] ~= nil) then
+	if (DBM.Options.RangeFrameFrames == "radar" or DBM.Options.RangeFrameFrames == "both") and (DBM.MapSizes[mapName] or DBM.MapSizes[mapName] and DBM.MapSizes[mapName][GetCurrentMapDungeonLevel()] ~= nil) then
 		onUpdateRadar(radarFrame, 1)
 	end
 end
