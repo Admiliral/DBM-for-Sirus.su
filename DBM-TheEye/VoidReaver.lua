@@ -89,7 +89,7 @@ end
 function mod:SPELL_CAST_START(args)  ------- спавн сфер  или это?
 	if 	args:IsSpellID(308984) then
 		timerOrbCD:Schedule(2)
-		timerOrbCast:Schedule(0)
+--		timerOrbCast:Schedule(0)
 		warnScope:Schedule(0)
 		warnSpawnOrbs:Schedule(23)
 	elseif args:IsSpellID(308470) then  -------- Тяжкий удар
