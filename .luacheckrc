@@ -131,6 +131,12 @@ globals = {
 	"C_Talent",
 
 	-- frames created via CreateFrame
+	"AlwaysUpFrame1",
+	"AlwaysUpFrame2",
+	"AlwaysUpFrame1Text",
+	"AlwaysUpFrame2Text",
+	"AlwaysUpFrame2DynamicIconButton",
+	"AlwaysUpFrame3DynamicIconButton",
 	"AchievementFrameMiniAchievement1",
 	"DeclensionFrame",
 	"DeclensionFrameCancelButton",
