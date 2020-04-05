@@ -38,10 +38,6 @@ local timerReloadCD			    = mod:NewCDTimer(60, 308474)
 
 local timerKnockbackCast        = mod:NewCastTimer(2, 308470) -- тяжкий удар
 
-
-
-local timerScope	    		= mod:NewBuffActiveTimer(10, 308469)  -- таймер сферы
-
 local berserkTimer              = mod:NewBerserkTimer(600)
 
 
@@ -80,7 +76,7 @@ do ---?????????
 		if DBM:GetRaidRank() > 0 then
 			table.sort(beaconIconTargets, sort_by_group)
 			local beaconIcons = 8
-			for i, v in ipairs(beaconIconTargets) do	
+			for i, v in ipairs(beaconIconTargets) do
 					SendChatMessage("Сферы на: ", L.BeaconIconSet:format(beaconIcons, UnitName(v)), GetNumRaidMembers() > 0 and "RAID_WARNING" or "RAID")
 				self:SetIcon(UnitName(v), beaconIcons,20)
 				beaconIcons = beaconIcons - 1
@@ -124,13 +120,13 @@ function mod:SPELL_AURA_APPLIED(args)
 				self:SetBeaconIcons()    --Сортируйте и стреляйте как можно раньше, когда у нас есть все цели.
 		end
 	elseif args:IsSpellID(308469) and args:IsPlayer() then	-- Отсчёт до взрыва сферы  +-
-		if args:IsPlayer() then 
-			timerScope:Start()	
+		if args:IsPlayer() then
+			timerScope:Start()
 			warnScope6:Cancel()
 			warnScope7:Cancel()
 			warnScope8:Cancel()
 			warnScope9:Cancel()
-			warnScope10:Cancel()	
+			warnScope10:Cancel()
 		end
 			warnScope6:Schedule(5)
 			warnScope7:Schedule(7)
@@ -142,7 +138,7 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(308469) and args:IsPlayer() then	------- ну типа понял
-		if args:IsPlayer() then 
+		if args:IsPlayer() then
 		warnBah:Schedule(0)
 		end
 	end

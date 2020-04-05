@@ -86,9 +86,6 @@ mod:AddBoolOption("HealthFrame", true)
 -- 		DBM.BossHealth:RemoveBoss(cid)
 -- 	end
 -- end
-function mod:resetTolik()
-    tolik = true
-end
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 15688, "Terestian Illhoof")

@@ -84,7 +84,6 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 34437, "The Curator", wipe)
-	isinCombat = false
 end
 
 function mod:SPELL_AURA_REMOVED(args)

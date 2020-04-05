@@ -34,7 +34,6 @@ local warnBomb					= mod:NewTargetAnnounce(35181, 3)
 --local specWarnFeather			= mod:NewSpecialWarningSpell(34229, not mod:IsRanged())
 local specWarnBomb				= mod:NewSpecialWarningYou(35181)
 local specWarnPatch				= mod:NewSpecialWarningMove(35383)
-local specWarnPatch				= mod:NewSpecialWarningSpell(46599)
 
 local timerNextPlat				= mod:NewTimer(33, "TimerNextPlat", 46599)
 local timerFeather				= mod:NewCastTimer(10, 34229)

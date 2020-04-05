@@ -417,14 +417,22 @@ local playerLevel = UnitLevel("player")
 local playerRealm = GetRealmName()
 local soundFolder = "Interface\\AddOns\\DBM-Core\\snd\\%s.wav"
 local iconFolder = "Interface\\AddOns\\DBM-Core\\icon\\"
+local timerRequestInProgress = false
+local updateNotificationDisplayed = 0
+local showConstantReminder = 0
 local SWFilterDisabed = 3
 local currentSpecName, currentSpecGroup
+local cSyncSender = {}
+local cSyncReceived = 0
 local canSetIcons = {}
 local iconSetRevision = {}
 local iconSetPerson = {}
 local addsGUIDs = {}
 local targetEventsRegistered = false
 local targetMonitor = {}
+local statusWhisperDisabled = false
+local statusGuildDisabled = false
+local breakTimerStart
 local AddMsg
 local dataBroker
 local voiceSessionDisabled = false
@@ -2906,7 +2914,8 @@ function DBM:LoadMod(mod, force)
 		if DBM_GUI then
 			DBM_GUI:UpdateModList()
 		end
-		if LastInstanceType ~= "pvp" and #inCombat == 0 and GetNumPartyMembers() > 0 then--do timer recovery only mod load
+		local _, instanceType = IsInInstance()
+		if instanceType ~= "pvp" and #inCombat == 0 and GetNumPartyMembers() > 0 then--do timer recovery only mod load
 			if not timerRequestInProgress then
 				timerRequestInProgress = true
 				-- Request timer to 3 person to prevent failure.
@@ -2991,8 +3000,9 @@ do
 
 	syncHandlers["C"] = function(sender, delay, mod, modRevision, startHp, dbmRevision, modHFRevision, event)
 		if not dbmIsEnabled or sender == playerName then return end
-		if LastInstanceType == "pvp" then return end
-		if LastInstanceType == "none" and (not UnitAffectingCombat("player") or #inCombat > 0) then--world boss
+		local _, instanceType = IsInInstance()
+		if instanceType == "pvp" then return end
+		if instanceType == "none" and (not UnitAffectingCombat("player") or #inCombat > 0) then--world boss
 			local senderuId = DBM:GetRaidUnitId(sender)
 			if not senderuId then return end--Should never happen, but just in case. If happens, MANY "C" syncs are sent. losing 1 no big deal.
 			local senderx, sendery = GetPlayerMapPosition(senderuId)
@@ -3931,7 +3941,7 @@ do
 							sendSync("IS", UnitGUID("player").."\t"..tostring(DBM.Revision).."\t"..option)
 						end
 					end
-				elseif not IsInGroup() then
+				elseif GetNumPartyMembers() == 0 then
 					for i = 1, #mod.findFastestComputer do
 						local option = mod.findFastestComputer[i]
 						if mod.Options[option] then
@@ -4189,16 +4199,10 @@ do
 	local autoLog = false
 	local autoTLog = false
 
-	local function isCurrentContent()
-		if LastInstanceMapID == 1861 or LastInstanceMapID == 2070 or LastInstanceMapID == 2096 or LastInstanceMapID == 2164 or LastInstanceMapID == 2217 then--BfA
-			return true
-		end
-		return false
-	end
-
 	function DBM:StartLogging(timer, checkFunc)
 		self:Unschedule(DBM.StopLogging)
-		if self.Options.LogOnlyNonTrivial and ((LastInstanceType ~= "raid") or IsPartyLFG() or not isCurrentContent()) then return end
+		local _, instanceType = IsInInstance()
+		if self.Options.LogOnlyNonTrivial and ((instanceType ~= "raid") or IsPartyLFG()) then return end
 		if self.Options.AutologBosses then--Start logging here to catch pre pots.
 			if not LoggingCombat() then
 				autoLog = true
@@ -4512,17 +4516,7 @@ do
 			return
 		end
 		spamProtection[target] = GetTime()
-		local mod
-		--Acquire correct pvp mod for zone we are in
-		if LastInstanceMapID == 529 or LastInstanceMapID == 1681 or LastInstanceMapID == 2107 or LastInstanceMapID == 2177 then--Arathi
-			mod = self:GetModByName("z2107")
-		elseif LastInstanceMapID == 30 or LastInstanceMapID == 2197 then--Alteract Valley
-			mod = self:GetModByName("z30")
-		elseif LastInstanceMapID == 566 or LastInstanceMapID == 968 then--Eye of the Storm
-			mod = self:GetModByName("z566")
-		else--Any other BG we can just use current MapID as mod ID
-			mod = self:GetModByName("z"..tostring(LastInstanceMapID))
-		end
+		local mod = nil -- TODO:
 		if mod then
 			self:SendTimerInfo(mod, target)
 		end
@@ -4564,6 +4558,7 @@ end
 
 do
 	function DBM:PLAYER_ENTERING_WORLD()
+		timerRequestInProgress = false
 		if not self.Options.DontShowReminders then
 			C_Timer:After(25, function() if self.Options.SilentMode then self:AddMsg(DBM_SILENT_REMINDER) end end)
 			C_Timer:After(30, function() if not self.Options.SettingsMessageShown then self.Options.SettingsMessageShown = true self:AddMsg(DBM_HOW_TO_USE_MOD) end end)

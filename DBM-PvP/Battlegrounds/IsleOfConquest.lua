@@ -46,7 +46,7 @@ local function isPoi(id)
 		or (id >= 150 and id <= 154)	-- Refinerie
 		or (id >= 9 and id <= 12)		-- Keep
 end
-function getPoiState(id)
+local function getPoiState(id)
 	if isInArgs(id, 18, 136, 141, 146, 151) then		return 1		-- alliance
 	elseif isInArgs(id, 20, 138, 143, 148, 153) then 	return 2		-- horde
 	elseif isInArgs(id, 16, 135, 140, 145, 150) then	return 3		-- if getPoiState(id) == 3 then --- untaken

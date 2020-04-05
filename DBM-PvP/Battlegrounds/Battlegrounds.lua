@@ -70,6 +70,7 @@ hooksecurefunc("WorldStateScoreFrame_Update", function() --re-color the players 
 	if not mod.Options.ColorByClass then
 		return
 	end
+	local _
 	local isArena = IsActiveBattlefieldArena()
 	for i = 1, MAX_WORLDSTATE_SCORE_BUTTONS do
 		local index = (FauxScrollFrame_GetOffset(WorldStateScoreScrollFrame) or 0) + i
@@ -78,7 +79,7 @@ hooksecurefunc("WorldStateScoreFrame_Update", function() --re-color the players 
 			getglobal("WorldStateScoreButton"..i.."NameText"):SetTextColor(RAID_CLASS_COLORS[class].r, RAID_CLASS_COLORS[class].g, RAID_CLASS_COLORS[class].b)
 			local playerName = getglobal("WorldStateScoreButton"..i.."NameText"):GetText()
 			if playerName then
-				local _, _, playerName, playerServer = string.find(playerName, "([^%-]+)%-(.+)")
+				_, _, playerName, playerServer = string.find(playerName, "([^%-]+)%-(.+)")
 				if playerServer and playerName then
 					if faction == 0 then
 						if isArena then --green team
