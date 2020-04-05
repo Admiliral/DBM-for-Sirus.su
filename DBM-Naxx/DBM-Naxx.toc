@@ -20,7 +20,6 @@
 localization.en.lua
 localization.ru.lua
 
-MapSizes.lua
 ArachnidQuarter\Anub'Rekhan.lua
 ArachnidQuarter\Faerlina.lua
 ArachnidQuarter\Maexxna.lua

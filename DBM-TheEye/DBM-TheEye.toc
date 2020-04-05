@@ -21,4 +21,3 @@ VoidReaver.lua
 Solarian.lua
 Alar.lua
 KaelThas.lua
-MapSizes.lua

@@ -19,7 +19,6 @@
 localization.en.lua
 localization.ru.lua
 
-MapSizes.lua
 TheLowerSpire\LordMarrowgar.lua
 TheLowerSpire\Deathwhisper.lua
 TheLowerSpire\GunshipBattle.lua

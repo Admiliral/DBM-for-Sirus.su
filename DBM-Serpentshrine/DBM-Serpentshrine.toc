@@ -23,4 +23,3 @@ Tidewalker.lua
 TheLurkerBelow.lua
 Leotheras.lua
 Vashj.lua
-MapSizes.lua

@@ -26,4 +26,3 @@ EssenceOfSouls.lua
 Shahraz.lua
 IllidariCouncil.lua
 Illidan.lua
-MapSizes.lua

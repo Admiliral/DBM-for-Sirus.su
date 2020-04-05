@@ -16,4 +16,3 @@ localization.ru.lua
 
 Gruul.lua
 Maulgar.lua
-MapSizes.lua

@@ -18,4 +18,3 @@ localization.en.lua
 localization.ru.lua
 
 Onyxia.lua
-MapSizes.lua

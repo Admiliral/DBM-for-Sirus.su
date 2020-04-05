@@ -30,4 +30,3 @@ PrinceMalchezaar.lua
 Nightbane.lua
 NamedBeasts.lua
 Zluker.lua
-MapSizes.lua

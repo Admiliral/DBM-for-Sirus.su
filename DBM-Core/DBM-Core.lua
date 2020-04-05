@@ -4276,6 +4276,17 @@ function DBM:GetCurrentInstanceDifficulty()
 	end
 end
 
+function DBM:HasMapRestrictions()
+	local mapName = GetMapInfo()
+	local level = GetCurrentMapDungeonLevel()
+	if level == 0 then level = 1 end
+	local playerX, playerY = GetPlayerMapPosition("player")
+	if (playerX == 0 or playerY == 0) or (self.MapSizes[mapName] and not self.MapSizes[mapName][level]) then
+		return true
+	end
+	return false
+end
+
 do
 	local LSMMediaCacheBuilt = false
 	local sharedMediaFileCache = {}

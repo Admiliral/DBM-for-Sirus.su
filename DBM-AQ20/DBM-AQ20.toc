@@ -23,4 +23,3 @@ Moam.lua
 Buru.lua
 Ayamiss.lua
 Ossirian.lua
-MapSizes.lua

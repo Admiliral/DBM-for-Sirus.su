@@ -1,1 +1,0 @@
-DBM:RegisterMapSize("TheRubySanctum", 0, 752.0833129882812, 502.083251953125) -- The Ruby Sanctum
