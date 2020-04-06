@@ -7,7 +7,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEvents(
 	"SPELL_CAST_START",
-    "SPELL_AURA_APPLIED",
+	"SPELL_AURA_APPLIED",
 	"SPELL_CAST_SUCCESS",
 	"SPELL_PERIODIC_DAMAGE",
 	"CHAT_MSG_RAID_BOSS_EMOTE"
@@ -42,14 +42,14 @@ local breatheCount = 0
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 15689, "Netherspite")
-    if mod:IsDifficulty("normal10") then
-        berserkTimer:Start(-delay)
-        timerPortalPhase:Start(62-delay)
-        warningBanishSoon:Schedule(57-delay)
-    elseif mod:IsDifficulty("heroic10") then
-        timerGates:Start()
-        timerGhostPhase:Start()
-    end
+	if mod:IsDifficulty("normal10") then
+		berserkTimer:Start(-delay)
+		timerPortalPhase:Start(62-delay)
+		warningBanishSoon:Schedule(57-delay)
+	elseif mod:IsDifficulty("heroic10") then
+		timerGates:Start()
+		timerGhostPhase:Start()
+	end
 
 end
 
@@ -61,13 +61,13 @@ function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(38523) then
 		warningBreathCast:Show()
 		timerBreathCast:Start()
-    elseif args:IsSpellID(305407) then
-        if breatheCount < 4 then
-            timerBreatheCD:Show()
-            breatheCount = breatheCount + 1
-        else
-            breatheCount = 0
-        end
+	elseif args:IsSpellID(305407) then
+		if breatheCount < 4 then
+			timerBreatheCD:Show()
+			breatheCount = breatheCount + 1
+		else
+			breatheCount = 0
+		end
 	end
 end
 
@@ -79,20 +79,20 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(305402, 305403, 305404) then
-        if args:IsPlayer() then
-            specWarnGates:Show()
-        end
-        gatesTargets[#gatesTargets + 1] = args.destName
-        if #gatesTargets >= 3 then
-            warnGates:Show(table.concat(gatesTargets, "<, >"))
-            table.wipe(gatesTargets)
-        end
-    elseif args:IsSpellID(305408, 305409) then
-        timerRepentance:Start()
-        timerPortals:Start()
-        timerNormalPhase:Start()
-        timerGates:Schedule(60)
-        timerGhostPhase:Schedule(60)
+		if args:IsPlayer() then
+			specWarnGates:Show()
+		end
+		gatesTargets[#gatesTargets + 1] = args.destName
+		if #gatesTargets >= 3 then
+			warnGates:Show(table.concat(gatesTargets, "<, >"))
+			table.wipe(gatesTargets)
+		end
+	elseif args:IsSpellID(305408, 305409) then
+		timerRepentance:Start()
+		timerPortals:Start()
+		timerNormalPhase:Start()
+		timerGates:Schedule(60)
+		timerGhostPhase:Schedule(60)
 	end
 end
 

@@ -9,7 +9,7 @@ mod:RegisterEvents(
 	"SPELL_CAST_START",
 	"SPELL_AURA_APPLIED",
 	"SPELL_AURA_REMOVED",
-    "SPELL_INTERRUPT"
+	"SPELL_INTERRUPT"
 )
 
 -- local warningRepentanceSoon	= mod:NewSoonAnnounce(29511, 2)
@@ -70,15 +70,15 @@ mod:AddBoolOption("HealthFrame", true)
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 16457, "Maiden of Virtue")
-    if mod:IsDifficulty("normal10") then
-    elseif mod:IsDifficulty("heroic10") then
-        timerRepentanceCD:Start(58-delay)
-        timerGroundCD:Start(20-delay)
-    end
-    if self.Options.HealthFrame then
-        DBM.BossHealth:Show(L.name)
-    end
-    ground = true
+	if mod:IsDifficulty("normal10") then
+	elseif mod:IsDifficulty("heroic10") then
+		timerRepentanceCD:Start(58-delay)
+		timerGroundCD:Start(20-delay)
+	end
+	if self.Options.HealthFrame then
+		DBM.BossHealth:Show(L.name)
+	end
+	ground = true
 end
 
 function mod:OnCombatEnd(wipe)
@@ -88,11 +88,11 @@ end
 
 
 function mod:SPELL_CAST_START(args)
-    if args:IsSpellID(305286) then
-        timerRepentanceCD:Start()
-        timerGroundCD:Start(30)
-        ground = true
-    end
+	if args:IsSpellID(305286) then
+		timerRepentanceCD:Start()
+		timerGroundCD:Start(30)
+		ground = true
+	end
 end
 
 local showShieldHealthBar, hideShieldHealthBar
@@ -134,21 +134,21 @@ do
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-    if args:IsSpellID(305271) then
-        if ground then
-            timerGroundCD:Start()
-            ground = false
-        end
+	if args:IsSpellID(305271) then
+		if ground then
+			timerGroundCD:Start()
+			ground = false
+		end
 		if args:IsPlayer() then
 	        specWarnGround:Show()
 		end
-    elseif args:IsSpellID(305285) then
-        showShieldHealthBar(self, args.destGUID, args.spellName, 600000)
-    end
+	elseif args:IsSpellID(305285) then
+		showShieldHealthBar(self, args.destGUID, args.spellName, 600000)
+	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-    if args:IsSpellID(305285) then
-        hideShieldHealthBar()
-    end
+	if args:IsSpellID(305285) then
+		hideShieldHealthBar()
+	end
 end

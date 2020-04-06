@@ -13,8 +13,8 @@ mod:RegisterEvents(
 )
 
 local isDispeller = select(2, UnitClass("player")) == "MAGE"
-				 or select(2, UnitClass("player")) == "PRIEST"
-				 or select(2, UnitClass("player")) == "SHAMAN"
+	or select(2, UnitClass("player")) == "PRIEST"
+	or select(2, UnitClass("player")) == "SHAMAN"
 
 local warnSpellReflect  = mod:NewSpellAnnounce(38592)
 local warnHasten		= mod:NewSpellAnnounce(31458)
@@ -40,5 +40,5 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	if args.spellId == 31458 then
 		timerHasten:Cancel(args.destName)
-    end
+	end
 end

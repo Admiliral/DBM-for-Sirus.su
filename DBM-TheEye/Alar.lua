@@ -20,7 +20,7 @@ mod:RegisterEvents(
 	"UNIT_HEALTH",
 	"CHAT_MSG_MONSTER_YELL",
 	"CHAT_MSG_RAID_BOSS_WHISPER",
-    "CHAT_MSG_RAID_BOSS_EMOTE",
+	"CHAT_MSG_RAID_BOSS_EMOTE",
 	"SWING_DAMAGE",
 	"SWING_MISSED"
 )
@@ -104,9 +104,9 @@ function mod:OnCombatStart(delay)
 
 	self.vb.phase = 1
 	if mod:IsDifficulty("heroic25") then
-        timerAnimatedCD:Start()
-        timerFireSignCD:Start()
-        timerFlamefallCD:Start()
+		timerAnimatedCD:Start()
+		timerFireSignCD:Start()
+		timerFlamefallCD:Start()
 	    berserkTimerH:Start()
 	    warned_preP1 = false
 	else
@@ -146,7 +146,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		end
 	elseif args:IsSpellID(308640) then  -- Phase 2
 		timerPhase2Cast:Start()
-        specWarnPhase2:Show()
+		specWarnPhase2:Show()
 		berserkTimerH:Cancel()
 		berserkTimerH2:Start()
 		self.vb.phase = 2
@@ -167,11 +167,11 @@ function mod:SPELL_CAST_START(args)
 	elseif args:IsSpellID(46599) then -- Знак огня
 		timerNextPlat:Start(33)
 	elseif args:IsSpellID(308638) then -- Знак огня
-        specWarnFireSign:Show()
-        timerFireSignCD:Start()
-        timerFireSignCast:Start()
+		specWarnFireSign:Show()
+		timerFireSignCD:Start()
+		timerFireSignCast:Start()
 	elseif args:IsSpellID(308987) then -- Падение пламени
-        specWarnFlamefall:Show()
+		specWarnFlamefall:Show()
 		timerFlamefallCD:Start()
 	    timerFlamefallCast:Start()
 		warnFlamefall5:Schedule(0)

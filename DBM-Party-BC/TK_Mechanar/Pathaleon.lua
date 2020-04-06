@@ -11,8 +11,8 @@ mod:RegisterEvents(
 	"SPELL_AURA_REMOVED"
 )
 
-local warnMC      = mod:NewTargetAnnounce(35280)
-local timerMC     = mod:NewTargetTimer(10, 35280)
+local warnMC	= mod:NewTargetAnnounce(35280)
+local timerMC	= mod:NewTargetTimer(10, 35280)
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 35280 then

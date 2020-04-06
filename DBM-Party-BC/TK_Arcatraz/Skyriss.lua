@@ -12,12 +12,12 @@ mod:RegisterEvents(
 	"UNIT_HEALTH"
 )
 
-local warnSplitSoon     = mod:NewAnnounce("warnSplitSoon")
-local warnSplit         = mod:NewAnnounce("warnSplit")
-local warnMindControl   = mod:NewTargetAnnounce(39019)
-local timerMindControl  = mod:NewTargetTimer(6, 39019)
-local warnMindRend      = mod:NewTargetAnnounce(39017)
-local timerMindRend     = mod:NewTargetTimer(6, 39017)
+local warnSplitSoon		= mod:NewAnnounce("warnSplitSoon")
+local warnSplit			= mod:NewAnnounce("warnSplit")
+local warnMindControl	= mod:NewTargetAnnounce(39019)
+local timerMindControl	= mod:NewTargetTimer(6, 39019)
+local warnMindRend		= mod:NewTargetAnnounce(39017)
+local timerMindRend		= mod:NewTargetTimer(6, 39017)
 
 local warnedSplit1		= false
 local warnedSplit2		= false
@@ -39,7 +39,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.Split then
-        warnSplit:Show()
+		warnSplit:Show()
 	end
 end
 

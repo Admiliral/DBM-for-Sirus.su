@@ -255,9 +255,9 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-    SetIconOnPyromancer     = "Set icons on Pyromancers",
-    AnnouncePyromancerIcons = "Announce Pyromancers",
-    RemoveWeaponOnMindControl = "Remove weapon on mind control",
+	SetIconOnPyromancer     = "Set icons on Pyromancers",
+	AnnouncePyromancerIcons = "Announce Pyromancers",
+	RemoveWeaponOnMindControl = "Remove weapon on mind control",
 	DBM_NB_AIR_WARN			= "Show warning for Air Phase",
 	PrewarnGroundPhase		= "Show pre-warnings for Ground Phase",
 	timerNightbane			= "Show timer for Nightbane summon",
@@ -265,7 +265,7 @@ L:SetOptionLocalization{
 }
 
 L:SetMiscLocalization{
-    PyromancerIconSet       = "Pyromancer icon {rt%d} set on %s",
+	PyromancerIconSet       = "Pyromancer icon {rt%d} set on %s",
 	DBM_NB_EMOTE_PULL		= "An ancient being awakens in the distance...",
 	DBM_NB_YELL_PULL		= "What fools! I shall bring a quick end to your suffering!",
 	DBM_NB_YELL_AIR			= "Miserable vermin. I shall exterminate you from the air!",

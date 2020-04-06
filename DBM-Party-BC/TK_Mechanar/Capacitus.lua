@@ -21,8 +21,8 @@ local enrageTimer	= mod:NewBerserkTimer(180)
 
 function mod:OnCombatStart(delay)
 	if mod:IsDifficulty("heroic5") then
-        enrageTimer:Start(-delay)
-    end
+		enrageTimer:Start(-delay)
+	end
 end
 
 function mod:SPELL_CAST_START(args)

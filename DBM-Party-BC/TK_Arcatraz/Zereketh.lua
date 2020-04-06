@@ -13,10 +13,10 @@ mod:RegisterEvents(
 	"SPELL_AURA_REMOVED"
 )
 
-local warnNova      = mod:NewSpellAnnounce(39005)
-local warnVoid      = mod:NewSpellAnnounce(36119)
-local warnSoC       = mod:NewTargetAnnounce(39367)
-local timerSoC      = mod:NewTargetTimer(18, 39367)
+local warnNova		= mod:NewSpellAnnounce(39005)
+local warnVoid		= mod:NewSpellAnnounce(36119)
+local warnSoC		= mod:NewTargetAnnounce(39367)
+local timerSoC		= mod:NewTargetTimer(18, 39367)
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(36127, 39005) then

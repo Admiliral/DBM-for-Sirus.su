@@ -895,9 +895,9 @@ do
 
 				local playerX, playerY = GetPlayerMapPosition("player")
 				if playerX == 0 and playerY == 0 then
-                    setFrames(self, "text")
-                    print("Radar is unavailable in this location: GetPlayerMapPosition(\"player\") = 0, 0")
-                return end		-- Somehow we can't get the correct position?
+					setFrames(self, "text")
+					print("Radar is unavailable in this location: GetPlayerMapPosition(\"player\") = 0, 0")
+				return end		-- Somehow we can't get the correct position?
 
 				for i=1, numPlayers do
 					local uId = unitID:format(i)

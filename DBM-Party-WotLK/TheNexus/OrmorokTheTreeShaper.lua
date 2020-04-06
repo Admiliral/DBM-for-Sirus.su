@@ -15,7 +15,7 @@ mod:RegisterEvents(
 )
 
 local isCaster = select(2, UnitClass("player")) == "MAGE"
-              or select(2, UnitClass("player")) == "WARLOCK"
+	or select(2, UnitClass("player")) == "WARLOCK"
 
 local warningSpikes			= mod:NewSpellAnnounce(47958, 2)
 local warningFrenzy			= mod:NewSpellAnnounce(48017, 3)

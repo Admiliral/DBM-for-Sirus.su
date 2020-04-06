@@ -11,9 +11,9 @@ mod:RegisterEvents(
 	"SPELL_AURA_APPLIED"
 )
 
-local WarnChannel   = mod:NewAnnounce("WarnChannel")
-local WarnReflect   = mod:NewSpellAnnounce(31534)
-local timerReflect  = mod:NewBuffActiveTimer(8, 31534)
+local WarnChannel		= mod:NewAnnounce("WarnChannel")
+local WarnReflect		= mod:NewSpellAnnounce(31534)
+local timerReflect		= mod:NewBuffActiveTimer(8, 31534)
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(31543) then

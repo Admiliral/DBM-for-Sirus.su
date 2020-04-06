@@ -86,19 +86,19 @@ local timerDeathMarkCD			= mod:NewCDTimer(25, 305470)
 local phase2 = false
 
 function mod:phase2warn()
-    phase2 = true
-    warnPhase2Soon:Show()
-    timerDeathMarkCD:Schedule(2)
+	phase2 = true
+	warnPhase2Soon:Show()
+	timerDeathMarkCD:Schedule(2)
 end
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 15687, "Moroes")
-    if mod:IsDifficulty("heroic10") then
-        phase2 = false
-        timerDanceCD:Start()
-        timerPhase2:Start()
-        self:ScheduleMethod(178, "phase2warn")
-    end
+	if mod:IsDifficulty("heroic10") then
+		phase2 = false
+		timerDanceCD:Start()
+		timerPhase2:Start()
+		self:ScheduleMethod(178, "phase2warn")
+	end
 end
 
 function mod:OnCombatEnd(wipe)
@@ -107,18 +107,18 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(305464) and phase2 then
-        timerPierceCD:Start()
-    elseif args:IsSpellID(305463) and phase2 then
-        timerWoundCD:Start()
-    elseif args:IsSpellID(305472) then
-        timerDanceCD:Start()
-    end
+		timerPierceCD:Start()
+	elseif args:IsSpellID(305463) and phase2 then
+		timerWoundCD:Start()
+	elseif args:IsSpellID(305472) then
+		timerDanceCD:Start()
+	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(305470) then
-        warnDeathMark:Show(args.destName)
-        timerDeathMark:Start(args.destName)
-        timerDeathMarkCD:Start()
-    end
+		warnDeathMark:Show(args.destName)
+		timerDeathMark:Start(args.destName)
+		timerDeathMarkCD:Start()
+	end
 end

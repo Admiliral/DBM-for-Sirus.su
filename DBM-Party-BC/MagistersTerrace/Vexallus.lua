@@ -10,10 +10,10 @@ mod:RegisterEvents(
 	"CHAT_MSG_MONSTER_YELL"
 )
 
-local WarnEnergy		= mod:NewAnnounce("WarnEnergy", 3, 44335)
+local WarnEnergy = mod:NewAnnounce("WarnEnergy", 3, 44335)
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.Discharge then
-        WarnEnergy:Show()
+		WarnEnergy:Show()
 	end
 end

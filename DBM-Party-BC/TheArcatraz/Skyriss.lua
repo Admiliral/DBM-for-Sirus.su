@@ -8,22 +8,22 @@ mod:SetZone()
 mod:RegisterCombat("combat", 20912)
 
 mod:RegisterEvents(
-    "CHAT_MSG_MONSTER_YELL",
-    "SPELL_AURA_REMOVED",
-    "SPELL_AURA_APPLIED",
-    "UNIT_HEALTH"
+	"CHAT_MSG_MONSTER_YELL",
+	"SPELL_AURA_REMOVED",
+	"SPELL_AURA_APPLIED",
+	"UNIT_HEALTH"
 )
 
-local warnSplitSoon     = mod:NewAnnounce("WarnSplitSoon", 2)
-local warnSplit         = mod:NewAnnounce("WarnSplit", 3)
-local warnMindControl   = mod:NewTargetAnnounce(39019, 4)
-local warnMindRend      = mod:NewTargetAnnounce(39017, 2)
+local warnSplitSoon		= mod:NewAnnounce("WarnSplitSoon", 2)
+local warnSplit			= mod:NewAnnounce("WarnSplit", 3)
+local warnMindControl	= mod:NewTargetAnnounce(39019, 4)
+local warnMindRend		= mod:NewTargetAnnounce(39017, 2)
 
-local timerMindControl  = mod:NewTargetTimer(6, 39019)
-local timerMindRend     = mod:NewTargetTimer(6, 39017)
+local timerMindControl	= mod:NewTargetTimer(6, 39019)
+local timerMindRend		= mod:NewTargetTimer(6, 39017)
 
-local warnedSplit1		= false
-local warnedSplit2		= false
+local warnedSplit1 = false
+local warnedSplit2 = false
 
 function mod:OnCombatStart()
 	warnedSplit1 = false
@@ -50,7 +50,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.Split then
-        warnSplit:Show()
+		warnSplit:Show()
 	end
 end
 

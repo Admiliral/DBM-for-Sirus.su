@@ -17,7 +17,7 @@ local warnStomp      = mod:NewSpellAnnounce(34716)
 local timerStomp     = mod:NewBuffActiveTimer(5, 34716)
 
 function mod:OnCombatStart(delay)
-    timerTreants:Start(15-delay)
+	timerTreants:Start(15-delay)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)

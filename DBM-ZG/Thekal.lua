@@ -56,8 +56,8 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(21060) then
 		timerBlind:Cancel(args.destName)
-    elseif args:IsSpellID(12540) then
-        timerGouge:Cancel(args.destName)
+	elseif args:IsSpellID(12540) then
+		timerGouge:Cancel(args.destName)
 	end
 end
 

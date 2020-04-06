@@ -8,7 +8,7 @@ mod:RegisterCombat("combat",23576)
 
 mod:RegisterEvents(
 	"SPELL_AURA_APPLIED",
-    "CHAT_MSG_MONSTER_YELL"
+	"CHAT_MSG_MONSTER_YELL"
 )
 
 local timerNextBearForm      = mod:NewTimer(47, "BearForm", 9634)
@@ -21,9 +21,9 @@ mod:AddBoolOption("BearForm", true)
 mod:AddBoolOption("TrollForm", true)
 
 function mod:OnCombatStart(delay)
-    DBM:FireCustomEvent("DBM_EncounterStart", 23576, "Nalorakk")
-    timerNextBearForm:Start(42)
-    berserkTimer:Start()
+	DBM:FireCustomEvent("DBM_EncounterStart", 23576, "Nalorakk")
+	timerNextBearForm:Start(42)
+	berserkTimer:Start()
 end
 
 function mod:OnCombatEnd(wipe)
@@ -31,15 +31,15 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-    if args:IsSpellID(42389) then
-        timerMangle:Start(args.destName)
-    end
+	if args:IsSpellID(42389) then
+		timerMangle:Start(args.destName)
+	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.YellBear then
-        timerNextSilence:Start()
-        timerNextTrollForm:Start()
-        timerNextBearForm:Schedule(23.5)
+		timerNextSilence:Start()
+		timerNextTrollForm:Start()
+		timerNextBearForm:Schedule(23.5)
 	end
 end

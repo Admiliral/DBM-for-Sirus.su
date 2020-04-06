@@ -43,7 +43,7 @@ mod.vb.phase = 0
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 10184, "Onyxia")
 	self.vb.phase = 1
-    self.vb.warned_preP2 = false
+	self.vb.warned_preP2 = false
 	self.vb.warned_preP3 = false
 	timerAchieve:Start(-delay)
 	if self.Options.SoundWTF3 then
@@ -96,7 +96,7 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(68958) then
-        specWarnBlastNova:Show()
+		specWarnBlastNova:Show()
 		soundBlastNova:Play()
 	elseif args:IsSpellID(17086, 18351, 18564, 18576) or args:IsSpellID(18584, 18596, 18609, 18617) then	-- 1 ID for each direction
 		specWarnBreath:Show()

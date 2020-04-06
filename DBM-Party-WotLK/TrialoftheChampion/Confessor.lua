@@ -14,8 +14,8 @@ mod:RegisterEvents(
 )
 
 local isDispeller = select(2, UnitClass("player")) == "MAGE"
-             or select(2, UnitClass("player")) == "PRIEST"
-             or select(2, UnitClass("player")) == "SHAMAN"
+			 or select(2, UnitClass("player")) == "PRIEST"
+			 or select(2, UnitClass("player")) == "SHAMAN"
 
 local warnReflectiveShield	= mod:NewTargetAnnounce(66515, 2)
 local warnRenew				= mod:NewTargetAnnounce(66537, 2)
@@ -41,7 +41,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args.destName == L.name and shielded then
 			-- nothing, she casted it on herself and you cant dispel
 		else
-            warnRenew:Show(args.destName)
+			warnRenew:Show(args.destName)
 			specwarnRenew:Show(args.destName)
 		end
 	elseif args:IsSpellID(66620, 67679) then                     -- Old Wounds

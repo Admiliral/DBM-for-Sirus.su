@@ -91,7 +91,7 @@ end
 
 local function warnBeaconTargets()
 	warnFrostBeacon:Show(table.concat(beaconTargets, "<, >"))
-    table.wipe(beaconTargets)
+	table.wipe(beaconTargets)
 end
 
 local function warnUnchainedTargets()
@@ -193,7 +193,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			timerInstability:Start()
 			if (mod:IsDifficulty("normal25", "normal10") and ((args.amount or 1) >= 10)) or (mod:IsDifficulty("heroic25", "heroic10") and ((args.amount or 1) >= 2)) then
 				specWarnInstability:Show(args.amount)
-            end
+			end
 		end
 	elseif args:IsSpellID(70127, 72528, 72529, 72530) then	--Mystic Buffet (phase 3 - everyone)
 		if args:IsPlayer() then

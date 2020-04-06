@@ -7,9 +7,9 @@ mod:SetCreatureID(24239)
 mod:RegisterCombat("combat",24239)
 
 mod:RegisterEvents(
-    "SPELL_CAST_START",
-    "SPELL_CAST_SUCCESS",
-    "SPELL_AURA_APPLIED"
+	"SPELL_CAST_START",
+	"SPELL_CAST_SUCCESS",
+	"SPELL_AURA_APPLIED"
 )
 local isDecurser = select(2, UnitClass("player")) == "DRUID" or select(2, UnitClass("player")) == "MAGE"
 local iconFolder = "Interface\\AddOns\\Dbm-Core\\icon\\%s"
@@ -36,41 +36,41 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_CAST_START(args)
-    if args:IsSpellID(43442) then
-        specWarnMelee:Show(args.spellName)
-    end
+	if args:IsSpellID(43442) then
+		specWarnMelee:Show(args.spellName)
+	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-    if args:IsSpellID(43383) then
-        timerBolts:Start()
-    elseif args:IsSpellID(43429) then
-        specWarnMelee:Show(args.spellName)
-    end
+	if args:IsSpellID(43383) then
+		timerBolts:Start()
+	elseif args:IsSpellID(43429) then
+		specWarnMelee:Show(args.spellName)
+	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-    if args:IsSpellID(43501) then
-        local class, classEN
-        for i = 1, GetNumRaidMembers() do
-            if UnitName("raid"..i) == args.destName then
-                class, classEN = UnitClass("raid"..i)
-                break
-            end
-        end
-        warnSiphon:Show(">" .. args.destName .. "<", iconFolder:format(classEN))
-        timerSpecial:Show(class, iconFolder:format(classEN))
-        timerSpecial:Schedule(8, class, iconFolder:format(classEN))
-        timerSpecial:Schedule(16, class, iconFolder:format(classEN))
-    elseif args:IsSpellID(43439) then
-        specWarnDecurse:Show(args.destName)
-    elseif args:IsSpellID(43440) then
-        if args:IsPlayer() then
-            specWarnMove:Show(args.spellName)
-        end
-    elseif args:IsSpellID(305658) then
-        if args:IsPlayer() then
-            specWarnMove:Show(args.spellName)
-        end
-    end
+	if args:IsSpellID(43501) then
+		local class, classEN
+		for i = 1, GetNumRaidMembers() do
+			if UnitName("raid"..i) == args.destName then
+				class, classEN = UnitClass("raid"..i)
+				break
+			end
+		end
+		warnSiphon:Show(">" .. args.destName .. "<", iconFolder:format(classEN))
+		timerSpecial:Show(class, iconFolder:format(classEN))
+		timerSpecial:Schedule(8, class, iconFolder:format(classEN))
+		timerSpecial:Schedule(16, class, iconFolder:format(classEN))
+	elseif args:IsSpellID(43439) then
+		specWarnDecurse:Show(args.destName)
+	elseif args:IsSpellID(43440) then
+		if args:IsPlayer() then
+			specWarnMove:Show(args.spellName)
+		end
+	elseif args:IsSpellID(305658) then
+		if args:IsPlayer() then
+			specWarnMove:Show(args.spellName)
+		end
+	end
 end

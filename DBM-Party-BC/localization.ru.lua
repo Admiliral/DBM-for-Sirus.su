@@ -52,7 +52,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-    EmoteFire = " оказывается в зоне внимания |3-1(%s)."
+	EmoteFire = " оказывается в зоне внимания |3-1(%s)."
 })
 
 ----------------------------------
@@ -65,14 +65,14 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-    WarnSoul = "Украденная душа на %s"
+	WarnSoul = "Украденная душа на %s"
 })
 
 L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-    WarnSoul = DBM_CORE_AUTO_ANNOUNCE_OPTIONS.target:format(32346, GetSpellInfo(32346))
+	WarnSoul = DBM_CORE_AUTO_ANNOUNCE_OPTIONS.target:format(32346, GetSpellInfo(32346))
 })
 
 L:SetMiscLocalization({
@@ -93,15 +93,15 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-    Dogs = "Призыв бойцовских псов"
+	Dogs = "Призыв бойцовских псов"
 })
 
 L:SetOptionLocalization({
-    Dogs = "Отсчет времени до призыва бойцовских псов"
+	Dogs = "Отсчет времени до призыва бойцовских псов"
 })
 
 L:SetMiscLocalization({
-    yellDogs = "Незваные гости! Задержите их, а я спущу бойцовых псов!"
+	yellDogs = "Незваные гости! Задержите их, а я спущу бойцовых псов!"
 })
 
 ----------------------------------
@@ -117,11 +117,11 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-    TimerWound = "Смертельная рана %s"
+	TimerWound = "Смертельная рана %s"
 })
 
 L:SetOptionLocalization({
-    TimerWound = DBM_CORE_AUTO_TIMER_OPTIONS.target:format(36814, GetSpellInfo(36814))
+	TimerWound = DBM_CORE_AUTO_TIMER_OPTIONS.target:format(36814, GetSpellInfo(36814))
 })
 
 L:SetMiscLocalization({
@@ -167,7 +167,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-    EmoteNazan = "Назан спускается с небес."
+	EmoteNazan = "Назан спускается с небес."
 })
 
 ----------------------------------
@@ -298,7 +298,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-    yellPull = "Не мешайте мне работать!"
+	yellPull = "Не мешайте мне работать!"
 })
 
 ----------------------------------
@@ -320,7 +320,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-    yellPull = "Заходите, незваные гости..."
+	yellPull = "Заходите, незваные гости..."
 })
 
 ----------------------------------
@@ -336,11 +336,11 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-    Explosion = "Взрыв!"
+	Explosion = "Взрыв!"
 })
 
 L:SetOptionLocalization({
-    Explosion = DBM_CORE_AUTO_TIMER_OPTIONS.cast:format(37371, GetSpellInfo(37371))
+	Explosion = DBM_CORE_AUTO_TIMER_OPTIONS.cast:format(37371, GetSpellInfo(37371))
 })
 
 L:SetMiscLocalization({
@@ -445,13 +445,13 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-    TimerEtherealOrb = "Следующий маяк",
-    TimerEtherealSpawn = "Вызов ученика"
+	TimerEtherealOrb = "Следующий маяк",
+	TimerEtherealSpawn = "Вызов ученика"
 })
 
 L:SetOptionLocalization({
-    TimerEtherealOrb = "Отсчет времени до вызова следующего эфирального маяка",
-    TimerEtherealSpawn = "Отсчет времени до вызова эфирального ученика"
+	TimerEtherealOrb = "Отсчет времени до вызова следующего эфирального маяка",
+	TimerEtherealSpawn = "Отсчет времени до вызова эфирального ученика"
 })
 
 L:SetMiscLocalization({
@@ -499,7 +499,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-    yellSummon = "У меня свои звер-ррр-рюшки есть!"
+	yellSummon = "У меня свои звер-ррр-рюшки есть!"
 })
 
 ----------------------------------
@@ -515,11 +515,11 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-    Explosion = "Взрыв!"
+	Explosion = "Взрыв!"
 })
 
 L:SetOptionLocalization({
-    Explosion = "Отсчет времени до взрыва"
+	Explosion = "Отсчет времени до взрыва"
 })
 
 L:SetMiscLocalization({
@@ -728,18 +728,18 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-    WarnSplitSoon = "Скоро раздвоение",
-    WarnSplit     = "Раздвоение"
+	WarnSplitSoon = "Скоро раздвоение",
+	WarnSplit     = "Раздвоение"
 })
 
 L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-    WarnSplitSoon = DBM_CORE_AUTO_ANNOUNCE_OPTIONS.soon:format(39019, GetSpellInfo(39019)),
-    WarnSplit     = DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(39019, GetSpellInfo(39019))
+	WarnSplitSoon = DBM_CORE_AUTO_ANNOUNCE_OPTIONS.soon:format(39019, GetSpellInfo(39019)),
+	WarnSplit     = DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(39019, GetSpellInfo(39019))
 })
 
 L:SetMiscLocalization({
-    Split	= "We span the universe, as countless as the stars!"
+	Split	= "We span the universe, as countless as the stars!"
 })

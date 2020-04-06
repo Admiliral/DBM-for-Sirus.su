@@ -11,7 +11,7 @@ mod:RegisterEvents(
 	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED",
 	"SPELL_AURA_REMOVED",
-    "CHAT_MSG_MONSTER_YELL"
+	"CHAT_MSG_MONSTER_YELL"
 )
 
 
@@ -63,152 +63,152 @@ local iceMarkTargets = {}
 
 function mod:OnCombat()
 	self.vb.phase = 1
-    explosiveIcons = 8
-    berserkTimer:Start()
-    timerSummonElemenCD:Start(27)
-    timerArcaneStormCD:Start(74)
-    timerUnstableMagicCD:Start(26)
-    warnArcaneStormSoon:Schedule(71)
-    warnUnstableMagicSoon:Schedule(23)
-    if self.Options.RangeFrame then
-        DBM.RangeCheck:Show(10)
+	explosiveIcons = 8
+	berserkTimer:Start()
+	timerSummonElemenCD:Start(27)
+	timerArcaneStormCD:Start(74)
+	timerUnstableMagicCD:Start(26)
+	warnArcaneStormSoon:Schedule(71)
+	warnUnstableMagicSoon:Schedule(23)
+	if self.Options.RangeFrame then
+		DBM.RangeCheck:Show(10)
 	end
 end
 
 function mod:WildFlame()
-    warnWildFlame:Show(table.concat(wildFlameTargets, "<, >"))
-    table.wipe(wildFlameTargets)
+	warnWildFlame:Show(table.concat(wildFlameTargets, "<, >"))
+	table.wipe(wildFlameTargets)
 end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(306464) then
-        specWarnArcaneStorm:Show() -- Шторм
-    elseif args:IsSpellID(306468) then
-        specWarnUnstableMagic:Show()
-        timerUnstableMagicCD:Start()
-        warnUnstableMagicSoon:Schedule(21)
-    elseif args:IsSpellID(306454) then
-        timerSummonElemenCD:Start()
-    elseif args:IsSpellID(306483) then  -- Phase 2
-        warnNextPhase:Show(2 .. ": " .. args.spellName)
-        self.vb.phase = 2
-        timerArcaneStormCD:Cancel()
-        timerUnstableMagicCD:Cancel()
-        warnArcaneStormSoon:Cancel()
-        warnUnstableMagicSoon:Cancel()
-        timerRaysCD:Start(17)
-        timerMeteorCD:Start(29)
-        timerFirewhirlCD:Start(60)
-    elseif args:IsSpellID(306485) then
-        timerRaysCD:Start()
-        specWarnRays:Show()
-    elseif args:IsSpellID(306491) then
-        timerMeteorCD:Start() -- Метеор
-    elseif args:IsSpellID(306531) then
-        specWarnIceRush:Show() -- Натиск
-    elseif args:IsSpellID(306545) then  -- Dome phase
-        specWarnIceWrath:Show()
-    end
+		specWarnArcaneStorm:Show() -- Шторм
+	elseif args:IsSpellID(306468) then
+		specWarnUnstableMagic:Show()
+		timerUnstableMagicCD:Start()
+		warnUnstableMagicSoon:Schedule(21)
+	elseif args:IsSpellID(306454) then
+		timerSummonElemenCD:Start()
+	elseif args:IsSpellID(306483) then  -- Phase 2
+		warnNextPhase:Show(2 .. ": " .. args.spellName)
+		self.vb.phase = 2
+		timerArcaneStormCD:Cancel()
+		timerUnstableMagicCD:Cancel()
+		warnArcaneStormSoon:Cancel()
+		warnUnstableMagicSoon:Cancel()
+		timerRaysCD:Start(17)
+		timerMeteorCD:Start(29)
+		timerFirewhirlCD:Start(60)
+	elseif args:IsSpellID(306485) then
+		timerRaysCD:Start()
+		specWarnRays:Show()
+	elseif args:IsSpellID(306491) then
+		timerMeteorCD:Start() -- Метеор
+	elseif args:IsSpellID(306531) then
+		specWarnIceRush:Show() -- Натиск
+	elseif args:IsSpellID(306545) then  -- Dome phase
+		specWarnIceWrath:Show()
+	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(306464) then
-        timerArcaneStorm:Start()
-        timerSummonElemenCD:Start(11)
-    elseif args:IsSpellID(306495) then
-        timerFirewhirlCD:Schedule(20)
-        timerCollapse:Start()
-        warnFirewhirl:Show()
-        if timerRaysCD:GetTime() > 0 then
-            timerRaysCD:Update(select(1, timerRaysCD:GetTime()), select(2, timerRaysCD:GetTime()) + 20)
-        else
-            timerRaysCD:Start(20)
-        end
-        if timerMeteorCD:GetTime() > 0 then
-            timerMeteorCD:Update(select(1, timerMeteorCD:GetTime()), select(2, timerMeteorCD:GetTime()) + 20)
-        else
-            timerMeteorCD:Start(20)
-        end
-    elseif args:IsSpellID(306487) then
-        explosiveTargets[#explosiveTargets + 1] = args.destName
-        if args:IsPlayer() then
-            specWarnExplosive:Show()
-        end
-        if self.Options.SetIconOnExplosiveTargets then
+		timerArcaneStorm:Start()
+		timerSummonElemenCD:Start(11)
+	elseif args:IsSpellID(306495) then
+		timerFirewhirlCD:Schedule(20)
+		timerCollapse:Start()
+		warnFirewhirl:Show()
+		if timerRaysCD:GetTime() > 0 then
+			timerRaysCD:Update(select(1, timerRaysCD:GetTime()), select(2, timerRaysCD:GetTime()) + 20)
+		else
+			timerRaysCD:Start(20)
+		end
+		if timerMeteorCD:GetTime() > 0 then
+			timerMeteorCD:Update(select(1, timerMeteorCD:GetTime()), select(2, timerMeteorCD:GetTime()) + 20)
+		else
+			timerMeteorCD:Start(20)
+		end
+	elseif args:IsSpellID(306487) then
+		explosiveTargets[#explosiveTargets + 1] = args.destName
+		if args:IsPlayer() then
+			specWarnExplosive:Show()
+		end
+		if self.Options.SetIconOnExplosiveTargets then
 			self:SetIcon(args.destName, explosiveIcons, 6)
 			explosiveIcons = explosiveIcons - 1
 		end
 		if #explosiveTargets >= 6 then
-            warnExplosiveFlame:Show(table.concat(explosiveTargets, "<, >"))
-            table.wipe(explosiveTargets)
-            explosiveIcons = 8
+			warnExplosiveFlame:Show(table.concat(explosiveTargets, "<, >"))
+			table.wipe(explosiveTargets)
+			explosiveIcons = 8
 		end
-    elseif args:IsSpellID(306502) then -- дикое пламя
-        if args:IsPlayer() then
-            specWarnWildFlame:Show()
-        else
-            local uId = DBM:GetRaidUnitId(args.destName)
-            if uId then
-                local inRange = CheckInteractDistance(uId, 3)
-                local x, y = GetPlayerMapPosition(uId)
-                if x == 0 and y == 0 then
-                    SetMapToCurrentZone()
-                    x, y = GetPlayerMapPosition(uId)
-                end
-                if inRange then
-                    specWarnWildFlameNear:Show()
-                end
-            end
-        end
-        wildFlameTargets[#wildFlameTargets + 1] = args.destName
-        self:UnscheduleMethod("WildFlame")
-        self:ScheduleMethod(0.1, "WildFlame")
-    elseif args:IsSpellID(306535) then
-        vengerfulIceTargets[#vengerfulIceTargets + 1] = args.destName
-        if args:IsPlayer() then
-            specWarnVengefulIce:Show()
-        end
-        if #vengerfulIceTargets >= 2 then
-            warnVengefulIce:Show(table.concat(vengerfulIceTargets, "<, >"))
-            table.wipe(vengerfulIceTargets)
-        end
-    elseif args:IsSpellID(306523, 306524) then
-        iceMarkTargets[#iceMarkTargets + 1] = args.destName
-        if args:IsPlayer() then
-            specWarnIceMark:Show()
-        end
-        if #iceMarkTargets >= 6 then
-            warnIceMark:Show(table.concat(iceMarkTargets, "<, >"))
-            table.wipe(iceMarkTargets)
-        end
-        timerFreezing:Start()
-    end
+	elseif args:IsSpellID(306502) then -- дикое пламя
+		if args:IsPlayer() then
+			specWarnWildFlame:Show()
+		else
+			local uId = DBM:GetRaidUnitId(args.destName)
+			if uId then
+				local inRange = CheckInteractDistance(uId, 3)
+				local x, y = GetPlayerMapPosition(uId)
+				if x == 0 and y == 0 then
+					SetMapToCurrentZone()
+					x, y = GetPlayerMapPosition(uId)
+				end
+				if inRange then
+					specWarnWildFlameNear:Show()
+				end
+			end
+		end
+		wildFlameTargets[#wildFlameTargets + 1] = args.destName
+		self:UnscheduleMethod("WildFlame")
+		self:ScheduleMethod(0.1, "WildFlame")
+	elseif args:IsSpellID(306535) then
+		vengerfulIceTargets[#vengerfulIceTargets + 1] = args.destName
+		if args:IsPlayer() then
+			specWarnVengefulIce:Show()
+		end
+		if #vengerfulIceTargets >= 2 then
+			warnVengefulIce:Show(table.concat(vengerfulIceTargets, "<, >"))
+			table.wipe(vengerfulIceTargets)
+		end
+	elseif args:IsSpellID(306523, 306524) then
+		iceMarkTargets[#iceMarkTargets + 1] = args.destName
+		if args:IsPlayer() then
+			specWarnIceMark:Show()
+		end
+		if #iceMarkTargets >= 6 then
+			warnIceMark:Show(table.concat(iceMarkTargets, "<, >"))
+			table.wipe(iceMarkTargets)
+		end
+		timerFreezing:Start()
+	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-    if args:IsSpellID(306516) then  -- Phase 3
-        warnNextPhase:Show(3 .. ": " .. L.blackIce)
-        self.vb.phase = 3
-        timerRaysCD:Cancel()
-        timerMeteorCD:Cancel()
-        timerFirewhirlCD:Cancel()
-        timerIceWrathCD:Start(135)
-        self:NewCDTimer(120, 306545)
-    end
+	if args:IsSpellID(306516) then  -- Phase 3
+		warnNextPhase:Show(3 .. ": " .. L.blackIce)
+		self.vb.phase = 3
+		timerRaysCD:Cancel()
+		timerMeteorCD:Cancel()
+		timerFirewhirlCD:Cancel()
+		timerIceWrathCD:Start(135)
+		self:NewCDTimer(120, 306545)
+	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-    if args:IsSpellID(306464) then
-        timerArcaneStormCD:Start()
-        warnArcaneStormSoon:Schedule(68)
+	if args:IsSpellID(306464) then
+		timerArcaneStormCD:Start()
+		warnArcaneStormSoon:Schedule(68)
 	elseif args:IsSpellID(306549) then
-        timerIceWrathCD:Start()
-    end
+		timerIceWrathCD:Start()
+	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.YellStart then
-        self:ScheduleMethod(54, "OnCombat")
+		self:ScheduleMethod(54, "OnCombat")
 		timerCombatStart:Start()
 	end
 end

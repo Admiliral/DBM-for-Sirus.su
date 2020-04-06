@@ -10,7 +10,7 @@ mod:RegisterEvents(
 	"SPELL_SUMMON"
 )
 
-local warnSummon   = mod:NewAnnounce("SummonElementals", 3, 33539)
+local warnSummon = mod:NewAnnounce("SummonElementals", 3, 33539)
 
 local spam = 0
 function mod:SPELL_SUMMON(args)

@@ -10,7 +10,7 @@ mod:RegisterEvents(
 	"SPELL_SUMMON"
 )
 
-local WarnCorruptedNova   = mod:NewSpellAnnounce(31991)
+local WarnCorruptedNova = mod:NewSpellAnnounce(31991)
 
 function mod:SPELL_SUMMON(args)
 	if args:IsSpellID(31991) then

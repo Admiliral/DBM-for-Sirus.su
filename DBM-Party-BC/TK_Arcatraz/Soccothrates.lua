@@ -10,7 +10,7 @@ mod:RegisterEvents(
 	"SPELL_CAST_SUCCESS"
 )
 
-local warnKnockaway      = mod:NewSpellAnnounce(36512)
+local warnKnockaway = mod:NewSpellAnnounce(36512)
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(36512) then

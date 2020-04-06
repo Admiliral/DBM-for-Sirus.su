@@ -357,7 +357,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		end
 	elseif args:IsSpellID(69200) then -- Raging Spirit
 		warnRagingSpirit:Show(args.destName)
-        timerSoulScreechCD:Start()
+		timerSoulScreechCD:Start()
 		if args:IsPlayer() then
 			specWarnRagingSpirit:Show()
 		end
@@ -422,7 +422,7 @@ function mod:SPELL_AURA_APPLIED_DOSE(args)
 		if args:IsPlayer() then
 			specWarnNecroticPlague:Show()
 		end
-    end
+	end
 end
 
 do

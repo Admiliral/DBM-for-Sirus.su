@@ -8,8 +8,8 @@ mod:RegisterCombat("combat", 19044)
 mod:RegisterEvents(
 	"SPELL_CAST_START",
 	"SPELL_CAST_SUCCESS",
-    "SPELL_AURA_APPLIED",
-    "SPELL_AURA_REMOVED"
+	"SPELL_AURA_APPLIED",
+	"SPELL_AURA_REMOVED"
 )
 
 local timerEarthStrikeCD            = mod:NewCDTimer(133, 33525)
@@ -27,13 +27,13 @@ local rockCounter = 1
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 19044, "Gruul the Dragonkiller")
-    if mod:IsDifficulty("heroic25") or mod:IsDifficulty("heroic10") then
-        timerHandCD:Start(15)
-    elseif mod:IsDifficulty("normal25") or mod:IsDifficulty("normal10") then
-        timerEarthStrikeCD:Start(35)
-        timerRockCD:Start(26)
-        rockCounter = 1
-    end
+	if mod:IsDifficulty("heroic25") or mod:IsDifficulty("heroic10") then
+		timerHandCD:Start(15)
+	elseif mod:IsDifficulty("normal25") or mod:IsDifficulty("normal10") then
+		timerEarthStrikeCD:Start(35)
+		timerRockCD:Start(26)
+		rockCounter = 1
+	end
 end
 
 function mod:OnCombatEnd(wipe)
@@ -41,38 +41,38 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_CAST_START(args)
-    if args:IsSpellID(33525) then
-         timerEarthStrikeCD:Start()
-         timerEchoCD:Start(25)
-         timerRockCD:Start(30 - rockCounter*2 + 4)
-         if rockCounter <= 11 then rockCounter = rockCounter + 1 end
-    end
+	if args:IsSpellID(33525) then
+		 timerEarthStrikeCD:Start()
+		 timerEchoCD:Start(25)
+		 timerRockCD:Start(30 - rockCounter*2 + 4)
+		 if rockCounter <= 11 then rockCounter = rockCounter + 1 end
+	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-    if args:IsSpellID(305188) then
-        timerHandCD:Start()
-        timerHandStrike:Start()
-    elseif args:IsSpellID(36240) then
-        timerRockCD:Start(30 - rockCounter*2)
-        if rockCounter <= 11 then rockCounter = rockCounter + 1 end
-    end
+	if args:IsSpellID(305188) then
+		timerHandCD:Start()
+		timerHandStrike:Start()
+	elseif args:IsSpellID(36240) then
+		timerRockCD:Start(30 - rockCounter*2)
+		if rockCounter <= 11 then rockCounter = rockCounter + 1 end
+	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(305201) then
-        timerFurnaceActive:Start()
-    elseif args:IsSpellID(305204) then
-        timerBurnedFlesh:Start()
-    elseif args:IsSpellID(36297) then
-        timerEchoCD:Start()
-    elseif args:IsSpellID(36240) and args:IsPlayer() then
-        specWarnRock:Show()
-    end
+		timerFurnaceActive:Start()
+	elseif args:IsSpellID(305204) then
+		timerBurnedFlesh:Start()
+	elseif args:IsSpellID(36297) then
+		timerEchoCD:Start()
+	elseif args:IsSpellID(36240) and args:IsPlayer() then
+		specWarnRock:Show()
+	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(305201) then
-        timerFurnaceInactive:Start()
-    end
+		timerFurnaceInactive:Start()
+	end
 end

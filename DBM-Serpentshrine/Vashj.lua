@@ -8,11 +8,11 @@ mod:RegisterCombat("combat", 21212)
 
 mod:RegisterEvents(
 	"CHAT_MSG_MONSTER_YELL",
-    "SPELL_CAST_START",
+	"SPELL_CAST_START",
 	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED",
 	"UNIT_DIED",
-    "UNIT_TARGET",
+	"UNIT_TARGET",
 	"SPELL_AURA_REMOVED",
 	"CHAT_MSG_LOOT"
 )
@@ -34,29 +34,29 @@ local ti = true
 
 
 function mod:NextStrider()
-    timerStrider:Start()
-    self:UnscheduleMethod("NextStrider")
-    self:ScheduleMethod(66, "NextStrider")
+	timerStrider:Start()
+	self:UnscheduleMethod("NextStrider")
+	self:ScheduleMethod(66, "NextStrider")
 end
 
 function mod:NextNaga()
-    timerNaga:Start()
-    self:UnscheduleMethod("NextNaga")
-    self:ScheduleMethod(47.5, "NextNaga")
+	timerNaga:Start()
+	self:UnscheduleMethod("NextNaga")
+	self:ScheduleMethod(47.5, "NextNaga")
 end
 
 function mod:ElementalSoon()
-    ti = true
-    warnElemental:Show()
+	ti = true
+	warnElemental:Show()
 end
 
 function mod:TaintedIcon()
-    if DBM:GetRaidRank() >= 1 then
+	if DBM:GetRaidRank() >= 1 then
 		for i = 1, GetNumRaidMembers() do
 			if UnitName("raid"..i.."target") == L.TaintedElemental then
 				ti = false
 				SetRaidTarget("raid"..i.."target", 8)
-                break
+				break
 			end
 		end
 	end
@@ -64,7 +64,7 @@ end
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 21212, "Lady Vashj")
-    ti = true
+	ti = true
 end
 
 function mod:OnCombatEnd(wipe)
@@ -72,48 +72,48 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-    if args:IsSpellID(38132) then
-        warnCore:Show(args.destName)
-        if args:IsPlayer() then
-            specWarnCore:Show()
-        end
-    end
+	if args:IsSpellID(38132) then
+		warnCore:Show(args.destName)
+		if args:IsPlayer() then
+			specWarnCore:Show()
+		end
+	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-    if args:IsSpellID(38280) then
-        warnCharge:Show(args.destName)
-        timerCharge:Start(args.destName)
-        if args:IsPlayer() then
-            specWarnCharge:Show()
-        end
-    end
+	if args:IsSpellID(38280) then
+		warnCharge:Show(args.destName)
+		timerCharge:Start(args.destName)
+		if args:IsPlayer() then
+			specWarnCharge:Show()
+		end
+	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-    if msg == L.YellPhase2 then
-        warnPhase:Show(2)
-        timerStrider:Start()
-        timerElemental:Start()
-        timerNaga:Start()
-        self:ScheduleMethod(66, "NextStrider")
-        self:ScheduleMethod(47.5, "NextNaga")
-        self:ScheduleMethod(48, "ElementalSoon")
-    elseif msg == L.YellPhase3 then
-        warnPhase:Show(3)
-        timerStrider:Cancel()
-        timerElemental:Cancel()
-        timerNaga:Cancel()
-        self:UnscheduleMethod("NextStrider")
-        self:UnscheduleMethod("NextNaga")
-    end
+	if msg == L.YellPhase2 then
+		warnPhase:Show(2)
+		timerStrider:Start()
+		timerElemental:Start()
+		timerNaga:Start()
+		self:ScheduleMethod(66, "NextStrider")
+		self:ScheduleMethod(47.5, "NextNaga")
+		self:ScheduleMethod(48, "ElementalSoon")
+	elseif msg == L.YellPhase3 then
+		warnPhase:Show(3)
+		timerStrider:Cancel()
+		timerElemental:Cancel()
+		timerNaga:Cancel()
+		self:UnscheduleMethod("NextStrider")
+		self:UnscheduleMethod("NextNaga")
+	end
 end
 
 function mod:UNIT_DIED(args)
-    if args.destName == L.TaintedElemental then
-        timerElemental:Start()
-        self:ScheduleMethod(48, "ElementalSoon")
-    end
+	if args.destName == L.TaintedElemental then
+		timerElemental:Start()
+		self:ScheduleMethod(48, "ElementalSoon")
+	end
 end
 
 function mod:UNIT_TARGET()
@@ -123,7 +123,7 @@ function mod:UNIT_TARGET()
 end
 
 function mod:OnCombatEnd()
-    self:UnscheduleMethod("NextStrider")
-    self:UnscheduleMethod("NextNaga")
-    self:UnscheduleMethod("ElementalSoon")
+	self:UnscheduleMethod("NextStrider")
+	self:UnscheduleMethod("NextNaga")
+	self:UnscheduleMethod("ElementalSoon")
 end

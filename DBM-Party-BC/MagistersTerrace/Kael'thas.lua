@@ -14,25 +14,25 @@ mod:RegisterEvents(
 	"SPELL_AURA_REMOVED"
 )
 
-local warnPhase2        = mod:NewPhaseAnnounce(2)
-local WarnPhoenix       = mod:NewSpellAnnounce(44194)
-local WarnShockBarrior  = mod:NewSpellAnnounce(46165)
-local warnPyroblast		= mod:NewCastAnnounce(36819)
-local timerPyroblast	= mod:NewCastTimer(4, 36819)
-local timerShockBarrior = mod:NewNextTimer(60, 46165)--Best guess based on limited CL data
-local timerPhoenix      = mod:NewCDTimer(45, 44194)--Best guess based on limited CL data
-local specwarnPyroblast = mod:NewSpecialWarning("specwarnPyroblast")
+local warnPhase2			= mod:NewPhaseAnnounce(2)
+local WarnPhoenix			= mod:NewSpellAnnounce(44194)
+local WarnShockBarrior		= mod:NewSpellAnnounce(46165)
+local warnPyroblast			= mod:NewCastAnnounce(36819)
+local timerPyroblast		= mod:NewCastTimer(4, 36819)
+local timerShockBarrior		= mod:NewNextTimer(60, 46165)--Best guess based on limited CL data
+local timerPhoenix			= mod:NewCDTimer(45, 44194)--Best guess based on limited CL data
+local specwarnPyroblast		= mod:NewSpecialWarning("specwarnPyroblast")
 
 function mod:OnCombatStart(delay)
 	if mod:IsDifficulty("heroic5") then
-        timerShockBarrior:Start(-delay)
-    end
+		timerShockBarrior:Start(-delay)
+	end
 end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(36819) then
 		warnPyroblast:Show()
-        timerPyroblast:Start()
+		timerPyroblast:Start()
 	end
 end
 
@@ -46,13 +46,13 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(46165) then
 		WarnShockBarrior:Show(args.destName)
-        timerShockBarrior:Start()
+		timerShockBarrior:Start()
 	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(46165) then
-        specwarnPyroblast:Show()
+		specwarnPyroblast:Show()
 	end
 end
 

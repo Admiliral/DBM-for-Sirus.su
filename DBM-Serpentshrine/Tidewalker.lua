@@ -23,16 +23,16 @@ local berserkTimer      = mod:NewBerserkTimer(600)
 local graveTargets = {}
 
 function mod:AnnounceGraves()
-    warnGraves:Show(table.concat(graveTargets, "<, >"))
-    table.wipe(graveTargets)
+	warnGraves:Show(table.concat(graveTargets, "<, >"))
+	table.wipe(graveTargets)
 end
 
 function mod:OnCombatStart()
 	DBM:FireCustomEvent("DBM_EncounterStart", 21213, "Morogrim Tidewalker")
-    berserkTimer:Start()
-    warnMurlocksSoon:Schedule(37)
-    timerMurlocks:Start(42)
-    timerGravesCD:Start()
+	berserkTimer:Start()
+	warnMurlocksSoon:Schedule(37)
+	timerMurlocks:Start(42)
+	timerGravesCD:Start()
 end
 
 function mod:OnCombatEnd(wipe)
@@ -40,20 +40,20 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-    if args:IsSpellID(37850, 38023, 38024, 38025, 38049) then
-        graveTargets[#graveTargets + 1] = args.destName
-    end
+	if args:IsSpellID(37850, 38023, 38024, 38025, 38049) then
+		graveTargets[#graveTargets + 1] = args.destName
+	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L.EmoteMurlocs then
-        warnMurlocksSoon:Cancel()
-        warnMurlocksSoon:Schedule(45)
-        timerMurlocks:Start(50)
-    elseif msg == L.EmoteGraves then
-        timerGravesCD:Start()
-        self:ScheduleMethod(0.2 , "AnnounceGraves")
-    elseif msg == L.EmoteGlobes then
-        warnGlobes:Show()
-    end
+		warnMurlocksSoon:Cancel()
+		warnMurlocksSoon:Schedule(45)
+		timerMurlocks:Start(50)
+	elseif msg == L.EmoteGraves then
+		timerGravesCD:Start()
+		self:ScheduleMethod(0.2 , "AnnounceGraves")
+	elseif msg == L.EmoteGlobes then
+		warnGlobes:Show()
+	end
 end

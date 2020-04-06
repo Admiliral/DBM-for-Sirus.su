@@ -8,11 +8,11 @@ mod:SetZone()
 mod:RegisterCombat("combat", 18472)
 
 mod:RegisterEvents(
-    "SPELL_CAST_SUCCESS",
-    "CHAT_MSG_MONSTER_YELL"
+	"SPELL_CAST_SUCCESS",
+	"CHAT_MSG_MONSTER_YELL"
 )
 
-local timerFroshShockCD	     = mod:NewCDTimer(10, 21401)
+local timerFroshShockCD = mod:NewCDTimer(10, 21401)
 
 
 function mod:SPELL_CAST_SUCCESS(args)
@@ -22,7 +22,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-    if msg == L.yellSummon then
-        timerFroshShockCD:Start()
+	if msg == L.yellSummon then
+		timerFroshShockCD:Start()
 	end
 end

@@ -11,8 +11,8 @@ mod:RegisterEvents(
 	"SPELL_AURA_REMOVED"
 )
 
-local WarnPrison   = mod:NewTargetAnnounce(32361)
-local timerPrison   = mod:NewTargetTimer(5, 32361)
+local WarnPrison	= mod:NewTargetAnnounce(32361)
+local timerPrison	= mod:NewTargetTimer(5, 32361)
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(32361) then

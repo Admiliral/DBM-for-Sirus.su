@@ -76,71 +76,71 @@
 	<Button name="DBM_GUI_OptionsFramePanelButtonTemplate" virtual="true" inherits="UIPanelButtonTemplate"/>
 
 	<Button name="DBM_GUI_OptionsFrameTabButtonTemplate" virtual="true">
-        <Size>
-            <AbsDimension x="85" y="24"/>
-        </Size>
-        <Layers>
+		<Size>
+			<AbsDimension x="85" y="24"/>
+		</Size>
+		<Layers>
 		<Layer level="BORDER">
-        		<Texture name="$parentLeftDisabled" file="Interface\OptionsFrame\UI-OptionsFrame-ActiveTab">
-        			<Size>
-        				<AbsDimension x="20" y="24"/>
-        			</Size>
-        			<Anchors>
-        				<Anchor point="BOTTOMLEFT">
-        					<Offset>
-        						<AbsDimension x="0" y="-3"/>
-        					</Offset>
-        				</Anchor>
-        			</Anchors>
+				<Texture name="$parentLeftDisabled" file="Interface\OptionsFrame\UI-OptionsFrame-ActiveTab">
+					<Size>
+						<AbsDimension x="20" y="24"/>
+					</Size>
+					<Anchors>
+						<Anchor point="BOTTOMLEFT">
+							<Offset>
+								<AbsDimension x="0" y="-3"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
 				<TexCoords left="0" right="0.15625" top="0" bottom="1.0"/>
-        		</Texture>
+				</Texture>
 			<Texture name="$parentMiddleDisabled" file="Interface\OptionsFrame\UI-OptionsFrame-ActiveTab">
-        			<Size>
-        				<AbsDimension x="47" y="24"/>
-        			</Size>
-        			<Anchors>
-        				<Anchor point="LEFT" relativeTo="$parentLeftDisabled" relativePoint="RIGHT"/>
-        			</Anchors>
+					<Size>
+						<AbsDimension x="47" y="24"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentLeftDisabled" relativePoint="RIGHT"/>
+					</Anchors>
 				<TexCoords left="0.15625" right="0.84375" top="0" bottom="1.0"/>
-        		</Texture>
+				</Texture>
 			<Texture name="$parentRightDisabled" file="Interface\OptionsFrame\UI-OptionsFrame-ActiveTab">
-        			<Size>
-        				<AbsDimension x="20" y="24"/>
-        			</Size>
-        			<Anchors>
-        				<Anchor point="LEFT" relativeTo="$parentMiddleDisabled" relativePoint="RIGHT"/>
-        			</Anchors>
+					<Size>
+						<AbsDimension x="20" y="24"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentMiddleDisabled" relativePoint="RIGHT"/>
+					</Anchors>
 				<TexCoords left="0.84375" right="1.0" top="0" bottom="1.0"/>
-        		</Texture>
+				</Texture>
 			<Texture name="$parentLeft" file="Interface\OptionsFrame\UI-OptionsFrame-InActiveTab">
-        			<Size>
-        				<AbsDimension x="20" y="24"/>
-        			</Size>
-        			<Anchors>
-        				<Anchor point="TOPLEFT"/>
-        			</Anchors>
+					<Size>
+						<AbsDimension x="20" y="24"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
 				<TexCoords left="0" right="0.15625" top="0" bottom="1.0"/>
-        		</Texture>
+				</Texture>
 			<Texture name="$parentMiddle" file="Interface\OptionsFrame\UI-OptionsFrame-InActiveTab">
-        			<Size>
-        				<AbsDimension x="47" y="24"/>
-        			</Size>
-        			<Anchors>
-        				<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT"/>
+					<Size>
+						<AbsDimension x="47" y="24"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT"/>
 				</Anchors>
 				<TexCoords left="0.15625" right="0.84375" top="0" bottom="1.0"/>
-        		</Texture>
+				</Texture>
 			<Texture name="$parentRight" file="Interface\OptionsFrame\UI-OptionsFrame-InActiveTab">
-        			<Size>
-        				<AbsDimension x="20" y="24"/>
-        			</Size>
-        			<Anchors>
-        				<Anchor point="LEFT" relativeTo="$parentMiddle" relativePoint="RIGHT"/>
-        			</Anchors>
+					<Size>
+						<AbsDimension x="20" y="24"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentMiddle" relativePoint="RIGHT"/>
+					</Anchors>
 				<TexCoords left="0.84375" right="1.0" top="0" bottom="1.0"/>
 			</Texture>
-        	</Layer>
-        </Layers>
+			</Layer>
+		</Layers>
 		<ButtonText name="$parentText">
 			<Anchors>
 				<Anchor point="CENTER">

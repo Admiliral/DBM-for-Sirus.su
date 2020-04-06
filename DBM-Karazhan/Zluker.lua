@@ -12,11 +12,11 @@ mod:RegisterEvents(
 local timerMagicCD          = mod:NewCDTimer(45, 305535)
 
 function mod:OnCombatStart(delay)
-    timerMagicCD:Start()
+	timerMagicCD:Start()
 end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(305535) then
-        timerMagicCD:Start()
-    end
+		timerMagicCD:Start()
+	end
 end

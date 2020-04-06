@@ -10,11 +10,11 @@ L:SetGeneralLocalization{
 }
 
 L:SetWarningLocalization{
-    WarnPhase2Soon = "Скоро фаза 2"
+	WarnPhase2Soon = "Скоро фаза 2"
 }
 
 L:SetOptionLocalization{
-    WarnPhase2Soon = "Предупреждать о переходе на пешую фазу"
+	WarnPhase2Soon = "Предупреждать о переходе на пешую фазу"
 }
 
 L:SetMiscLocalization{
@@ -32,18 +32,18 @@ L:SetGeneralLocalization{
 
 L:SetWarningLocalization{
 	DBM_MOROES_VANISH_FADED	= "Исчезновение рассеивается",
-    WarnPhase2Soon = "Скоро фаза 2",
+	WarnPhase2Soon = "Скоро фаза 2",
 }
 
 L:SetTimerLocalization{
-    Phase2 = "Фаза 2"
+	Phase2 = "Фаза 2"
 }
 
 L:SetOptionLocalization{
 	DBM_MOROES_VANISH_FADED	= "Show vanish fade warning",
-    WarnPhase2Soon = "Предупреждать о приближении второй фазы",
-    WarnDeathMark = DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(305470, GetSpellInfo(305470) or "unknown"),
-    Phase2 = "Отсчитывать время до второй фазы."
+	WarnPhase2Soon = "Предупреждать о приближении второй фазы",
+	WarnDeathMark = DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(305470, GetSpellInfo(305470) or "unknown"),
+	Phase2 = "Отсчитывать время до второй фазы."
 }
 
 L:SetMiscLocalization{
@@ -63,7 +63,7 @@ L:SetWarningLocalization{
 
 L:SetOptionLocalization{
 	RangeFrame			= "Show range frame (10)",
-    HealthFrame         = "Отображать здоровье босса и прочность щита"
+	HealthFrame         = "Отображать здоровье босса и прочность щита"
 }
 
 L:SetMiscLocalization{
@@ -117,17 +117,17 @@ L:SetGeneralLocalization{
 }
 
 L:SetWarningLocalization{
-    WarnUnstableTar = "Нестабильная энергия на >%s<"
+	WarnUnstableTar = "Нестабильная энергия на >%s<"
 }
 
 L:SetTimerLocalization{
-    TimerRunesBam = "Взрыв!"
+	TimerRunesBam = "Взрыв!"
 }
 
 L:SetOptionLocalization{
 	RangeFrame			= "Show range frame (10)",
-    WarnUnstableTar =   DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(305309, GetSpellInfo(305309) or "unknown"),
-    TimerRunesBam = "Отсчет времени до взрыва рун"
+	WarnUnstableTar =   DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(305309, GetSpellInfo(305309) or "unknown"),
+	TimerRunesBam = "Отсчет времени до взрыва рун"
 }
 
 L:SetMiscLocalization{
@@ -168,23 +168,23 @@ L:SetGeneralLocalization{
 
 L:SetWarningLocalization{
 	DBM_ARAN_DO_NOT_MOVE	= "Не двигайтесь!",
-    SpecWarnFreeze = "Вы будете заморожены!",
-    WarnFreeze = "%s заморожен!"
+	SpecWarnFreeze = "Вы будете заморожены!",
+	WarnFreeze = "%s заморожен!"
 }
 
 L:SetTimerLocalization{
-    TimerSpecialHeroic = "Следующая спец-способность"
+	TimerSpecialHeroic = "Следующая спец-способность"
 }
 
 L:SetOptionLocalization{
 	DBM_ARAN_DO_NOT_MOVE	= "Show special warning for $spell:30004",
-    TimerSpecialHeroic = "Отсчет времени до следующей спец-способности",
-    SpecWarnFreeze = "Предупреждение о том что вы будете заморожены",
-    WarnFreeze = "Обьявление замороженой цели"
+	TimerSpecialHeroic = "Отсчет времени до следующей спец-способности",
+	SpecWarnFreeze = "Предупреждение о том что вы будете заморожены",
+	WarnFreeze = "Обьявление замороженой цели"
 }
 
 L:SetMiscLocalization{
-    Familliar = "Фамильяр"
+	Familliar = "Фамильяр"
 }
 
 
@@ -200,17 +200,17 @@ L:SetWarningLocalization{
 	DBM_NS_WARN_BANISH_SOON	= "Фаза изгнания через 5 секунд",
 	warningPortal			= "Фаза порталов",
 	warningBanish			= "Фаза изгнания",
-    SpecWarnKickNow			= "Прерывание"
+	SpecWarnKickNow			= "Прерывание"
 }
 
 L:SetTimerLocalization{
 	timerPortalPhase	= "Фаза порталов",
 	timerBanishPhase	= "Фаза изгнания",
-    TimerGates          = "Зеленые лучи",
-    TimerGhostPhase     = "Призрачная фаза",
-    TimerRepentance     = "Возмездие",
-    TimerPortals        = "Появление порталов",
-    TimerNormalPhase    = "Обычная фаза"
+	TimerGates          = "Зеленые лучи",
+	TimerGhostPhase     = "Призрачная фаза",
+	TimerRepentance     = "Возмездие",
+	TimerPortals        = "Появление порталов",
+	TimerNormalPhase    = "Обычная фаза"
 }
 
 L:SetOptionLocalization{
@@ -220,12 +220,12 @@ L:SetOptionLocalization{
 	warningBanish			= "Show warning for Banish phase",
 	timerPortalPhase		= "Show timer for Portal Phase duration",
 	timerBanishPhase		= "Show timer for Banish Phase duration",
-    SpecWarnKickNow				= "Спец-предупреждение, когда вы должы прервать заклинание",
-    TimerGates          = "Зеленые лучи",
-    TimerGhostPhase     = "Призрачная фаза",
-    TimerRepentance     = "Возмездие",
-    TimerPortals        = "Появление порталов",
-    TimerNormalPhase    = "Обычная фаза"
+	SpecWarnKickNow				= "Спец-предупреждение, когда вы должы прервать заклинание",
+	TimerGates          = "Зеленые лучи",
+	TimerGhostPhase     = "Призрачная фаза",
+	TimerRepentance     = "Возмездие",
+	TimerPortals        = "Появление порталов",
+	TimerNormalPhase    = "Обычная фаза"
 }
 
 L:SetMiscLocalization{
@@ -242,14 +242,14 @@ L:SetGeneralLocalization{
 }
 
 L:SetWarningLocalization{
-    WarnNextPhaseSoon = "Фаза %s"
+	WarnNextPhaseSoon = "Фаза %s"
 }
 
 L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-    WarnNextPhaseSoon = "Предупреждать о переходе на следующую фазу"
+	WarnNextPhaseSoon = "Предупреждать о переходе на следующую фазу"
 }
 
 L:SetMiscLocalization{
@@ -258,10 +258,10 @@ L:SetMiscLocalization{
 	DBM_PRINCE_YELL_P3		= "Как ты можешь надеяться выстоять против такой ошеломляющей мощи?",
 	DBM_PRINCE_YELL_INF1	= "Все миры, все измерения открыты мне!",
 	DBM_PRINCE_YELL_INF2	= "Вас ждет не один Малчезаар, но и легионы, которыми я командую!",
-    FlameWorld              = "Огненные просторы",
-    IceWorld                = "Ледяная пустошь",
-    BlackForest             = "Черный лес",
-    LastPhase               = "Финал"
+	FlameWorld              = "Огненные просторы",
+	IceWorld                = "Ледяная пустошь",
+	BlackForest             = "Черный лес",
+	LastPhase               = "Финал"
 }
 
 
@@ -284,9 +284,9 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-    SetIconOnPyromancer     = "Устанавливать иконки на Пиромантов",
-    AnnouncePyromancerIcons = "Анонсировать Пиромантов",
-    RemoveWeaponOnMindControl = "Снимать оружие при подчинении",
+	SetIconOnPyromancer     = "Устанавливать иконки на Пиромантов",
+	AnnouncePyromancerIcons = "Анонсировать Пиромантов",
+	RemoveWeaponOnMindControl = "Снимать оружие при подчинении",
 	DBM_NB_AIR_WARN			= "Show warning for Air Phase",
 	PrewarnGroundPhase		= "Show pre-warnings for Ground Phase",
 	timerNightbane			= "Show timer for Nightbane summon",
@@ -294,9 +294,9 @@ L:SetOptionLocalization{
 }
 
 L:SetMiscLocalization{
-    Pyromancer              = "Пиромант",
-    Hypothermia             = "Переохлаждение",
-    PyromancerIconSet       = "Pyromancer icon {rt%d} set on %s",
+	Pyromancer              = "Пиромант",
+	Hypothermia             = "Переохлаждение",
+	PyromancerIconSet       = "Pyromancer icon {rt%d} set on %s",
 	DBM_NB_EMOTE_PULL		= "Древнее существо пробуждается вдалеке...",
 	DBM_NB_YELL_PULL		= "Ну и глупцы! Я быстро покончу с вашими страданиями!",
 	DBM_NB_YELL_AIR			= "Жалкий гнус! Я изгоню тебя из воздуха!",
@@ -356,7 +356,7 @@ L:SetOptionLocalization{
 }
 
 L:SetMiscLocalization{
-    YellZluker = "Вместе мы неудержимы!"
+	YellZluker = "Вместе мы неудержимы!"
 }
 
 

@@ -41,15 +41,15 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(69629, 69167) then					-- Unholy Power
-        warnUnholyPower:Show()
+		warnUnholyPower:Show()
 		timerUnholyPower:Start()
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(69155, 69627) then					-- Forceful Smash
-        warnForcefulSmash:Show()
-        timerForcefulSmash:Start()
+		warnForcefulSmash:Show()
+		timerForcefulSmash:Start()
 	end
 end
 

@@ -8,13 +8,13 @@ mod:SetZone()
 mod:RegisterCombat("combat", 17770)
 
 mod:RegisterEvents(
-    "SPELL_CAST_SUCCESS"
+	"SPELL_CAST_SUCCESS"
 )
 
-local timerGayserCD	    = mod:NewCDTimer(30, 38739)
+local timerGayserCD		= mod:NewCDTimer(30, 38739)
 
 function mod:OnCombatStart(delay)
-    timerGayserCD:Start()
+	timerGayserCD:Start()
 end
 
 function mod:SPELL_CAST_SUCCESS(args)

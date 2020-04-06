@@ -8,7 +8,7 @@ mod:RegisterCombat("yell", L.YellPull)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START",
-    "SPELL_CAST_SUCCESS"
+	"SPELL_CAST_SUCCESS"
 )
 
 
@@ -22,9 +22,9 @@ local berserkTimer          = mod:NewBerserkTimer(600)
 
 function mod:OnCombatStart()
 	DBM:FireCustomEvent("DBM_EncounterStart", 21214, "Fathom-Lord Karathress")
-    berserkTimer:Start()
-    timerNovaCD:Start()
-    timerSpitfireCD:Start()
+	berserkTimer:Start()
+	timerNovaCD:Start()
+	timerSpitfireCD:Start()
 end
 
 function mod:OnCombatEnd(wipe)
@@ -32,14 +32,14 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_CAST_START(args)
-    if args:IsSpellID(38445) then
-        specWarnNova:Show()
+	if args:IsSpellID(38445) then
+		specWarnNova:Show()
 		timerNovaCD:Start()
-    end
+	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-    if args:IsSpellID(38236) then
-        timerSpitfireCD:Start()
-    end
+	if args:IsSpellID(38236) then
+		timerSpitfireCD:Start()
+	end
 end

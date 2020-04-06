@@ -9,36 +9,36 @@ mod:SetUsedIcons(3, 4, 5, 6, 7, 8)
 mod:RegisterCombat("yell", L.YellPull)
 
 mod:RegisterEvents(
-    "SPELL_CAST_SUCCESS",
+	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_REMOVED",
 	"SPELL_AURA_APPLIED",
 	"SPELL_CAST_START"
 )
 
-local warnPhase1                = mod:NewAnnounce("Phase1", 2)  -- Спавн сфер
-local warnPhase2                = mod:NewAnnounce("Phase2", 2)  -- Спавн сфер
-local warnSpawnOrbs             = mod:NewAnnounce("SpawnOrbs", 2)  -- Спавн сфер
-local warnKnockback             = mod:NewSoonAnnounce(308470, 2)  -- тяжкий удар
-local warnScope				    = mod:NewSoonAnnounce(308984, 2)  -- Сферы
+local warnPhase1				= mod:NewAnnounce("Phase1", 2)  -- Спавн сфер
+local warnPhase2				= mod:NewAnnounce("Phase2", 2)  -- Спавн сфер
+local warnSpawnOrbs				= mod:NewAnnounce("SpawnOrbs", 2)  -- Спавн сфер
+local warnKnockback				= mod:NewSoonAnnounce(308470, 2)  -- тяжкий удар
+local warnScope					= mod:NewSoonAnnounce(308984, 2)  -- Сферы
 local warnScope6				= mod:NewAnnounce("warnScope6", 2)  -- Отсчёт сфер
 local warnScope7				= mod:NewAnnounce("warnScope7", 2)  -- Отсчёт сфер
 local warnScope8				= mod:NewAnnounce("warnScope8", 2)  -- Отсчёт сфер
 local warnScope9				= mod:NewAnnounce("warnScope9", 2)  -- Отсчёт сфер
-local warnScope10			    = mod:NewAnnounce("warnScope10", 2) -- Отсчёт сфер
-local warnBah				    = mod:NewAnnounce("Bah", 2)  -- Сферы
+local warnScope10				= mod:NewAnnounce("warnScope10", 2) -- Отсчёт сфер
+local warnBah					= mod:NewAnnounce("Bah", 2)  -- Сферы
 
 
 
 local timerScope				= mod:NewBuffActiveTimer(10, 308469) -- Баф сферы
 
-local timerKnockbackCD          = mod:NewCDTimer(7, 308470) -- тяжкий удар
-local timerOrbCD		        = mod:NewCDTimer(26, 308466)
+local timerKnockbackCD			= mod:NewCDTimer(7, 308470) -- тяжкий удар
+local timerOrbCD				= mod:NewCDTimer(26, 308466)
 local timerLoadCD				= mod:NewCDTimer(60, 308465)
-local timerReloadCD			    = mod:NewCDTimer(60, 308474)
+local timerReloadCD				= mod:NewCDTimer(60, 308474)
 
-local timerKnockbackCast        = mod:NewCastTimer(2, 308470) -- тяжкий удар
+local timerKnockbackCast		= mod:NewCastTimer(2, 308470) -- тяжкий удар
 
-local berserkTimer              = mod:NewBerserkTimer(600)
+local berserkTimer				= mod:NewBerserkTimer(600)
 
 
 mod:AddBoolOption("RangeFrame", true)
@@ -51,7 +51,7 @@ function mod:OnCombatStart(delay) ---- готово
 	DBM:FireCustomEvent("DBM_EncounterStart", 19516, "Void Reaver")
 	timerLoadCD:Start()
 	timerOrbCD:Start()
-    timerKnockbackCD:Start()
+	timerKnockbackCD:Start()
 	self:ScheduleMethod(23, "Playsound")
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(15)
@@ -93,7 +93,7 @@ function mod:SPELL_CAST_START(args)  ------- спавн сфер  или это?
 		warnScope:Schedule(0)
 		warnSpawnOrbs:Schedule(23)
 	elseif args:IsSpellID(308470) then  -------- Тяжкий удар
-        timerKnockbackCD:Start()
+		timerKnockbackCD:Start()
 		timerKnockbackCast:Start()
 		warnKnockback:Schedule(0)
 	end

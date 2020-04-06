@@ -10,8 +10,8 @@ mod:RegisterEvents(
 	"SPELL_CAST_START"
 )
 
-local warnShell     = mod:NewSpellAnnounce(32358, 3)
-local timerShell    = mod:NewBuffActiveTimer(7, 32358)
+local warnShell		= mod:NewSpellAnnounce(32358, 3)
+local timerShell	= mod:NewBuffActiveTimer(7, 32358)
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(32358, 38759) then

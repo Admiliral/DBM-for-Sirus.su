@@ -14,7 +14,7 @@ mod:RegisterEvents(
 	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REFRESH",
 	"SPELL_AURA_REMOVED",
-    "CHAT_MSG_RAID_BOSS_EMOTE",
+	"CHAT_MSG_RAID_BOSS_EMOTE",
 	"UNIT_HEALTH"
 )
 
@@ -230,10 +230,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-    if msg == L.EmoteMalleable then
+	if msg == L.EmoteMalleable then
 		warnMalleableGoo:Show()
 		specWarnMalleableGooCast:Show()
-        timerMalleableGooCD:Start()
+		timerMalleableGooCD:Start()
 		if self.Options.BypassLatencyCheck then
 			self:ScheduleMethod(0.1, "OldMalleableGooTarget")
 		else
@@ -299,9 +299,9 @@ function mod:SPELL_AURA_APPLIED_DOSE(args)
 	if args:IsSpellID(72451, 72463, 72671, 72672) then	-- Mutated Plague
 		warnMutatedPlague:Show(args.spellName, args.destName, args.amount or 1)
 		timerMutatedPlagueCD:Start()
-        if args.amount >=4 then
-            specWarnMutatedPlague:Show(args.amount, args.destName)
-        end
+		if args.amount >=4 then
+			specWarnMutatedPlague:Show(args.amount, args.destName)
+		end
 	elseif args:IsSpellID(70542) then
 		timerMutatedSlash:Show(args.destName)
 	end

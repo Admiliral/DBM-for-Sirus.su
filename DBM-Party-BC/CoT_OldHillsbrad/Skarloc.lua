@@ -13,10 +13,10 @@ mod:RegisterEvents(
 	"SPELL_PERIODIC_DAMAGE"
 )
 
-local warnHeal                  = mod:NewSpellAnnounce(29427)
-local warnHammer                = mod:NewTargetAnnounce(13005)
-local timerHammer               = mod:NewTargetTimer(6, 13005)
-local specWarnConsecration      = mod:NewSpecialWarningMove(38385)
+local warnHeal					= mod:NewSpellAnnounce(29427)
+local warnHammer				= mod:NewTargetAnnounce(13005)
+local timerHammer				= mod:NewTargetTimer(6, 13005)
+local specWarnConsecration		= mod:NewSpecialWarningMove(38385)
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(29427) and self:IsInCombat() then

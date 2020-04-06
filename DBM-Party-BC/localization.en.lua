@@ -538,7 +538,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-    BirdStone	= "%s returns to stone."
+	BirdStone	= "%s returns to stone."
 })
 
 ------------------------
@@ -736,18 +736,18 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-    warnFrenzy	= "Frenzy"
+	warnFrenzy	= "Frenzy"
 })
 
 L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-    warnFrenzy	= "Show warning for Frenzy"
+	warnFrenzy	= "Show warning for Frenzy"
 })
 
 L:SetMiscLocalization({
-    AeonusFrenzy	= "%s goes into a frenzy!"
+	AeonusFrenzy	= "%s goes into a frenzy!"
 })
 
 ---------------------
@@ -760,9 +760,9 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-    WarnWavePortalSoon	= "New portal soon",
-    WarnWavePortal		= "Portal %d",
-    WarnBossPortal		= "Boss incoming"
+	WarnWavePortalSoon	= "New portal soon",
+	WarnWavePortal		= "Portal %d",
+	WarnBossPortal		= "Boss incoming"
 })
 
 L:SetTimerLocalization({
@@ -770,9 +770,9 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-    WarnWavePortalSoon	= "Show pre-warning for new portal",
-    WarnWavePortal		= "Show warning for new portal",
-    WarnBossPortal		= "Show warning for boss incoming",
+	WarnWavePortalSoon	= "Show pre-warning for new portal",
+	WarnWavePortal		= "Show warning for new portal",
+	WarnBossPortal		= "Show warning for boss incoming",
 	TimerNextPortal		= "Show timer for next portal (after Boss)",
 	ShowAllPortalTimers	= "Show timers for all portals (inaccurate)"
 })

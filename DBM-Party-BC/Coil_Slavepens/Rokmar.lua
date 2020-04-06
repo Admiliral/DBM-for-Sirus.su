@@ -10,8 +10,8 @@ mod:RegisterEvents(
 	"SPELL_AURA_APPLIED"
 )
 
-local WarnFrenzy  = mod:NewSpellAnnounce(34970)
-local WarnWound   = mod:NewTargetAnnounce(38801)
+local WarnFrenzy	= mod:NewSpellAnnounce(34970)
+local WarnWound		= mod:NewTargetAnnounce(38801)
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(31956, 38801) then

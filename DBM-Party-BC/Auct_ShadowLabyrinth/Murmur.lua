@@ -12,10 +12,10 @@ mod:RegisterEvents(
 	"SPELL_CAST_START"
 )
 
-local warnBoom          = mod:NewCastAnnounce(33923)
-local warnTouch         = mod:NewTargetAnnounce(33711)
-local timerBoomCast     = mod:NewCastTimer(5, 33923)
-local timerTouch        = mod:NewTargetTimer(14, 33711)
+local warnBoom			= mod:NewCastAnnounce(33923)
+local warnTouch			= mod:NewTargetAnnounce(33711)
+local timerBoomCast		= mod:NewCastTimer(5, 33923)
+local timerTouch		= mod:NewTargetTimer(14, 33711)
 local specWarnTouch		= mod:NewSpecialWarningMove(33711)
 
 local soundBoom = mod:NewSound(33923)
@@ -37,7 +37,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			self:SetIcon(args.destName, 8, 14)
 		end
 		if args:IsPlayer() then
-            specWarnTouch:Show()
-        end
+			specWarnTouch:Show()
+		end
 	end
 end

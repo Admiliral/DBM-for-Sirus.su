@@ -10,7 +10,7 @@ mod:RegisterEvents(
 	"SPELL_CAST_SUCCESS"
 )
 
-local warnFoulSpores  = mod:NewSpellAnnounce(31673)--Iffy, this may not work. Dry-coded off wowhead.
+local warnFoulSpores = mod:NewSpellAnnounce(31673) --Iffy, this may not work. Dry-coded off wowhead.
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 31673 then

@@ -70,7 +70,7 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-    TimerNextPlat = "Отсчет времени до перелета на следующую платформу",
+	TimerNextPlat = "Отсчет времени до перелета на следующую платформу",
 	TwilightCutterCast = "Предупреждать заранее о $spell:308631 ",
 	WarnSplit		= "Show warning for Split",
 	WarnSplitSoon	= "Show pre-warning for Split",

@@ -301,7 +301,7 @@ DBM.DefaultOptions = {
 	-- these keys are not in live
 	StatusEnabled = true,
 	ShowFakedRaidWarnings = false,
-    Memes = false,
+	Memes = false,
 	ShowLoadMessage = true,
 	ShowKillMessage = true,
 	ShowWipeMessage = true,
@@ -957,12 +957,12 @@ do
 				"CHAT_MSG_MONSTER_EMOTE",
 				"CHAT_MSG_MONSTER_SAY",
 				"CHAT_MSG_RAID_BOSS_EMOTE",
-                "RESURRECT_REQUEST",
+				"RESURRECT_REQUEST",
 				"PLAYER_ENTERING_WORLD",
-                "SPELL_CAST_SUCCESS",
+				"SPELL_CAST_SUCCESS",
 				"LFG_PROPOSAL_SHOW",
 				"LFG_PROPOSAL_FAILED",
-                "LFG_PROPOSAL_SUCCEEDED",
+				"LFG_PROPOSAL_SUCCEEDED",
 				"LFG_UPDATE",
 				"PLAYER_TALENT_UPDATE"
 			)
@@ -2845,8 +2845,8 @@ end
 
 function DBM:RESURRECT_REQUEST()
 	if DBM.Options.Memes then
-        PlaySoundFile(soundFolder:format("erjan"))
-    end
+		PlaySoundFile(soundFolder:format("erjan"))
+	end
 end
 
 function DBM:PLAYER_TALENT_UPDATE()
@@ -3763,23 +3763,23 @@ do
 	end
 
 	function DBM:CHAT_MSG_MONSTER_YELL(msg, name)
-        DBM_saved_emotes[msg] = name .. " yell"
+		DBM_saved_emotes[msg] = name .. " yell"
 		return onMonsterMessage("yell", msg)
 	end
 
 	function DBM:CHAT_MSG_MONSTER_EMOTE(msg, name)
-        DBM_saved_emotes[msg] = name .. " chat emote"
+		DBM_saved_emotes[msg] = name .. " chat emote"
 		return onMonsterMessage("emote", msg)
 	end
 
 	function DBM:CHAT_MSG_RAID_BOSS_EMOTE(msg, name, ...)
-        DBM_saved_emotes[msg] = name .. " emote"
+		DBM_saved_emotes[msg] = name .. " emote"
 		onMonsterMessage("emote", msg)
 		return self:FilterRaidBossEmote(msg, name, ...)
 	end
 
 	function DBM:CHAT_MSG_MONSTER_SAY(msg, name)
-        DBM_saved_emotes[msg] = name .. " say"
+		DBM_saved_emotes[msg] = name .. " say"
 		return onMonsterMessage("say", msg)
 	end
 end
@@ -5128,7 +5128,7 @@ end
 
 function bossModPrototype:GetDifficulty()
 	local _, instanceType = GetInstanceInfo()
-    local diff = GetInstanceDifficulty()
+	local diff = GetInstanceDifficulty()
 	if instanceType == "party" then
 		if diff == 1 then
 			return "normal5"
@@ -5977,11 +5977,11 @@ do
 
 	function soundPrototype:Play(file)
 		if not self.option or self.mod.Options[self.option] then
-            if DBM.Options.Memes then
-                PlaySoundFile(file or soundFolder:format("fear2")) --беги сука беги
-            else
-                PlaySoundFile(file or "Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
-            end
+			if DBM.Options.Memes then
+				PlaySoundFile(file or soundFolder:format("fear2")) --беги сука беги
+			else
+				PlaySoundFile(file or "Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
+			end
 		end
 	end
 

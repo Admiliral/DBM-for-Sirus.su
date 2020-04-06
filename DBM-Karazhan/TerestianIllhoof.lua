@@ -15,7 +15,7 @@ mod:RegisterCombat("combat", 15688)
 mod:RegisterEvents(
 	"SPELL_AURA_APPLIED",
 	"SPELL_CAST_START",
-    "SPELL_CAST_SUCCESS"
+	"SPELL_CAST_SUCCESS"
 )
 
 -- local warningWeakened	= mod:NewTargetAnnounce(30065, 2)
@@ -89,12 +89,12 @@ mod:AddBoolOption("HealthFrame", true)
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 15688, "Terestian Illhoof")
-    if mod:IsDifficulty("normal10") then
+	if mod:IsDifficulty("normal10") then
 
-    elseif mod:IsDifficulty("heroic10") then
-        timerHandCD:Start()
-        timerMarkCD:Start()
-    end
+	elseif mod:IsDifficulty("heroic10") then
+		timerHandCD:Start()
+		timerMarkCD:Start()
+	end
 end
 
 function mod:OnCombatEnd(wipe)
@@ -105,25 +105,25 @@ function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(305345) then
 		warningHandCast:Show()
 		timerHandCD:Start()
-    end
+	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-    if args:IsSpellID(305351) then
-        if args.sourceName == L.name then
-            timerMarkCD:Start()
-            WarnMark:Show(args.destName)
-        end
+	if args:IsSpellID(305351) then
+		if args.sourceName == L.name then
+			timerMarkCD:Start()
+			WarnMark:Show(args.destName)
+		end
 		if args:IsPlayer() then
 			specWarnMark:Show()
 		end
-    elseif args:IsSpellID(305367) then
+	elseif args:IsSpellID(305367) then
 		if args:IsPlayer() and ((args.amount or 1) >= 7) then
-            specWarnDart:Show(args.amount)
+			specWarnDart:Show(args.amount)
 		end
-    elseif args:IsSpellID(305360) then
-        if args:IsPlayer() then
-            specWarnSeed:Show()
-        end
+	elseif args:IsSpellID(305360) then
+		if args:IsPlayer() then
+			specWarnSeed:Show()
+		end
 	end
 end

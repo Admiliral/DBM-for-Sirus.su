@@ -8,25 +8,25 @@ mod:SetZone()
 mod:RegisterCombat("combat", 18105)
 
 mod:RegisterEvents(
-    "SPELL_CAST_SUCCESS"
+	"SPELL_CAST_SUCCESS"
 )
 
-local timerSpitCD	    = mod:NewCDTimer(8, 34290)
-local timerBreathCD	    = mod:NewCDTimer(6, 34268)
-local timerSwipeCD	    = mod:NewCDTimer(10, 38737)
+local timerSpitCD		= mod:NewCDTimer(8, 34290)
+local timerBreathCD		= mod:NewCDTimer(6, 34268)
+local timerSwipeCD		= mod:NewCDTimer(10, 38737)
 
 function mod:OnCombatStart(delay)
-    timerBreathCD:Start(2)
-    timerSwipeCD:Start()
+	timerBreathCD:Start(2)
+	timerSwipeCD:Start()
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(34290) then
 		timerSpitCD:Start()
-    elseif args:IsSpellID(34268) then
-        timerBreathCD:Start()
-    elseif args:IsSpellID(38737) then
-        timerSwipeCD:Start()
-    end
+	elseif args:IsSpellID(34268) then
+		timerBreathCD:Start()
+	elseif args:IsSpellID(38737) then
+		timerSwipeCD:Start()
+	end
 end
 

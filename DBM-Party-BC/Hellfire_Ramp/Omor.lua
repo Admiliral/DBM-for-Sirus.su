@@ -12,9 +12,9 @@ mod:RegisterEvents(
 	"SPELL_AURA_REMOVED"
 )
 
-local warnBane      = mod:NewTargetAnnounce(37566)
-local timerBane     = mod:NewTargetTimer(15, 37566)
-local specwarnBane  = mod:NewSpecialWarningYou(37566)
+local warnBane			= mod:NewTargetAnnounce(37566)
+local timerBane			= mod:NewTargetTimer(15, 37566)
+local specwarnBane		= mod:NewSpecialWarningYou(37566)
 
 mod:AddBoolOption("SetIconOnBaneTarget", true)
 
@@ -26,8 +26,8 @@ function mod:SPELL_AURA_APPLIED(args)
 			self:SetIcon(args.destName, 8, 15)
 		end
 		if args:IsPlayer() then
-            specwarnBane:Show()
-        end
+			specwarnBane:Show()
+		end
 	end
 end
 

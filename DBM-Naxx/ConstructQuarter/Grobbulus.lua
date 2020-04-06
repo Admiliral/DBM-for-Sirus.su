@@ -53,9 +53,9 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 15931, "Grobbulus", wipe)
-    for i,j in ipairs(mutateIcons) do
-       mod:SetIcon(j, 0)
-    end
+	for i,j in ipairs(mutateIcons) do
+	   mod:SetIcon(j, 0)
+	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)

@@ -8,7 +8,7 @@ mod:SetZone()
 mod:RegisterCombat("combat", 17826)
 
 mod:RegisterEvents(
-    "SPELL_CAST_SUCCESS"
+	"SPELL_CAST_SUCCESS"
 )
 
 
@@ -18,6 +18,6 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(34290) then
-    end
+	end
 end
 

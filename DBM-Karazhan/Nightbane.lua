@@ -11,9 +11,9 @@ mod:RegisterEvents(
 	"SPELL_CAST_START",
 	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED",
-    "SPELL_AURA_REMOVED",
+	"SPELL_AURA_REMOVED",
 	"CHAT_MSG_MONSTER_EMOTE",
-    "UNIT_HEALTH"
+	"UNIT_HEALTH"
 )
 
 -- local warningBone			= mod:NewSpellAnnounce(37098, 3)
@@ -96,18 +96,18 @@ mod:AddBoolOption("AnnouncePyromancerIcons", true)
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 17225, "Nightbane")
-    if mod:IsDifficulty("normal10") then
+	if mod:IsDifficulty("normal10") then
 
-    elseif mod:IsDifficulty("heroic10") and isStart then
-        timerGrievingFireCD:Start()
-        timerConflCD:Start()
-        table.wipe(pyromancerTargets)
-        groundPhase = 0
-        alivePyromancers = 0
-        conflCount = 0
-        isPyroFirst = true
-        isStart = false
-    end
+	elseif mod:IsDifficulty("heroic10") and isStart then
+		timerGrievingFireCD:Start()
+		timerConflCD:Start()
+		table.wipe(pyromancerTargets)
+		groundPhase = 0
+		alivePyromancers = 0
+		conflCount = 0
+		isPyroFirst = true
+		isStart = false
+	end
 end
 
 function mod:OnCombatEnd(wipe)
@@ -115,73 +115,73 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_CAST_START(args)
-    if args:IsSpellID(305375) then
-        timerGrievingFireCD:Start()
-    elseif args:IsSpellID(305377) then
-        if conflCount <=1 then
-            timerConflCD:Start()
-            conflCount = conflCount + 1
-        else
-            conflCount = 0
-        end
-    elseif args:IsSpellID(305386) then
-        if UnitAura("player", L.Pyromancer, nil, "HARMFUL") or UnitAura("player", L.Hypothermia, nil, "HARMFUL") and self.Options.RemoveWeaponOnMindControl then
-            if self:IsWeaponDependent("player") then
-                PickupInventoryItem(16)
-                PutItemInBackpack()
-                PickupInventoryItem(17)
-                PutItemInBackpack()
-            elseif select(2, UnitClass("player")) == "HUNTER" then
-                PickupInventoryItem(18)
-                PutItemInBackpack()
-            end
-        end
-        table.wipe(pyromancerTargets)
-        isPyroFirst = true
-        groundPhase = 0
-        alivePyromancers = 0
-        conflCount = 0
-    end
+	if args:IsSpellID(305375) then
+		timerGrievingFireCD:Start()
+	elseif args:IsSpellID(305377) then
+		if conflCount <=1 then
+			timerConflCD:Start()
+			conflCount = conflCount + 1
+		else
+			conflCount = 0
+		end
+	elseif args:IsSpellID(305386) then
+		if UnitAura("player", L.Pyromancer, nil, "HARMFUL") or UnitAura("player", L.Hypothermia, nil, "HARMFUL") and self.Options.RemoveWeaponOnMindControl then
+			if self:IsWeaponDependent("player") then
+				PickupInventoryItem(16)
+				PutItemInBackpack()
+				PickupInventoryItem(17)
+				PutItemInBackpack()
+			elseif select(2, UnitClass("player")) == "HUNTER" then
+				PickupInventoryItem(18)
+				PutItemInBackpack()
+			end
+		end
+		table.wipe(pyromancerTargets)
+		isPyroFirst = true
+		groundPhase = 0
+		alivePyromancers = 0
+		conflCount = 0
+	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(305382) then
-        if args:IsPlayer() then
-            specWarnPyromancer:Show()
-        end
-        pyromancerTargets[#pyromancerTargets + 1] = args.destName
-        if #pyromancerTargets >= 3 and isPyroFirst then
-            warnPyromancer:Show(table.concat(pyromancerTargets, "<, >"))
-            if self.Options.SetIconOnPyromancer then
-                table.sort(pyromancerTargets, function(v1,v2) return DBM:GetRaidSubgroup(v1) < DBM:GetRaidSubgroup(v2) end)
-                local pyroIcons = 8
-                for i, v in ipairs(pyromancerTargets) do
-                    if self.Options.AnnouncePyromancerIcons then
-                        SendChatMessage(L.PyromancerIconSet:format(pyroIcons, v), "RAID")
-                    end
-                    self:SetIcon(v, pyroIcons)
-                    pyroIcons = pyroIcons - 1
-                end
-            end
-            isPyroFirst = false
-        end
-    elseif args:IsSpellID(305388) then
-        alivePyromancers = alivePyromancers + 1
-    end
+		if args:IsPlayer() then
+			specWarnPyromancer:Show()
+		end
+		pyromancerTargets[#pyromancerTargets + 1] = args.destName
+		if #pyromancerTargets >= 3 and isPyroFirst then
+			warnPyromancer:Show(table.concat(pyromancerTargets, "<, >"))
+			if self.Options.SetIconOnPyromancer then
+				table.sort(pyromancerTargets, function(v1,v2) return DBM:GetRaidSubgroup(v1) < DBM:GetRaidSubgroup(v2) end)
+				local pyroIcons = 8
+				for i, v in ipairs(pyromancerTargets) do
+					if self.Options.AnnouncePyromancerIcons then
+						SendChatMessage(L.PyromancerIconSet:format(pyroIcons, v), "RAID")
+					end
+					self:SetIcon(v, pyroIcons)
+					pyroIcons = pyroIcons - 1
+				end
+			end
+			isPyroFirst = false
+		end
+	elseif args:IsSpellID(305388) then
+		alivePyromancers = alivePyromancers + 1
+	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-    if args:IsSpellID(305388) then
-        if groundPhase == alivePyromancers - 1 then
-            timerGrievingFireCD:Start(35)
-            timerConflCD:Start(54)
-        else
-            groundPhase = groundPhase + 1
-        end
-    end
+	if args:IsSpellID(305388) then
+		if groundPhase == alivePyromancers - 1 then
+			timerGrievingFireCD:Start(35)
+			timerConflCD:Start(54)
+		else
+			groundPhase = groundPhase + 1
+		end
+	end
 end
  function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L.DBM_NB_EMOTE_PULL then
-        isStart = true
+		isStart = true
 	end
  end

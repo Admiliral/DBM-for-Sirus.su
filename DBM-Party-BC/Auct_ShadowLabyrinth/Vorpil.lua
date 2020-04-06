@@ -10,11 +10,11 @@ mod:RegisterEvents(
 	"SPELL_CAST_SUCCESS"
 )
 
-local warnTeleport         = mod:NewSpellAnnounce(33563)
-local timerTeleport        = mod:NewNextTimer(37, 33563)
+local warnTeleport		= mod:NewSpellAnnounce(33563)
+local timerTeleport		= mod:NewNextTimer(37, 33563)
 
 function mod:OnCombatStart(delay)
-    timerTeleport:Start(40-delay)
+	timerTeleport:Start(40-delay)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)

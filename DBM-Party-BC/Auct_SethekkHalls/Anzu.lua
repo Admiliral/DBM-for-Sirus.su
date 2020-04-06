@@ -30,8 +30,8 @@ local warnedbirds2 = false
 
 function mod:OnCombatStart(delay)
 	timerScreechCD:Start()
-    warnedbirds1 = false
-    warnedbirds2 = false
+	warnedbirds1 = false
+	warnedbirds2 = false
 end
 
 function mod:SPELL_CAST_START(args)

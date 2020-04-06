@@ -12,27 +12,27 @@ mod:RegisterEvents(
 	"SPELL_AURA_APPLIED"
 )
 
-local timerWoundCD		        = mod:NewCDTimer(10, 38801)
-local timerSpitCD		        = mod:NewCDTimer(14, 35008)
-local specWarnWound             = mod:NewSpecialWarningTarget(38801, "Tank|Healer")
-local specWarnSpit              = mod:NewSpecialWarningInterrupt(35008)
+local timerWoundCD		= mod:NewCDTimer(10, 38801)
+local timerSpitCD		= mod:NewCDTimer(14, 35008)
+local specWarnWound		= mod:NewSpecialWarningTarget(38801, "Tank|Healer")
+local specWarnSpit		= mod:NewSpecialWarningInterrupt(35008)
 
 function mod:OnCombatStart(delay)
-    timerSpitCD:Start()
-    timerWoundCD:Start()
+	timerSpitCD:Start()
+	timerWoundCD:Start()
 end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(35008) then
 		timerSpitCD:Start()
-        specWarnSpit:Show()
+		specWarnSpit:Show()
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(38801) then
 		timerWoundCD:Start()
-        specWarnWound:Show(args.destName)
+		specWarnWound:Show(args.destName)
 	end
 end
 

@@ -122,17 +122,17 @@ function mod:SPELL_AURA_APPLIED(args)
 			end
 		end
 	elseif args:IsSpellID(70867, 70879, 71473, 71525) or args:IsSpellID(71530, 71531, 71532, 71533) then	--Essence of the Blood Queen
-        warnEssenceoftheBloodQueen:Show(args.destName)
+		warnEssenceoftheBloodQueen:Show(args.destName)
 		if args:IsPlayer() then
-            specWarnEssenceoftheBloodQueen:Show()
-        end
-        if mod:IsDifficulty("normal10") or mod:IsDifficulty("heroic10") then
-            timerEssenceoftheBloodQueen:Start(75)--75 seconds on 10 man
-            --warnBloodthirstSoon:Schedule(70)
-        else
-            timerEssenceoftheBloodQueen:Start()--60 seconds on 25 man
-            --warnBloodthirstSoon:Schedule(55)
-        end
+			specWarnEssenceoftheBloodQueen:Show()
+		end
+		if mod:IsDifficulty("normal10") or mod:IsDifficulty("heroic10") then
+			timerEssenceoftheBloodQueen:Start(75)--75 seconds on 10 man
+			--warnBloodthirstSoon:Schedule(70)
+		else
+			timerEssenceoftheBloodQueen:Start()--60 seconds on 25 man
+			--warnBloodthirstSoon:Schedule(55)
+		end
 	elseif args:IsSpellID(70923) then
 		warnMindControlled:Show(args.destName)
 		specWarnMindConrolled:Show(args.destName)
@@ -195,8 +195,8 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)
 		warnSwarmingShadows:Show(target)
 		timerNextSwarmingShadows:Start()
 		if target == UnitName("player") then
-            specWarnSwarmingShadows:Show()
-            soundSwarmingShadows:Play()
+			specWarnSwarmingShadows:Show()
+			soundSwarmingShadows:Play()
 		end
 		if self.Options.SwarmingShadowsIcon then
 			self:SetIcon(target, 8, 6)

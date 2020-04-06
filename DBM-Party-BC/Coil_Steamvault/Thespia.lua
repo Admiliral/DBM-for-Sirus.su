@@ -12,11 +12,11 @@ mod:RegisterEvents(
 	"SPELL_AURA_REMOVED"
 )
 
-local warningCloud = mod:NewSpellAnnounce(25033)
-local warningWinds = mod:NewTargetAnnounce(31718)
-local warningBurst = mod:NewTargetAnnounce(31481)
-local timerWinds   = mod:NewTargetTimer(6, 31718)
-local timerBurst   = mod:NewTargetTimer(10, 31481)
+local warningCloud		= mod:NewSpellAnnounce(25033)
+local warningWinds		= mod:NewTargetAnnounce(31718)
+local warningBurst		= mod:NewTargetAnnounce(31481)
+local timerWinds		= mod:NewTargetTimer(6, 31718)
+local timerBurst		= mod:NewTargetTimer(10, 31481)
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(25033) then

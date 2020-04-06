@@ -12,7 +12,7 @@ mod:RegisterEvents(
 	"SPELL_AURA_REMOVED",
 	"SPELL_SUMMON",
 	"SPELL_PERIODIC_DAMAGE",
-    "UNIT_DIED"
+	"UNIT_DIED"
 )
 
 local warningFlameCast		= mod:NewCastAnnounce(30004, 4)
@@ -61,14 +61,14 @@ end
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 16524, "Shade of Aran")
-    if mod:IsDifficulty("normal10") then
-        berserkTimer:Start(-delay)
-        flameWreathIcon = 8
-        table.wipe(WreathTargets)
-    elseif mod:IsDifficulty("heroic10") then
-        timerSpecialHeroic:Start()
-        famCounter = 1
-    end
+	if mod:IsDifficulty("normal10") then
+		berserkTimer:Start(-delay)
+		flameWreathIcon = 8
+		table.wipe(WreathTargets)
+	elseif mod:IsDifficulty("heroic10") then
+		timerSpecialHeroic:Start()
+		famCounter = 1
+	end
 end
 
 function mod:OnCombatEnd(wipe)
@@ -92,15 +92,15 @@ function mod:SPELL_CAST_START(args)
 		timerBlizzad:Schedule(3.7)                 --may need tweaking
 		timerSpecial:Start()
 	elseif args:IsSpellID(305338) then
-        specWarnDontMove:Show()
-        timerSpecialHeroic:Start()
+		specWarnDontMove:Show()
+		timerSpecialHeroic:Start()
 	elseif args:IsSpellID(305329) then
-        specWarnWinter:Show()
-        timerSpecialHeroic:Start()
+		specWarnWinter:Show()
+		timerSpecialHeroic:Start()
 	elseif args:IsSpellID(305326) then
-        if args.destName == UnitName("player") then
-            specWarnFreeze:Show()
-        end
+		if args.destName == UnitName("player") then
+			specWarnFreeze:Show()
+		end
 	end
 end
 
@@ -121,16 +121,16 @@ function mod:SPELL_AURA_APPLIED(args)
 		self:Unschedule(warnFlameWreathTargets)
 		self:Schedule(0.3, warnFlameWreathTargets)
 	elseif args:IsSpellID(305328) then
-        timerFreeze:Start(args.destName)
-        warnFreeze:Show(args.destName)
+		timerFreeze:Start(args.destName)
+		warnFreeze:Show(args.destName)
 	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(29991) then
 		timerChains:Cancel(args.destName)
-    elseif args:IsSpellID(305328) then
-        timerFreeze:Cancel(args.destName)
+	elseif args:IsSpellID(305328) then
+		timerFreeze:Cancel(args.destName)
 	end
 end
 
@@ -189,11 +189,11 @@ end
 
 function mod:UNIT_DIED(args)
 	if args.destName == L.Familliar then
-        if famCounter == 3 then
-            timerSpecialHeroic:Start()
-            famCounter = 1
-        else
-            famCounter = famCounter + 1
-        end
+		if famCounter == 3 then
+			timerSpecialHeroic:Start()
+			famCounter = 1
+		else
+			famCounter = famCounter + 1
+		end
 	end
 end

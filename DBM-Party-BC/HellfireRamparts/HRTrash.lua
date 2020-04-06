@@ -7,10 +7,10 @@ mod:RegisterEvents(
 	"CHAT_MSG_MONSTER_YELL"
 )
 
-local timerDogs            = mod:NewTimer(16, "Dogs", 53186)
+local timerDogs = mod:NewTimer(16, "Dogs", 53186)
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-    if msg == L.yellDogs then
-        timerDogs:Start()
+	if msg == L.yellDogs then
+		timerDogs:Start()
 	end
 end

@@ -7,10 +7,10 @@ mod:RegisterCombat("combat", 34972)
 
 mod:RegisterEvents(
 	"SPELL_AURA_APPLIED",
-    "SPELL_AURA_REMOVED",
+	"SPELL_AURA_REMOVED",
 	"CHAT_MSG_MONSTER_YELL",
-    "SPELL_CAST_START",
-    "UNIT_HEALTH"
+	"SPELL_CAST_START",
+	"UNIT_HEALTH"
 )
 
 local warnPhase2			= mod:NewPhaseAnnounce(2)
@@ -34,10 +34,10 @@ local phaseCounter = true
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 34972, "Attumen the Huntsman")
 	Phase = 1
-    phaseCounter = true
-    if mod:IsDifficulty("heroic10") then
-        timerInvCD:Start(20)
-    end
+	phaseCounter = true
+	if mod:IsDifficulty("heroic10") then
+		timerInvCD:Start(20)
+	end
 end
 
 function mod:OnCombatEnd(wipe)
@@ -57,32 +57,32 @@ function mod:SPELL_AURA_APPLIED(args)
 			warningCurseSoon:Schedule(26)
 		end
 		lastCurse = GetTime()
-    elseif args:IsSpellID(305265) then
-        timerChargeCD:Start()
-        timerSufferingCD:Start()
-        timerInvCD:Cancel()
-        warnPhase2:Show()
-    end
+	elseif args:IsSpellID(305265) then
+		timerChargeCD:Start()
+		timerSufferingCD:Start()
+		timerInvCD:Cancel()
+		warnPhase2:Show()
+	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-    if args:IsSpellID(305265) then
-        timerCharge2CD:Start()
-        timerTrampCD:Start(20)
-        warnPhase3:Show()
-    end
+	if args:IsSpellID(305265) then
+		timerCharge2CD:Start()
+		timerTrampCD:Start(20)
+		warnPhase3:Show()
+	end
 end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(305258) then
-        timerChargeCD:Start()
-    elseif args:IsSpellID(305251) then
-        timerInvCD:Start()
-    elseif args:IsSpellID(305263) then
-        timerCharge2CD:Start()
-    elseif args:IsSpellID(305259) then
-        timerSufferingCD:Start()
-    end
+		timerChargeCD:Start()
+	elseif args:IsSpellID(305251) then
+		timerInvCD:Start()
+	elseif args:IsSpellID(305263) then
+		timerCharge2CD:Start()
+	elseif args:IsSpellID(305259) then
+		timerSufferingCD:Start()
+	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
@@ -98,5 +98,5 @@ function mod:UNIT_HEALTH(uId)
 	if (self:GetUnitCreatureId(uId) == 15550 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.52 and phaseCounter) then
 		phaseCounter = false
 		warnPhase2Soon:Show()
-    end
+	end
 end

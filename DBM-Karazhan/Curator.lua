@@ -9,9 +9,9 @@ mod:RegisterCombat("combat",34437)
 
 mod:RegisterEvents(
 	"SPELL_AURA_APPLIED",
-    "SPELL_AURA_REMOVED",
-    "SPELL_CAST_START",
-    "SPELL_INTERRUPT"
+	"SPELL_AURA_REMOVED",
+	"SPELL_CAST_START",
+	"SPELL_INTERRUPT"
 )
 
 -- local warnEvoSoon		= mod:NewPreWarnAnnounce(30254, 10, 2)
@@ -69,17 +69,17 @@ local unstableTargets = {}
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 34437, "The Curator")
-    for i=1,3 do
-        if UnitAura("boss".. i,"Деактивация", nil, "HARMFUL") == nil then
-            if     i==3 then
-                timerAnnihilationCD:Start()
-                timerCondCD:Start()
-            elseif i==1 then
-                timerRunesCD:Start()
-            end
-        end
-    end
-    table.wipe(unstableTargets)
+	for i=1,3 do
+		if UnitAura("boss".. i,"Деактивация", nil, "HARMFUL") == nil then
+			if     i==3 then
+				timerAnnihilationCD:Start()
+				timerCondCD:Start()
+			elseif i==1 then
+				timerRunesCD:Start()
+			end
+		end
+	end
+	table.wipe(unstableTargets)
 end
 
 function mod:OnCombatEnd(wipe)
@@ -87,51 +87,51 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-    if args:IsSpellID(305313) then
-        for i=1,3 do
-            if UnitAura("boss".. i,"Деактивация", nil, "HARMFUL") == nil then
-                if     i==3 then
-                    timerAnnihilationCD:Start()
-                    timerCondCD:Start()
-                elseif i==1 then
-                    timerRunesCD:Start()
-                end
-            end
-        end
-    elseif args:IsSpellID(305309) then
-        for i=1,10 do
-            if UnitAura("raid".. i,"Нестабильная энергия") then
-                unstableTargets[#unstableTargets + 1] =  UnitName("raid".. i)
-            end
-        end
-        warnUnstableTar:Show(table.concat(unstableTargets, "<, >"))
-        table.wipe(unstableTargets)
-    end
+	if args:IsSpellID(305313) then
+		for i=1,3 do
+			if UnitAura("boss".. i,"Деактивация", nil, "HARMFUL") == nil then
+				if     i==3 then
+					timerAnnihilationCD:Start()
+					timerCondCD:Start()
+				elseif i==1 then
+					timerRunesCD:Start()
+				end
+			end
+		end
+	elseif args:IsSpellID(305309) then
+		for i=1,10 do
+			if UnitAura("raid".. i,"Нестабильная энергия") then
+				unstableTargets[#unstableTargets + 1] =  UnitName("raid".. i)
+			end
+		end
+		warnUnstableTar:Show(table.concat(unstableTargets, "<, >"))
+		table.wipe(unstableTargets)
+	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-    if args:IsSpellID(305305) then
-        timerCondCD:Start()
-        if args:IsPlayer() then
-            specWarnCond:Show()
-        end
-    elseif args:IsSpellID(305309) then
-        for i=1,10 do
-            if UnitAura("raid".. i,"Нестабильная энергия") then
-                unstableTargets[#unstableTargets + 1] =  UnitName("raid".. i)
-            end
-        end
-        warnUnstableTar:Show(table.concat(unstableTargets, "<, >"))
-        table.wipe(unstableTargets)
-    end
+	if args:IsSpellID(305305) then
+		timerCondCD:Start()
+		if args:IsPlayer() then
+			specWarnCond:Show()
+		end
+	elseif args:IsSpellID(305309) then
+		for i=1,10 do
+			if UnitAura("raid".. i,"Нестабильная энергия") then
+				unstableTargets[#unstableTargets + 1] =  UnitName("raid".. i)
+			end
+		end
+		warnUnstableTar:Show(table.concat(unstableTargets, "<, >"))
+		table.wipe(unstableTargets)
+	end
 end
 
 function mod:SPELL_CAST_START(args)
-    if args:IsSpellID(305296) then
-        specWarnRunes:Show()
-        timerRunesCD:Start()
-        timerRunesBam:Start()
-    elseif args:IsSpellID(305312) then
-        timerAnnihilationCD:Start()
-    end
+	if args:IsSpellID(305296) then
+		specWarnRunes:Show()
+		timerRunesCD:Start()
+		timerRunesBam:Start()
+	elseif args:IsSpellID(305312) then
+		timerAnnihilationCD:Start()
+	end
 end

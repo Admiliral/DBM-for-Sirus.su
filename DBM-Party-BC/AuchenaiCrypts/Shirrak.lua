@@ -21,10 +21,10 @@ local specWarnFire          	= mod:NewSpecialWarningYou(42075)
 local targetName
 
 function mod:OnCombatStart(delay)
-    timerSuppressionCD:Start()
-    timerBiteCD:Start()
-    timerAttractionCD:Start()
-    timerFireCD:Start()
+	timerSuppressionCD:Start()
+	timerBiteCD:Start()
+	timerAttractionCD:Start()
+	timerFireCD:Start()
 end
 
 function mod:SPELL_AURA_APPLIED(args)
@@ -36,19 +36,19 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(39382) then
 		timerBiteCD:Start()
-    elseif args:IsSpellID(32265) then
+	elseif args:IsSpellID(32265) then
 		timerAttractionCD:Start()
 	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, name)
-    if name == L.name then
-        targetName = msg:match("%w+")
-        if msg:gsub(targetName, "") == L.EmoteFire then
-            timerFireCD:Start()
-            if targetName == UnitName("player") then
-                specWarnFire:Show()
-            end
-        end
+	if name == L.name then
+		targetName = msg:match("%w+")
+		if msg:gsub(targetName, "") == L.EmoteFire then
+			timerFireCD:Start()
+			if targetName == UnitName("player") then
+				specWarnFire:Show()
+			end
+		end
 	end
 end

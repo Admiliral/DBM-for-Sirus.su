@@ -10,10 +10,10 @@ mod:RegisterEvents(
 	"CHAT_MSG_MONSTER_EMOTE"
 )
 
-local warnChanneling		= mod:NewAnnounce("warnChanneling")
+local warnChanneling = mod:NewAnnounce("warnChanneling")
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L.ChannelCrystal then
-        warnChanneling:Show()
+		warnChanneling:Show()
 	end
 end
