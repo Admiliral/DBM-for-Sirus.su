@@ -122,6 +122,10 @@ globals = {
 	"LOCALE_ruRU",
 	"LOCALE_zhCN",
 	"LOCALE_zhTW",
+	-- Temp DBM
+	"DBMBurningCrusade_SavedModOptions",
+	"DBMBC",
+	"DBM_SBT",
 
 	-- Sirus
 	"AnimationsToggle_STARTNUMBERS",
@@ -129,6 +133,7 @@ globals = {
 	"TimerTracker_OnEvent",
 	"C_Timer",
 	"C_Talent",
+	"TimerFrame",
 
 	-- frames created via CreateFrame
 	"AlwaysUpFrame1",
