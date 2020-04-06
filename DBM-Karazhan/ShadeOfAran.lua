@@ -48,6 +48,7 @@ local soundArcane			= mod:NewSound(29973)
 mod:AddBoolOption("WreathIcons", true)
 mod:AddBoolOption("ElementalIcons", true)
 
+local beastIcon = {}
 local WreathTargets = {}
 local flameWreathIcon = 8
 local famCounter = 1

@@ -26,7 +26,6 @@ local warnPhase2soon			    = mod:NewAnnounce("WarnPhase2soon", 1)
 local timerPull				        = mod:NewTimer(112, "Pull", 305131)
 local pullWarned = true
 local warned_P2 = false
-local devast = true
 local timerNovaNormalCD             = mod:NewCDTimer(70, 30616) -- Обычка
 
 mod:AddBoolOption("WarnPhase2soon",true)
@@ -44,7 +43,6 @@ function mod:OnCombatStart(delay)
         timerNovaNormalCD:Start()
     end
     warned_P2 = false
-    devast = true
     pullWarned = true
 end
 
@@ -58,13 +56,11 @@ function mod:SPELL_CAST_START(args)
 		timerNovaCD:Start()
         specWarnNova:Show()
         timerDevastatingStrikeCD:Start()
-        devast = true
     elseif args:IsSpellID(305134) then
         targetShattered = self:GetBossTarget(17257)
         warnDevastatingStrike:Show(targetShattered)
 		specwarnDevastatingStrike:Show(targetShattered)
 		timerDevastatingStrikeCD:Start()
-        devast = false
     elseif args:IsSpellID(30616) then
         specWarnNova:Show()
         timerNovaNormalCD:Start()

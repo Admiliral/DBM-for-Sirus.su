@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Onyxia", "DBM-Onyxia")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 3763 $"):sub(12, -3))
+mod:SetRevision("20200222200840")
 mod:SetCreatureID(10184)
 
 mod:RegisterCombat("combat")
@@ -17,8 +17,8 @@ mod:RegisterEvents(
 local warnWhelpsSoon		= mod:NewAnnounce("WarnWhelpsSoon", 1)
 local warnPhase2			= mod:NewPhaseAnnounce(2)
 local warnPhase3			= mod:NewPhaseAnnounce(3)
-local warnPhase2Soon		= mod:NewAnnounce("WarnPhase2Soon", 1)
-local warnPhase3Soon		= mod:NewAnnounce("WarnPhase3Soon", 1)
+local warnPhase2Soon		= mod:NewPrePhaseAnnounce(2)
+local warnPhase3Soon		= mod:NewPrePhaseAnnounce(3)
 
 --local preWarnDeepBreath     = mod:NewSoonAnnounce(17086, 2)--Experimental, if it is off please let me know.
 local specWarnBreath		= mod:NewSpecialWarningRun(17086)

@@ -53,6 +53,7 @@ mod:AddBoolOption("SetIconOnMC", true)
 
 mod.vb.phase = 0
 
+local dominateMindTargets = {}
 local mincControl = {}
 local axe = true
 
@@ -72,6 +73,7 @@ function mod:OnCombatStart(delay)
     axe = true
     warnPhase:Show(L.WarnPhase1)
     timerNextAdd:Start(L.NamesAdds["Thaladred"])
+    table.wipe(dominateMindTargets)
     table.wipe(mincControl)
 end
 

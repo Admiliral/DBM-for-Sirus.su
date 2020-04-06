@@ -347,25 +347,25 @@ do
 			-- now we filter if cast is from outside raidgrp (we don't want to see mass spam in Dalaran/...)
 			if settings.only_from_raid and DBM:GetRaidUnitId(fromplayer) == "none" then return end
 
-      guikey = SpellIDIndex[spellid]
-      v = (guikey and settings.spells[guikey])
-      if v and v.enabled == true then
-          if v.spell ~= spellid then
-            print("DBM-SpellTimers Index mismatch error! "..guikey.." "..spellid)
-          end
-					local spellinfo, _, icon = GetSpellInfo(spellid)
-					local bartext = v.bartext:gsub("%%spell", spellinfo):gsub("%%player", fromplayer):gsub("%%target", toplayer)	-- Changed by Florin Patan
-					SpellBarIndex[bartext] = SpellBars:CreateBar(v.cooldown, bartext, icon, nil, true)
+			local guikey = SpellIDIndex[spellid]
+			local v = (guikey and settings.spells[guikey])
+			if v and v.enabled == true then
+				if v.spell ~= spellid then
+					print("DBM-SpellTimers Index mismatch error! "..guikey.." "..spellid)
+				end
 
-					if settings.showlocal then
-						local msg =  L.Local_CastMessage:format(bartext)
-						if not lastmsg or lastmsg ~= msg then
-							DBM:AddMsg(msg)
-							lastmsg = msg
-						end
+				local spellinfo, _, icon = GetSpellInfo(spellid)
+				local bartext = v.bartext:gsub("%%spell", spellinfo):gsub("%%player", fromplayer):gsub("%%target", toplayer)	-- Changed by Florin Patan
+				SpellBarIndex[bartext] = SpellBars:CreateBar(v.cooldown, bartext, icon, nil, true)
+
+				if settings.showlocal then
+					local msg =  L.Local_CastMessage:format(bartext)
+					if not lastmsg or lastmsg ~= msg then
+						DBM:AddMsg(msg)
+						lastmsg = msg
 					end
+				end
 			end
-
 		elseif settings.enabled and event == "COMBAT_LOG_EVENT_UNFILTERED" and settings.show_portal and select(2, ...) == "SPELL_CREATE" then
 			if settings.only_from_raid and not DBM:IsInRaid() then return end
 
