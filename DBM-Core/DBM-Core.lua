@@ -442,6 +442,7 @@ local enableIcons = true -- set to false when a raid leader or a promoted player
 
 local bannedMods = { -- a list of "banned" (meaning they are replaced by another mod or discontinued). These mods will not be loaded by DBM (and they wont show up in the GUI)
 	"DBM-Outlands",
+	"DBM-Sunwell",
 	"DBM-Battlegrounds", --replaced by DBM-PvP
 }
 
