@@ -62,8 +62,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:OnSync(msg, arg)
-	if msg == "Submerge" and not submerge then
-		submerge = true
+	if msg == "Submerge" and not submerged then
+		submerged = true
 		warnSubmerge:Show()
 		timerEmerge:Start()
 		warnEmergeSoon:Schedule(80)
