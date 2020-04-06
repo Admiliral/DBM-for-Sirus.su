@@ -29,13 +29,15 @@ waitFrame:SetScript("OnUpdate", function (self, elapsed)
 			data[1] = data[1] - elapsed
 			i = i + 1
 		else
-			if not data[3] or data[2]._remainingIterations == 0 then
-				tremove(waitTable, i)
-			end
-
 			data[2]._callback()
 
-			total = total - 1
+			if data[2]._remainingIterations == -1 then
+				data[1] = data[2]._duration
+				i = i + 1
+			elseif data[2]._remainingIterations == 0 then
+				tremove(waitTable, i)
+				total = total - 1
+			end
 		end
 	end
 
@@ -45,7 +47,7 @@ waitFrame:SetScript("OnUpdate", function (self, elapsed)
 end)
 
 local function AddDelayedCall(delay, func)
-	tinsert(waitTable, {delay, func, true})
+	tinsert(waitTable, {delay, func})
 	waitFrame:Show()
 end
 
