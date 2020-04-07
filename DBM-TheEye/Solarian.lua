@@ -80,7 +80,7 @@ function mod:PriestNIcon()  --об
 		for i = 1, GetNumRaidMembers() do
 			if UnitName("raid"..i.."target") == L.PriestN then
 				priestsN = false
-				SetRaidTarget("raid"..i.."target", 8)
+				SetRaidTarget("raid"..i.."target", 6)
 				break
 			end
 		end
@@ -98,21 +98,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(42783) then
-		timerNextWrathN:Start()
-		warnWrathN:Show(args.destName)
-		timerWrathN:Start(args.destName)
-		self:SetIcon(args.destName, 7, 6)
-		if args:IsPlayer() then
-			specWarnWrathN:Show()
-		end
-	end
-end
-
 function mod:UNIT_TARGET()
 	if priestsN then
-		self:PriestIcon()
+		self:PriestNIcon()
 	end
 end
 
@@ -127,6 +115,8 @@ function mod:SPELL_CAST_START(args)
 		timerNextHelp:Start(75)
 		specWarnHelp:Show()
 		warnHelp:Schedule(0)
+                priestsH = true
+                provid	 = true	
 	elseif args:IsSpellID(308545) then -- врата
 		timerNextGates:Start()
 		specWarnGates:Show()
@@ -151,7 +141,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerNextWrathH:Start()
 		warnWrathH:Show(args.destName)
 		timerWrathH:Start(args.destName)
-		self:SetIcon(args.destName, 8)
+		self:SetIcon(args.destName, 8, 6)
 		if args:IsPlayer() then
 			specWarnWrathH:Show()
 		end
@@ -159,7 +149,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerNextWrathN:Start()
 		warnWrathN:Show(args.destName)
 		timerWrathN:Start(args.destName)
-		self:SetIcon(args.destName, 7, 6)
+		self:SetIcon(args.destName, 8, 6)
 		if args:IsPlayer() then
 			specWarnWrathN:Show()
 		end
@@ -192,7 +182,7 @@ end
 
 function mod:UNIT_TARGET()
 	if priestsN or priestsH then
-		self:PriestIcon()
+		self:PriestHIcon()
 	elseif provid then
 	    self:ProvidIcon()
 	end
