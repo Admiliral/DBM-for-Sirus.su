@@ -35,11 +35,11 @@ waitFrame:SetScript("OnUpdate", function(self, elapsed)
 			if ticker._remainingIterations == -1 then
 				ticker._delay = ticker._duration
 				i = i + 1
-			elseif ticker._remainingIterations > 0 then
+			elseif ticker._remainingIterations > 1 then
 				ticker._remainingIterations = ticker._remainingIterations - 1
 				ticker._delay = ticker._duration
 				i = i + 1
-			elseif ticker._remainingIterations == 0 then
+			elseif ticker._remainingIterations == 1 then
 				tremove(waitTable, i)
 				total = total - 1
 			end
@@ -62,7 +62,7 @@ end
 
 _G.AddDelayedCall = AddDelayedCall
 
-function C_Timer:NewTicker(duration, callback, iterations)
+local function CreateTicker(delay, callback, iterations)
 	local ticker = setmetatable({}, TickerMetatable)
 	ticker._remainingIterations = iterations or -1
 	ticker._duration = duration
@@ -75,7 +75,19 @@ function C_Timer:NewTicker(duration, callback, iterations)
 end
 
 function C_Timer:After(duration, callback)
-	return C_Timer:NewTicker(duration, callback, 1)
+	AddDelayedCall({
+		_remainingIterations = 1,
+		_delay = duration,
+		_callback = callback
+	})
+end
+
+function C_Timer:NewTimer(duration, callback)
+	return CreateTicker(duration, callback, 1)
+end
+
+function C_Timer:NewTicker(duration, callback, iterations)
+	return CreateTicker(duration, callback, iterations)
 end
 
 function TickerPrototype:Cancel()
