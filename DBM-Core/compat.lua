@@ -62,7 +62,7 @@ end
 
 _G.AddDelayedCall = AddDelayedCall
 
-local function CreateTicker(delay, callback, iterations)
+local function CreateTicker(duration, callback, iterations)
 	local ticker = setmetatable({}, TickerMetatable)
 	ticker._remainingIterations = iterations or -1
 	ticker._duration = duration
