@@ -2,9 +2,9 @@
 
 local L
 
----------------------------
---  Trash - Lower Spire  --
----------------------------
+-------------------------
+-- Trash - Lower Spire --
+-------------------------
 L = DBM:GetModLocalization("LowerSpireTrash")
 
 L:SetGeneralLocalization{
@@ -27,9 +27,9 @@ L:SetMiscLocalization{
 	WarderTrap3		= "В покои господина проникли!"
 }
 
----------------------------
---  Trash - Plagueworks  --
----------------------------
+-------------------------
+-- Trash - Plagueworks --
+-------------------------
 L = DBM:GetModLocalization("PlagueworksTrash")
 
 L:SetGeneralLocalization{
@@ -52,9 +52,9 @@ L:SetMiscLocalization{
 	FleshreaperTrap3		= "Живые? Здесь?!"
 }
 
----------------------------
---  Trash - Crimson Hall  --
----------------------------
+--------------------------
+-- Trash - Crimson Hall --
+--------------------------
 L = DBM:GetModLocalization("CrimsonHallTrash")
 
 L:SetGeneralLocalization{
@@ -71,9 +71,9 @@ L:SetOptionLocalization{
 L:SetMiscLocalization{
 }
 
----------------------------
---  Trash - Frostwing Hall  --
----------------------------
+----------------------------
+-- Trash - Frostwing Hall --
+----------------------------
 L = DBM:GetModLocalization("FrostwingHallTrash")
 
 L:SetGeneralLocalization{
@@ -97,9 +97,9 @@ L:SetMiscLocalization{
 	SindragosaEvent		= "Они не должны прорваться к Синдрагосе! Скорее, остановите их!"
 }
 
-----------------------
---  Lord Marrowgar  --
-----------------------
+--------------------
+-- Lord Marrowgar --
+--------------------
 L = DBM:GetModLocalization("LordMarrowgar")
 
 L:SetGeneralLocalization{
@@ -120,9 +120,9 @@ L:SetOptionLocalization{
 	SetIconOnImpale		= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(69062)
 }
 
--------------------------
---  Lady Deathwhisper  --
--------------------------
+-----------------------
+-- Lady Deathwhisper --
+-----------------------
 L = DBM:GetModLocalization("Deathwhisper")
 
 L:SetGeneralLocalization{
@@ -150,7 +150,7 @@ L:SetOptionLocalization{
 	SetIconOnDominateMind		= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(71289),
 	SetIconOnDeformedFanatic	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(70900),
 	SetIconOnEmpoweredAdherent	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(70901),
-	RemoveWeaponOnMindControl   = "Убирать оружие на МК.",
+	RemoveWeaponOnMindControl	= "Убирать оружие на МК.",
 	RemoveShadowResistanceBuffs = "Убирать шадоу-резист бафы."
 }
 
@@ -163,9 +163,9 @@ L:SetMiscLocalization{
 	Fanatic3				= "Воскрешенный фанатик"
 }
 
-----------------------
---  Gunship Battle  --
-----------------------
+--------------------
+-- Gunship Battle --
+--------------------
 L = DBM:GetModLocalization("GunshipBattle")
 
 L:SetGeneralLocalization{
@@ -198,9 +198,9 @@ L:SetMiscLocalization{
 	AddsHorde		= "Marines, Sergeants, attack"
 }
 
------------------------------
---  Deathbringer Saurfang  --
------------------------------
+---------------------------
+-- Deathbringer Saurfang --
+---------------------------
 L = DBM:GetModLocalization("Deathbringer")
 
 L:SetGeneralLocalization{
@@ -217,7 +217,6 @@ L:SetTimerLocalization{
 
 L:SetOptionLocalization{
 	TimerCombatStart		= "Отсчет времени до начала боя",
-	WarnFrenzySoon			= "Предупреждать о скором Бешенстве (на ~33%)",
 	BoilingBloodIcons	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(72441),
 	RangeFrame				= "Показывать окно проверки дистанции (12 м)",
 	RunePowerFrame			= "Показывать здоровье босса + индикатор для $spell:72371",
@@ -230,9 +229,9 @@ L:SetMiscLocalization{
 	PullHorde			= "Кор'крон, выдвигайтесь! Герои, будьте начеку. Плеть только что..."
 }
 
------------------
---  Festergut  --
------------------
+---------------
+-- Festergut --
+---------------
 L = DBM:GetModLocalization("Festergut")
 
 L:SetGeneralLocalization{
@@ -256,9 +255,9 @@ L:SetMiscLocalization{
 	SporeSet	= "Метка Газообразных спор {rt%d} установлена на: %s"
 }
 
----------------
---  Rotface  --
----------------
+-------------
+-- Rotface --
+-------------
 L = DBM:GetModLocalization("Rotface")
 
 L:SetGeneralLocalization{
@@ -290,9 +289,9 @@ L:SetMiscLocalization{
 	YellSlimePipes2	= "Отличные новости, народ! Слизь снова потекла!"	-- Professor Putricide
 }
 
----------------------------
---  Professor Putricide  --
----------------------------
+-------------------------
+-- Professor Putricide --
+-------------------------
 L = DBM:GetModLocalization("Putricide")
 
 L:SetGeneralLocalization{
@@ -303,7 +302,7 @@ L:SetWarningLocalization{
 	WarnPhase2Soon				= "Скоро фаза 2",
 	WarnPhase3Soon				= "Скоро фаза 3",
 	WarnMutatedPlague			= "%s на |3-5(>%s<) (%s)",	-- Mutated Plague on >args.destName< (args.amount)
-	SpecWarnMutatedPlague       = "%s стак на |3-5(>%s<)",
+	SpecWarnMutatedPlague		= "%s стак на |3-5(>%s<)",
 	SpecWarnMalleableGoo		= "Вязкая гадость на вас - отбегите",
 	SpecWarnMalleableGooNear	= "Вязкая гадость около вас - остерегайтесь",
 	SpecWarnUnboundPlague		= "Передайте Безудержную чуму",
@@ -316,7 +315,7 @@ L:SetOptionLocalization{
 	SpecWarnMalleableGoo		= "Спец-предупреждение, когда вы - первая цель заклинания\n$spell:72295",
 	SpecWarnMalleableGooNear	= "Спец-предупреждение, когда вы около первой цели заклинания\n$spell:72295",
 	WarnMutatedPlague			= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(72451, GetSpellInfo(72451) or "unknown"),
-	SpecWarnMutatedPlague       = "Спец предупреждение когда на танке >4 стаков $spell:72451",
+	SpecWarnMutatedPlague		= "Спец предупреждение когда на танке >4 стаков $spell:72451",
 	OozeAdhesiveIcon			= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(70447),
 	GaseousBloatIcon			= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(70672),
 	UnboundPlagueIcon			= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(72856),
@@ -330,15 +329,15 @@ L:SetOptionLocalization{
 }
 
 L:SetMiscLocalization{
-	EmoteMalleable  = "|TInterface\\Icons\\inv_misc_herb_evergreenmoss.blp:16|t %s разливает |cFF00FF00вязкую жижу!|r",
+	EmoteMalleable	= "|TInterface\\Icons\\inv_misc_herb_evergreenmoss.blp:16|t %s разливает |cFF00FF00вязкую жижу!|r",
 	YellPull		= "Отличные новости, народ! Я усовершенствовал штамм чумы, которая уничтожит весь Азерот!",
 	YellMalleable	= "Вязкая гадость на мне!",
 	YellUnbound		= "Безудержная чума на мне!"
 }
 
-----------------------------
---  Blood Prince Council  --
-----------------------------
+--------------------------
+-- Blood Prince Council --
+--------------------------
 L = DBM:GetModLocalization("BPCouncil")
 
 L:SetGeneralLocalization{
@@ -375,9 +374,9 @@ L:SetMiscLocalization{
 	EmpoweredFlames		= "Жаркое пламя тянется к (%S+)!"
 }
 
------------------------------
---  Blood-Queen Lana'thel  --
------------------------------
+---------------------------
+-- Blood-Queen Lana'thel --
+---------------------------
 L = DBM:GetModLocalization("Lanathel")
 
 L:SetGeneralLocalization{
@@ -403,9 +402,9 @@ L:SetMiscLocalization{
 	YellFrenzy				= "Я голоден!"
 }
 
------------------------------
---  Valithria Dreamwalker  --
------------------------------
+---------------------------
+-- Valithria Dreamwalker --
+---------------------------
 L = DBM:GetModLocalization("Valithria")
 
 L:SetGeneralLocalization{
@@ -419,6 +418,7 @@ L:SetWarningLocalization{
 
 L:SetTimerLocalization{
 	TimerPortalsOpen		= "Открытие порталов",
+	TimerPortalsClose		= "Закрытие порталов",
 	TimerBlazingSkeleton	= "Исторгающий пламя скелет",
 	TimerAbom				= "След. поганище?"
 }
@@ -427,6 +427,7 @@ L:SetOptionLocalization{
 	SetIconOnBlazingSkeleton	= "Устанавливать метку на Исторгающего пламя скелета (череп)",
 	WarnPortalOpen				= "Предупреждение об открытии порталов",
 	TimerPortalsOpen			= "Отсчет времени для открытия порталов",
+	TimerPortalsClose			= "Отсчет времени до заткрытия порталов",
 	TimerBlazingSkeleton		= "Отсчет времени до Исторгающего пламя скелета",
 	TimerAbom					= "Отсчет времени до след. Прожорливого поганища (экспериментальный)",
 	WarnCorrosion				= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(70751, GetSpellInfo(70751) or "unknown")
@@ -439,9 +440,9 @@ L:SetMiscLocalization{
 	YellPhase2		= "Силы возвращаются ко мне. Герои, еще немного!"--Need to confirm this is when adds spawn faster (phase 2) before used in mod
 }
 
-------------------
---  Sindragosa  --
-------------------
+----------------
+-- Sindragosa --
+----------------
 L = DBM:GetModLocalization("Sindragosa")
 
 L:SetGeneralLocalization{
@@ -486,9 +487,9 @@ L:SetMiscLocalization{
 	YellPull		= "Глупцы, зачем вы сюда явились! Ледяные ветра Нордскола унесут ваши души!"
 }
 
----------------------
---  The Lich King  --
----------------------
+-------------------
+-- The Lich King --
+-------------------
 L = DBM:GetModLocalization("LichKing")
 
 L:SetGeneralLocalization{
@@ -556,9 +557,9 @@ L:SetMiscLocalization{
 	ValkGrabbed		= "Валь'кира схватила %s"
 }
 
--------------
---  Jaina  --
--------------
+-----------
+-- Jaina --
+-----------
 L = DBM:GetModLocalization("Jaina")
 
 L:SetGeneralLocalization({
@@ -566,30 +567,29 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-	WarnNextPhase       = "Фаза %s",
-	SpecWarnIceWrath    = "Купол - бегите на край.",
-	SpecWarnWildFlameNear = "Дикое пламя рядом - отойдите."
+	WarnNextPhase			= "Фаза %s",
+	SpecWarnIceWrath		= "Купол - бегите на край.",
+	SpecWarnWildFlameNear	= "Дикое пламя рядом - отойдите."
 })
 
 L:SetTimerLocalization({
 	TimerCombatStart	= "Начало боя",
-	TimerFreezing = "Заморозка меток"
+	TimerFreezing	= "Заморозка меток"
 })
 
 L:SetOptionLocalization({
-	TimerCombatStart		    = "Отсчет времени до начала боя",
-	WarnNextPhase               = "Предупреждать о переходе на следующую фазу",
-	SpecWarnIceWrath            = "Спец-предупреждение о фазе купола",
-	SpecWarnWildFlameNear       = "Спец-предупреждение, когда $spell:306502 около вас",
-	TimerFreezing               = "Отсчет времени до заморозки $spell:306523",
-	SetIconOnExplosiveTargets   = DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(306487),
-	RangeFrame				    = "Показывать игроков в окне проверки дистанции"
+	TimerCombatStart			= "Отсчет времени до начала боя",
+	WarnNextPhase				= "Предупреждать о переходе на следующую фазу",
+	SpecWarnIceWrath			= "Спец-предупреждение о фазе купола",
+	SpecWarnWildFlameNear		= "Спец-предупреждение, когда $spell:306502 около вас",
+	TimerFreezing				= "Отсчет времени до заморозки $spell:306523",
+	SetIconOnExplosiveTargets	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(306487),
+	RangeFrame					= "Показывать игроков в окне проверки дистанции"
 })
 
 L:SetMiscLocalization({
-	infect      = "заразил",
-	blackIce    = "Черный лед",
-	YellPull    = "Джайна... Зачем...",
-	YellStart   = "Джайна? Что ты делаешь? Оставь его, это не тот Артас, которого ты знала!"
+	infect		= "заразил",
+	blackIce	= "Черный лед",
+	YellPull	= "Джайна... Зачем...",
+	YellStart	= "Джайна? Что ты делаешь? Оставь его, это не тот Артас, которого ты знала!"
 })
-

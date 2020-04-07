@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Lanathel", "DBM-Icecrown", 3)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 4212 $"):sub(12, -3))
+mod:SetRevision("20200405141240")
 mod:SetCreatureID(37955)
 mod:SetUsedIcons(4, 5, 6, 7, 8)
 
@@ -19,28 +19,29 @@ mod:RegisterEvents(
 local warnPactDarkfallen			= mod:NewTargetAnnounce(71340, 4)
 local warnBloodMirror				= mod:NewTargetAnnounce(71510, 3, nil, "Tank|Healer")
 local warnSwarmingShadows			= mod:NewTargetAnnounce(71266, 4)
-local warnInciteTerror				= mod:NewSpellAnnounce(73070, 3)
+local warnInciteTerror				= mod:NewSpellAnnounce(73070, 3, nil, nil, nil, nil, nil, 2)
 local warnVampricBite				= mod:NewTargetAnnounce(71727, 2)
 local warnMindControlled			= mod:NewTargetAnnounce(70923, 4)
 local warnBloodthirstSoon			= mod:NewSoonAnnounce(71474, 2)
 local warnBloodthirst				= mod:NewTargetAnnounce(71474, 3, nil, false)
 local warnEssenceoftheBloodQueen	= mod:NewTargetAnnounce(71473, 3, nil, false)
 
-local specWarnBloodBolt				= mod:NewSpecialWarningSpell(71772)
-local specWarnPactDarkfallen		= mod:NewSpecialWarningYou(71340)
-local specWarnEssenceoftheBloodQueen= mod:NewSpecialWarningYou(71473)
-local specWarnBloodthirst			= mod:NewSpecialWarningYou(71474)
-local specWarnSwarmingShadows		= mod:NewSpecialWarningMove(71266)
-local specWarnMindConrolled			= mod:NewSpecialWarningTarget(70923, "Tank")
+local specWarnBloodBolt				= mod:NewSpecialWarningSpell(71772, nil, nil, nil, 2, 2)
+local specWarnPactDarkfallen		= mod:NewSpecialWarningYou(71340, nil, nil, nil, 1, 2)
+local specWarnEssenceoftheBloodQueen= mod:NewSpecialWarningYou(71473, nil, nil, nil, 1, 2)
+local specWarnBloodthirst			= mod:NewSpecialWarningYou(71474, nil, nil, nil, 3, 2)
+local yellBloodthirst				= mod:NewYell(71474, L.YellFrenzy)
+local specWarnSwarmingShadows		= mod:NewSpecialWarningMove(71266, nil, nil, nil, 1, 2)
+local specWarnMindConrolled			= mod:NewSpecialWarningTarget(70923, "Tank", nil, nil, 1, 2)
 
-local timerNextInciteTerror			= mod:NewNextTimer(100, 73070)
-local timerFirstBite				= mod:NewCastTimer(15, 71727)
-local timerNextPactDarkfallen		= mod:NewNextTimer(30.5, 71340)
-local timerNextSwarmingShadows		= mod:NewNextTimer(30.5, 71266)
+local timerNextInciteTerror			= mod:NewNextTimer(100, 73070, nil, nil, nil, 6)
+local timerFirstBite				= mod:NewCastTimer(15, 71727, nil, nil, nil, 5)
+local timerNextPactDarkfallen		= mod:NewNextTimer(30.5, 71340, nil, nil, nil, 3)
+local timerNextSwarmingShadows		= mod:NewNextTimer(30.5, 71266, nil, nil, nil, 3)
 local timerInciteTerror				= mod:NewBuffActiveTimer(4, 73070)
-local timerBloodBolt				= mod:NewBuffActiveTimer(6, 71772)
-local timerBloodThirst				= mod:NewBuffActiveTimer(10, 71474)
-local timerEssenceoftheBloodQueen	= mod:NewBuffActiveTimer(60, 71473)
+local timerBloodBolt				= mod:NewBuffActiveTimer(6, 71772, nil, nil, nil, 2)
+local timerBloodThirst				= mod:NewBuffFadesTimer(10, 71474, nil, nil, nil, 5)
+local timerEssenceoftheBloodQueen	= mod:NewBuffFadesTimer(60, 71473, nil, nil, nil, 5)
 
 local berserkTimer					= mod:NewBerserkTimer(320)
 
@@ -50,7 +51,6 @@ mod:AddBoolOption("BloodMirrorIcon", false)
 mod:AddBoolOption("SwarmingShadowsIcon", true)
 mod:AddBoolOption("SetIconOnDarkFallen", true)
 mod:AddBoolOption("RangeFrame", true)
-mod:AddBoolOption("YellOnFrenzy", false, "announce")
 
 local pactTargets = {}
 local pactIcons = 6
@@ -112,9 +112,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnBloodthirst:Show(args.destName)
 		if args:IsPlayer() then
 			specWarnBloodthirst:Show()
-			if self.Options.YellOnFrenzy then
-				SendChatMessage(L.YellFrenzy, "SAY")
-			end
+			yellBloodthirst:Yell()
 			if mod:IsDifficulty("normal10") or mod:IsDifficulty("heroic10") then
 				timerBloodThirst:Start(15)--15 seconds on 10 man
 			else

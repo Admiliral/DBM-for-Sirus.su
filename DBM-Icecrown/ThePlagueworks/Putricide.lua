@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Putricide", "DBM-Icecrown", 2)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 4408 $"):sub(12, -3))
+mod:SetRevision("20200405141240")
 mod:SetCreatureID(36678)
 mod:RegisterCombat("yell", L.YellPull)
 mod:SetMinSyncRevision(3860)
@@ -23,42 +23,44 @@ local warnUnstableExperimentSoon	= mod:NewSoonAnnounce(70351, 3)      -- Неп�
 local warnUnstableExperiment		= mod:NewSpellAnnounce(70351, 4)
 local warnVolatileOozeAdhesive		= mod:NewTargetAnnounce(70447, 3)
 local warnGaseousBloat				= mod:NewTargetAnnounce(70672, 3)
-local warnPhase2Soon				= mod:NewAnnounce("WarnPhase2Soon", 2)
+local warnPhase2Soon				= mod:NewPrePhaseAnnounce(2)
 local warnTearGas					= mod:NewSpellAnnounce(71617, 2)		-- Phase transition normal
 local warnVolatileExperiment		= mod:NewSpellAnnounce(72840, 4)		-- Phase transition heroic
 local warnMalleableGoo				= mod:NewSpellAnnounce(72295, 2)		-- Phase 2 ability (Вязкая гадость)
 local warnChokingGasBomb			= mod:NewSpellAnnounce(71255, 3)		-- Phase 2 ability
-local warnPhase3Soon				= mod:NewAnnounce("WarnPhase3Soon", 2)
-local warnMutatedPlague				= mod:NewAnnounce("WarnMutatedPlague", 2, 72451, "Tank|Healer") -- Phase 3 ability
+local warnPhase3Soon				= mod:NewPrePhaseAnnounce(3)
+local warnMutatedPlague				= mod:NewStackAnnounce(72451, 2, nil, "Tank|Healer") -- Phase 3 ability
 local warnUnboundPlague				= mod:NewTargetAnnounce(72856, 3)			-- Heroic Ability
 
-local specWarnVolatileOozeAdhesive	= mod:NewSpecialWarningYou(70447)
-local specWarnGaseousBloat			= mod:NewSpecialWarningYou(70672)
+local specWarnVolatileOozeAdhesive	= mod:NewSpecialWarningYou(70447, nil, nil, nil, 1, 2)
+local specWarnGaseousBloat			= mod:NewSpecialWarningRun(70672, nil, nil, nil, 4, 2)
 local specWarnVolatileOozeOther		= mod:NewSpecialWarningTarget(70447, false)
 local specWarnGaseousBloatOther		= mod:NewSpecialWarningTarget(70672, false)
-local specWarnMalleableGoo			= mod:NewSpecialWarning("SpecWarnMalleableGoo")
-local specWarnMalleableGooNear		= mod:NewSpecialWarning("SpecWarnMalleableGooNear")
-local specWarnChokingGasBomb		= mod:NewSpecialWarningSpell(71255, "Tank")
-local specWarnMalleableGooCast		= mod:NewSpecialWarningSpell(72295, false)
+local specWarnMalleableGoo			= mod:NewSpecialWarningYou(72295, nil, nil, nil, 1, 2)
+local yellMalleableGoo				= mod:NewYell(72295)
+local specWarnMalleableGooNear		= mod:NewSpecialWarningClose(72295, nil, nil, nil, 1, 2)
+local specWarnChokingGasBomb		= mod:NewSpecialWarningMove(71255, "Tank", nil, nil, 1, 2)
+local specWarnMalleableGooCast		= mod:NewSpecialWarningSpell(72295, false, nil, nil, 2, 2)
 local specWarnOozeVariable			= mod:NewSpecialWarningYou(70352)		-- Heroic Ability
 local specWarnGasVariable			= mod:NewSpecialWarningYou(70353)		-- Heroic Ability
-local specWarnUnboundPlague			= mod:NewSpecialWarningYou(72856)		-- Heroic Ability
+local specWarnUnboundPlague			= mod:NewSpecialWarningYou(72856, nil, nil, nil, 1, 2)		-- Heroic Ability
 local specWarnMutatedPlague         = mod:NewSpecialWarning("SpecWarnMutatedPlague", "Tank|Healer")
+local yellUnboundPlague				= mod:NewYell(70911)
 
-local timerGaseousBloat				= mod:NewTargetTimer(20, 70672)			-- Duration of debuff
-local timerSlimePuddleCD			= mod:NewCDTimer(35, 70341)				-- Approx
-local timerUnstableExperimentCD		= mod:NewNextTimer(38, 70351)			-- Used every 38 seconds exactly except after phase changes
-local timerChokingGasBombCD			= mod:NewNextTimer(35.5, 71255)
-local timerMalleableGooCD			= mod:NewCDTimer(25, 72295)
-local timerTearGas					= mod:NewBuffActiveTimer(16, 71615)
-local timerPotions					= mod:NewBuffActiveTimer(30, 73122)
-local timerMutatedPlagueCD			= mod:NewCDTimer(10, 72451)				-- 10 to 11
-local timerUnboundPlagueCD			= mod:NewNextTimer(60, 72856)
-local timerUnboundPlague			= mod:NewBuffActiveTimer(12, 72856)		-- Heroic Ability: we can't keep the debuff 60 seconds, so we have to switch at 12-15 seconds. Otherwise the debuff does to much damage!
+local timerGaseousBloat				= mod:NewTargetTimer(20, 70672, nil, nil, nil, 3)			-- Duration of debuff
+local timerSlimePuddleCD			= mod:NewCDTimer(35, 70341, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)				-- Approx
+local timerUnstableExperimentCD		= mod:NewNextTimer(38, 70351, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON)			-- Used every 38 seconds exactly except after phase changes
+local timerChokingGasBombCD			= mod:NewNextTimer(35.5, 71255, nil, nil, nil, 3)
+local timerMalleableGooCD			= mod:NewCDTimer(25, 72295, nil, nil, nil, 3)
+local timerTearGas					= mod:NewBuffFadesTimer(16, 71615, nil, nil, nil, 6)
+local timerPotions					= mod:NewBuffActiveTimer(30, 73122, nil, nil, nil, 6)
+local timerMutatedPlagueCD			= mod:NewCDTimer(10, 72451, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)				-- 10 to 11
+local timerUnboundPlagueCD			= mod:NewNextTimer(60, 72856, nil, nil, nil, 3, nil, DBM_CORE_HEROIC_ICON)
+local timerUnboundPlague			= mod:NewBuffActiveTimer(12, 72856, nil, nil, nil, 3)		-- Heroic Ability: we can't keep the debuff 60 seconds, so we have to switch at 12-15 seconds. Otherwise the debuff does to much damage!
 
 -- buffs from "Drink Me"
-local timerMutatedSlash				= mod:NewTargetTimer(20, 70542)
-local timerRegurgitatedOoze			= mod:NewTargetTimer(20, 70539)
+local timerMutatedSlash				= mod:NewTargetTimer(20, 70542, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerRegurgitatedOoze			= mod:NewTargetTimer(20, 70539, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
 
 local berserkTimer					= mod:NewBerserkTimer(600)
 
@@ -69,7 +71,6 @@ mod:AddBoolOption("GaseousBloatIcon")
 mod:AddBoolOption("MalleableGooIcon")
 mod:AddBoolOption("UnboundPlagueIcon")					-- icon on the player with active buff
 mod:AddBoolOption("GooArrow")
-mod:AddBoolOption("YellOnMalleableGoo", true, "announce")
 mod:AddBoolOption("YellOnUnbound", true, "announce")
 mod:AddBoolOption("BypassLatencyCheck", false)--Use old scan method without syncing or latency check (less reliable but not dependant on other DBM users in raid)
 
@@ -117,9 +118,7 @@ function mod:OldMalleableGooTarget()
 		end
 	if targetname == UnitName("player") then
 		specWarnMalleableGoo:Show()
-		if self.Options.YellOnMalleableGoo then
-			SendChatMessage(L.YellMalleable, "SAY")
-		end
+		yellMalleableGoo:Yell()
 	elseif targetname then
 		local uId = DBM:GetRaidUnitId(targetname)
 		if uId then
@@ -288,9 +287,7 @@ function mod:SPELL_AURA_APPLIED(args)
 -- 		if args:IsPlayer() then
 -- 			specWarnUnboundPlague:Show()
 -- 			timerUnboundPlague:Start()
--- 			if self.Options.YellOnUnbound then
--- 				SendChatMessage(L.YellUnbound, "SAY")
--- 			end
+-- 			yellUnboundPlague:Yell()
 -- 		end
 	end
 end
@@ -359,9 +356,6 @@ function mod:OnSync(msg, target)
 			end
 			if target == UnitName("player") then
 				specWarnMalleableGoo:Show()
-				if self.Options.YellOnMalleableGoo then
-					SendChatMessage(L.YellMalleable, "SAY")
-				end
 			elseif target then
 				local uId = DBM:GetRaidUnitId(target)
 				if uId then

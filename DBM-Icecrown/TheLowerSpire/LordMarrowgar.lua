@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("LordMarrowgar", "DBM-Icecrown", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 4409 $"):sub(12, -3))
+mod:SetRevision("20200405141240")
 mod:SetCreatureID(36612)
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6, 7, 8)
 
@@ -15,25 +15,26 @@ mod:RegisterEvents(
 	"SPELL_SUMMON"
 )
 
-local preWarnWhirlwind   	= mod:NewSoonAnnounce(69076, 3)
+local preWarnWhirlwind		= mod:NewSoonAnnounce(69076, 3)
 local warnBoneSpike			= mod:NewCastAnnounce(69057, 2)
-local warnImpale			= mod:NewAnnounce("WarnImpale", 4, 72669)
+local warnImpale			= mod:NewTargetAnnounce(72669, 3)
 
-local specWarnColdflame		= mod:NewSpecialWarningMove(70825)
-local specWarnWhirlwind		= mod:NewSpecialWarningRun(69076)
+local specWarnColdflame		= mod:NewSpecialWarningMove(70825, nil, nil, nil, 1, 2)
+local specWarnWhirlwind		= mod:NewSpecialWarningRun(69076, nil, nil, nil, 4, 2)
 
-local timerBoneSpike		= mod:NewCDTimer(18, 69057)
-local timerWhirlwindCD		= mod:NewCDTimer(90, 69076)
-local timerWhirlwind		= mod:NewBuffActiveTimer(20, 69076)
-local timerBoned			= mod:NewAchievementTimer(8, 4610, "AchievementBoned")
+local timerBoneSpike		= mod:NewCDTimer(18, 69057, nil, nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)
+local timerWhirlwindCD		= mod:NewCDTimer(90, 69076, nil, nil, nil, 2)
+local timerWhirlwind		= mod:NewBuffActiveTimer(20, 69076, nil, nil, nil, 6)
+local timerBoned			= mod:NewAchievementTimer(8, 4610)
 
 local berserkTimer			= mod:NewBerserkTimer(600)
 
 local soundWhirlwind = mod:NewSound(69076)
 mod:AddBoolOption("SetIconOnImpale", true)
 
+mod.vb.impaleIcon = 8
+
 local impaleTargets = {}
-local impaleIcon	= 8
 local lastColdflame = 0
 
 local function showImpaleWarning()
@@ -96,11 +97,11 @@ function mod:SPELL_SUMMON(args)
 		impaleTargets[#impaleTargets + 1] = args.sourceName
 		timerBoned:Start()
 		if self.Options.SetIconOnImpale then
-			if 	impaleIcon < 1 then	--Icons are gonna be crazy on this fight if people don't control jumps, we will use ALL of them and only reset icons if we run out of them
-				impaleIcon = 8
+			if self.vb.impaleIcon < 1 then	--Icons are gonna be crazy on this fight if people don't control jumps, we will use ALL of them and only reset icons if we run out of them
+				self.vb.impaleIcon = 8
 			end
 			self:SetIcon(args.sourceName, impaleIcon)
-			impaleIcon = impaleIcon - 1
+			self.vb.impaleIcon = self.vb.impaleIcon - 1
 		end
 		self:Unschedule(showImpaleWarning)
 		if mod:IsDifficulty("normal10") or (mod:IsDifficulty("normal25") and #impaleTargets >= 3) then

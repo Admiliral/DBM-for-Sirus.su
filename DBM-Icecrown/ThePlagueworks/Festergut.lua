@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Festergut", "DBM-Icecrown", 2)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 4404 $"):sub(12, -3))
+mod:SetRevision("20200405141240")
 mod:SetCreatureID(36626)
 mod:RegisterCombat("combat")
 mod:SetUsedIcons(6, 7, 8)
@@ -13,30 +13,31 @@ mod:RegisterEvents(
 	"UNIT_SPELLCAST_SUCCEEDED"
 )
 
-local warnInhaledBlight		= mod:NewAnnounce("InhaledBlight", 3, 71912)
-local warnGastricBloat		= mod:NewAnnounce("WarnGastricBloat", 2, 72551, "Tank|Healer")
+local warnInhaledBlight		= mod:NewStackAnnounce(71912, 3)
+local warnGastricBloat		= mod:NewStackAnnounce(72551, 2, nil, "Tank|Healer")
 local warnGasSpore			= mod:NewTargetAnnounce(69279, 4)
 local warnVileGas			= mod:NewTargetAnnounce(73020, 3)
+local warnGoo				= mod:NewSpellAnnounce(72549, 4)
 
-local specWarnPungentBlight	= mod:NewSpecialWarningSpell(71219)
-local specWarnGasSpore		= mod:NewSpecialWarningYou(69279)
-local specWarnVileGas		= mod:NewSpecialWarningYou(71218)
-local specWarnGastricBloat	= mod:NewSpecialWarningStack(72551, nil, 9)
-local specWarnInhaled3		= mod:NewSpecialWarningStack(71912, "Tank", 3)
-local specWarnGoo			= mod:NewSpecialWarningSpell(72549, false)
+local specWarnPungentBlight	= mod:NewSpecialWarningSpell(71219, nil, nil, nil, 2, 2)
+local specWarnGasSpore		= mod:NewSpecialWarningYou(69279, nil, nil, nil, 1, 2)
+local yellGasSpore			= mod:NewYell(69279)
+local specWarnVileGas		= mod:NewSpecialWarningYou(71218, nil, nil, nil, 1, 2)
+local yellVileGas			= mod:NewYell(69240)
+local specWarnGastricBloat	= mod:NewSpecialWarningStack(72551, nil, 9, nil, nil, 1, 6)
+local specWarnInhaled3		= mod:NewSpecialWarningStack(71912, "Tank", 3, nil, nil, 1, 2)
+local specWarnGoo			= mod:NewSpecialWarningDodge(72549, "Melee", nil, nil, 1, 2)
 
-local timerGasSpore			= mod:NewBuffActiveTimer(12, 69279)
-local timerVileGas			= mod:NewBuffActiveTimer(6, 71218, nil, "Ranged")
-local timerGasSporeCD		= mod:NewNextTimer(40, 69279)		-- Every 40 seconds except after 3rd and 6th cast, then it's 50sec CD
-local timerPungentBlight	= mod:NewNextTimer(33, 71219)		-- 33 seconds after 3rd stack of inhaled
-local timerInhaledBlight	= mod:NewNextTimer(34, 71912)		-- 34 seconds'ish
-local timerGastricBloat		= mod:NewTargetTimer(100, 72551, nil, "Tank|Healer")	-- 100 Seconds until expired
-local timerGastricBloatCD	= mod:NewCDTimer(11, 72551, nil, "Tank|Healer") 		-- 10 to 14 seconds
+local timerGasSpore			= mod:NewBuffFadesTimer(12, 69279, nil, nil, nil, 3)
+local timerVileGas			= mod:NewBuffFadesTimer(6, 71218, nil, "Ranged", nil, 3)
+local timerGasSporeCD		= mod:NewNextTimer(40, 69279, nil, nil, nil, 3)		-- Every 40 seconds except after 3rd and 6th cast, then it's 50sec CD
+local timerPungentBlight	= mod:NewNextTimer(33, 71219, nil, nil, nil, 2)		-- 33 seconds after 3rd stack of inhaled
+local timerInhaledBlight	= mod:NewNextTimer(34, 71912, nil, nil, nil, 6)		-- 34 seconds'ish
+local timerGastricBloat		= mod:NewTargetTimer(100, 72551, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)	-- 100 Seconds until expired
+local timerGastricBloatCD	= mod:NewCDTimer(11, 72551, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) 		-- 10 to 14 seconds
+local timerGooCD			= mod:NewNextTimer(10, 72549, nil, nil, nil, 3)
 
 local berserkTimer			= mod:NewBerserkTimer(300)
-
-local warnGoo				= mod:NewSpellAnnounce(72549, 4)
-local timerGooCD			= mod:NewNextTimer(10, 72549)
 
 mod:AddBoolOption("RangeFrame", "Ranged")
 mod:AddBoolOption("SetIconOnGasSpore", true)
@@ -148,6 +149,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		if args:IsPlayer() then
 			specWarnGasSpore:Show()
+			yellGasSpore:Yell()
 		end
 		if self.Options.SetIconOnGasSpore then
 			table.insert(gasSporeIconTargets, DBM:GetRaidUnitId(args.destName))
@@ -181,6 +183,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		vileGasTargets[#vileGasTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnVileGas:Show()
+			yellVileGas:Yell()
 		end
 		self:Unschedule(warnVileGasTargets)
 		self:Schedule(0.8, warnVileGasTargets)

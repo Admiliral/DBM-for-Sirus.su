@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Valithria", "DBM-Icecrown", 4)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 4415 $"):sub(12, -3))
+mod:SetRevision("20200405141240")
 mod:SetCreatureID(36789)
 --mod:SetUsedIcons(8)
 mod:RegisterCombat("yell", L.YellPull)
@@ -17,27 +17,29 @@ mod:RegisterEvents(
 	"CHAT_MSG_MONSTER_YELL"
 )
 
-local warnCorrosion		= mod:NewAnnounce("WarnCorrosion", 2, 70751, false)
-local warnGutSpray		= mod:NewTargetAnnounce(71283, 3, nil, "Tank|Healer")
-local warnManaVoid		= mod:NewSpellAnnounce(71741, 2, nil, "-Melee")
-local warnSupression	= mod:NewSpellAnnounce(70588, 3)
-local warnPortalSoon	= mod:NewSoonAnnounce(72483, 2, nil)
-local warnPortal		= mod:NewSpellAnnounce(72483, 3, nil)
-local warnPortalOpen	= mod:NewAnnounce("WarnPortalOpen", 4, 72483)
+local warnCorrosion			= mod:NewStackAnnounce(70751, 2, nil, false)
+local warnGutSpray			= mod:NewTargetAnnounce(71283, 3, nil, "Tank|Healer")
+local warnManaVoid			= mod:NewSpellAnnounce(71741, 2, nil, "-Melee")
+local warnSupression		= mod:NewSpellAnnounce(70588, 3)
+local warnPortalSoon		= mod:NewSoonAnnounce(72483, 2, nil)
+local warnPortal			= mod:NewSpellAnnounce(72483, 3, nil)
+local warnPortalOpen		= mod:NewAnnounce("WarnPortalOpen", 4, 72483)
 
-local specWarnLayWaste	= mod:NewSpecialWarningSpell(71730)
-local specWarnManaVoid	= mod:NewSpecialWarningMove(71741)
+local specWarnGutSpray		= mod:NewSpecialWarningDefensive(70633, nil, nil, nil, 1, 2)
+local specWarnLayWaste		= mod:NewSpecialWarningSpell(71730, nil, nil, nil, 2, 2)
+local specWarnManaVoid		= mod:NewSpecialWarningMove(71741, nil, nil, nil, 1, 2)
 
-local timerLayWaste		= mod:NewBuffActiveTimer(12, 69325)
-local timerNextPortal	= mod:NewCDTimer(46.5, 72483, nil)
-local timerPortalsOpen	= mod:NewTimer(10, "TimerPortalsOpen", 72483)
-local timerHealerBuff	= mod:NewBuffActiveTimer(40, 70873)
-local timerGutSpray		= mod:NewTargetTimer(12, 71283, nil, "Tank|Healer")
-local timerCorrosion	= mod:NewTargetTimer(6, 70751, nil, false)
-local timerBlazingSkeleton	= mod:NewTimer(50, "TimerBlazingSkeleton", 17204)
-local timerAbom				= mod:NewTimer(25, "TimerAbom", 43392)--Experimental
+local timerLayWaste			= mod:NewBuffActiveTimer(12, 69325, nil, nil, nil, 2)
+local timerNextPortal		= mod:NewCDTimer(46.5, 72483, nil, nil, nil, 5, nil, DBM_CORE_HEALER_ICON)
+local timerPortalsOpen		= mod:NewTimer(10, "TimerPortalsOpen", 72483, nil, nil, 6)
+local timerPortalsClose		= mod:NewTimer(10, "TimerPortalsClose", 72483, nil, nil, 6)
+local timerHealerBuff		= mod:NewBuffFadesTimer(40, 70873, nil, nil, nil, 5, nil, DBM_CORE_HEALER_ICON)
+local timerGutSpray			= mod:NewTargetTimer(12, 71283, nil, "Tank|Healer", nil, 5)
+local timerCorrosion		= mod:NewTargetTimer(6, 70751, nil, false, nil, 3)
+local timerBlazingSkeleton	= mod:NewTimer(50, "TimerBlazingSkeleton", 17204, nil, nil, 1)
+local timerAbom				= mod:NewTimer(25, "TimerAbom", 43392, nil, nil, 1) --Experimental
 
-local berserkTimer		= mod:NewBerserkTimer(420)
+local berserkTimer			= mod:NewBerserkTimer(420)
 
 --mod:AddBoolOption("SetIconOnBlazingSkeleton", true)
 
@@ -97,7 +99,8 @@ function mod:Portals()
 	timerPortalsOpen:Cancel()
 	warnPortalSoon:Cancel()
 	warnPortalOpen:Schedule(15)
-	timerPortalsOpen:Schedule(15)
+	timerPortalsOpen:Start()
+	timerPortalsClose:Schedule(15)
 	warnPortalSoon:Schedule(41)
 	timerNextPortal:Start()
 	self:UnscheduleMethod("Portals")
@@ -127,6 +130,9 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerGutSpray:Start(args.destName)
 		self:Unschedule(warnGutSprayTargets)
 		self:Schedule(0.3, warnGutSprayTargets)
+		if self:IsTank() then
+			specWarnGutSpray:Show()
+		end
 	elseif args:IsSpellID(70751, 71738, 72022, 72023) and args:IsDestTypePlayer() then--Corrosion
 		warnCorrosion:Show(args.spellName, args.destName, args.amount or 1)
 		timerCorrosion:Start(args.destName)

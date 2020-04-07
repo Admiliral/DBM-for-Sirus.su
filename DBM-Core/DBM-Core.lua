@@ -5197,6 +5197,7 @@ local specFlags ={
 	["Ranged"] = "IsRanged",
 	["Physical"] = "IsPhysical",
 	["RemoveEnrage"] = "CanRemoveEnrage",
+	["MagicDispeller"] = "IsMagicDispeller",
 }
 
 function bossModPrototype:GetRoleFlagValue(flag)
@@ -5248,11 +5249,11 @@ function bossModPrototype:CanRemoveEnrage()
 	return select(2, UnitClass("player")) == "HUNTER" or select(2, UnitClass("player")) == "ROGUE"
 end
 
---[[
 function bossModPrototype:IsMagicDispeller()
-
+	return select(2, UnitClass("player")) == "MAGE"
+		or select(2, UnitClass("player")) == "SHAMAN"
+		or select(2, UnitClass("player")) == "PRIEST"
 end
-]]
 
 local function IsDeathKnightTank()
 	-- idea taken from addon 'ElitistJerks'

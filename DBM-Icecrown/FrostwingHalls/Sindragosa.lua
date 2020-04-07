@@ -1,7 +1,7 @@
 ﻿local mod	= DBM:NewMod("Sindragosa", "DBM-Icecrown", 4)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 4408 $"):sub(12, -3))
+mod:SetRevision("20200405141240")
 mod:SetCreatureID(36853)
 mod:RegisterCombat("combat")
 mod:SetMinSyncRevision(3712)
@@ -19,34 +19,34 @@ mod:RegisterEvents(
 
 local warnAirphase				= mod:NewAnnounce("WarnAirphase", 2, 43810)
 local warnGroundphaseSoon		= mod:NewAnnounce("WarnGroundphaseSoon", 2, 43810)
-local warnPhase2soon			= mod:NewAnnounce("WarnPhase2soon", 1)
+local warnPhase2soon			= mod:NewPrePhaseAnnounce(2)
 local warnPhase2				= mod:NewPhaseAnnounce(2, 2)
-local warnInstability			= mod:NewAnnounce("WarnInstability", 2, 69766, false)
-local warnChilledtotheBone		= mod:NewAnnounce("WarnChilledtotheBone", 2, 70106, false)
-local warnMysticBuffet			= mod:NewAnnounce("WarnMysticBuffet", 2, 70128, false)
+local warnInstability			= mod:NewCountAnnounce(69766, 2, nil, false)
+local warnChilledtotheBone		= mod:NewCountAnnounce(70106, 2, nil, false)
+local warnMysticBuffet			= mod:NewCountAnnounce(70128, 2, nil, false)
 local warnFrostBeacon			= mod:NewTargetAnnounce(70126, 4)
 local warnBlisteringCold		= mod:NewSpellAnnounce(70123, 3)
 local warnFrostBreath			= mod:NewSpellAnnounce(71056, 2, nil, "Tank|Healer")
-local warnUnchainedMagic		= mod:NewTargetAnnounce(69762, 2, nil, "-Melee")
+local warnUnchainedMagic		= mod:NewTargetAnnounce(69762, 2, nil, "-Melee", 2)
 
-local specWarnUnchainedMagic	= mod:NewSpecialWarningYou(69762)
-local specWarnFrostBeacon		= mod:NewSpecialWarningYou(70126)
-local specWarnInstability		= mod:NewSpecialWarningStack(69766, nil, 4)
-local specWarnChilledtotheBone	= mod:NewSpecialWarningStack(70106, nil, 4)
-local specWarnMysticBuffet		= mod:NewSpecialWarningStack(70128, false, 5)
-local specWarnBlisteringCold	= mod:NewSpecialWarningRun(70123)
+local specWarnUnchainedMagic	= mod:NewSpecialWarningYou(69762, nil, nil, nil, 1, 2)
+local specWarnFrostBeacon		= mod:NewSpecialWarningMoveAway(70126, nil, nil, nil, 3, 2)
+local specWarnInstability		= mod:NewSpecialWarningStack(69766, nil, 4, nil, nil, 1, 6)
+local specWarnChilledtotheBone	= mod:NewSpecialWarningStack(70106, nil, 4, nil, nil, 1, 6)
+local specWarnMysticBuffet		= mod:NewSpecialWarningStack(70128, false, 5, nil, nil, 1, 6)
+local specWarnBlisteringCold	= mod:NewSpecialWarningRun(70123, nil, nil, nil, 4, 2)
 
-local timerNextAirphase			= mod:NewTimer(110, "TimerNextAirphase", 43810)
-local timerNextGroundphase		= mod:NewTimer(45, "TimerNextGroundphase", 43810)
-local timerNextFrostBreath		= mod:NewNextTimer(22, 71056, nil, "Tank|Healer")
-local timerNextBlisteringCold	= mod:NewCDTimer(67, 70123)
-local timerNextBeacon			= mod:NewNextTimer(16, 70126)
-local timerBlisteringCold		= mod:NewCastTimer(6, 70123)
-local timerUnchainedMagic		= mod:NewBuffActiveTimer(30, 69762)
-local timerInstability			= mod:NewBuffActiveTimer(5, 69766)
-local timerChilledtotheBone		= mod:NewBuffActiveTimer(8, 70106)
-local timerMysticBuffet			= mod:NewBuffActiveTimer(8, 70128)
-local timerNextMysticBuffet		= mod:NewNextTimer(6, 70128)
+local timerNextAirphase			= mod:NewTimer(110, "TimerNextAirphase", 43810, nil, nil, 6)
+local timerNextGroundphase		= mod:NewTimer(45, "TimerNextGroundphase", 43810, nil, nil, 6)
+local timerNextFrostBreath		= mod:NewNextTimer(22, 71056, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerNextBlisteringCold	= mod:NewCDTimer(67, 70123, nil, nil, nil, 2)
+local timerNextBeacon			= mod:NewNextTimer(16, 70126, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
+local timerBlisteringCold		= mod:NewCastTimer(6, 70123, nil, nil, nil, 2)
+local timerUnchainedMagic		= mod:NewCDTimer(30, 69762, nil, nil, nil, 3)
+local timerInstability			= mod:NewBuffFadesTimer(5, 69766, nil, nil, nil, 5)
+local timerChilledtotheBone		= mod:NewBuffFadesTimer(8, 70106, nil, nil, nil, 5)
+local timerMysticBuffet			= mod:NewBuffFadesTimer(8, 70128, nil, nil, nil, 5)
+local timerNextMysticBuffet		= mod:NewNextTimer(6, 70128, nil, nil, nil, 2)
 local timerMysticAchieve		= mod:NewAchievementTimer(30, 4620, "AchievementMystic")
 
 local berserkTimer				= mod:NewBerserkTimer(600)
@@ -131,7 +131,7 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(69649, 71056, 71057, 71058) or args:IsSpellID(73061, 73062, 73063, 73064) then  --Frost Breath
+	if args:IsSpellID(69649, 71056, 71057, 71058) or args:IsSpellID(73061, 73062, 73063, 73064) then --Frost Breath
 		warnFrostBreath:Show()
 		timerNextFrostBreath:Start()
 	end
@@ -146,10 +146,10 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self.vb.phase == 1 and self.Options.SetIconOnFrostBeacon then
 			table.insert(beaconIconTargets, DBM:GetRaidUnitId(args.destName))
 			if (mod:IsDifficulty("normal25") and #beaconIconTargets >= 5) or (mod:IsDifficulty("heroic25") and #beaconIconTargets >= 6) or ((mod:IsDifficulty("normal10") or mod:IsDifficulty("heroic10")) and #beaconIconTargets >= 2) then
-				self:SetBeaconIcons()              --Sort and fire as early as possible once we have all targets.
+				self:SetBeaconIcons() --Sort and fire as early as possible once we have all targets.
 			end
 		end
-		if self.vb.phase == 2 then                --Phase 2 there is only one icon/beacon, don't use sorting method if we don't have to.
+		if self.vb.phase == 2 then --Phase 2 there is only one icon/beacon, don't use sorting method if we don't have to.
 			timerNextBeacon:Start()
 			if self.Options.SetIconOnFrostBeacon then
 				self:SetIcon(args.destName, 8)

@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Deathwhisper", "DBM-Icecrown", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 4411 $"):sub(12, -3))
+mod:SetRevision("20200405141240")
 mod:SetCreatureID(36855)
 mod:SetUsedIcons(4, 5, 6, 7, 8)
 mod:RegisterCombat("yell", L.YellPull)
@@ -19,10 +19,6 @@ mod:RegisterEvents(
 	"UNIT_TARGET"
 )
 
-local canPurge = select(2, UnitClass("player")) == "MAGE"
-			or select(2, UnitClass("player")) == "SHAMAN"
-			or select(2, UnitClass("player")) == "PRIEST"
-
 local warnAddsSoon					= mod:NewAnnounce("WarnAddsSoon", 2)
 local warnDominateMind				= mod:NewTargetAnnounce(71289, 3)
 local warnDeathDecay				= mod:NewSpellAnnounce(72108, 2)
@@ -32,23 +28,23 @@ local warnDarkTransformation		= mod:NewSpellAnnounce(70900, 4)
 local warnDarkEmpowerment			= mod:NewSpellAnnounce(70901, 4)
 local warnPhase2					= mod:NewPhaseAnnounce(2, 1)
 local warnFrostbolt					= mod:NewCastAnnounce(72007, 2)
-local warnTouchInsignificance		= mod:NewAnnounce("WarnTouchInsignificance", 2, 71204, "Tank|Healer")
+local warnTouchInsignificance		= mod:NewStackAnnounce(71204, 2, nil, "Tank|Healer")
 local warnDarkMartyrdom				= mod:NewSpellAnnounce(72499, 4)
 
-local specWarnCurseTorpor			= mod:NewSpecialWarningYou(71237)
-local specWarnDeathDecay			= mod:NewSpecialWarningMove(72108)
-local specWarnTouchInsignificance	= mod:NewSpecialWarningStack(71204, nil, 3)
-local specWarnVampricMight			= mod:NewSpecialWarningDispel(70674, canPurge)
-local specWarnDarkMartyrdom			= mod:NewSpecialWarningMove(72499, "Melee")
-local specWarnFrostbolt				= mod:NewSpecialWarningInterrupt(72007, false)
+local specWarnCurseTorpor			= mod:NewSpecialWarningYou(71237, nil, nil, nil, 1, 2)
+local specWarnDeathDecay			= mod:NewSpecialWarningMove(72108, nil, nil, nil, 1, 2)
+local specWarnTouchInsignificance	= mod:NewSpecialWarningStack(71204, nil, 3, nil, nil, 1, 6)
+local specWarnVampricMight			= mod:NewSpecialWarningDispel(70674, "MagicDispeller", nil, nil, 1, 2)
+local specWarnDarkMartyrdom			= mod:NewSpecialWarningRun(72499, "Melee", nil, nil, 4, 2)
+local specWarnFrostbolt				= mod:NewSpecialWarningInterrupt(72007, false, nil, 2, 1, 2) -- TODO: HasInterrupt
 local specWarnVengefulShade			= mod:NewSpecialWarning("SpecWarnVengefulShade", "-Tank")
 
-local timerAdds						= mod:NewTimer(60, "TimerAdds", 61131)
+local timerAdds						= mod:NewTimer(60, "TimerAdds", 61131, nil, nil, 1, DBM_CORE_TANK_ICON..DBM_CORE_DAMAGE_ICON)
 local timerDominateMind				= mod:NewBuffActiveTimer(12, 71289)
-local timerDominateMindCD			= mod:NewCDTimer(40, 71289)
+local timerDominateMindCD			= mod:NewCDTimer(40, 71289, nil, nil, nil, 3)
 local timerSummonSpiritCD			= mod:NewCDTimer(10, 71426, nil, false)
 local timerFrostboltCast			= mod:NewCastTimer(4, 72007)
-local timerTouchInsignificance		= mod:NewTargetTimer(30, 71204, nil, "Tank|Healer")
+local timerTouchInsignificance		= mod:NewTargetTimer(30, 71204, nil, "Tank|Healer", nil, 5)
 
 local berserkTimer					= mod:NewBerserkTimer(600)
 
@@ -206,7 +202,7 @@ mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(71289) then
 		if args:IsPlayer() and self.Options.RemoveWeaponOnMindControl then
-		   if self:IsWeaponDependent("player") then
+			if self:IsWeaponDependent("player") then
 				PickupInventoryItem(16)
 				PutItemInBackpack()
 				PickupInventoryItem(17)

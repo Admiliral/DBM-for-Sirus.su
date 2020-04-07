@@ -1,11 +1,11 @@
 local mod	= DBM:NewMod("LichKing", "DBM-Icecrown", 5)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 4413 $"):sub(12, -3))
+mod:SetRevision("20200405141240")
 mod:SetCreatureID(36597)
 mod:RegisterCombat("combat", 36597)
-mod:SetMinSyncRevision(3913)
 mod:SetUsedIcons(2, 3, 4, 5, 6, 7, 8)
+mod:SetMinSyncRevision(3913)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START",
@@ -35,56 +35,56 @@ local warnShamblingEnrage	= mod:NewTargetAnnounce(72143, 3, nil, "Tank|Healer|Re
 local warnNecroticPlague	= mod:NewTargetAnnounce(73912, 4) --Phase 1+ Ability
 local warnNecroticPlagueJump= mod:NewAnnounce("WarnNecroticPlagueJump", 4, 73912) --Phase 1+ Ability
 local warnInfest			= mod:NewSpellAnnounce(73779, 3, nil, "Healer") --Phase 1 & 2 Ability
-local warnPhase2Soon		= mod:NewAnnounce("WarnPhase2Soon", 1)
+local warnPhase2Soon		= mod:NewPhaseAnnounce(2)
 local valkyrWarning			= mod:NewAnnounce("ValkyrWarning", 3, 71844)--Phase 2 Ability
 local warnDefileSoon		= mod:NewSoonAnnounce(73708, 3)	--Phase 2+ Ability
 local warnSoulreaper		= mod:NewSpellAnnounce(73797, 4, nil, "Tank|Healer") --Phase 2+ Ability
 local warnDefileCast		= mod:NewTargetAnnounce(72762, 4) --Phase 2+ Ability
 local warnSummonValkyr		= mod:NewSpellAnnounce(69037, 3, 71844) --Phase 2 Add
-local warnPhase3Soon		= mod:NewAnnounce("WarnPhase3Soon", 1)
+local warnPhase3Soon		= mod:NewPhaseAnnounce(3)
 local warnSummonVileSpirit	= mod:NewSpellAnnounce(70498, 2) --Phase 3 Add
 local warnHarvestSoul		= mod:NewTargetAnnounce(74325, 4) --Phase 3 Ability
 local warnTrapCast			= mod:NewTargetAnnounce(73539, 3) --Phase 1 Heroic Ability
 local warnRestoreSoul		= mod:NewCastAnnounce(73650, 2) --Phase 3 Heroic
 
-local specWarnSoulreaper	= mod:NewSpecialWarningYou(73797) --Phase 1+ Ability
-local specWarnNecroticPlague= mod:NewSpecialWarningYou(73912) --Phase 1+ Ability
-local specWarnRagingSpirit	= mod:NewSpecialWarningYou(69200) --Transition Add
-local specWarnYouAreValkd	= mod:NewSpecialWarning("SpecWarnYouAreValkd") --Phase 2+ Ability
-local specWarnPALGrabbed	= mod:NewSpecialWarning("SpecWarnPALGrabbed", nil, false) --Phase 2+ Ability
-local specWarnPRIGrabbed	= mod:NewSpecialWarning("SpecWarnPRIGrabbed", nil, false) --Phase 2+ Ability
-local specWarnDefileCast	= mod:NewSpecialWarning("SpecWarnDefileCast") --Phase 2+ Ability
-local specWarnDefileNear	= mod:NewSpecialWarning("SpecWarnDefileNear", false) --Phase 2+ Ability
-local specWarnDefile		= mod:NewSpecialWarningMove(73708) --Phase 2+ Ability
-local specWarnWinter		= mod:NewSpecialWarningMove(73791) --Transition Ability
-local specWarnHarvestSoul	= mod:NewSpecialWarningYou(74325) --Phase 3+ Ability
-local specWarnInfest		= mod:NewSpecialWarningSpell(73779, false) --Phase 1+ Ability
-local specwarnSoulreaper	= mod:NewSpecialWarningTarget(73797, "Tank") --phase 2+
-local specWarnTrap			= mod:NewSpecialWarningYou(73539) --Heroic Ability
-local specWarnTrapNear		= mod:NewSpecialWarning("SpecWarnTrapNear") --Heroic Ability
-local specWarnHarvestSouls	= mod:NewSpecialWarningSpell(74297) --Heroic Ability
-local specWarnValkyrLow		= mod:NewSpecialWarning("SpecWarnValkyrLow")
+local specWarnSoulreaper	= mod:NewSpecialWarningYou(73797, nil, nil, nil, 1, 2) --Phase 1+ Ability
+local specWarnNecroticPlague= mod:NewSpecialWarningMoveAway(73912, nil, nil, nil, 1, 2) --Phase 1+ Ability
+local specWarnRagingSpirit	= mod:NewSpecialWarningYou(69200, nil, nil, nil, 1, 2) --Transition Add
+local specWarnYouAreValkd	= mod:NewSpecialWarning("SpecWarnYouAreValkd", nil, nil, nil, 1, 2) --Phase 2+ Ability
+local specWarnPALGrabbed	= mod:NewSpecialWarning("SpecWarnPALGrabbed", nil, false, nil, 1, 2) --Phase 2+ Ability
+local specWarnPRIGrabbed	= mod:NewSpecialWarning("SpecWarnPRIGrabbed", nil, false, nil, 1, 2) --Phase 2+ Ability
+local specWarnDefileCast	= mod:NewSpecialWarning("SpecWarnDefileCast", nil, nil, nil, 1, 2) --Phase 2+ Ability
+local specWarnDefileNear	= mod:NewSpecialWarning("SpecWarnDefileNear", false, nil, 1, 2) --Phase 2+ Ability
+local specWarnDefile		= mod:NewSpecialWarningMove(73708, nil, nil, nil, 1, 2) --Phase 2+ Ability
+local specWarnWinter		= mod:NewSpecialWarningMove(73791, nil, nil, nil, 1, 2) --Transition Ability
+local specWarnHarvestSoul	= mod:NewSpecialWarningYou(74325, nil, nil, nil, 1, 2) --Phase 3+ Ability
+local specWarnInfest		= mod:NewSpecialWarningSpell(73779, nil, nil, nil, 2) --Phase 1+ Ability
+local specwarnSoulreaperOtr	= mod:NewSpecialWarningTaunt(73797, nil, nil, nil, 1, 2) --phase 2+
+local specWarnTrap			= mod:NewSpecialWarningYou(73539, nil, nil, nil, 3, 2) --Heroic Ability
+local specWarnTrapNear		= mod:NewSpecialWarning("SpecWarnTrapNear", nil, nil, nil, 3, 2) --Heroic Ability
+local specWarnHarvestSouls	= mod:NewSpecialWarningSpell(74297, nil, nil, nil, 3, 2) --Heroic Ability
+local specWarnValkyrLow		= mod:NewSpecialWarning("SpecWarnValkyrLow", nil, nil, nil, 1, 2)
 
-local timerCombatStart		= mod:NewTimer(53.5, "TimerCombatStart", 2457)
-local timerPhaseTransition	= mod:NewTimer(62, "PhaseTransition", 72262)
+local timerCombatStart		= mod:NewCombatTimer(53.5)
+local timerPhaseTransition	= mod:NewTimer(62, "PhaseTransition", 72262, nil, nil, 6)
 local timerSoulreaper	 	= mod:NewTargetTimer(5.1, 73797, nil, "Tank|Healer")
-local timerSoulreaperCD	 	= mod:NewCDTimer(30.5, 73797, nil, "Tank|Healer")
+local timerSoulreaperCD	 	= mod:NewNextTimer(30.5, 73797, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerHarvestSoul	 	= mod:NewTargetTimer(6, 74325)
-local timerHarvestSoulCD	= mod:NewCDTimer(75, 74325)
-local timerInfestCD			= mod:NewCDTimer(22.5, 73779, nil, "Healer")
-local timerNecroticPlagueCleanse = mod:NewTimer(5, "TimerNecroticPlagueCleanse", 73912, false)
-local timerNecroticPlagueCD	= mod:NewCDTimer(30, 73912)
-local timerDefileCD			= mod:NewCDTimer(32.5, 72762)
-local timerEnrageCD			= mod:NewCDTimer(20, 72143, nil, "Tank|RemoveEnrage")
-local timerShamblingHorror 	= mod:NewNextTimer(60, 70372)
-local timerDrudgeGhouls 	= mod:NewNextTimer(20, 70358)
-local timerRagingSpiritCD	= mod:NewCDTimer(22, 69200)
-local timerSoulScreechCD	= mod:NewCDTimer(15, 73802)
-local timerSummonValkyr 	= mod:NewCDTimer(45, 71844)
-local timerVileSpirit 		= mod:NewNextTimer(30.5, 70498)
-local timerTrapCD		 	= mod:NewCDTimer(15.5, 73539)
-local timerRestoreSoul 		= mod:NewCastTimer(40, 73650)
-local timerRoleplay			= mod:NewTimer(162, "TimerRoleplay", 72350)
+local timerHarvestSoulCD	= mod:NewNextTimer(75, 74325, nil, nil, nil, 6)
+local timerInfestCD			= mod:NewNextTimer(22.5, 73779, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON, nil, 1, 4)
+local timerNecroticPlagueCleanse = mod:NewTimer(5, "TimerNecroticPlagueCleanse", 73912, "Healer", nil, 5, DBM_CORE_HEALER_ICON)
+local timerNecroticPlagueCD	= mod:NewNextTimer(30, 73912, nil, nil, nil, 3)
+local timerDefileCD			= mod:NewNextTimer(32.5, 72762, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON, nil, 2, 4)
+local timerEnrageCD			= mod:NewCDTimer(20, 72143, nil, "Tank|RemoveEnrage", nil, 5, nil, DBM_CORE_ENRAGE_ICON)
+local timerShamblingHorror 	= mod:NewNextTimer(60, 70372, nil, nil, nil, 1)
+local timerDrudgeGhouls 	= mod:NewNextTimer(20, 70358, nil, nil, nil, 1)
+local timerRagingSpiritCD	= mod:NewNextTimer(22, 69200, nil, nil, nil, 1)
+local timerSoulScreechCD	= mod:NewNextTimer(15, 73802, nil, nil, nil, 1)
+local timerSummonValkyr 	= mod:NewCDTimer(45, 71844, nil, nil, nil, 1)
+local timerVileSpirit 		= mod:NewNextTimer(30.5, 70498, nil, nil, nil, 1)
+local timerTrapCD		 	= mod:NewNextTimer(15.5, 73539, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON, nil, 2, 4)
+local timerRestoreSoul 		= mod:NewCastTimer(40, 73650, nil, nil, nil, 6)
+local timerRoleplay			= mod:NewTimer(162, "TimerRoleplay", 72350, nil, nil, 6)
 
 local berserkTimer			= mod:NewBerserkTimer(1020)
 
@@ -219,9 +219,9 @@ end
 function mod:OldTrapTarget()
 	local targetname = self:GetBossTarget(36597)
 	if not targetname then return end
-	if targetname ~= LKTank then--If scan doesn't return tank abort other scans and do other warnings.
+	if targetname ~= LKTank then --If scan doesn't return tank abort other scans and do other warnings.
 		self:UnscheduleMethod("OldTrapTarget")
-		self:UnscheduleMethod("OldTankTrap")--Also unschedule tanktrap since we got a scan that returned a non tank.
+		self:UnscheduleMethod("OldTankTrap") --Also unschedule tanktrap since we got a scan that returned a non tank.
 		warnTrapCast:Show(targetname)
 		if self.Options.TrapIcon then
 			self:SetIcon(targetname, 8, 10)
@@ -324,7 +324,7 @@ function mod:SPELL_CAST_START(args)
 		warnRestoreSoul:Show()
 		timerRestoreSoul:Start()
 	elseif args:IsSpellID(72350) then -- Fury of Frostmourne
-		mod:SetWipeTime(160)--Change min wipe time mid battle to force dbm to keep module loaded for this long out of combat roleplay, hopefully without breaking mod.
+		mod:SetWipeTime(160) --Change min wipe time mid battle to force dbm to keep module loaded for this long out of combat roleplay, hopefully without breaking mod.
 		timerRoleplay:Start()
 		timerVileSpirit:Cancel()
 		timerSoulreaperCD:Cancel()
@@ -349,11 +349,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 		end
 	elseif args:IsSpellID(69409, 73797, 73798, 73799) then -- Soul reaper (MT debuff)
 		warnSoulreaper:Show(args.destName)
-		specwarnSoulreaper:Show(args.destName)
 		timerSoulreaper:Start(args.destName)
 		timerSoulreaperCD:Start()
 		if args:IsPlayer() then
 			specWarnSoulreaper:Show()
+		else
+			specWarnSoulreaperOtr:Show(args.destName)
 		end
 	elseif args:IsSpellID(69200) then -- Raging Spirit
 		warnRagingSpirit:Show(args.destName)
@@ -409,9 +410,9 @@ do
 		elseif args:IsSpellID(73650) and time() - lastRestore > 3 then		-- Restore Soul (Heroic)
 			lastRestore = time()
 			timerHarvestSoulCD:Start(60)
-			timerVileSpirit:Start(10)--May be wrong too but we'll see, didn't have enough log for this one.
---			timerSoulreaperCD:Start(2)--seems random anywheres from 2-10seconds after
---			timerDefileCD:Start(2)--seems random anywheres from 2-10seconds after
+			timerVileSpirit:Start(10) --May be wrong too but we'll see, didn't have enough log for this one.
+--			timerSoulreaperCD:Start(2) --seems random anywheres from 2-10seconds after
+--			timerDefileCD:Start(2) --seems random anywheres from 2-10seconds after
 		end
 	end
 end
@@ -440,18 +441,18 @@ do
 	end
 
 	local function scanValkyrTargets()
-		if (time() - lastValk) < 10 then    -- scan for like 10secs
-			for i=0, GetNumRaidMembers() do        -- for every raid member check ..
-				if UnitInVehicle("raid"..i) and not valkyrTargets[i] then      -- if person #i is in a vehicle and not already announced
-					valkyrWarning:Show(UnitName("raid"..i))  -- UnitName("raid"..i) returns the name of the person who got valkyred
-					valkyrTargets[i] = true          -- this person has been announced
+		if (time() - lastValk) < 10 then -- scan for like 10secs
+			for i=0, GetNumRaidMembers() do -- for every raid member check ..
+				if UnitInVehicle("raid"..i) and not valkyrTargets[i] then -- if person #i is in a vehicle and not already announced
+					valkyrWarning:Show(UnitName("raid"..i)) -- UnitName("raid"..i) returns the name of the person who got valkyred
+					valkyrTargets[i] = true -- this person has been announced
 					if UnitName("raid"..i) == UnitName("player") then
 						specWarnYouAreValkd:Show()
-						if mod:IsHealer() then--Is player that's grabbed a healer
+						if mod:IsHealer() then --Is player that's grabbed a healer
 							if isPAL then
-								mod:SendSync("PALGrabbed", UnitName("player"))--They are a holy paladin
+								mod:SendSync("PALGrabbed", UnitName("player")) --They are a holy paladin
 							elseif isPRI then
-								mod:SendSync("PRIGrabbed", UnitName("player"))--They are a disc/holy priest
+								mod:SendSync("PRIGrabbed", UnitName("player")) --They are a disc/holy priest
 							end
 						end
 					end
@@ -465,9 +466,9 @@ do
 					end
 				end
 			end
-			mod:Schedule(0.5, scanValkyrTargets)  -- check for more targets in a few
+			mod:Schedule(0.5, scanValkyrTargets) -- check for more targets in a few
 		else
-			wipe(valkyrTargets)       -- no more valkyrs this round, so lets clear the table
+			wipe(valkyrTargets) -- no more valkyrs this round, so lets clear the table
 			grabIcon = 2
 		end
 	end
@@ -561,9 +562,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_WHISPER(msg)--We get this whisper for all plagues, ones cast by lich king and ones from dispel jumps.
-	if msg:find(L.PlagueWhisper) and self:IsInCombat() then--We do a combat check with lich king since rotface uses the same whisper message and we only want this to work on lich king.
-		if GetTime() - lastPlagueCast > 1 then--We don't want to send sync if it came from a spell cast though, so we ignore whisper unless it was at least 1 second after a cast.
+function mod:CHAT_MSG_RAID_BOSS_WHISPER(msg) --We get this whisper for all plagues, ones cast by lich king and ones from dispel jumps.
+	if msg:find(L.PlagueWhisper) and self:IsInCombat() then --We do a combat check with lich king since rotface uses the same whisper message and we only want this to work on lich king.
+		if GetTime() - lastPlagueCast > 1 then --We don't want to send sync if it came from a spell cast though, so we ignore whisper unless it was at least 1 second after a cast.
 			specWarnNecroticPlague:Show()
 			self:SendSync("PlagueOn", UnitName("player"))
 		end
@@ -571,23 +572,23 @@ function mod:CHAT_MSG_RAID_BOSS_WHISPER(msg)--We get this whisper for all plague
 end
 
 function mod:SWING_DAMAGE(args)
-	if args:GetSrcCreatureID() == 36597 then--Lich king Tank
+	if args:GetSrcCreatureID() == 36597 then --Lich king Tank
 		LKTank = args.destName
 	end
 end
 
 function mod:SWING_MISSED(args)
-	if args:GetSrcCreatureID() == 36597 then--Lich king Tank
+	if args:GetSrcCreatureID() == 36597 then --Lich king Tank
 		LKTank = args.destName
 	end
 end
 
 function mod:OnSync(msg, target)
-	if msg == "PALGrabbed" then--Does this function fail to alert second healer if 2 different paladins are grabbed within < 2.5 seconds?
+	if msg == "PALGrabbed" then --Does this function fail to alert second healer if 2 different paladins are grabbed within < 2.5 seconds?
 		if self.Options.specWarnHealerGrabbed then
 			specWarnPALGrabbed:Show(target)
 		end
-	elseif msg == "PRIGrabbed" then--Does this function fail to alert second healer if 2 different priests are grabbed within < 2.5 seconds?
+	elseif msg == "PRIGrabbed" then --Does this function fail to alert second healer if 2 different priests are grabbed within < 2.5 seconds?
 		if self.Options.specWarnHealerGrabbed then
 			specWarnPRIGrabbed:Show(target)
 		end
