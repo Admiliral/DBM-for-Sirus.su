@@ -1598,7 +1598,7 @@ do
 				elseif subCmd:upper() == "FOCUS" then
 					DBM.Arrow:ShowRunTo("focus")
 					success = true
-				elseif DBM:GetRaidUnitId(DBM:Capitalize(subCmd)) ~= "none" then
+				elseif DBM:GetRaidUnitId(DBM:Capitalize(subCmd)) then
 					DBM.Arrow:ShowRunTo(DBM:Capitalize(subCmd))
 					success = true
 				end
@@ -4629,7 +4629,7 @@ do
 			mod = mod or inCombat[1]
 			sendWhisper(sender, chatPrefix..DBM_CORE_STATUS_WHISPER:format((mod.combatInfo.name or ""), mod:GetHP() or "unknown", getNumAlivePlayers(), mmax(GetNumRaidMembers(), GetNumPartyMembers() + 1)))
 		elseif #inCombat > 0 and DBM.Options.AutoRespond and
-		(isRealIdMessage and (not isOnSameServer(sender) or DBM:GetRaidUnitId((select(4, BNGetFriendInfoByID(sender)))) == "none") or not isRealIdMessage and DBM:GetRaidUnitId(sender) == "none") then
+		(isRealIdMessage and (not isOnSameServer(sender) or not DBM:GetRaidUnitId((select(4, BNGetFriendInfoByID(sender))))) or not isRealIdMessage and not DBM:GetRaidUnitId(sender)) then
 			local mod
 			for i, v in ipairs(inCombat) do
 				mod = not v.isCustomMod and v

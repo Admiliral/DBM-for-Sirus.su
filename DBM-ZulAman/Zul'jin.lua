@@ -102,7 +102,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(17207) then
 		timerWhirlwind:Start()
 	elseif args:IsSpellID(43153) then
-		if DBM:GetRaidUnitId(args.destName) ~= "none" then
+		if DBM:GetRaidUnitId(args.destName) then
 			bleedTargets[#bleedTargets + 1] = args.destName
 		end
 		if notBleedWarned then

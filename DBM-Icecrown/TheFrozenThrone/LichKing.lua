@@ -200,7 +200,7 @@ function mod:OldTankTrap()
 		end
 	end
 	local uId = DBM:GetRaidUnitId(LKTank)
-	if uId ~= "none" then
+	if uId then
 		local inRange = CheckInteractDistance(uId, 2)
 		local x, y = GetPlayerMapPosition(uId)
 		if x == 0 and y == 0 then
@@ -605,7 +605,7 @@ function mod:OnSync(msg, target)
 				end
 			end
 			local uId = DBM:GetRaidUnitId(target)
-			if uId ~= "none" then
+			if uId then
 				local inRange = CheckInteractDistance(uId, 2)
 				local x, y = GetPlayerMapPosition(uId)
 				if x == 0 and y == 0 then
