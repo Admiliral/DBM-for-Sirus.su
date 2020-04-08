@@ -75,11 +75,7 @@ local function CreateTicker(duration, callback, iterations)
 end
 
 function C_Timer:After(duration, callback)
-	AddDelayedCall({
-		_remainingIterations = 1,
-		_delay = duration,
-		_callback = callback
-	})
+	return CreateTicker(duration, callback, 1)
 end
 
 function C_Timer:NewTimer(duration, callback)
