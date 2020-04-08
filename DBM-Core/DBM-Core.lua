@@ -430,8 +430,8 @@ local iconSetPerson = {}
 local addsGUIDs = {}
 local targetEventsRegistered = false
 local targetMonitor = {}
-local statusWhisperDisabled = false
-local statusGuildDisabled = false
+--local statusWhisperDisabled = false
+--local statusGuildDisabled = false
 local breakTimerStart
 local AddMsg
 local dataBroker
@@ -853,15 +853,18 @@ do
 				if GetAddOnMetadata(i, "X-DBM-Mod") and not checkEntry(bannedMods, addonName) then
 					if enabled then
 						table.insert(self.AddOns, {
-							sort		= tonumber(GetAddOnMetadata(i, "X-DBM-Mod-Sort") or math.huge) or math.huge,
-							type		= GetAddOnMetadata(i, "X-DBM-Mod-Type") or "OTHER",
-							category	= GetAddOnMetadata(i, "X-DBM-Mod-Category") or "Other",
-							name		= GetAddOnMetadata(i, "X-DBM-Mod-Name") or "",
-							zone		= {strsplit(",", GetAddOnMetadata(i, "X-DBM-Mod-LoadZone") or "")},
-							zoneId		= {strsplit(",", GetAddOnMetadata(i, "X-DBM-Mod-LoadZoneID") or "")},
-							subTabs		= GetAddOnMetadata(i, "X-DBM-Mod-SubCategories") and {strsplit(",", GetAddOnMetadata(i, "X-DBM-Mod-SubCategories"))},
-							hasHeroic	= tonumber(GetAddOnMetadata(i, "X-DBM-Mod-Has-Heroic-Mode") or 1) == 1,
-							modId		= addonName,
+							sort			= tonumber(GetAddOnMetadata(i, "X-DBM-Mod-Sort") or math.huge) or math.huge,
+							type			= GetAddOnMetadata(i, "X-DBM-Mod-Type") or "OTHER",
+							category		= GetAddOnMetadata(i, "X-DBM-Mod-Category") or "Other",
+							name			= GetAddOnMetadata(i, "X-DBM-Mod-Name") or "",
+							zone			= {strsplit(",", GetAddOnMetadata(i, "X-DBM-Mod-LoadZone") or "")},
+							zoneId			= {strsplit(",", GetAddOnMetadata(i, "X-DBM-Mod-LoadZoneID") or "")},
+							subTabs			= GetAddOnMetadata(i, "X-DBM-Mod-SubCategories") and {strsplit(",", GetAddOnMetadata(i, "X-DBM-Mod-SubCategories"))},
+							hasHeroic		= tonumber(GetAddOnMetadata(i, "X-DBM-Mod-Has-Heroic-Mode") or 1) == 1,
+							noHeroic		= tonumber(GetAddOnMetadata(i, "X-DBM-Mod-No-Heroic") or 0) == 1,
+							noStatistics	= tonumber(GetAddOnMetadata(i, "X-DBM-Mod-No-Statistics") or 0) == 1,
+							isWorldBoss		= tonumber(GetAddOnMetadata(i, "X-DBM-Mod-World-Boss") or 0) == 1,
+							modId			= addonName,
 						})
 
 						for k, v in ipairs(self.AddOns[#self.AddOns].zone) do
@@ -3028,7 +3031,7 @@ do
 						if DBM:AntiSpam(3, "HOTFIX") and not DBM.Options.DontShowReminders then
 							--There is a newer RELEASE version of DBM out that has this mods fixes that we do not possess
 							if DBM.HighestRelease >= modHFRevision and DBM.ReleaseRevision < modHFRevision then
-								showConstantReminder = 2
+--								showConstantReminder = 2
 								DBM:AddMsg(DBM_CORE_UPDATEREMINDER_HOTFIX)
 							else--This mods fixes are in an alpha version
 								DBM:AddMsg(DBM_CORE_UPDATEREMINDER_HOTFIX_ALPHA)
@@ -3042,13 +3045,13 @@ do
 
 	syncHandlers["DSW"] = function(sender)
 		if (DBM:GetRaidRank(sender) ~= 2 or GetNumPartyMembers() == 0) then return end--If not on group, we're probably sender, don't disable status. IF not leader, someone is trying to spoof this, block that too
-		statusWhisperDisabled = true
+--		statusWhisperDisabled = true
 		DBM:Debug("Raid leader has disabled status whispers")
 	end
 
 	syncHandlers["DGP"] = function(sender)
 		if (DBM:GetRaidRank(sender) ~= 2 or GetNumPartyMembers() == 0) then return end--If not on group, we're probably sender, don't disable status. IF not leader, someone is trying to spoof this, block that too
-		statusGuildDisabled = true
+--		statusGuildDisabled = true
 		DBM:Debug("Raid leader has disabled guild progress messages")
 	end
 
@@ -3259,7 +3262,7 @@ do
 					updateNotificationDisplayed = 2
 					AddMsg(DBM, DBM_CORE_UPDATEREMINDER_HEADER:match("([^\n]*)"))
 					AddMsg(DBM, DBM_CORE_UPDATEREMINDER_HEADER:match("\n(.*)"):format(displayVersion, version))
-					showConstantReminder = 1
+--					showConstantReminder = 1
 				elseif not noRaid and #newerVersionPerson == 3 and updateNotificationDisplayed < 3 then--The following code requires at least THREE people to send that higher revision. That should be more than adaquate
 					--Disable if revision grossly out of date even if not major patch.
 					if raid[newerVersionPerson[1]] and raid[newerVersionPerson[2]] and raid[newerVersionPerson[3]] then
@@ -3893,7 +3896,8 @@ do
 				mod.stats.normalPulls = mod.stats.normalPulls + 1--Treat it as normal for kill stats.
 				difficultyText = ""--So lets just return no difficulty :)
 			end
-			if DBM.Options.ShowEngageMessage then
+			--show enage message
+			if DBM.Options.ShowEngageMessage and not mod.noStatistics then
 				self:AddMsg(DBM_CORE_COMBAT_STARTED:format(difficultyText..mod.combatInfo.name))
 			end
 

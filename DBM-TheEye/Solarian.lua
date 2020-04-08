@@ -115,8 +115,8 @@ function mod:SPELL_CAST_START(args)
 		timerNextHelp:Start(75)
 		specWarnHelp:Show()
 		warnHelp:Schedule(0)
-                priestsH = true
-                provid	 = true	
+		priestsH = true
+		provid	 = true
 	elseif args:IsSpellID(308545) then -- врата
 		timerNextGates:Start()
 		specWarnGates:Show()

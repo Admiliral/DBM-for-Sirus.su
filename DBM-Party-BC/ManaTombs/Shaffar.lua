@@ -36,7 +36,7 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(36814) then
-		timerWound:Start(args.amount*5 .. "%")
+--		timerWound:Start(args.amount*5 .. "%")
 	end
 end
 

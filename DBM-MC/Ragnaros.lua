@@ -39,7 +39,7 @@ function mod:emerged()
 	warnEmerge:Show()
 	timerSubmerge:Start()
 	warnSubmergeSoon:Schedule(170)
-	submerge = false
+	submerged = false
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
@@ -69,6 +69,6 @@ function mod:OnSync(msg, arg)
 		warnEmergeSoon:Schedule(80)
 		self:ScheduleMethod(90, "emerged")
 	elseif msg == "Emerge" then
-		emerged()
+		self:emerged()
 	end
 end

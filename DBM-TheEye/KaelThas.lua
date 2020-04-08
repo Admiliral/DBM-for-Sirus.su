@@ -54,6 +54,7 @@ mod:AddBoolOption("SetIconOnMC", true)
 mod.vb.phase = 0
 
 local dominateMindTargets = {}
+local dominateMindIcon = 8
 local mincControl = {}
 local axe = true
 
@@ -70,6 +71,7 @@ end
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 19622, "Kael'thas Sunstrider")
 	self.vb.phase = 1
+	dominateMindIcon = 8
 	axe = true
 	warnPhase:Show(L.WarnPhase1)
 	timerNextAdd:Start(L.NamesAdds["Thaladred"])
@@ -169,12 +171,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 			self:SetIcon(args.destName, dominateMindIcon, 12)
 			dominateMindIcon = dominateMindIcon - 1
 		end
-		self:Unschedule(showDominateMindWarning)
-		if mod:IsDifficulty("heroic10") or mod:IsDifficulty("normal25") or (mod:IsDifficulty("heroic25") and #dominateMindTargets >= 3) then
-			showDominateMindWarning()
-		else
-			self:Schedule(0.9, showDominateMindWarning)
-		end
+--		self:Unschedule(showDominateMindWarning)
+--		if mod:IsDifficulty("heroic10") or mod:IsDifficulty("normal25") or (mod:IsDifficulty("heroic25") and #dominateMindTargets >= 3) then
+--			showDominateMindWarning()
+--		else
+--			self:Schedule(0.9, showDominateMindWarning)
+--		end
 	end
 end
 

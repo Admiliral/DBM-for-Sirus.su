@@ -189,8 +189,8 @@ do
 	local function loadQuests()
 		for _, v in pairs(quests) do
 			if type(v[1]) == "table" then
-				for _, v in ipairs(v) do
-					v[1] = getQuestName(v[1]) or v[1]
+				for _, v2 in ipairs(v) do
+					v2[1] = getQuestName(v2[1]) or v2[1]
 				end
 			else
 				v[1] = getQuestName(v[1]) or v[1]
@@ -227,8 +227,8 @@ end
 local function isQuestAutoTurnInQuest(name)
 	for _, v in pairs(quests) do
 		if type(v[1]) == "table" then
-			for _, v in ipairs(v) do
-				if v[1] == name then return true end
+			for _, v2 in ipairs(v) do
+				if v2[1] == name then return true end
 			end
 		else
 			if v[1] == name then return true end
