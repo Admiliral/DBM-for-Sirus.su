@@ -100,7 +100,7 @@ function mod:SPELL_SUMMON(args)
 			if self.vb.impaleIcon < 1 then	--Icons are gonna be crazy on this fight if people don't control jumps, we will use ALL of them and only reset icons if we run out of them
 				self.vb.impaleIcon = 8
 			end
-			self:SetIcon(args.sourceName, impaleIcon)
+			self:SetIcon(args.sourceName, self.vb.impaleIcon)
 			self.vb.impaleIcon = self.vb.impaleIcon - 1
 		end
 		self:Unschedule(showImpaleWarning)
