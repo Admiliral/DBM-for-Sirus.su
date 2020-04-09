@@ -3766,23 +3766,19 @@ do
 	end
 
 	function DBM:CHAT_MSG_MONSTER_YELL(msg, name)
-		DBM_saved_emotes[msg] = name .. " yell"
 		return onMonsterMessage("yell", msg)
 	end
 
 	function DBM:CHAT_MSG_MONSTER_EMOTE(msg, name)
-		DBM_saved_emotes[msg] = name .. " chat emote"
 		return onMonsterMessage("emote", msg)
 	end
 
 	function DBM:CHAT_MSG_RAID_BOSS_EMOTE(msg, name, ...)
-		DBM_saved_emotes[msg] = name .. " emote"
 		onMonsterMessage("emote", msg)
 		return self:FilterRaidBossEmote(msg, name, ...)
 	end
 
 	function DBM:CHAT_MSG_MONSTER_SAY(msg, name)
-		DBM_saved_emotes[msg] = name .. " say"
 		return onMonsterMessage("say", msg)
 	end
 end
