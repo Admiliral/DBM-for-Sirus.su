@@ -29,13 +29,11 @@ local timerBoned			= mod:NewAchievementTimer(8, 4610)
 
 local berserkTimer			= mod:NewBerserkTimer(600)
 
-local soundWhirlwind = mod:NewSound(69076)
 mod:AddBoolOption("SetIconOnImpale", true)
 
 mod.vb.impaleIcon = 8
 
 local impaleTargets = {}
-local lastColdflame = 0
 
 local function showImpaleWarning()
 	warnImpale:Show(table.concat(impaleTargets, "<, >"))
@@ -54,6 +52,7 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(69076) then
 		specWarnWhirlwind:Show()
+		specWarnWhirlwind:Play("justrun")
 		timerWhirlwindCD:Start()
 		preWarnWhirlwind:Schedule(85)
 		if mod:IsDifficulty("heroic10") or mod:IsDifficulty("heroic25") then
@@ -62,7 +61,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			timerWhirlwind:Show()						-- Approx 20seconds on normal.
 			timerBoneSpike:Cancel()						-- He doesn't do Bone Spike Graveyard during Bone Storm on normal
 		end
-		soundWhirlwind:Play()
 	end
 end
 
@@ -86,9 +84,9 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_PERIODIC_DAMAGE(args)
-	if args:IsSpellID(69146, 70823, 70824, 70825) and args:IsPlayer() and GetTime() - lastColdflame > 2 then		-- Coldflame, MOVE!
+	if args:IsSpellID(69146, 70823, 70824, 70825) and args:IsPlayer() and self:AntiSpam() then		-- Coldflame, MOVE!
 		specWarnColdflame:Show()
-		lastColdflame = GetTime()
+		specWarnColdflame:Play("runaway")
 	end
 end
 

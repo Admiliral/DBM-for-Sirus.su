@@ -51,7 +51,6 @@ local timerMysticAchieve		= mod:NewAchievementTimer(30, 4620, "AchievementMystic
 
 local berserkTimer				= mod:NewBerserkTimer(600)
 
-local soundBlisteringCold = mod:NewSound(70123)
 mod:AddBoolOption("SetIconOnFrostBeacon", true)
 mod:AddBoolOption("SetIconOnUnchainedMagic", true)
 mod:AddBoolOption("ClearIconsOnAirphase", true)
@@ -142,6 +141,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		beaconTargets[#beaconTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnFrostBeacon:Show()
+			specWarnFrostBeacon:Play("scatter")
 		end
 		if self.vb.phase == 1 and self.Options.SetIconOnFrostBeacon then
 			table.insert(beaconIconTargets, DBM:GetRaidUnitId(args.destName))
@@ -168,6 +168,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		unchainedTargets[#unchainedTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnUnchainedMagic:Show()
+			specWarnUnchainedMagic:Play("targetyou")
 		end
 		if self.Options.SetIconOnUnchainedMagic then
 			self:SetIcon(args.destName, unchainedIcons)
@@ -185,6 +186,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			timerChilledtotheBone:Start()
 			if (args.amount or 1) >= 4 then
 				specWarnChilledtotheBone:Show(args.amount)
+				specWarnChilledtotheBone:Play("stackhigh")
 			end
 		end
 	elseif args:IsSpellID(69766) then	--Instability (casters)
@@ -193,6 +195,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			timerInstability:Start()
 			if (mod:IsDifficulty("normal25", "normal10") and ((args.amount or 1) >= 10)) or (mod:IsDifficulty("heroic25", "heroic10") and ((args.amount or 1) >= 2)) then
 				specWarnInstability:Show(args.amount)
+				specWarnInstability:Play("stackhigh")
 			end
 		end
 	elseif args:IsSpellID(70127, 72528, 72529, 72530) then	--Mystic Buffet (phase 3 - everyone)
@@ -202,6 +205,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			timerNextMysticBuffet:Start()
 			if (args.amount or 1) >= 5 then
 				specWarnMysticBuffet:Show(args.amount)
+				specWarnMysticBuffet:Play("stackhigh")
 			end
 			if (args.amount or 1) < 2 then
 				timerMysticAchieve:Start()
@@ -226,9 +230,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(70117) then--Icy Grip Cast, not blistering cold, but adds an extra 1sec to the warning
 		warnBlisteringCold:Show()
 		specWarnBlisteringCold:Show()
+		specWarnBlisteringCold:Play("runout")
 		timerBlisteringCold:Start()
 		timerNextBlisteringCold:Start()
-		soundBlisteringCold:Play()
 	end
 end
 

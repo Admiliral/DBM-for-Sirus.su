@@ -119,7 +119,10 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(72410) then
 		warnRuneofBlood:Show(args.destName)
-		specwarnRuneofBlood:Show(args.destName)
+		if not args:IsPlayer() then
+			specwarnRuneofBlood:Show(args.destName)
+			specwarnRuneofBlood:Play("tauntboss")
+		end
 		timerRuneofBlood:Start()
 	end
 end

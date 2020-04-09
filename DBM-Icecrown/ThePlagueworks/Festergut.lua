@@ -112,6 +112,7 @@ end
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(69195, 71219, 73031, 73032) then	-- Pungent Blight
 		specWarnPungentBlight:Show()
+		specWarnPungentBlight:Play("aesoon")
 		timerInhaledBlight:Start(38)
 	end
 end
@@ -127,6 +128,7 @@ function mod:OnSync(event, arg)
 		if time() - lastGoo > 5 then
 			warnGoo:Show()
 			specWarnGoo:Show()
+			specWarnGoo:Play("watchstep")
 			if mod:IsDifficulty("heroic25") then
 				timerGooCD:Start()
 			else
@@ -149,6 +151,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		if args:IsPlayer() then
 			specWarnGasSpore:Show()
+			specWarnGasSpore:Play("targetyou")
 			yellGasSpore:Yell()
 		end
 		if self.Options.SetIconOnGasSpore then
@@ -167,6 +170,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnInhaledBlight:Show(args.amount or 1)
 		if (args.amount or 1) >= 3 then
 			specWarnInhaled3:Show(args.amount)
+			specWarnInhaled3:Play("defensive")
 			timerPungentBlight:Start()
 		end
 		if (args.amount or 1) <= 2 then	--Prevent timer from starting after 3rd stack since he won't cast it a 4th time, he does Pungent instead.
@@ -178,11 +182,13 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerGastricBloatCD:Start()
 		if args:IsPlayer() and (args.amount or 1) >= 9 then
 			specWarnGastricBloat:Show(args.amount)
+			specWarnGastricBloat:Play("stackhigh")
 		end
 	elseif args:IsSpellID(69240, 71218, 73019, 73020) and args:IsDestTypePlayer() then	-- Vile Gas
 		vileGasTargets[#vileGasTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnVileGas:Show()
+			specWarnVileGas:Play("scatter")
 			yellVileGas:Yell()
 		end
 		self:Unschedule(warnVileGasTargets)

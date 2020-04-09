@@ -88,8 +88,6 @@ local timerRoleplay			= mod:NewTimer(162, "TimerRoleplay", 72350, nil, nil, 6)
 
 local berserkTimer			= mod:NewBerserkTimer(1020)
 
-local soundDefile			= mod:NewSound(72762)
-
 mod:AddBoolOption("SpecWarnHealerGrabbed", "Tank|Healer", "announce")
 mod:AddBoolOption("DefileIcon")
 mod:AddBoolOption("NecroticPlagueIcon")
@@ -165,7 +163,7 @@ function mod:OldDefileTarget()
 		end
 	if targetname == UnitName("player") then
 		specWarnDefileCast:Show()
-		soundDefile:Play()
+		specWarnDefileCast:Play("runout")
 		if self.Options.YellOnDefile then
 			SendChatMessage(L.YellDefile, "SAY")
 		end
@@ -195,6 +193,7 @@ function mod:OldTankTrap()
 	end
 	if LKTank == UnitName("player") then
 		specWarnTrap:Show()
+		specWarnTrap:Play("watchstep")
 		if self.Options.YellOnTrap then
 			SendChatMessage(L.YellTrap, "SAY")
 		end
@@ -209,6 +208,7 @@ function mod:OldTankTrap()
 		end
 		if inRange then
 			specWarnTrapNear:Show()
+			specWarnTrapNear:Play("watchstep")
 			if self.Options.TrapArrow then
 				DBM.Arrow:ShowRunAway(x, y, 10, 5)
 			end
@@ -228,6 +228,7 @@ function mod:OldTrapTarget()
 		end
 		if targetname == UnitName("player") then
 			specWarnTrap:Show()
+			specWarnTrap:Play("watchstep")
 			if self.Options.YellOnTrap then
 				SendChatMessage(L.YellTrap, "SAY")
 			end
@@ -242,6 +243,7 @@ function mod:OldTrapTarget()
 			end
 			if inRange then
 				specWarnTrapNear:Show()
+				specWarnTrapNear:Play("watchstep")
 				if self.Options.TrapArrow then
 					DBM.Arrow:ShowRunAway(x, y, 10, 5)
 				end
@@ -343,6 +345,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		lastPlagueCast = GetTime()
 		if args:IsPlayer() then
 			specWarnNecroticPlague:Show()
+			specWarnNecroticPlague:Play("runout")
 		end
 		if self.Options.NecroticPlagueIcon then
 			self:SetIcon(args.destName, 5, 5)
@@ -353,14 +356,17 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerSoulreaperCD:Start()
 		if args:IsPlayer() then
 			specWarnSoulreaper:Show()
+			specWarnSoulreaper:Play("defensive")
 		else
 			specWarnSoulreaperOtr:Show(args.destName)
+			specWarnSoulreaperOtr:Play("tauntboss")
 		end
 	elseif args:IsSpellID(69200) then -- Raging Spirit
 		warnRagingSpirit:Show(args.destName)
 		timerSoulScreechCD:Start()
 		if args:IsPlayer() then
 			specWarnRagingSpirit:Show()
+			specWarnRagingSpirit:Play("targetyou")
 		end
 		if self.vb.phase == 1 then
 			timerRagingSpiritCD:Start()
@@ -376,12 +382,14 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerHarvestSoulCD:Start()
 		if args:IsPlayer() then
 			specWarnHarvestSoul:Show()
+			specWarnHarvestSoul:Play("targetyou")
 		end
 		if self.Options.HarvestSoulIcon then
 			self:SetIcon(args.destName, 6, 6)
 		end
 	elseif args:IsSpellID(73654, 74295, 74296, 74297) then -- Harvest Souls (Heroic)
 		specWarnHarvestSouls:Show()
+		specWarnHarvestSouls:Play("phasechange")
 		timerVileSpirit:Cancel()
 		timerSoulreaperCD:Cancel()
 		timerDefileCD:Cancel()
@@ -397,23 +405,18 @@ function mod:SPELL_DISPEL(args)
 	end
 end
 
-do
-	local lastDefile = 0
-	local lastRestore = 0
-	function mod:SPELL_AURA_APPLIED(args)
-		if args:IsSpellID(72143, 72146, 72147, 72148) then -- Shambling Horror enrage effect.
-			warnShamblingEnrage:Show(args.destName)
-			timerEnrageCD:Start()
-		elseif args:IsSpellID(72754, 73708, 73709, 73710) and args:IsPlayer() and time() - lastDefile > 2 then		-- Defile Damage
-			specWarnDefile:Show()
-			lastDefile = time()
-		elseif args:IsSpellID(73650) and time() - lastRestore > 3 then		-- Restore Soul (Heroic)
-			lastRestore = time()
-			timerHarvestSoulCD:Start(60)
-			timerVileSpirit:Start(10) --May be wrong too but we'll see, didn't have enough log for this one.
---			timerSoulreaperCD:Start(2) --seems random anywheres from 2-10seconds after
---			timerDefileCD:Start(2) --seems random anywheres from 2-10seconds after
-		end
+function mod:SPELL_AURA_APPLIED(args)
+	if args:IsSpellID(72143, 72146, 72147, 72148) then -- Shambling Horror enrage effect.
+		warnShamblingEnrage:Show(args.destName)
+		timerEnrageCD:Start()
+	elseif args:IsSpellID(72754, 73708, 73709, 73710) and args:IsPlayer() and self:AntiSpam(2, 1) then		-- Defile Damage
+		specWarnDefile:Show()
+		specWarnDefile:Play("runaway")
+	elseif args:IsSpellID(73650) and self:AntiSpam(3, 2) then		-- Restore Soul (Heroic)
+		timerHarvestSoulCD:Start(60)
+		timerVileSpirit:Start(10) --May be wrong too but we'll see, didn't have enough log for this one.
+--		timerSoulreaperCD:Start(2) --seems random anywheres from 2-10seconds after
+--		timerDefileCD:Start(2) --seems random anywheres from 2-10seconds after
 	end
 end
 
@@ -448,6 +451,7 @@ do
 					valkyrTargets[i] = true -- this person has been announced
 					if UnitName("raid"..i) == UnitName("player") then
 						specWarnYouAreValkd:Show()
+						specWarnYouAreValkd:Play("targetyou")
 						if mod:IsHealer() then --Is player that's grabbed a healer
 							if isPAL then
 								mod:SendSync("PALGrabbed", UnitName("player")) --They are a holy paladin
@@ -506,13 +510,10 @@ do
 	end, 1)
 end
 
-do
-	local lastWinter = 0
-	function mod:SPELL_DAMAGE(args)
-		if args:IsSpellID(68983, 73791, 73792, 73793) and args:IsPlayer() and time() - lastWinter > 2 then		-- Remorseless Winter
-			specWarnWinter:Show()
-			lastWinter = time()
-		end
+function mod:SPELL_DAMAGE(args)
+	if args:IsSpellID(68983, 73791, 73792, 73793) and args:IsPlayer() and self:AntiSpam(2, 3) then		-- Remorseless Winter
+		specWarnWinter:Show()
+		specWarnWinter:Play("runaway")
 	end
 end
 
@@ -520,6 +521,7 @@ function mod:UNIT_HEALTH(uId)
 	if (mod:IsDifficulty("heroic10") or mod:IsDifficulty("heroic25")) and uId == "target" and self:GetUnitCreatureId(uId) == 36609 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.55 and not warnedValkyrGUIDs[UnitGUID(uId)] then
 		warnedValkyrGUIDs[UnitGUID(uId)] = true
 		specWarnValkyrLow:Show()
+		specWarnValkyrLow:Play("stopattack")
 	end
 	if self.vb.phase == 1 and not warned_preP2 and self:GetUnitCreatureId(uId) == 36597 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.73 then
 		warned_preP2 = true
@@ -600,6 +602,7 @@ function mod:OnSync(msg, target)
 			end
 			if target == UnitName("player") then
 				specWarnTrap:Show()
+				specWarnTrap:Play("watchstep")
 				if self.Options.YellOnTrap then
 					SendChatMessage(L.YellTrap, "SAY")
 				end
@@ -614,6 +617,7 @@ function mod:OnSync(msg, target)
 				end
 				if inRange then
 					specWarnTrapNear:Show()
+					specWarnTrapNear:Play("watchstep")
 					if self.Options.TrapArrow then
 						DBM.Arrow:ShowRunAway(x, y, 10, 5)
 					end
@@ -628,7 +632,7 @@ function mod:OnSync(msg, target)
 			end
 			if target == UnitName("player") then
 				specWarnDefileCast:Show()
-				soundDefile:Play()
+				specWarnDefileCast:Play("runout")
 				if self.Options.YellOnDefile then
 					SendChatMessage(L.YellDefile, "SAY")
 				end

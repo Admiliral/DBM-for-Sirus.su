@@ -51,7 +51,6 @@ local timerShadowPrison			= mod:NewBuffFadesTimer(10, 72999, nil, nil, nil, 5) -
 
 local berserkTimer				= mod:NewBerserkTimer(600)
 
-local soundEmpoweredFlames		= mod:NewSound(72040)
 mod:AddBoolOption("EmpoweredFlameIcon", true)
 mod:AddBoolOption("ActivePrinceIcon", false)
 mod:AddBoolOption("RangeFrame", true)
@@ -100,6 +99,7 @@ function mod:OldShockVortexTarget()
 	warnShockVortex:Show(targetname)
 	if targetname == UnitName("player") then
 		specWarnVortex:Show()
+		specWarnVortex:Play("watchstep")
 		yellVortex:Yell()
 	elseif targetname then
 		local uId = DBM:GetRaidUnitId(targetname)
@@ -112,6 +112,7 @@ function mod:OldShockVortexTarget()
 			end
 			if inRange then
 				specWarnVortexNear:Show()
+				specWarnVortexNear:Play("watchstep")
 				if self.Options.VortexArrow then
 					DBM.Arrow:ShowRunAway(x, y, 10, 5)
 				end
@@ -149,6 +150,7 @@ function mod:SPELL_CAST_START(args)
 	elseif args:IsSpellID(72039, 73037, 73038, 73039) then	-- Empowered Shock Vortex(73037, 73038, 73039 drycoded from wowhead)
 		warnEmpoweredShockVortex:Show()
 		specWarnEmpoweredShockV:Show()
+		specWarnEmpoweredShockV:Play("scatter")
 		timerShockVortex:Start()
 	elseif args:IsSpellID(71718) then	-- Conjure Flames
 		warnConjureFlames:Show()
@@ -189,6 +191,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			timerShadowPrison:Start()
 			if (args.amount or 1) >= 6 then	--Placeholder right now, might use a different value
 				specWarnShadowPrison:Show(args.amount)
+				specWarnShadowPrison:Play("stackhigh")
 			end
 		end
 	elseif args:IsSpellID(71807, 72796, 72797, 72798) and args:IsDestTypePlayer() then	-- Glittering Sparks(Dot/slow, dangerous on heroic during valanaar)
@@ -212,7 +215,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)
 		warnEmpoweredFlames:Show(target)
 		if target == UnitName("player") then
 			specWarnEmpoweredFlames:Show()
-			soundEmpoweredFlames:Play()
+			specWarnEmpoweredFlames:Play("justrun")
 		end
 		if self.Options.EmpoweredFlameIcon then
 			self:SetIcon(target, 7, 10)

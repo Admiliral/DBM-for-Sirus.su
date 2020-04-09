@@ -23,7 +23,6 @@ local timerDisruptingShout		= mod:NewCastTimer(3, 71022)
 local timerDarkReckoning		= mod:NewTargetTimer(8, 69483)
 local timerDeathPlague			= mod:NewTargetTimer(15, 72865)
 
-local soundDarkReckoning = mod:NewSound(69483)
 mod:AddBoolOption("SetIconOnDarkReckoning", true)
 mod:AddBoolOption("SetIconOnDeathPlague", true)
 mod:RemoveOption("HealthFrame")
@@ -43,7 +42,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerDarkReckoning:Start(args.destName)
 		if args:IsPlayer() then
 			specWarnDarkReckoning:Show()
-			soundDarkReckoning:Play()
+			specWarnDarkReckoning:Play("runaway")
 		end
 		if self.Options.SetIconOnDarkReckoning then
 			self:SetIcon(args.destName, 8, 8)

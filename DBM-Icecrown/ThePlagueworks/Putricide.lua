@@ -64,8 +64,6 @@ local timerRegurgitatedOoze			= mod:NewTargetTimer(20, 70539, nil, nil, nil, 5, 
 
 local berserkTimer					= mod:NewBerserkTimer(600)
 
-local soundGaseousBloat 			= mod:NewSound(72455)
-
 mod:AddBoolOption("OozeAdhesiveIcon")
 mod:AddBoolOption("GaseousBloatIcon")
 mod:AddBoolOption("MalleableGooIcon")
@@ -130,6 +128,7 @@ function mod:OldMalleableGooTarget()
 			end
 			if inRange then
 				specWarnMalleableGooNear:Show()
+				specWarnMalleableGooNear:Play("watchstep")
 				if self.Options.GooArrow then
 					DBM.Arrow:ShowRunAway(x, y, 10, 5)
 				end
@@ -215,6 +214,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 -- 	elseif args:IsSpellID(72615, 72295, 74280, 74281, 70852, 72296) then
 -- 		warnMalleableGoo:Show()
 -- 		specWarnMalleableGooCast:Show()
+-- 		specWarnMalleableGooCast:Play("watchstep")
 -- 		if mod:IsDifficulty("heroic10") or mod:IsDifficulty("heroic25") then
 -- 			timerMalleableGooCD:Start(20)
 -- 		else
@@ -232,6 +232,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L.EmoteMalleable then
 		warnMalleableGoo:Show()
 		specWarnMalleableGooCast:Show()
+		specWarnMalleableGooCast:Play("watchstep")
 		timerMalleableGooCD:Start()
 		if self.Options.BypassLatencyCheck then
 			self:ScheduleMethod(0.1, "OldMalleableGooTarget")
@@ -247,6 +248,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnVolatileOozeOther:Show(args.destName)
 		if args:IsPlayer() then
 			specWarnVolatileOozeAdhesive:Show()
+			specWarnVolatileOozeAdhesive:Play("helpsoak")
 		end
 		if self.Options.OozeAdhesiveIcon then
 			self:SetIcon(args.destName, 8, 8)
@@ -257,7 +259,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerGaseousBloat:Start(args.destName)
 		if args:IsPlayer() then
 			specWarnGaseousBloat:Show()
-			soundGaseousBloat:Play()
+			specWarnGaseousBloat:Play("justrun")
 		end
 		if self.Options.GaseousBloatIcon then
 			self:SetIcon(args.destName, 7, 20)
@@ -286,6 +288,7 @@ function mod:SPELL_AURA_APPLIED(args)
 -- 		end
 -- 		if args:IsPlayer() then
 -- 			specWarnUnboundPlague:Show()
+-- 			specWarnUnboundPlague:Play("targetyou")
 -- 			timerUnboundPlague:Start()
 -- 			yellUnboundPlague:Yell()
 -- 		end
@@ -367,6 +370,7 @@ function mod:OnSync(msg, target)
 					end
 					if inRange then
 						specWarnMalleableGooNear:Show()
+						specWarnMalleableGooNear:Play("watchstep")
 						if self.Options.GooArrow then
 							DBM.Arrow:ShowRunAway(x, y, 10, 5)
 						end

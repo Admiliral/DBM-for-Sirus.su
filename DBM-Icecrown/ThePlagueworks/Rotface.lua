@@ -42,7 +42,6 @@ local timerMutatedInfection		= mod:NewTargetTimer(12, 71224, nil, nil, nil, 3)
 local timerOozeExplosion		= mod:NewCastTimer(4, 69839, nil, nil, nil, 2)
 local timerVileGasCD			= mod:NewNextTimer(30, 72272, nil, nil, nil, 3)
 
-local soundMutatedInfection		= mod:NewSound(71224)
 mod:AddBoolOption("RangeFrame", "Ranged")
 mod:AddBoolOption("InfectionIcon", true)
 mod:AddBoolOption("TankArrow")
@@ -114,6 +113,7 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsPlayer() and args:IsSpellID(71208) then
 		specWarnStickyOoze:Show()
+		specWarnStickyOoze:Play("runaway")
 	elseif args:IsSpellID(69760) then
 		warnRadiatingOoze:Show()
 	elseif args:IsSpellID(69558) then
@@ -123,7 +123,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerMutatedInfection:Start(args.destName)
 		if args:IsPlayer() then
 			specWarnMutatedInfection:Show()
-			soundMutatedInfection:Play()
+			specWarnMutatedInfection:Play("movetotank")
 		end
 		if self.Options.InfectionIcon then
 			self:SetIcon(args.destName, InfectionIcon, 12)
@@ -137,6 +137,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		RFVileGasTargets[#RFVileGasTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnVileGas:Show()
+			specWarnVileGas:Play("scatter")
 		end
 		self:Unschedule(warnRFVileGasTargets)
 		self:Schedule(2.5, warnRFVileGasTargets) -- Yes it does take this long to travel to all 3 targets sometimes, qq.
@@ -164,6 +165,7 @@ end
 function mod:SPELL_DAMAGE(args)
 	if args:IsSpellID(69761, 71212, 73026, 73027) and args:IsPlayer() then
 		specWarnRadiatingOoze:Show()
+		specWarnRadiatingOoze:Play("runaway")
 	elseif args:GetDestCreatureID() == 36899 and args:IsSrcTypePlayer() and not args:IsSpellID(53189, 53190, 53194, 53195) then--Any spell damage except for starfall (ranks 3 and 4)
 --		self:ScheduleMethod(1, "SlimeTank")
 		if args.sourceName ~= UnitName("player") then
@@ -177,6 +179,7 @@ end
 function mod:SWING_DAMAGE(args)
 	if args:IsPlayer() and args:GetSrcCreatureID() == 36897 then --Little ooze hitting you
 		specWarnLittleOoze:Show()
+		specWarnLittleOoze:Play("keepmove")
 	elseif args:GetDestCreatureID() == 36899 and args:IsSrcTypePlayer() then
 --		self:ScheduleMethod(1, "SlimeTank")
 		if args.sourceName ~= UnitName("player") then

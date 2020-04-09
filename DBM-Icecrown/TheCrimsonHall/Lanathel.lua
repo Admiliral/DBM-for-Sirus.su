@@ -45,8 +45,6 @@ local timerEssenceoftheBloodQueen	= mod:NewBuffFadesTimer(60, 71473, nil, nil, n
 
 local berserkTimer					= mod:NewBerserkTimer(320)
 
-local soundSwarmingShadows			= mod:NewSound(71266)
-
 mod:AddBoolOption("BloodMirrorIcon", false)
 mod:AddBoolOption("SwarmingShadowsIcon", true)
 mod:AddBoolOption("SetIconOnDarkFallen", true)
@@ -92,6 +90,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		pactTargets[#pactTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnPactDarkfallen:Show()
+			specWarnPactDarkfallen:Play("linegather")
 		end
 		if self.Options.SetIconOnDarkFallen then--Debuff doesn't actually last 30 seconds
 			self:SetIcon(args.destName, pactIcons, 28)--it lasts forever, but if you still have it after 28 seconds
@@ -112,6 +111,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnBloodthirst:Show(args.destName)
 		if args:IsPlayer() then
 			specWarnBloodthirst:Show()
+			specWarnBloodthirst:Play("frenzy")
 			yellBloodthirst:Yell()
 			if mod:IsDifficulty("normal10") or mod:IsDifficulty("heroic10") then
 				timerBloodThirst:Start(15)--15 seconds on 10 man
@@ -123,6 +123,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnEssenceoftheBloodQueen:Show(args.destName)
 		if args:IsPlayer() then
 			specWarnEssenceoftheBloodQueen:Show()
+			specWarnEssenceoftheBloodQueen:Play("targetyou")
 		end
 		if mod:IsDifficulty("normal10") or mod:IsDifficulty("heroic10") then
 			timerEssenceoftheBloodQueen:Start(75)--75 seconds on 10 man
@@ -133,9 +134,11 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif args:IsSpellID(70923) then
 		warnMindControlled:Show(args.destName)
+		warnMindControlled:Play("findmc")
 		specWarnMindConrolled:Show(args.destName)
 	elseif args:IsSpellID(71772) then
 		specWarnBloodBolt:Show()
+		specWarnBloodBolt:Play("scatter")
 		timerBloodBolt:Start()
 	end
 end
@@ -159,6 +162,7 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(73070) then				--Incite Terror (fear before air phase)
 		warnInciteTerror:Show()
+		warnInciteTerror:Play("fearsoon")
 		timerInciteTerror:Start()
 		timerNextSwarmingShadows:Start()--This resets the swarming shadows timer
 		timerNextPactDarkfallen:Start(25)--and the Pact timer also reset -5 seconds
@@ -182,6 +186,7 @@ do
 		if args:IsPlayer() and args:IsSpellID(71277, 72638, 72639, 72640) then		--Swarn of Shadows (spell damage, you're standing in it.)
 			if GetTime() - 3 > lastswarm then
 				specWarnSwarmingShadows:Show()
+				specWarnSwarmingShadows:Play("runaway")
 				lastswarm = GetTime()
 			end
 		end
@@ -194,7 +199,8 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)
 		timerNextSwarmingShadows:Start()
 		if target == UnitName("player") then
 			specWarnSwarmingShadows:Show()
-			soundSwarmingShadows:Play()
+			specWarnSwarmingShadows:Play("runout")
+			specWarnSwarmingShadows:ScheduleVoice(1.5, "keepmove")
 		end
 		if self.Options.SwarmingShadowsIcon then
 			self:SetIcon(target, 8, 6)

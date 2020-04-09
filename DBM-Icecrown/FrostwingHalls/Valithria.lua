@@ -132,12 +132,14 @@ function mod:SPELL_AURA_APPLIED(args)
 		self:Schedule(0.3, warnGutSprayTargets)
 		if self:IsTank() then
 			specWarnGutSpray:Show()
+			specWarnGutSpray:Play("defensive")
 		end
 	elseif args:IsSpellID(70751, 71738, 72022, 72023) and args:IsDestTypePlayer() then--Corrosion
 		warnCorrosion:Show(args.spellName, args.destName, args.amount or 1)
 		timerCorrosion:Start(args.destName)
 	elseif args:IsSpellID(69325, 71730) then--Lay Waste
 		specWarnLayWaste:Show()
+		specWarnLayWaste:Play("aesoon")
 		timerLayWaste:Start()
 	elseif args:IsSpellID(70873, 71941) then	--Emerald Vigor/Twisted Nightmares (portal healers)
 		if args:IsPlayer() then
@@ -156,22 +158,13 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
-do
-	local lastVoid = 0
-	function mod:SPELL_DAMAGE(args)
-		if args:IsSpellID(71086, 71743, 72029, 72030) and args:IsPlayer() and time() - lastVoid > 2 then		-- Mana Void
-			specWarnManaVoid:Show()
-			lastVoid = time()
-		end
-	end
-
-	function mod:SPELL_MISSED(args)
-		if args:IsSpellID(71086, 71743, 72029, 72030) and args:IsPlayer() and time() - lastVoid > 2 then		-- Mana Void
-			specWarnManaVoid:Show()
-			lastVoid = time()
-		end
+function mod:SPELL_DAMAGE(args)
+	if args:IsSpellID(71086, 71743, 72029, 72030) and args:IsPlayer() and self:AntiSpam(2, 2) then		-- Mana Void
+		specWarnManaVoid:Show()
+		specWarnManaVoid:Play("runaway")
 	end
 end
+mod.SPELL_MISSED = mod.SPELL_DAMAGE
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if (msg == L.YellPortals or msg:find(L.YellPortals)) and mod:LatencyCheck() then

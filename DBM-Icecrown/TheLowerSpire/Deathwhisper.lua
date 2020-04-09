@@ -177,6 +177,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(71001, 72108, 72109, 72110) then
 		if args:IsPlayer() then
 			specWarnDeathDecay:Show()
+			specWarnDeathDecay:Play("runaway")
 		end
 		if (GetTime() - lastDD > 5) then
 			warnDeathDecay:Show()
@@ -184,15 +185,19 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif args:IsSpellID(71237) and args:IsPlayer() then
 		specWarnCurseTorpor:Show()
+		specWarnCurseTorpor:Play("targetyou")
 	elseif args:IsSpellID(70674) and not args:IsDestTypePlayer() and (UnitName("target") == L.Fanatic1 or UnitName("target") == L.Fanatic2 or UnitName("target") == L.Fanatic3) then
 		specWarnVampricMight:Show(args.destName)
+		specWarnVampricMight:Play("helpdispel")
 	elseif args:IsSpellID(71204) then
 		warnTouchInsignificance:Show(args.spellName, args.destName, args.amount or 1)
 		timerTouchInsignificance:Start(args.destName)
 		if args:IsPlayer() and (args.amount or 1) >= 3 and (mod:IsDifficulty("normal10") or mod:IsDifficulty("normal25")) then
 			specWarnTouchInsignificance:Show(args.amount)
+			specWarnTouchInsignificance:Play("stackhigh")
 		elseif args:IsPlayer() and (args.amount or 1) >= 5 and (mod:IsDifficulty("heroic10") or mod:IsDifficulty("heroic25")) then
 			specWarnTouchInsignificance:Show(args.amount)
+			specWarnTouchInsignificance:Play("stackhigh")
 		end
 	end
 end
@@ -239,6 +244,7 @@ end
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(71420, 72007, 72501, 72502) then
 		warnFrostbolt:Show()
+		warnFrostbolt:Play("kickcast")
 		timerFrostboltCast:Start()
 	elseif args:IsSpellID(70900) then
 		warnDarkTransformation:Show()
@@ -255,6 +261,7 @@ function mod:SPELL_CAST_START(args)
 	elseif args:IsSpellID(72499, 72500, 72497, 72496) then
 		warnDarkMartyrdom:Show()
 		specWarnDarkMartyrdom:Show()
+		specWarnDarkMartyrdom:Play("justrun")
 	end
 end
 
