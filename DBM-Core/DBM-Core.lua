@@ -73,9 +73,9 @@ local function showRealDate(curseDate)
 end
 
 DBM = {
-	Revision = parseCurseDate("20200405141240"),
+	Revision = parseCurseDate("202004101174223"),
 	DisplayVersion = "5.40", -- the string that is shown as version
-	ReleaseRevision = releaseDate(2020, 4, 05) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
+	ReleaseRevision = releaseDate(2020, 4, 5) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
 
@@ -441,6 +441,7 @@ local handleSync
 local enableIcons = true -- set to false when a raid leader or a promoted player has a newer version of DBM
 
 local bannedMods = { -- a list of "banned" (meaning they are replaced by another mod or discontinued). These mods will not be loaded by DBM (and they wont show up in the GUI)
+	"DBM_API",
 	"DBM-Outlands",
 	"DBM-Sunwell",
 	"DBM-Battlegrounds", --replaced by DBM-PvP
