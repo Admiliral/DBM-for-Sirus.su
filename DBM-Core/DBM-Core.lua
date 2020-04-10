@@ -73,7 +73,7 @@ local function showRealDate(curseDate)
 end
 
 DBM = {
-	Revision = parseCurseDate("20200410233000"),
+	Revision = parseCurseDate("20200411003253"),
 	DisplayVersion = "5.40", -- the string that is shown as version
 	ReleaseRevision = releaseDate(2020, 4, 10) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
@@ -2149,12 +2149,22 @@ do
 		end
 	end
 
-	function DBM:RAID_ROSTER_UPDATE()
-		updateAllRoster(self)
+	function DBM:RAID_ROSTER_UPDATE(force)
+		self:Unschedule(updateAllRoster)
+		if force then
+			updateAllRoster(self)
+		else
+			self:Schedule(1.5, updateAllRoster, self)
+		end
 	end
 
-	function DBM:PARTY_MEMBERS_CHANGED()
-		updateAllRoster(self)
+	function DBM:PARTY_MEMBERS_CHANGED(force)
+		self:Unschedule(updateAllRoster)
+		if force then
+			updateAllRoster(self)
+		else
+			self:Schedule(1.5, updateAllRoster, self)
+		end
 	end
 
 	function DBM:IsInRaid()
@@ -2354,7 +2364,7 @@ function DBM:LoadModOptions(modId, inCombat, first)
 	local savedVarsName = modId:gsub("-", "").."_AllSavedVars"
 	local savedStatsName = modId:gsub("-", "").."_SavedStats"
 	local fullname = playerName.."-"..playerRealm
-	if not currentSpecGroup then
+	if not currentSpecName or not currentSpecGroup then
 		self:SetCurrentSpecInfo()
 	end
 	local profileNum = playerLevel > 9 and DBM_UseDualProfile and currentSpecGroup or 0
@@ -2490,7 +2500,7 @@ function DBM:LoadAllModDefaultOption(modId)
 	-- modId is string like "DBM-Highmaul"
 	if not modId or not self.ModLists[modId] then return end
 	-- prevent error
-	if not currentSpecGroup then
+	if not currentSpecName or not currentSpecGroup then
 		self:SetCurrentSpecInfo()
 	end
 	-- variable init
@@ -2529,7 +2539,7 @@ function DBM:LoadModDefaultOption(mod)
 	-- mod must be table
 	if not mod then return end
 	-- prevent error
-	if not currentSpecGroup then
+	if not currentSpecName or not currentSpecGroup then
 		self:SetCurrentSpecInfo()
 	end
 	-- variable init
@@ -2565,7 +2575,7 @@ function DBM:CopyAllModOption(modId, sourceName, sourceProfile)
 	-- modId is string like "DBM-Highmaul"
 	if not modId or not sourceName or not sourceProfile or not DBM.ModLists[modId] then return end
 	-- prevent error
-	if not currentSpecGroup then
+	if not currentSpecName or not currentSpecGroup then
 		self:SetCurrentSpecInfo()
 	end
 	-- variable init
@@ -2625,7 +2635,7 @@ function DBM:CopyAllModTypeOption(modId, sourceName, sourceProfile, Type)
 	-- modId is string like "DBM-Highmaul"
 	if not modId or not sourceName or not sourceProfile or not self.ModLists[modId] or not Type then return end
 	-- prevent error
-	if not currentSpecGroup then
+	if not currentSpecName or not currentSpecGroup then
 		self:SetCurrentSpecInfo()
 	end
 	-- variable init
@@ -2682,7 +2692,7 @@ function DBM:DeleteAllModOption(modId, name, profile)
 	-- modId is string like "DBM-Highmaul"
 	if not modId or not name or not profile or not self.ModLists[modId] then return end
 	-- prevent error
-	if not currentSpecGroup then
+	if not currentSpecName or not currentSpecGroup then
 		self:SetCurrentSpecInfo()
 	end
 	-- variable init
@@ -2886,7 +2896,7 @@ function DBM:LoadMod(mod, force)
 		EnableAddOn(mod.modId)
 	end
 
-	if not currentSpecGroup then
+	if not currentSpecName or not currentSpecGroup then
 		self:SetCurrentSpecInfo()
 	end
 	self:Debug("LoadAddOn should have fired for "..mod.name, 2)
