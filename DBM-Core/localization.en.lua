@@ -459,6 +459,9 @@ DBM_ARROW_ERROR_USAGE	= {
 	"/dbm arrow move  makes the arrow movable",
 }
 
+DBM_SPEED_KILL_TIMER_TEXT	= "Record Victory"
+DBM_CORE_TIMER_RESPAWN		= "%s Respawn"
+
 --Role Icons
 DBM_CORE_TANK_ICON			= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:20:20:0:0:255:66:6:21:7:27|t"
 DBM_CORE_DAMAGE_ICON		= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:20:20:0:0:255:66:39:55:7:27|t"

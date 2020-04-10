@@ -422,5 +422,8 @@ DBM_ARROW_ERROR_USAGE	= {
 	"/dbm arrow move: разрешает перемещение стрелки",
 }
 
+DBM_SPEED_KILL_TIMER_TEXT	= "Рекордная победа"
+DBM_CORE_TIMER_RESPAWN		= "Появление %s"
+
 --LDB
 DBM_LDB_TOOLTIP_HELP1	= "Левый клик чтобы открыть DBM"
