@@ -962,7 +962,6 @@ do
 				"CHAT_MSG_MONSTER_EMOTE",
 				"CHAT_MSG_MONSTER_SAY",
 				"CHAT_MSG_RAID_BOSS_EMOTE",
-				"RESURRECT_REQUEST",
 				"PLAYER_ENTERING_WORLD",
 				"SPELL_CAST_SUCCESS",
 				"LFG_PROPOSAL_SHOW",
@@ -2842,12 +2841,6 @@ function DBM:LFG_UPDATE()
 	local _, joined = GetLFGInfoServer()
 	if not joined then
 		DBM.Bars:CancelBar(DBM_LFG_INVITE)
-	end
-end
-
-function DBM:RESURRECT_REQUEST()
-	if DBM.Options.Memes then
-		PlaySoundFile(soundFolder:format("erjan"))
 	end
 end
 
