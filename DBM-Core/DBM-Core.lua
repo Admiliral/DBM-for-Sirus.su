@@ -6099,7 +6099,7 @@ do
 
 	function yellPrototype:Countdown(time, numAnnounces, ...)
 		if time > 60 then--It's a spellID not a time
-			local _, _, _, _, _, expireTime = DBM:UnitDebuff("player", time)
+			local _, _, _, _, _, _, expireTime = DBM:UnitDebuff("player", time)
 			if expireTime then
 				local remaining = expireTime-GetTime()
 				scheduleCountdown(remaining, numAnnounces, self.Yell, self.mod, self, ...)
