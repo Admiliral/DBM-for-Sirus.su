@@ -972,7 +972,6 @@ do
 			)
 			self:ZONE_CHANGED_NEW_AREA()
 			self:RAID_ROSTER_UPDATE()
-			self:PARTY_MEMBERS_CHANGED()
 			DBM:Schedule(1.5, setCombatInitialized)
 		end
 	end
