@@ -97,7 +97,7 @@ end
 function mod:SPELL_AURA_APPLIED_DOSE(args)
 	if args:IsSpellID(72306, 69638) and ((UnitFactionGroup("player") == "Alliance" and mod:GetCIDFromGUID(args.destGUID) == 36939) or (UnitFactionGroup("player") == "Horde" and mod:GetCIDFromGUID(args.destGUID) == 37200)) then
 		if args.amount % 10 == 0 or (args.amount >= 20 and args.amount % 5 == 0) then		-- warn every 10th stack and every 5th stack if more than 20
-			warnBattleFury:Show(GetSpellInfo(72306), args.amount or 1)
+			warnBattleFury:Show(args.destName, args.amount or 1)
 		end
 		timerBattleFuryActive:Start()
 	end

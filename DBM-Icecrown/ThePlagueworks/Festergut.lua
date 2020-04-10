@@ -167,7 +167,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			self:Schedule(0.3, warnGasSporeTargets)
 		end
 	elseif args:IsSpellID(69166, 71912) then	-- Inhaled Blight
-		warnInhaledBlight:Show(args.amount or 1)
+		warnInhaledBlight:Show(args.destName, args.amount or 1)
 		if (args.amount or 1) >= 3 then
 			specWarnInhaled3:Show(args.amount)
 			specWarnInhaled3:Play("defensive")
@@ -177,7 +177,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			timerInhaledBlight:Start()
 		end
 	elseif args:IsSpellID(72219, 72551, 72552, 72553) then	-- Gastric Bloat
-		warnGastricBloat:Show(args.spellName, args.destName, args.amount or 1)
+		warnGastricBloat:Show(args.destName, args.amount or 1)
 		timerGastricBloat:Start(args.destName)
 		timerGastricBloatCD:Start()
 		if args:IsPlayer() and (args.amount or 1) >= 9 then

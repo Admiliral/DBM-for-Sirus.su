@@ -36,7 +36,7 @@ local specWarnDeathDecay			= mod:NewSpecialWarningMove(72108, nil, nil, nil, 1, 
 local specWarnTouchInsignificance	= mod:NewSpecialWarningStack(71204, nil, 3, nil, nil, 1, 6)
 local specWarnVampricMight			= mod:NewSpecialWarningDispel(70674, "MagicDispeller", nil, nil, 1, 2)
 local specWarnDarkMartyrdom			= mod:NewSpecialWarningRun(72499, "Melee", nil, nil, 4, 2)
-local specWarnFrostbolt				= mod:NewSpecialWarningInterrupt(72007, false, nil, 2, 1, 2) -- TODO: HasInterrupt
+local specWarnFrostbolt				= mod:NewSpecialWarningInterrupt(72007, nil, nil, 2, 1, 2) -- TODO: HasInterrupt
 local specWarnVengefulShade			= mod:NewSpecialWarning("SpecWarnVengefulShade", "-Tank")
 
 local timerAdds						= mod:NewTimer(60, "TimerAdds", 61131, nil, nil, 1, DBM_CORE_TANK_ICON..DBM_CORE_DAMAGE_ICON)
@@ -190,7 +190,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnVampricMight:Show(args.destName)
 		specWarnVampricMight:Play("helpdispel")
 	elseif args:IsSpellID(71204) then
-		warnTouchInsignificance:Show(args.spellName, args.destName, args.amount or 1)
+		warnTouchInsignificance:Show(args.destName, args.amount or 1)
 		timerTouchInsignificance:Start(args.destName)
 		if args:IsPlayer() and (args.amount or 1) >= 3 and (mod:IsDifficulty("normal10") or mod:IsDifficulty("normal25")) then
 			specWarnTouchInsignificance:Show(args.amount)

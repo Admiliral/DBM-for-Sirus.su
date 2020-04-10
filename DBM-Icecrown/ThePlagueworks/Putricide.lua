@@ -267,7 +267,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(71615, 71618) then	--71615 used in 10 and 25 normal, 71618?
 		timerTearGas:Start()
 	elseif args:IsSpellID(72451, 72463, 72671, 72672) then	-- Mutated Plague
-		warnMutatedPlague:Show(args.spellName, args.destName, args.amount or 1)
+		warnMutatedPlague:Show(args.destName, args.amount or 1)
 		timerMutatedPlagueCD:Start()
 	elseif args:IsSpellID(70542) then
 		timerMutatedSlash:Show(args.destName)

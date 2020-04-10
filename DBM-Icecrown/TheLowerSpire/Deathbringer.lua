@@ -42,6 +42,8 @@ mod:AddSetIconOption("BeastIcons", 72173, true, true, {1, 2, 3, 4, 5, 6, 7, 8})
 mod:AddBoolOption("BoilingBloodIcons", false)
 mod:RemoveOption("HealthFrame")
 
+mod.vb.Mark = 0
+
 local warned_preFrenzy = false
 local boilingBloodTargets = {}
 local boilingBloodIcon 	= 8
@@ -73,6 +75,7 @@ function mod:OnCombatStart(delay)
 	table.wipe(boilingBloodTargets)
 	warned_preFrenzy = false
 	boilingBloodIcon = 8
+	self.vb.Mark = 0
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(12)
 	end
@@ -173,7 +176,8 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(72293) then		-- Mark of the Fallen Champion
-		warnMark:Show(args.destName)
+		self.vb.Mark = self.vb.Mark + 1
+		warnMark:Show(self.vb.Mark, args.destName)
 		specwarnMark:Show(args.destName)
 	elseif args:IsSpellID(72385, 72441, 72442, 72443) then	-- Boiling Blood
 		boilingBloodTargets[#boilingBloodTargets + 1] = args.destName

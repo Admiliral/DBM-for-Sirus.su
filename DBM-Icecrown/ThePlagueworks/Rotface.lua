@@ -117,7 +117,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(69760) then
 		warnRadiatingOoze:Show()
 	elseif args:IsSpellID(69558) then
-		warnUnstableOoze:Show(args.spellName, args.destName, args.amount or 1)
+		warnUnstableOoze:Show(args.destName, args.amount or 1)
 	elseif args:IsSpellID(69674, 71224, 73022, 73023) then
 		warnMutatedInfection:Show(args.destName)
 		timerMutatedInfection:Start(args.destName)

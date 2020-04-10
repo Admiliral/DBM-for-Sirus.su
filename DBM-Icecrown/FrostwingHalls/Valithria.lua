@@ -135,7 +135,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnGutSpray:Play("defensive")
 		end
 	elseif args:IsSpellID(70751, 71738, 72022, 72023) and args:IsDestTypePlayer() then--Corrosion
-		warnCorrosion:Show(args.spellName, args.destName, args.amount or 1)
+		warnCorrosion:Show(args.destName, args.amount or 1)
 		timerCorrosion:Start(args.destName)
 	elseif args:IsSpellID(69325, 71730) then--Lay Waste
 		specWarnLayWaste:Show()
