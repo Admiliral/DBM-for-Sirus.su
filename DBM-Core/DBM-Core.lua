@@ -799,21 +799,6 @@ do
 	local onLoadCallbacks = {}
 	local disabledMods = {}
 
-	local function showOldVerWarning()
-		StaticPopupDialogs["DBM_OLD_VERSION"] = {
-			text = DBM_CORE_ERROR_DBMV3_LOADED,
-			button1 = DBM_CORE_OK,
-			OnAccept = function()
-				DisableAddOn("DBM_API")
-				ReloadUI()
-			end,
-			timeout = 0,
-			exclusive = 1,
-			whileDead = 1,
-		}
-		StaticPopup_Show("DBM_OLD_VERSION")
-	end
-
 	local function setCombatInitialized()
 		combatInitialized = true
 	end
@@ -989,8 +974,6 @@ do
 			self:RAID_ROSTER_UPDATE()
 			self:PARTY_MEMBERS_CHANGED()
 			DBM:Schedule(1.5, setCombatInitialized)
-			local enabled, loadable = select(4, GetAddOnInfo("DBM_API"))
-			if enabled and loadable then showOldVerWarning() end
 		end
 	end
 end
