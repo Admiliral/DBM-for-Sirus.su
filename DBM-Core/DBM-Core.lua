@@ -4954,7 +4954,7 @@ do
 			tinsert(self.ModLists[modId], name)
 		end
 		modsById[name] = obj
-		obj:AddBoolOption("HealthFrame", false, "misc")
+		obj:AddBoolOption("Отображать здоровье", false, "misc")
 		obj:SetZone()
 		return obj
 	end
