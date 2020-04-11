@@ -149,7 +149,7 @@ L:SetOptionLocalization{
 	WarnThrow = "Анонсировать цели кровотечения на фазе тролля",
 	WarnJump = "Анонсировать цели кровотечения на фазе рыси",
 	WarnNextPhaseSoon = "Предупреждать о скорой смене облика",
-	WarnFlamePillar = "Обявлять на ком Колонна огня"
+	WarnFlamePillar = "Объявлять на ком Колонна огня"
 }
 
 L:SetMiscLocalization{
