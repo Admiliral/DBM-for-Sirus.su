@@ -157,6 +157,8 @@ DBM_CORE_RANGECHECK_OPTION_AVERAGE	= "Medium"
 DBM_CORE_RANGECHECK_OPTION_FAST		= "Fast (Most real-time)"
 DBM_CORE_RANGERADAR_HEADER			= "Range Radar (%d yd)"
 DBM_LFG_INVITE						= "LFG Invite"
+DBM_LFG_CD                          = "LFG cooldown"
+DBM_PHASE							= "Phase %d"
 
 DBM_CORE_SLASHCMD_HELP				= {
 	"Available slash commands:",

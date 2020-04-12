@@ -157,6 +157,7 @@ DBM_CORE_RANGERADAR_HEADER			= "Радар (%d метров)"
 
 DBM_LFG_INVITE						= "Приглашение в подземелье"
 DBM_LFG_CD                          = "Восстановление ПП"
+DBM_PHASE							= "%d-я фаза"
 
 DBM_CORE_SLASHCMD_HELP				= {
 	"Доступные (/) команды:",
