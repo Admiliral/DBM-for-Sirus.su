@@ -43,6 +43,7 @@ local specWarnHelp		= mod:NewSpecialWarningAdds(308559, nil, nil, nil, 1, 2)  --
 local specWarnRing		= mod:NewSpecialWarningLookAway(308562, nil, nil, nil, 2, 2)  -- Кольцо
 local specWarnStar		= mod:NewSpecialWarningDispel(308565, nil, nil, nil, 1, 2)  -- Звездное пламя
 local specWarnWrathH	= mod:NewSpecialWarningRun(308548, nil, nil, nil, 1, 2) -- Гнев
+local specWarnFlashVoid = mod:NewSpecialWarningLookAway(308585, nil, nil, nil, 2, 2) -- фир 2 фаза
 
 local timerNextHeal		= mod:NewTimer(15, "TimerNextHeal", 308561, "RemoveEnrage", nil, 1, DBM_CORE_ENRAGE_ICON)
 local timerNextGates	= mod:NewTimer(40, "TimerNextGates", 308545, "Tank|Healer", nil, 3, DBM_CORE_TANK_ICON, nil, 1, 4)
@@ -51,6 +52,7 @@ local timerNextStar		= mod:NewTimer(12, "TimerNextStar", 308565, "Healer", nil, 
 local timerNextHelp		= mod:NewTimer(40, "TimerNextHelp", 308558, "Tank|Healer", nil, 3, DBM_CORE_TANK_ICON, nil, 1, 4)
 local timerWrathH		= mod:NewTargetTimer(6, 308548, nil, "RemoveEnrage", nil, 1, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 4)
 local timerNextWrathH	= mod:NewCDTimer(43, 308548, nil, "RemoveEnrage", nil, 1, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 4)
+local timerFlashVoid    = mod:NewCDTimer(75, 308585, nil, "RemoveEnrage", nil, 6, nil, DBM_CORE_HEROIC_ICON, nil, 1, 4)
 
 local priestsN = true
 local priestsH = true
@@ -130,7 +132,12 @@ function mod:SPELL_CAST_START(args)
 		timerNextHeal:Start()
 		specWarnHeal:Show(args.sourceName)
 		warnHeal:Schedule(0)
+	elseif args:IsSpellID(308585) then -- УЖАС
+		specWarnFlashVoid:Show(args.sourceName)
+		timerFlashVoid:Schedule(5)
 	elseif args:IsSpellID(308576) then
+		phase = 2
+		timerFlashVoid:Start()
 		phase = 2
 		timerNextGates:Cancel()
 		timerNextGates:Start(15)
