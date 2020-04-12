@@ -4354,9 +4354,6 @@ function checkCustomBossHealth(self, mod)
 	self:Schedule(1, checkCustomBossHealth, self, mod)
 end
 
--- наименьшее здоровье босса в текущем бою
-local lowestBossHealth = 1
-
 function DBM:InGuildParty()
 	local guildName = GetGuildInfo("player")
 	local numRaid = GetNumPartyMembers()
@@ -4422,6 +4419,8 @@ do
 				mod.ignoreBestkill = true--Force this to true so we don't check any more occurances of "stats"
 			elseif event == "TIMER_RECOVERY" then --add a lag time to delay when TIMER_RECOVERY
 				delay = delay + select(3, GetNetStats()) / 1000
+			else
+				mod.ignoreBestkill = false
 			end
 			savedDifficulty, difficultyText, difficultyIndex, LastGroupSize = self:GetCurrentInstanceDifficulty()
 			local name = mod.combatInfo.name
@@ -4449,17 +4448,6 @@ do
 				syncedStartHp = syncedStartHp * 100
 			end
 			local startHp = syncedStartHp or mod:GetBossHP(mod.mainBoss or mod.combatInfo.mob or -1) or 100
-			--check boss engaged first?
-			if (savedDifficulty == "worldboss" and startHp < 98) or (event == "UNIT_HEALTH" and delay > 4) or event == "TIMER_RECOVERY" then--Boss was not full health when engaged, disable combat start timer and kill record
-				mod.ignoreBestkill = true
-			else--Reset ignoreBestkill after wipe
-				mod.ignoreBestkill = false
-				--It was a clean pull, so cancel any RequestTimers which might fire after boss was pulled if boss was pulled right after mod load
-				--Only want timer recovery on in progress bosses, not clean pulls
-				if startHp > 98 and savedDifficulty == "worldboss" then
-					self:Unschedule(self.RequestTimers)
-				end
-			end
 			if self.Options.HideTooltips then
 				--Better or cleaner way?
 				tooltipsHidden = true
@@ -4544,17 +4532,9 @@ do
 				end
 				--show enage message
 				if self.Options.ShowEngageMessage and not mod.noStatistics then
-					if mod.ignoreBestkill and (savedDifficulty == "worldboss") then--Should only be true on in progress field bosses, not in progress raid bosses we did timer recovery on.
-						self:AddMsg(DBM_CORE_COMBAT_STARTED_IN_PROGRESS:format(difficultyText..name))
-					elseif mod.ignoreBestkill and mod.inScenario then
-						self:AddMsg(DBM_CORE_SCENARIO_STARTED_IN_PROGRESS:format(difficultyText..name))
-					else
-						self:AddMsg(DBM_CORE_COMBAT_STARTED:format(difficultyText..name))
-						-- TODO: raid only
-						print(self:InGuildParty())
-						if self:InGuildParty() and not statusGuildDisabled and not self.Options.DisableGuildStatus then
-							SendAddonMessage("D4", "GCB\t"..modId.."\t2\t"..difficultyIndex.."\t"..name, "GUILD")
-						end
+					self:AddMsg(DBM_CORE_COMBAT_STARTED:format(difficultyText..name))
+					if self:InGuildParty() and not statusGuildDisabled and not self.Options.DisableGuildStatus then
+						SendAddonMessage("D4", "GCB\t"..modId.."\t2\t"..difficultyIndex.."\t"..name, "GUILD")
 					end
 				end
 				--stop pull count
@@ -4593,25 +4573,6 @@ do
 				self:AddMsg(DBM_CORE_COMBAT_STATE_RECOVERED:format(difficultyText..name, strFromTime(delay)))
 				if mod.OnTimerRecovery then
 					mod:OnTimerRecovery()
-				end
-			end
-		end
-	end
-
-	function DBM:UNIT_HEALTH(uId)
-		local cId = self:GetCIDFromGUID(UnitGUID(uId))
-		local health
-		if UnitHealthMax(uId) ~= 0 then
-			health = UnitHealth(uId) / UnitHealthMax(uId) * 100
-		end
-		if not health or health < 2 then return end -- no worthy of combat start if health is below 2%
-		-- TODO
-		for i, v in ipairs(inCombat) do
-			-- best guess for the ID of the boss we are interested in (from GetBossHPString)
-			local bossId = v.mainBossId or (v.combatInfo and v.combatInfo.mob) or v.creatureId
-			if cId == bossId then
-				if health < lowestBossHealth then
-					lowestBossHealth = health
 				end
 			end
 		end
@@ -8745,22 +8706,6 @@ function bossModPrototype:SetWipeTime(t)
 	self.combatInfo.wipeTimer = t
 end
 
-function bossModPrototype:GetBossHPString(cId)
-	local idType = (GetNumRaidMembers() == 0 and "party") or "raid"
-	for i = 0, mmax(GetNumRaidMembers(), GetNumPartyMembers()) do
-		local unitId = ((i == 0) and "target") or idType..i.."target"
-		local guid = UnitGUID(unitId)
-		if guid and tonumber(guid:sub(9, 12), 16) == cId then
-			return floor(UnitHealth(unitId)/UnitHealthMax(unitId) * 100).."%"
-		end
-	end
-	return DBM_CORE_UNKNOWN
-end
-
-function bossModPrototype:GetHP()
-	return self:GetBossHPString((self.combatInfo and self.combatInfo.mob) or self.creatureId)
-end
-
 function bossModPrototype:IsWipe()
 	local wipe = true
 	local uId = ((GetNumRaidMembers() == 0) and "party") or "raid"
@@ -8773,8 +8718,6 @@ function bossModPrototype:IsWipe()
 	end
 	return wipe
 end
-
-
 
 -----------------------
 --  Synchronization  --
