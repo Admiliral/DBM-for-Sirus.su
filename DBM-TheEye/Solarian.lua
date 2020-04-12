@@ -21,12 +21,12 @@ mod:RegisterEvents(
 local warnWrathN		= mod:NewTargetAnnounce(42783, 4)
 local warnAddsSoon		= mod:NewAnnounce("WarnAddsSoon", 3, 55342)
 
-local specWarnWrathN	= mod:NewSpecialWarningRun(42783)
+local specWarnWrathN	= mod:NewSpecialWarningRun(42783, nil, nil, nil, 1, 2)
 
-local timerAdds			= mod:NewTimer(60, "TimerAdds", 55342)
+local timerAdds			= mod:NewTimer(60, "TimerAdds", 55342, "RemoveEnrage", nil, 5, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 4)
 local timerPriestsN		= mod:NewTimer(14, "TimerPriests", 47788)
-local timerWrathN		= mod:NewTargetTimer(6, 42783)
-local timerNextWrathN	= mod:NewCDTimer(21, 42783)
+local timerWrathN		= mod:NewTargetTimer(6, 42783, nil, "RemoveEnrage", nil, 5, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 4)
+local timerNextWrathN	= mod:NewCDTimer(21, 42783, nil, "RemoveEnrage", nil, 5, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 4)
 
 --------------------------героик--------------------------
 
@@ -37,20 +37,20 @@ local warnHelp			= mod:NewSoonAnnounce(308559, 3) -- Призыв помощни
 local warnWrathH		= mod:NewSoonAnnounce(308550, 3) -- Гнев звездочета
 local warnGates			= mod:NewSoonAnnounce(308545, 3) -- Врата бездны - активация
 
-local specWarnHeal		= mod:NewSpecialWarningSpell(308561)  -- Хил
-local specWarnGates		= mod:NewSpecialWarningSpell(308545)  -- Врата
-local specWarnRing		= mod:NewSpecialWarningSpell(308562)  -- Кольцо
-local specWarnStar		= mod:NewSpecialWarningSpell(308565)  -- Звездное пламя
-local specWarnHelp		= mod:NewSpecialWarningSpell(308559)  -- Послушники
-local specWarnWrathH	= mod:NewSpecialWarningRun(308548) -- Гнев
+local specWarnHeal		= mod:NewSpecialWarningSpell(308561, nil, nil, nil, 1, 2)  -- Хил
+local specWarnGates		= mod:NewSpecialWarningSpell(308545, nil, nil, nil, 1, 2)  -- Врата
+local specWarnRing		= mod:NewSpecialWarningSpell(308562, nil, nil, nil, 1, 2)  -- Кольцо
+local specWarnStar		= mod:NewSpecialWarningSpell(308565, nil, nil, nil, 1, 2)  -- Звездное пламя
+local specWarnHelp		= mod:NewSpecialWarningSpell(308559, nil, nil, nil, 1, 2)  -- Послушники
+local specWarnWrathH	= mod:NewSpecialWarningRun(308548, nil, nil, nil, 1, 2) -- Гнев
 
-local timerNextHeal		= mod:NewTimer(15, "TimerNextHeal", 308561)
-local timerNextGates	= mod:NewTimer(44, "TimerNextGates", 308545)
-local timerNextRing		= mod:NewTimer(18, "TimerNextRing", 308563)
-local timerNextStar		= mod:NewTimer(12, "TimerNextStar", 308565)
-local timerNextHelp		= mod:NewTimer(40, "TimerNextHelp", 308558)
-local timerWrathH		= mod:NewTargetTimer(6, 308548)
-local timerNextWrathH	= mod:NewCDTimer(43, 308548)
+local timerNextHeal		= mod:NewTimer(15, "TimerNextHeal", 308561, "RemoveEnrage", nil, 1, nil, DBM_CORE_ENRAGE_ICON)
+local timerNextGates	= mod:NewTimer(44, "TimerNextGates", 308545, "Tank", nil, 3, nil, DBM_CORE_TANK_ICON, nil, 1, 4)
+local timerNextRing		= mod:NewTimer(18, "TimerNextRing", 308563, "RemoveEnrage", nil, 3, nil, DBM_CORE_DEADLY_ICON)
+local timerNextStar		= mod:NewTimer(12, "TimerNextStar", 308565, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON)
+local timerNextHelp		= mod:NewTimer(40, "TimerNextHelp", 308558, "Tank", nil, 3, nil, DBM_CORE_TANK_ICON, nil, 1, 4)
+local timerWrathH		= mod:NewTargetTimer(6, 308548, nil, "RemoveEnrage", nil, 1, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 4)
+local timerNextWrathH	= mod:NewCDTimer(43, 308548, nil, "RemoveEnrage", nil, 1, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 4)
 
 local priestsN = true
 local priestsH = true
