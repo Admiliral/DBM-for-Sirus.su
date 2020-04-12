@@ -193,13 +193,13 @@ function mod:SPELL_CAST_START(args)
 		warnPhoenixScream1:Schedule(1)
 		warnPhoenixScream0:Schedule(2)
 	elseif args:IsSpellID(308633) then -- Знак феникса: Рассеяность
-		timerScatteringCast:Start()
+--		timerScatteringCast:Start()
 	elseif args:IsSpellID(308633) then -- Знак феникса: Слабость
-		timerWeaknessCast:Start()
+--		timerWeaknessCast:Start()
 	elseif args:IsSpellID(308633) then -- Знак феникса: Ярость
-		timerFuryCast:Start()
+--		timerFuryCast:Start()
 	elseif args:IsSpellID(308633) then -- Знак феникса: Усталость
-		timerFatigueCast:Start()
+--		timerFatigueCast:Start()
 	end
 end
 
