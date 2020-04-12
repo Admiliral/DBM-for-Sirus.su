@@ -3672,7 +3672,7 @@ do
 					diff = diff,
 					maxPlayers = maxPlayers,
 				}
-	
+
 				results.data[instanceId].ids[progress] = results.data[instanceId].ids[progress] or { progress = progress }
 				tinsert(results.data[instanceId].ids[progress], sender)
 			end
