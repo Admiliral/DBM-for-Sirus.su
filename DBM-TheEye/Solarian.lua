@@ -34,7 +34,7 @@ local warnHeal			= mod:NewSoonAnnounce(308561, 3) -- Высшее исцелен
 local warnRing			= mod:NewSoonAnnounce(308563, 3) -- ослепляющее кольцо
 local warnStar			= mod:NewSoonAnnounce(308565, 3) -- Звездное пламя
 local warnHelp			= mod:NewSoonAnnounce(308559, 3) -- Призыв помощников
-local warnWrathH		= mod:NewSoonAnnounce(308550, 3) -- Гнев звездочета
+local warnWrathH		= mod:NewTargetAnnounce(308550, 4) -- Гнев звездочета
 local warnGates			= mod:NewSoonAnnounce(308545, 3) -- Врата бездны - активация
 
 local specWarnHeal		= mod:NewSpecialWarningSpell(308561, nil, nil, nil, 1, 2)  -- Хил
