@@ -81,10 +81,10 @@ local timerFlamefallCast		= mod:NewCastTimer(5, 308987, nil, nil, nil, 2) -- К�
 local timerPhase2Cast			= mod:NewCastTimer(20, 308640, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON, nil, 2, 4) -- Перефаза
 -- 2 фаза --
 local timerPhoenixScreamCast	= mod:NewCastTimer(2, 308671, DBM_CORE_DEADLY_ICON, nil, 1, 2) -- Крик феникса
---local timerScatteringCast		= mod:NewCastTimer(20, 308663) -- Знак феникса: рассеяность
---local timerWeaknessCast			= mod:NewCastTimer(20, 308664) -- Знак феникса: слабость
---local timerFuryCast				= mod:NewCastTimer(20, 308665) -- Знак феникса: ярость
---local timerFatigueCast			= mod:NewCastTimer(20, 308667) -- Знак феникса: усталость
+local timerScatteringCast		= mod:NewCastTimer(20, 308663) -- Знак феникса: рассеяность
+local timerWeaknessCast			= mod:NewCastTimer(20, 308664) -- Знак феникса: слабость
+local timerFuryCast				= mod:NewCastTimer(20, 308665) -- Знак феникса: ярость
+local timerFatigueCast			= mod:NewCastTimer(20, 308667) -- Знак феникса: усталость
 
 local berserkTimerH				= mod:NewBerserkTimer(444)
 local berserkTimerH2			= mod:NewBerserkTimer(500)
@@ -192,14 +192,14 @@ function mod:SPELL_CAST_START(args)
 		warnPhoenixScream2:Schedule(0)
 		warnPhoenixScream1:Schedule(1)
 		warnPhoenixScream0:Schedule(2)
-	elseif args:IsSpellID(308633) then -- Знак феникса: Рассеяность
---		timerScatteringCast:Start()
-	elseif args:IsSpellID(308633) then -- Знак феникса: Слабость
---		timerWeaknessCast:Start()
-	elseif args:IsSpellID(308633) then -- Знак феникса: Ярость
---		timerFuryCast:Start()
-	elseif args:IsSpellID(308633) then -- Знак феникса: Усталость
---		timerFatigueCast:Start()
+	elseif args:IsSpellID(308663) then -- Знак феникса: Рассеяность
+		timerScatteringCast:Start()
+	elseif args:IsSpellID(308664) then -- Знак феникса: Слабость
+		timerWeaknessCast:Start()
+	elseif args:IsSpellID(308665) then -- Знак феникса: Ярость
+		timerFuryCast:Start()
+	elseif args:IsSpellID(308667) then -- Знак феникса: Усталость
+		timerFatigueCast:Start()
 	end
 end
 
