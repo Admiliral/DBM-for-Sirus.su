@@ -37,11 +37,11 @@ local warnHelp			= mod:NewSoonAnnounce(308559, 3) -- Призыв помощни
 local warnWrathH		= mod:NewTargetAnnounce(308550, 4) -- Гнев звездочета
 local warnGates			= mod:NewSoonAnnounce(308545, 3) -- Врата бездны - активация
 
-local specWarnHeal		= mod:NewSpecialWarningSpell(308561, nil, nil, nil, 1, 2)  -- Хил
-local specWarnGates		= mod:NewSpecialWarningSpell(308545, nil, nil, nil, 1, 2)  -- Врата
-local specWarnHelp		= mod:NewSpecialWarningAddsCustom(308559, nil, nil, nil, 1, 2)  -- Послушники
+local specWarnHeal		= mod:NewSpecialWarningInterrupt(308561, nil, nil, nil, 1, 2)  -- Хил
+local specWarnGates		= mod:NewSpecialWarningSoak(308545, nil, nil, nil, 1, 2)  -- Врата
+local specWarnHelp		= mod:NewSpecialWarningAdds(308559, nil, nil, nil, 1, 2)  -- Послушники
 local specWarnRing		= mod:NewSpecialWarningLookAway(308562, nil, nil, nil, 2, 2)  -- Кольцо
-local specWarnStar		= mod:NewSpecialWarningSpell(308565, nil, nil, nil, 1, 2)  -- Звездное пламя
+local specWarnStar		= mod:NewSpecialWarningDispel(308565, nil, nil, nil, 1, 2)  -- Звездное пламя
 local specWarnWrathH	= mod:NewSpecialWarningRun(308548, nil, nil, nil, 1, 2) -- Гнев
 
 local timerNextHeal		= mod:NewTimer(15, "TimerNextHeal", 308561, "RemoveEnrage", nil, 1, DBM_CORE_ENRAGE_ICON)
@@ -128,7 +128,7 @@ function mod:SPELL_CAST_START(args)
 		warnGates:Schedule(0)
 	elseif args:IsSpellID(308561) then -- хил
 		timerNextHeal:Start()
-		specWarnHeal:Show()
+		specWarnHeal:Show(args.sourceName)
 		warnHeal:Schedule(0)
 	elseif args:IsSpellID(308576) then
 		phase = 2
