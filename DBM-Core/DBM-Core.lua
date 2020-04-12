@@ -4429,6 +4429,16 @@ do
 			mod.inCombat = true
 			mod.blockSyncs = nil
 			mod.combatInfo.pull = GetTime() - (delay or 0)
+			if (self.Options.AlwaysShowHealthFrame or mod.Options.HealthFrame) and mod.Options.Enabled then
+				self.BossHealth:Show(mod.localization.general.name)
+				if mod.bossHealthInfo then
+					for i = 1, #mod.bossHealthInfo, 2 do
+						self.BossHealth:AddBoss(mod.bossHealthInfo[i], mod.bossHealthInfo[i + 1])
+					end
+				else
+					self.BossHealth:AddBoss(mod.combatInfo.mob, mod.localization.general.name)
+				end
+			end
 			if mod.minCombatTime then
 				self:Schedule(mmax((mod.minCombatTime - delay), 3), checkWipe, self)
 			else
