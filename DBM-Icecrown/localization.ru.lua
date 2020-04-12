@@ -323,6 +323,7 @@ L:SetOptionLocalization{
 	NextUnboundPlagueTargetIcon	= "Устанавливать метку на следующую цель заклинания $spell:72856",
 	YellOnMalleableGoo			= "Кричать, когда на вас $spell:72295",
 	YellOnUnbound				= "Кричать, когда на вас $spell:72856",
+    GooArrow					= "Показывать стрелку DBM, когда $spell:72295 рядом с вами",
 	SpecWarnUnboundPlague		= "Спец-предупреждение для передачи заклинания $spell:72856",
 	SpecWarnNextPlageSelf		= "Спец-предупреждение, когда вы являетесь следующей целью\nзаклинания $spell:72856",
 	BypassLatencyCheck			= "Отключить синхр-цию для $spell:72295\n(используйте только в случае возникновения проблем)"
@@ -364,6 +365,7 @@ L:SetOptionLocalization{
 	EmpoweredFlameIcon		= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(72040),
 	ActivePrinceIcon		= "Устанавливать метку на наполненного силой Принца (череп)",
 	RangeFrame				= "Показывать окно проверки дистанции (12 м)",
+	VortexArrow				= "Показывать стрелку DBM, когда $spell:72037 рядом с тобой",
 	BypassLatencyCheck		= "Отключить синхр-цию для $spell:72037\n(используйте только в случае возникновения проблем)"
 }
 
