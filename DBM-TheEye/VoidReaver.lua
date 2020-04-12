@@ -18,8 +18,8 @@ mod:RegisterEvents(
 local warnPhase1				= mod:NewAnnounce("Phase1", 2)  -- Спавн сфер
 local warnPhase2				= mod:NewAnnounce("Phase2", 2)  -- Спавн сфер
 local warnSpawnOrbs				= mod:NewAnnounce("SpawnOrbs", 2)  -- Спавн сфер
-local warnKnockback				= mod:NewSoonAnnounce(308470, 2)  -- тяжкий удар
-local warnScope					= mod:NewSoonAnnounce(308984, 2)  -- Сферы
+local warnKnockback				= mod:NewSoonAnnounce(308470, 2, nil, "Tank|Healer|RemoveEnrage")  -- тяжкий удар
+local warnScope					= mod:NewSoonAnnounce(308984, 2, nil, "Tank|Healer|RemoveEnrage")  -- Сферы
 local warnScope6				= mod:NewAnnounce("warnScope6", 2)  -- Отсчёт сфер
 local warnScope7				= mod:NewAnnounce("warnScope7", 2)  -- Отсчёт сфер
 local warnScope8				= mod:NewAnnounce("warnScope8", 2)  -- Отсчёт сфер
@@ -27,16 +27,19 @@ local warnScope9				= mod:NewAnnounce("warnScope9", 2)  -- Отсчёт сфер
 local warnScope10				= mod:NewAnnounce("warnScope10", 2) -- Отсчёт сфер
 local warnBah					= mod:NewAnnounce("Bah", 2)  -- Сферы
 
+-----обычка-----
+local timerNextPounding         = mod:NewCDTimer(14, 34162, nil, nil, nil, 1)
+local timerNextKnockback        = mod:NewCDTimer(30, 25778, nil, "Healer", nil, 5, DBM_CORE_HEALER_ICON)
+------героик------
 
+local timerScope				= mod:NewBuffActiveTimer(10, 308469, nil, "Tank|RemoveEnrage", nil, 5, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 5) -- Баф сферы
 
-local timerScope				= mod:NewBuffActiveTimer(10, 308469) -- Баф сферы
+local timerKnockbackCD			= mod:NewCDTimer(7, 308470, nil, "Tank|RemoveEnrage", nil, 5, nil, DBM_CORE_TANK_ICON) -- тяжкий удар
+local timerOrbCD				= mod:NewCDTimer(26, 308466, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
+local timerLoadCD				= mod:NewCDTimer(60, 308465, nil, nil, nil, 1, nil, DBM_CORE_ENRAGE_ICON)
+local timerReloadCD				= mod:NewCDTimer(60, 308474, nil, nil, nil, 2, nil, DBM_CORE_DAMAGE_ICON)
 
-local timerKnockbackCD			= mod:NewCDTimer(7, 308470) -- тяжкий удар
-local timerOrbCD				= mod:NewCDTimer(26, 308466)
-local timerLoadCD				= mod:NewCDTimer(60, 308465)
-local timerReloadCD				= mod:NewCDTimer(60, 308474)
-
-local timerKnockbackCast		= mod:NewCastTimer(2, 308470) -- тяжкий удар
+local timerKnockbackCast		= mod:NewCastTimer(2, 308470, nil, "Healer", nil, 5, DBM_CORE_HEALER_ICON) -- тяжкий удар
 
 local berserkTimer				= mod:NewBerserkTimer(600)
 
@@ -49,12 +52,15 @@ local beaconIconTargets	= {}
 function mod:OnCombatStart(delay) ---- готово
 	table.wipe(beaconIconTargets)
 	DBM:FireCustomEvent("DBM_EncounterStart", 19516, "Void Reaver")
-	timerLoadCD:Start()
-	timerOrbCD:Start()
-	timerKnockbackCD:Start()
-	self:ScheduleMethod(23, "Playsound")
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(15)
+	if mod:IsDifficulty("heroic25") then
+	    timerLoadCD:Start()
+	    timerOrbCD:Start()
+	    timerKnockbackCD:Start()
+	     self:ScheduleMethod(23, "Playsound")
+    else
+        berserkTimer:Start()
+        timerNextPounding:Start()
+        timerNextKnockback:Start()
 	end
 end
 
@@ -65,8 +71,16 @@ function mod:OnCombatEnd(wipe) --- не трогать
 	end
 end
 
-------------------------------------------------------------
+----------------------об--------------------------------------
 
+function mod:SPELL_CAST_SUCCESS(args)
+	if args:IsSpellID(25778) then
+        timerNextKnockback:Start()
+    elseif args:IsSpellID(34162) then
+        timerNextPounding:Start()
+    end
+end
+-------------------------хм------------------------------------
 
 do ---?????????
 	local function sort_by_group(v1, v2)
