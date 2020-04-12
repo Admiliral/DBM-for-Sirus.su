@@ -73,7 +73,7 @@ local function showRealDate(curseDate)
 end
 
 DBM = {
-	Revision = parseCurseDate("20200412095500"),
+	Revision = parseCurseDate("20200412133500"),
 	DisplayVersion = "5.40", -- the string that is shown as version
 	ReleaseRevision = releaseDate(2020, 4, 12) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
@@ -252,7 +252,7 @@ DBM.DefaultOptions = {
 	ArrowPoint = "TOP",
 	-- global boss mod settings (overrides mod-specific settings for some options)
 	DontShowBossAnnounces = false,
-	DontShowTargetAnnouncements = true,
+	DontShowTargetAnnouncements = false,
 	DontShowSpecialWarnings = false,
 	DontShowSpecialWarningText = false,
 	DontShowBossTimers = false,
