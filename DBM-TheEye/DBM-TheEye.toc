@@ -8,6 +8,7 @@
 ## SavedVariablesPerCharacter: DBMTheEye_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Category: BC
+## X-DBM-Mod-Has-Single-Format: 1
 ## X-DBM-Mod-Name: The Eye
 ## X-DBM-Mod-Name-ruRU: Крепость Бурь
 ## X-DBM-Mod-Sort: 303

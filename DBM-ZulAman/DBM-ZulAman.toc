@@ -8,6 +8,7 @@
 ## SavedVariablesPerCharacter: DBMZulAman_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Category: BC
+## X-DBM-Mod-Has-Single-Format: 1
 ## X-DBM-Mod-Name: Zul'Aman
 ## X-DBM-Mod-Name-ruRU: Зул'Аман
 ## X-DBM-Mod-Sort: 305

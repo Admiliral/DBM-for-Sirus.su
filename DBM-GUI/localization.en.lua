@@ -106,6 +106,22 @@ L.MonochromeOutline			= "Monochrome outline"
 L.MonochromeThickOutline	= "Monochrome thick outline"
 L.RaidWarnSound				= "Play sound on raid warning"
 
+-- Tab: Generalwarnings
+L.Tab_GeneralMessages 		= "General Messages"
+L.CoreMessages				= "Core Message Options"
+L.ShowPizzaMessage 			= "Show timer broadcast messages in chat frame"
+L.ShowAllVersions	 		= "Show boss mod versions for all group members in chat frame when doing a version check. (If disabled, still does out of date/current summery)"
+L.CombatMessages			= "Combat Message Options"
+L.ShowEngageMessage 		= "Show engage messages in chat frame"
+L.ShowDefeatMessage 		= "Show kill/wipe messages in chat frame"
+L.ShowGuildMessages 		= "Show engage/kill/wipe messages for guild raids in chat frame"
+L.ShowGuildMessagesPlus		= "Also show Mythic+ engage/kill/wipe messages for guild groups (requires raid option)"
+L.WhisperMessages			= "Whisper Message Options"
+L.AutoRespond 				= "Auto-respond to whispers while fighting"
+L.WhisperStats 				= "Include kill/wipe stats in whisper responses"
+L.DisableStatusWhisper 		= "Disable status whispers for the entire group (requires Group Leader). Applies only to normal/heroic/mythic raids and mythic+ dungeons"
+L.DisableGuildStatus 		= "Disable progression messages from being sent to guild for entire group (requires Group Leader)."
+
 -- Tab: Barsetup
 L.BarSetup					= "Bar Setup"
 L.BarTexture				= "Bar texture"

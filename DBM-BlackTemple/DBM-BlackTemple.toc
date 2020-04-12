@@ -8,6 +8,8 @@
 ## LoadOnDemand: 1
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Category: BC
+## X-DBM-Mod-Has-Single-Format: 1
+## X-DBM-Mod-No-Heroic: 1
 ## X-DBM-Mod-Name: Black Temple
 ## X-DBM-Mod-Name-ruRU: Черный храм
 ## X-DBM-Mod-Sort: 307

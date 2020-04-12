@@ -271,15 +271,10 @@ function mod:SPELL_INTERRUPT(args)
 	end
 end
 
-local lastSpirit = 0
-
 function mod:SPELL_SUMMON(args)
-	if args:IsSpellID(71426) then -- Summon Vengeful Shade
-		if time() - lastSpirit > 5 then
-			warnSummonSpirit:Show()
-			timerSummonSpiritCD:Start()
-			lastSpirit = time()
-		end
+	if args:IsSpellID(71426) and self:AntiSpam(5, 1) then -- Summon Vengeful Shade
+		warnSummonSpirit:Show()
+		timerSummonSpiritCD:Start()
 	end
 end
 

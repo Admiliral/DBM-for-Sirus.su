@@ -426,5 +426,32 @@ DBM_ARROW_ERROR_USAGE	= {
 DBM_SPEED_KILL_TIMER_TEXT	= "Рекордная победа"
 DBM_CORE_TIMER_RESPAWN		= "Появление %s"
 
+DBM_REQ_INSTANCE_ID_PERMISSION		= "%s запрашивает разрешение на просмотр ваших текущих сохранений подземелий.\nВы хотите предоставить %s такое право? Этот игрок получит возможность запрашивать эту информацию без уведомления в течение вашей текущей игровой сессии."
+DBM_ERROR_NO_RAID					= "Вы должны состоять в рейдовой группе для использования этой функции."
+DBM_INSTANCE_INFO_REQUESTED			= "Отослан запрос на просмотр текущих сохранений подземелий у членов рейда.\nОбратите внимание, что игроки будут уведомлены об этом и могут отклонить ваш запрос."
+DBM_INSTANCE_INFO_STATUS_UPDATE		= "На запрос ответили %d игроков из %d пользователей DBM: %d послали данные, %d отклонили запрос. Ожидание ответа продлено на %d секунд..."
+DBM_INSTANCE_INFO_ALL_RESPONSES		= "Получен ответ ото всех членов рейда"
+DBM_INSTANCE_INFO_DETAIL_DEBUG		= "Игрок: %s ТипРезультата: %s Инстанс: %s ID: %s Сложность: %d Размер: %d Прогресс: %s"
+DBM_INSTANCE_INFO_DETAIL_HEADER		= "%s, сложность %s:"
+DBM_INSTANCE_INFO_DETAIL_INSTANCE	= "    ID %s, прогресс %d: %s"
+DBM_INSTANCE_INFO_DETAIL_INSTANCE2	= "    прогресс %d: %s"
+DBM_INSTANCE_INFO_NOLOCKOUT			= "Ваша рейдовая группа не имеет сохранений подземелий."
+DBM_INSTANCE_INFO_STATS_DENIED		= "Отклонили запрос: %s"
+DBM_INSTANCE_INFO_STATS_AWAY		= "Отошли от компьютера: %s"
+DBM_INSTANCE_INFO_STATS_NO_RESPONSE	= "Установлена устаревшая версия DBM: %s"
+DBM_INSTANCE_INFO_RESULTS			= "Результаты сканирования сохранений. Обратите внимание, что инстансы могут появляться более одного раза, если в вашем рейде есть игроки с локализованными клиентами WoW."
+--DBM_INSTANCE_INFO_SHOW_RESULTS		= "Игроки, которые еще не ответили: %s\n|HDBM:showRaidIdResults|h|cff3588ff[Показать текущие результаты]|r|h"
+DBM_INSTANCE_INFO_SHOW_RESULTS		= "Игроки, которые еще не ответили: %s"
+
+DBM_CORE_LAG_CHECKING				= "Проверка задержки у рейда..."
+DBM_CORE_LAG_HEADER					= "Deadly Boss Mods - Результаты проверки задержки"
+DBM_CORE_LAG_ENTRY					= "%s: глобальная задержка [%d ms] / локальная задержка [%d ms]"
+DBM_CORE_LAG_FOOTER					= "Нет ответа: %s"
+
+DBM_CORE_DUR_CHECKING				= "Проверка прочности у рейда..."
+DBM_CORE_DUR_HEADER					= "Deadly Boss Mods - результаты проверки прочности"
+DBM_CORE_DUR_ENTRY					= "%s: прочность [%d процентов] / экипировка сломана [%s]"
+DBM_CORE_LAG_FOOTER					= "Нет ответа: %s"
+
 --LDB
 DBM_LDB_TOOLTIP_HELP1	= "Левый клик чтобы открыть DBM"

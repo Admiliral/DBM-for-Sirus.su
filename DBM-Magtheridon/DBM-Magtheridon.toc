@@ -7,6 +7,7 @@
 ## SavedVariablesPerCharacter: DBMMagtheridon_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Category: BC
+## X-DBM-Mod-Has-Single-Format: 1
 ## X-DBM-Mod-Name: Magtheridon
 ## X-DBM-Mod-Name-ruRU: Магтеридон
 ## X-DBM-Mod-Sort: 307

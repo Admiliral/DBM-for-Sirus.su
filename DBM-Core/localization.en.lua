@@ -464,6 +464,33 @@ DBM_ARROW_ERROR_USAGE	= {
 DBM_SPEED_KILL_TIMER_TEXT	= "Record Victory"
 DBM_CORE_TIMER_RESPAWN		= "%s Respawn"
 
+DBM_REQ_INSTANCE_ID_PERMISSION		= "%s requested to see your current instance IDs and progress.\nDo you want to send this information to %s? He or she will be able to request this information during your current session (i. e. until you relog)."
+DBM_ERROR_NO_RAID					= "You need to be in a raid group to use this feature."
+DBM_INSTANCE_INFO_REQUESTED			= "Sent request for raid lockout information to the raid group.\nPlease note that the users will be asked for permission before sending the data to you, so it might take a minute until we get all responses."
+DBM_INSTANCE_INFO_STATUS_UPDATE		= "Got responses from %d players of %d DBM users: %d sent data, %d denied the request. Waiting %d more seconds for responses..."
+DBM_INSTANCE_INFO_ALL_RESPONSES		= "Received responses from all raid members"
+DBM_INSTANCE_INFO_DETAIL_DEBUG		= "Sender: %s ResultType: %s InstanceName: %s InstanceID: %s Difficulty: %d Size: %d Progress: %s"
+DBM_INSTANCE_INFO_DETAIL_HEADER		= "%s, difficulty %s:"
+DBM_INSTANCE_INFO_DETAIL_INSTANCE	= "    ID %s, progress %d: %s"
+DBM_INSTANCE_INFO_DETAIL_INSTANCE2	= "    Progress %d: %s"
+DBM_INSTANCE_INFO_NOLOCKOUT			= "There is no raid lockout information in your raid group."
+DBM_INSTANCE_INFO_STATS_DENIED		= "Denied the request: %s"
+DBM_INSTANCE_INFO_STATS_AWAY		= "Away: %s"
+DBM_INSTANCE_INFO_STATS_NO_RESPONSE	= "No recent "..DBM_DBM.." version installed: %s"
+DBM_INSTANCE_INFO_RESULTS			= "Instance ID scan results. Note that instances might show up more than once if there are players with localized WoW clients in your raid."
+--DBM_INSTANCE_INFO_SHOW_RESULTS		= "Players yet to respond: %s\n|HDBM:showRaidIdResults|h|cff3588ff[Show results now]|r|h"
+DBM_INSTANCE_INFO_SHOW_RESULTS		= "Players yet to respond: %s"
+
+DBM_CORE_LAG_CHECKING				= "Checking raid Latency..."
+DBM_CORE_LAG_HEADER					= DBM_DEADLY_BOSS_MODS.." - Latency Results"
+DBM_CORE_LAG_ENTRY					= "%s: World delay [%d ms] / Home delay [%d ms]"
+DBM_CORE_LAG_FOOTER					= "No Response: %s"
+
+DBM_CORE_DUR_CHECKING				= "Checking raid Durability..."
+DBM_CORE_DUR_HEADER					= DBM_DEADLY_BOSS_MODS.." - Durability Results"
+DBM_CORE_DUR_ENTRY					= "%s: Durability [%d percent] / Gear broken [%s]"
+DBM_CORE_LAG_FOOTER					= "No Response: %s"
+
 --Role Icons
 DBM_CORE_TANK_ICON			= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:20:20:0:0:255:66:6:21:7:27|t"
 DBM_CORE_DAMAGE_ICON		= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:20:20:0:0:255:66:39:55:7:27|t"

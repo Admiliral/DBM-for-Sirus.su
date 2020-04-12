@@ -6,6 +6,7 @@
 ## SavedVariables: DBMIcecrown_AllSavedVars
 ## SavedVariablesPerCharacter: DBMIcecrown_SavedStats
 ## X-DBM-Mod: 1
+## X-DBM-Mod-Type: RAID
 ## X-DBM-Mod-Category: WotLK
 ## X-DBM-Mod-SubCategories: The Lower Spire, The Plagueworks, The Crimson Hall, Frostwing Halls, The Frozen Throne
 ## X-DBM-Mod-SubCategories-ruRU: Шпиль, Чумодельня, Багровый зал, Зал Ледокрылых, Ледяной Трон

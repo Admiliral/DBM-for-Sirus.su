@@ -6,6 +6,7 @@
 ## SavedVariablesPerCharacter: DBMGruul_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Category: BC
+## X-DBM-Mod-Has-Single-Format: 1
 ## X-DBM-Mod-Name: Gruul
 ## X-DBM-Mod-Name-ruRU: Груул
 ## X-DBM-Mod-Sort: 307

@@ -7,6 +7,7 @@
 ## SavedVariables: DBMPartyBC_AllSavedVars
 ## SavedVariablesPerCharacter: DBMPartyBC_SavedStats
 ## X-DBM-Mod: 1
+## X-DBM-Mod-Type: PARTY
 ## X-DBM-Mod-Category: BC
 ## X-DBM-Mod-SubCategories: Auchenai Crypts, Hellfire Ramparts, Mana-Tombs, The Blood Furnace, Underbog, The Steamvault, The Shattered Halls, Sethekk Halls, The Slave Pens, The Arcatraz, Shadow Labyrinth, The Botanica, The Mechanar, Old Hillsbrad Foothills, Magisters' Terrace, Black Morass
 ## X-DBM-Mod-SubCategories-ruRU: Аукенайские гробницы, Бастионы Адского Пламени, Гробницы Маны, Кузня Крови, Нижетопь, Паровое подземелье, Разрушенные залы, Сетеккские залы, Узилище, Аркатрац, Темный лабиринт, Ботаника, Механар, Старые предгорья Хилсбрада, Терраса Магистров, Черные топи

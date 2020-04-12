@@ -7,7 +7,9 @@
 ## SavedVariables: DBMVoA_AllSavedVars
 ## SavedVariablesPerCharacter: DBMVoA_SavedStats
 ## X-DBM-Mod: 1
+## X-DBM-Mod-Type: RAID
 ## X-DBM-Mod-Category: WotLK
+## X-DBM-Mod-No-Heroic: 1
 ## X-DBM-Mod-Name: Vault of Archavon
 ## X-DBM-Mod-Name-ruRU: Склеп Аркавона
 ## X-DBM-Mod-Sort: 7

@@ -7,7 +7,8 @@
 ## SavedVariablesPerCharacter: DBMAQ40_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Category: Classic
-## X-DBM-Mod-Has-Heroic-Mode: 0
+## X-DBM-Mod-Has-Single-Format: 1
+## X-DBM-Mod-No-Heroic: 1
 ## X-DBM-Mod-Name: The Temple of Ahn'Qiraj
 ## X-DBM-Mod-Name-ruRU: Храм Ан'Киража
 ## X-DBM-Mod-Sort: 402

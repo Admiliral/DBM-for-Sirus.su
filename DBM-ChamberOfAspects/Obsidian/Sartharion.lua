@@ -14,6 +14,7 @@ mod:RegisterEvents(
 	"CHAT_MSG_RAID_BOSS_EMOTE",
 	"CHAT_MSG_MONSTER_EMOTE"
 )
+mod.onlyNormal = true
 
 local warnShadowFissure	    = mod:NewSpellAnnounce(59127)
 local warnTenebron          = mod:NewAnnounce("WarningTenebron", 2, 61248, false)

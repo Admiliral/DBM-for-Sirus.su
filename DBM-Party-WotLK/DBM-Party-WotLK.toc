@@ -6,6 +6,7 @@
 ## SavedVariables: DBMPartyWotLK_AllSavedVars
 ## SavedVariablesPerCharacter: DBMPartyWotLK_SavedStats
 ## X-DBM-Mod: 1
+## X-DBM-Mod-Type: PARTY
 ## X-DBM-Mod-Category: WotLK
 ## X-DBM-Mod-SubCategories: Ahn'Kahet,Azjol-Nerub,CoT: Old Stratholme,Drak'Tharon Keep,Gundrak,Halls of Lightning,Halls of Stone,The Nexus,The Oculus,Utgarde Keep,Utgarde Pinnacle,Violet Hold,Trial of the Champion,The Forge of Souls,Pit of Saron,Halls of Reflection
 ## X-DBM-Mod-SubCategories-ruRU: Ан'кахет,Азжол-Неруб,Очищение Стратхольма,Крепость Драк'Тарон,Гундрак,Чертоги Молний,Чертоги Камня,Нексус,Окулус,Крепость Утгард,Вершина Утгард,Аметистовая крепость,Испытание чемпиона,Кузня Душ,Яма Сарона,Залы Отражений
