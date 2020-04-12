@@ -71,7 +71,7 @@ local specWarnFeatherNear		= mod:NewSpecialWarning("SpecWarnFeatherNear") -- П�
 local timerAnimatedCD			= mod:NewCDTimer(70, 308633, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON) -- Ожившее плямя
 local timerFireSignCD			= mod:NewCDTimer(39, 308638, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON) -- Знак огня
 local timerFlamefallCD			= mod:NewCDTimer(31, 308987, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON, nil, 2, 4) -- Перезарядка перьев
-local timerPhoenixScreamCD		= mod:NewCDTimer(20, 308671, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON) -- Крик феникса
+local timerPhoenixScreamCD		= mod:NewCDTimer(20, 308671, nil, nil, nil, 1, nil, DBM_CORE_HEROIC_ICON) -- Крик феникса
 local timerSupernova			= mod:NewBuffActiveTimer(5, 308636, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON, nil, 2, 4) -- таймер суперновой
 
 
@@ -80,7 +80,7 @@ local timerFireSignCast			= mod:NewCastTimer(1, 308638, nil, nil, nil, 2) -- З�
 local timerFlamefallCast		= mod:NewCastTimer(5, 308987, nil, nil, nil, 2) -- Каст перьев
 local timerPhase2Cast			= mod:NewCastTimer(20, 308640, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON, nil, 2, 4) -- Перефаза
 -- 2 фаза --
-local timerPhoenixScreamCast	= mod:NewCastTimer(2, 308671, DBM_CORE_DEADLY_ICON, nil, 1, 2) -- Крик феникса
+local timerPhoenixScreamCast	= mod:NewCastTimer(2, 308671, nil, nil, nil, 6, nil, DBM_CORE_HEROIC_ICON) -- Крик феникса
 local timerScatteringCast		= mod:NewCastTimer(20, 308663) -- Знак феникса: рассеяность
 local timerWeaknessCast			= mod:NewCastTimer(20, 308664) -- Знак феникса: слабость
 local timerFuryCast				= mod:NewCastTimer(20, 308665) -- Знак феникса: ярость
