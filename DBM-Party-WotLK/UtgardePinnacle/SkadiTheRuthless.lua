@@ -23,8 +23,6 @@ local specWarnWhirlwind	= mod:NewSpecialWarningRun(59322)
 
 local timerAchieve		= mod:NewAchievementTimer(180, 1873, "TimerSpeedKill")
 
-local soundWhirlwind	= mod:NewSound(59322)
-
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(59331, 50255) then
 		warningPoison:Show(args.destName)
@@ -33,7 +31,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		warningWhirlwind:Show()
 		timerWhirlwindCD:Start()
 		specWarnWhirlwind:Show()
-		soundWhirlwind:Play()
 	end
 end
 

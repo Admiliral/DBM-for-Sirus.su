@@ -48,8 +48,6 @@ local timerFieryBreathCD			= mod:NewCDTimer(19, 74526, nil, "Tank|Healer")--But 
 
 local berserkTimer					= mod:NewBerserkTimer(480)
 
-local soundConsumption 				= mod:NewSound(74562, "SoundOnConsumption")
-
 mod:AddBoolOption("YellOnConsumption", true, "announce")
 mod:AddBoolOption("AnnounceAlternatePhase", true, "announce")
 mod:AddBoolOption("WhisperOnConsumption", false, "announce")
@@ -153,7 +151,6 @@ function mod:SPELL_AURA_APPLIED(args)--We don't use spell cast success for actua
 		end
 		if args:IsPlayer() then
 			specWarnShadowConsumption:Show()
-			soundConsumption:Play()
 			if self.Options.YellOnConsumption then
 				SendChatMessage(L.YellConsumption, "SAY")
 			end
@@ -173,7 +170,6 @@ function mod:SPELL_AURA_APPLIED(args)--We don't use spell cast success for actua
 		end
 		if args:IsPlayer() then
 			specWarnFieryConsumption:Show()
-			soundConsumption:Play()
 			if self.Options.YellOnConsumption then
 				SendChatMessage(L.YellCombustion, "SAY")
 			end

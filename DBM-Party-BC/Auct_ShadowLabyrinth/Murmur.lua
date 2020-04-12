@@ -18,14 +18,12 @@ local timerBoomCast		= mod:NewCastTimer(5, 33923)
 local timerTouch		= mod:NewTargetTimer(14, 33711)
 local specWarnTouch		= mod:NewSpecialWarningMove(33711)
 
-local soundBoom = mod:NewSound(33923)
 mod:AddBoolOption("SetIconOnTouchTarget", true)
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 33923 or args.spellId == 38796 then
 		warnBoom:Show()
 		timerBoomCast:Start()
-		soundBoom:Play()
 	end
 end
 

@@ -26,7 +26,6 @@ local timerCombatStart		= mod:NewTimer(55.5, "TimerCombatStart", 2457)
 local timerMarked			= mod:NewTargetTimer(10, 67823)
 local timerExplode			= mod:NewCastTimer(4, 67886)
 
-local soundExplode	 		= mod:NewSound(67751, nil, "Melee")
 mod:AddBoolOption("SetIconOnMarkedTarget", true)
 
 function mod:SPELL_CAST_START(args)
@@ -58,7 +57,6 @@ do
 		elseif args:IsSpellID(67751) and time() - lastexplode > 2 then	-- Ghoul Explode (BK exlodes Army of the dead. Phase 3)
 			warnGhoulExplode:Show(args.destName)
 			specWarnExplode:Show()
-			soundExplode:Play()
 			lastexplode = time()
 		end
 	end

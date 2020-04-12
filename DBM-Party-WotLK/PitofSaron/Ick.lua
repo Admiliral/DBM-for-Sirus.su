@@ -28,8 +28,6 @@ local timerPursuitCast			= mod:NewCastTimer(5, 68987)
 local timerPursuitConfusion		= mod:NewBuffActiveTimer(12, 69029)
 local timerPoisonNova			= mod:NewCastTimer(5, 68989)
 
-local soundPoisonNova	= mod:NewSound(68989, nil, "Melee")
-local soundPursuit		= mod:NewSound(68987)
 mod:AddBoolOption("SetIconOnPursuitTarget", true)
 
 function mod:SPELL_CAST_START(args)
@@ -40,7 +38,6 @@ function mod:SPELL_CAST_START(args)
 		warnPoisonNova:Show()
 		timerPoisonNova:Start()
 		specWarnPoisonNova:Show()
-		soundPoisonNova:Play()
 	end
 end
 
@@ -77,7 +74,6 @@ function mod:OnSync(msg, target)
 		warnPursuit:Show(target)
 		if target == UnitName("player") then
 			specWarnPursuit:Show()
-			soundPursuit:Play()
 		end
 		if self.Options.SetIconOnPursuitTarget then
 			self:SetIcon(target, 8, 12)

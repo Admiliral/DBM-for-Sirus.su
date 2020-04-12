@@ -43,8 +43,6 @@ local warnFreeze            = mod:NewAnnounce("WarnFreeze", 4, 305328)
 
 local berserkTimer			= mod:NewBerserkTimer(900)
 
-local soundArcane			= mod:NewSound(29973)
-
 mod:AddBoolOption("WreathIcons", true)
 mod:AddBoolOption("ElementalIcons", true)
 
@@ -84,7 +82,6 @@ function mod:SPELL_CAST_START(args)
 		warningArcaneCast:Show()
 		timerArcaneExplosion:Start()
 		specWarnArcane:Show()
-		soundArcane:Play()
 		timerSpecial:Start()
 	elseif args:IsSpellID(29969) then
 		warningBlizzard:Show()

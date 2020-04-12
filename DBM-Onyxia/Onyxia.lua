@@ -31,9 +31,6 @@ local timerWhelps			= mod:NewTimer(105, "TimerWhelps", 10697)
 local timerAchieve			= mod:NewAchievementTimer(300, 4405, "TimerSpeedKill")
 local timerAchieveWhelps	= mod:NewAchievementTimer(10, 4406, "TimerWhelps")
 
-local soundBlastNova		= mod:NewSound(68958, nil, "Melee")
-local soundDeepBreath 		= mod:NewSound(17086)
-
 mod:AddBoolOption("SoundWTF3", true, "sound")
 
 mod.vb.warned_preP2 = false
@@ -97,10 +94,8 @@ end
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(68958) then
 		specWarnBlastNova:Show()
-		soundBlastNova:Play()
 	elseif args:IsSpellID(17086, 18351, 18564, 18576) or args:IsSpellID(18584, 18596, 18609, 18617) then	-- 1 ID for each direction
 		specWarnBreath:Show()
-		soundDeepBreath:Play()
 		timerBreath:Start()
 		timerNextDeepBreath:Start()
 --		preWarnDeepBreath:Schedule(35)              -- Pre-Warn Deep Breath

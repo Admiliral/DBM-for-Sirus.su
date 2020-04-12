@@ -415,7 +415,6 @@ local fireEvent
 local playerName = UnitName("player")
 local playerLevel = UnitLevel("player")
 local playerRealm = GetRealmName()
-local soundFolder = "Interface\\AddOns\\DBM-Core\\snd\\%s.wav"
 local iconFolder = "Interface\\AddOns\\DBM-Core\\icon\\"
 local timerRequestInProgress = false
 local updateNotificationDisplayed = 0
@@ -5946,49 +5945,6 @@ do
 
 	function bossModPrototype:NewMoveToAnnounce(spellId, color, ...)
 		return newAnnounce(self, "moveto", spellId, color or 3, ...)
-	end
-end
-
---------------------
---  Sound Object  --
---------------------
-do
-	local soundPrototype = {}
-	local mt = { __index = soundPrototype }
-	function bossModPrototype:NewSound(spellId, optionName, optionDefault)
-		self.numSounds = self.numSounds and self.numSounds + 1 or 1
-		local obj = setmetatable(
-			{
-				option = optionName or DBM_CORE_AUTO_SOUND_OPTION_TEXT:format(spellId),
-				mod = self,
-			},
-			mt
-		)
-		if optionName == false then
-			obj.option = nil
-		else
-			self:AddBoolOption(obj.option, optionDefault, "misc")
-		end
-		return obj
-	end
-	bossModPrototype.NewRunAwaySound = bossModPrototype.NewSound
-
-	function soundPrototype:Play(file)
-		if not self.option or self.mod.Options[self.option] then
-			if DBM.Options.Memes then
-				PlaySoundFile(file or soundFolder:format("fear2")) --беги сука беги
-			else
-				PlaySoundFile(file or "Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
-			end
-		end
-	end
-
-	function soundPrototype:Schedule(t, ...)
-		return schedule(t, self.Play, self.mod, self, ...)
-	end
-
-	function soundPrototype:Cancel(...)
-		return unschedule(self.Play, self.mod, self, ...)
 	end
 end
 
