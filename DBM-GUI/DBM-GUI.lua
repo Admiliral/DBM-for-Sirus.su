@@ -42,7 +42,6 @@
 --
 --
 
-local revision =(string.sub("20200412155347", 1, -5))
 local FrameTitle = "DBM_GUI_Option_"	-- all GUI frames get automatically a name FrameTitle..ID
 
 local PanelPrototype = {}
