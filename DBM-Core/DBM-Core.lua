@@ -2996,9 +2996,9 @@ do
 		self:LoadModsOnDemand("zoneId", mapID)
 		if DBM:HasMapRestrictions() then
 			DBM.Arrow:Hide()
-			if DBM.RangeCheck:IsRadarShown() then
+--			if DBM.RangeCheck:IsRadarShown() then
 				DBM.RangeCheck:Hide(true)
-			end
+--			end
 		end
 		-- Auto Logging for entire zone if record only bosses is off
 		if not DBM.Options.RecordOnlyBosses then
