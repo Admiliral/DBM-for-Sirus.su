@@ -39,16 +39,16 @@ local warnGates			= mod:NewSoonAnnounce(308545, 3) -- Врата бездны - 
 
 local specWarnHeal		= mod:NewSpecialWarningSpell(308561, nil, nil, nil, 1, 2)  -- Хил
 local specWarnGates		= mod:NewSpecialWarningSpell(308545, nil, nil, nil, 1, 2)  -- Врата
-local specWarnRing		= mod:NewSpecialWarningSpell(308562, nil, nil, nil, 1, 2)  -- Кольцо
+local specWarnHelp		= mod:NewSpecialWarningAddsCustom(308559, nil, nil, nil, 1, 2)  -- Послушники
+local specWarnRing		= mod:NewSpecialWarningLookAway(308562, nil, nil, nil, 2, 2)  -- Кольцо
 local specWarnStar		= mod:NewSpecialWarningSpell(308565, nil, nil, nil, 1, 2)  -- Звездное пламя
-local specWarnHelp		= mod:NewSpecialWarningSpell(308559, nil, nil, nil, 1, 2)  -- Послушники
 local specWarnWrathH	= mod:NewSpecialWarningRun(308548, nil, nil, nil, 1, 2) -- Гнев
 
-local timerNextHeal		= mod:NewTimer(15, "TimerNextHeal", 308561, "RemoveEnrage", nil, 1, nil, DBM_CORE_ENRAGE_ICON)
-local timerNextGates	= mod:NewTimer(44, "TimerNextGates", 308545, "Tank", nil, 3, nil, DBM_CORE_TANK_ICON, nil, 1, 4)
-local timerNextRing		= mod:NewTimer(18, "TimerNextRing", 308563, "RemoveEnrage", nil, 3, nil, DBM_CORE_DEADLY_ICON)
-local timerNextStar		= mod:NewTimer(12, "TimerNextStar", 308565, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON)
-local timerNextHelp		= mod:NewTimer(40, "TimerNextHelp", 308558, "Tank", nil, 3, nil, DBM_CORE_TANK_ICON, nil, 1, 4)
+local timerNextHeal		= mod:NewTimer(15, "TimerNextHeal", 308561, "RemoveEnrage", nil, 1, DBM_CORE_ENRAGE_ICON)
+local timerNextGates	= mod:NewTimer(40, "TimerNextGates", 308545, "Tank|Healer", nil, 3, DBM_CORE_TANK_ICON, nil, 1, 4)
+local timerNextRing		= mod:NewTimer(18, "TimerNextRing", 308563, "RemoveEnrage", nil, 3, DBM_CORE_HEROIC_ICON)
+local timerNextStar		= mod:NewTimer(12, "TimerNextStar", 308565, "Healer", nil, 5, DBM_CORE_HEALER_ICON)
+local timerNextHelp		= mod:NewTimer(40, "TimerNextHelp", 308558, "Tank|Healer", nil, 3, DBM_CORE_TANK_ICON, nil, 1, 4)
 local timerWrathH		= mod:NewTargetTimer(6, 308548, nil, "RemoveEnrage", nil, 1, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 4)
 local timerNextWrathH	= mod:NewCDTimer(43, 308548, nil, "RemoveEnrage", nil, 1, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 4)
 
@@ -56,18 +56,20 @@ local priestsN = true
 local priestsH = true
 local provid = true
 
-
+phase = 0
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 18805, "High Astromancer Solarian")
 	if mod:IsDifficulty("heroic25") then
 		timerNextHelp:Start()
-	    timerNextGates:Start(25)
+	    timerNextGates:Start(20)
 	    timerNextWrathH:Start()
+		phase = 1
 	else
 	    timerAdds:Start()
 		warnAddsSoon:Schedule(52)
 	end
 end
+
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 18805, "High Astromancer Solarian", wipe)
@@ -109,22 +111,29 @@ end
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(308562) then -- кольцо
 		timerNextRing:Start(18)
-		specWarnRing:Show()
+		specWarnRing:Show(args.sourceName)
 		warnRing:Schedule(0)
 	elseif args:IsSpellID(308558) then -- послушники
-		timerNextHelp:Start(75)
-		specWarnHelp:Show()
-		warnHelp:Schedule(0)
+		timerNextHelp:Schedule(80)
+		specWarnHelp:Show(args.sourceName)
+		warnHelp:Schedule(80)
 		priestsH = true
 		provid	 = true
-	elseif args:IsSpellID(308545) then -- врата
-		timerNextGates:Start()
-		specWarnGates:Show()
+	elseif args:IsSpellID(308545) and phase == 1 then -- врата
+        timerNextGates:Start()
+        specWarnGates:Show()
+		warnGates:Schedule(0)
+	elseif args:IsSpellID(308545) and phase == 2 then -- врата
+        timerNextGates:Start(30)
 		warnGates:Schedule(0)
 	elseif args:IsSpellID(308561) then -- хил
 		timerNextHeal:Start()
 		specWarnHeal:Show()
 		warnHeal:Schedule(0)
+	elseif args:IsSpellID(308576) then
+		phase = 2
+		timerNextGates:Cancel()
+		timerNextGates:Start(15)
 	end
 end
 
@@ -161,7 +170,7 @@ function mod:PriestHIcon() -- хм
 		for i = 1, GetNumRaidMembers() do
 			if UnitName("raid"..i.."target") == L.PriestH then
 				priestsH = false
-				SetRaidTarget("raid"..i.."target", 2)
+				SetRaidTarget("raid"..i.."target", 6)
 				break
 			end
 		end
@@ -173,7 +182,7 @@ function mod:ProvidIcon()
 		for i = 1, GetNumRaidMembers() do
 			if UnitName("raid"..i.."target") == L.Provid then
 				provid = false
-				SetRaidTarget("raid"..i.."target", 6)
+				SetRaidTarget("raid"..i.."target", 7)
 				break
 			end
 		end
@@ -181,7 +190,7 @@ function mod:ProvidIcon()
 end
 
 function mod:UNIT_TARGET()
-	if priestsN or priestsH then
+	if priestsH then
 		self:PriestHIcon()
 	elseif provid then
 	    self:ProvidIcon()
