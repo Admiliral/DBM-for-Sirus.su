@@ -25,7 +25,7 @@ end
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(35008) then
 		timerSpitCD:Start()
-		specWarnSpit:Show()
+		specWarnSpit:Show(args.sourceName)
 	end
 end
 

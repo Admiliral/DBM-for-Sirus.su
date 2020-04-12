@@ -20,7 +20,7 @@ local warnScreamKick	= mod:NewSpecialWarningInterrupt(22686)
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(22686) then
 		timerScreamCD:Start()
-		warnScreamKick:Show()
+		warnScreamKick:Show(args.sourceName)
 	end
 end
 

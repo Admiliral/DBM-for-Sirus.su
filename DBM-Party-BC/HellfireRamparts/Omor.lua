@@ -37,6 +37,6 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(37566) then
-		specWarnKickTreach:Show()
+		specWarnKickTreach:Show(args.sourceName)
 	end
 end
