@@ -58,14 +58,15 @@ local priestsN = true
 local priestsH = true
 local provid = true
 
-phase = 0
+mod.vb.phase = 0
+
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 18805, "High Astromancer Solarian")
 	if mod:IsDifficulty("heroic25") then
 		timerNextHelp:Start()
 	    timerNextGates:Start(20)
 	    timerNextWrathH:Start()
-		phase = 1
+		self.vb.phase = 1
 	else
 	    timerAdds:Start()
 		warnAddsSoon:Schedule(52)
@@ -121,11 +122,11 @@ function mod:SPELL_CAST_START(args)
 		warnHelp:Schedule(80)
 		priestsH = true
 		provid	 = true
-	elseif args:IsSpellID(308545) and phase == 1 then -- врата
+	elseif args:IsSpellID(308545) and self.vb.phase == 1 then -- врата
         timerNextGates:Start()
         specWarnGates:Show()
 		warnGates:Schedule(0)
-	elseif args:IsSpellID(308545) and phase == 2 then -- врата
+	elseif args:IsSpellID(308545) and self.vb.phase == 2 then -- врата
         timerNextGates:Start(30)
 		warnGates:Schedule(0)
 	elseif args:IsSpellID(308561) then -- хил
@@ -136,9 +137,8 @@ function mod:SPELL_CAST_START(args)
 		specWarnFlashVoid:Show(args.sourceName)
 		timerFlashVoid:Schedule(5)
 	elseif args:IsSpellID(308576) then
-		phase = 2
+		self.vb.phase = 2
 		timerFlashVoid:Start()
-		phase = 2
 		timerNextGates:Cancel()
 		timerNextGates:Start(15)
 	end
