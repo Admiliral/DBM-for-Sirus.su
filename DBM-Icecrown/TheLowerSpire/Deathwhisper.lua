@@ -27,7 +27,6 @@ local warnReanimating				= mod:NewAnnounce("WarnReanimating", 3)
 local warnDarkTransformation		= mod:NewSpellAnnounce(70900, 4)
 local warnDarkEmpowerment			= mod:NewSpellAnnounce(70901, 4)
 local warnPhase2					= mod:NewPhaseAnnounce(2, 1)
-local warnFrostbolt					= mod:NewCastAnnounce(72007, 2)
 local warnTouchInsignificance		= mod:NewStackAnnounce(71204, 2, nil, "Tank|Healer")
 local warnDarkMartyrdom				= mod:NewSpellAnnounce(72499, 4)
 
@@ -243,8 +242,8 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(71420, 72007, 72501, 72502) then
-		warnFrostbolt:Show()
-		warnFrostbolt:Play("kickcast")
+		specWarnFrostbolt:Show(args.sourceName)
+		specWarnFrostbolt:Play("kickcast")
 		timerFrostboltCast:Start()
 	elseif args:IsSpellID(70900) then
 		warnDarkTransformation:Show()

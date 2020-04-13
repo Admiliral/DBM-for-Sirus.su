@@ -297,7 +297,7 @@ end
 
 function mod:SPELL_AURA_APPLIED_DOSE(args)
 	if args:IsSpellID(72451, 72463, 72671, 72672) then	-- Mutated Plague
-		warnMutatedPlague:Show(args.spellName, args.destName, args.amount or 1)
+		warnMutatedPlague:Show(args.destName, args.amount or 1)
 		timerMutatedPlagueCD:Start()
 		if args.amount >=4 then
 			specWarnMutatedPlague:Show(args.amount, args.destName)
