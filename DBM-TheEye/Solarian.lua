@@ -45,7 +45,7 @@ local specWarnStar		= mod:NewSpecialWarningDispel(308565, nil, nil, nil, 1, 2)  
 local specWarnWrathH	= mod:NewSpecialWarningRun(308548, nil, nil, nil, 1, 2) -- Гнев
 local specWarnFlashVoid = mod:NewSpecialWarningLookAway(308585, nil, nil, nil, 2, 2) -- фир 2 фаза
 
-local timerNextHeal		= mod:NewTimer(15, "TimerNextHeal", 308561, "RemoveEnrage", nil, 1, DBM_CORE_ENRAGE_ICON)
+local timerNextHeal		= mod:NewTimer(15, "TimerNextHeal", 308561, "RemoveEnrage", nil, 1, DBM_CORE_INTERRUPT_ICON)
 local timerNextGates	= mod:NewTimer(40, "TimerNextGates", 308545, "Tank|Healer", nil, 3, DBM_CORE_TANK_ICON, nil, 1, 4)
 local timerNextRing		= mod:NewTimer(18, "TimerNextRing", 308563, "RemoveEnrage", nil, 3, DBM_CORE_HEROIC_ICON)
 local timerNextStar		= mod:NewTimer(12, "TimerNextStar", 308565, "Healer", nil, 5, DBM_CORE_HEALER_ICON)
