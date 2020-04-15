@@ -127,7 +127,7 @@ function mod:OldMalleableGooTarget()
 				x, y = GetPlayerMapPosition(uId)
 			end
 			if inRange then
-				specWarnMalleableGooNear:Show()
+				specWarnMalleableGooNear:Show(targetname)
 				specWarnMalleableGooNear:Play("watchstep")
 				if self.Options.GooArrow then
 					DBM.Arrow:ShowRunAway(x, y, 10, 5)
@@ -369,7 +369,7 @@ function mod:OnSync(msg, target)
 						x, y = GetPlayerMapPosition(uId)
 					end
 					if inRange then
-						specWarnMalleableGooNear:Show()
+						specWarnMalleableGooNear:Show(target)
 						specWarnMalleableGooNear:Play("watchstep")
 						if self.Options.GooArrow then
 							DBM.Arrow:ShowRunAway(x, y, 10, 5)
