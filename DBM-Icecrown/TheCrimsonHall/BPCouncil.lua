@@ -111,7 +111,7 @@ function mod:OldShockVortexTarget()
 				x, y = GetPlayerMapPosition(uId)
 			end
 			if inRange then
-				specWarnVortexNear:Show()
+				specWarnVortexNear:Show(targetname)
 				specWarnVortexNear:Play("watchstep")
 				if self.Options.VortexArrow then
 					DBM.Arrow:ShowRunAway(x, y, 10, 5)
@@ -245,11 +245,10 @@ function mod:OnSync(msg, target)
 		end
 	elseif msg == "ShockVortex" then
 		if not self.Options.BypassLatencyCheck then
-			local targetname = self:GetBossTarget(37970)
 			warnShockVortex:Show(target)
 			if target == UnitName("player") then
 				specWarnVortex:Show()
-			elseif targetname then
+			elseif target then
 				local uId = DBM:GetRaidUnitId(target)
 				if uId then
 					local inRange = CheckInteractDistance(uId, 2)
@@ -259,7 +258,7 @@ function mod:OnSync(msg, target)
 						x, y = GetPlayerMapPosition(uId)
 					end
 					if inRange then
-						specWarnVortexNear:Show()
+						specWarnVortexNear:Show(target)
 						if self.Options.VortexArrow then
 							DBM.Arrow:ShowRunAway(x, y, 10, 5)
 						end
