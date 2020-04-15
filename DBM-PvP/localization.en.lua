@@ -227,3 +227,31 @@ L:SetMiscLocalization({
 	GoblinBrokenHorde		= "It's broken again?! I'll fix it... just don't expect the warranty to cover this"
 })
 
+-------------------------
+--  Battle of Gilneas  --
+-------------------------
+L = DBM:GetModLocalization("Gilneas")
+
+L:SetGeneralLocalization({
+	name = "Battle for Gilneas"
+})
+
+L:SetMiscLocalization({
+	ScoreExpr	= "(%d+)/2000",
+	Alliance	= "Alliance",
+	Horde		= "Horde",
+	WinBarText	= "%s wins",
+	BasesToWin	= "Bases to win: %d",
+	Flag		= "Flag"
+})
+
+L:SetTimerLocalization({
+	TimerCap	= "%s"
+})
+
+L:SetOptionLocalization({
+	TimerWin				= "Show win timer",
+	TimerCap				= "Show capture timer",
+	ShowGilneasEstimatedPoints		= "Show estimated points on win/loss",
+	ShowGilneasBasesToWin			= "Show bases required to win"
+})
