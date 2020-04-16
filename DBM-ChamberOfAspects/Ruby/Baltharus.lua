@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Baltharus", "DBM-ChamberOfAspects", 2)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 4297 $"):sub(12, -3))
+mod:SetRevision("20200405141240")
 mod:SetCreatureID(39751)
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6, 7, 8)
 
@@ -18,8 +18,8 @@ local warningRepellingWave	= mod:NewSpellAnnounce(74509, 3)
 local warnWhirlwind			= mod:NewSpellAnnounce(75125, 3, nil, "Tank|Healer")
 local warningWarnBrand		= mod:NewTargetAnnounce(74505, 4)
 
-local specWarnBrand			= mod:NewSpecialWarningYou(74505)
-local specWarnRepellingWave	= mod:NewSpecialWarningSpell(74509)
+local specWarnBrand			= mod:NewSpecialWarningYou(74505, nil, nil, nil, 3, 2)
+local specWarnRepellingWave	= mod:NewSpecialWarningSpell(74509, nil, nil, nil, 3, 2)
 
 local timerWhirlwind		= mod:NewBuffActiveTimer(4, 75125, nil, "Tank|Healer")
 local timerRepellingWave	= mod:NewBuffActiveTimer(4, 74509)--1 second cast + 3 second stun
@@ -60,6 +60,7 @@ function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(74509) then
 		warningRepellingWave:Show()
 		specWarnRepellingWave:Show()
+		specWarnRepellingWave:Play("carefly")
 		timerRepellingWave:Show()
 	end
 end
@@ -72,6 +73,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		brandTargets[#brandTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnBrand:Show()
+			specWarnBrand:Play("targetyou")
 			timerBrand:Show()
 		end
 		if self.Options.SetIconOnBrand then
