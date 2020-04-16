@@ -72,7 +72,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	Wall			= "Лава вокруг %s начинает бурлить!",
+	Wall			= "Лава вокруг |3-1(%s) начинает бурлить!",
 	Portal			= "%s открывает сумрачный портал!",
 	NameTenebron	= "Тенеброн",
 	NameShadron		= "Шадрон",
