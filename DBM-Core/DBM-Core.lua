@@ -2966,10 +2966,10 @@ do
 			savedDifficulty, difficultyText = currentDifficulty, currentDifficultyText
 		end
 		self:Debug("Instance Check fired with mapID "..mapID.." and difficulty "..difficulty, 2)
-		if LastInstanceMapID == mapID then
-			self:Debug("No action taken because mapID hasn't changed since last check", 2)
-			return
-		end--ID hasn't changed, don't waste cpu doing anything else (example situation, porting into garrosh stage 4 is a loading screen)
+--		if LastInstanceMapID == mapID then
+--			self:Debug("No action taken because mapID hasn't changed since last check", 2)
+--			return
+--		end--ID hasn't changed, don't waste cpu doing anything else (example situation, porting into garrosh stage 4 is a loading screen)
 		LastInstanceMapID = mapID
 		LastGroupSize = instanceGroupSize
 		difficultyIndex = difficulty
