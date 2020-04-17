@@ -50,7 +50,7 @@ end
 
 function mod:OnCombatStart(delay)
 	DBM.BossHealth:Clear()
-	timerCombatStart:Show(-delay)
+	timerCombatStart:Start(-delay)
 	if UnitFactionGroup("player") == "Alliance" then
 		DBM:FireCustomEvent("DBM_EncounterStart", 37215, "Icecrown Gunship Battle")
 		timerAdds:Start(62-delay)
