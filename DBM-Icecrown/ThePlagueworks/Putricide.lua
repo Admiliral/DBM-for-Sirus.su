@@ -165,7 +165,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif args:IsSpellID(73121, 73122) then		--Guzzle Potions (Heroic phase change end)
 		if self:IsDifficulty("heroic10") then
-			self:ScheduleMethod(40, "NextPhase")	--May need slight tweaking +- a second or two
+			self:ScheduleMethod(30, "NextPhase")	--May need slight tweaking +- a second or two
 			timerPotions:Start()
 		elseif self:IsDifficulty("heroic25") then
 			self:ScheduleMethod(20, "NextPhase")
