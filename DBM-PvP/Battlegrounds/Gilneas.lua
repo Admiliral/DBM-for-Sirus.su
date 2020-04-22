@@ -120,7 +120,7 @@ do
 end
 
 local function Gilneas_Initialize()
-	if select(2, IsInInstance()) == "pvp" and GetCurrentMapAreaID() == 906 then
+	if select(2, IsInInstance()) == "pvp" and GetCurrentMapAreaID() == 916 then
 		bgzone = true
 		update_gametime()
 		for i=1, GetNumMapLandmarks(), 1 do
