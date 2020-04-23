@@ -228,6 +228,27 @@ L:SetMiscLocalization({
 })
 
 -------------------------
+--  Silvershard Mines  --
+-------------------------
+L = DBM:GetModLocalization("z861")
+
+L:SetGeneralLocalization({
+	name		= "Silvershard Mines"
+})
+
+L:SetTimerLocalization({
+	TimerCart	= "Cart respawn"
+})
+
+L:SetOptionLocalization({
+	TimerCart	= "Show cart respawn timer"
+})
+
+L:SetMiscLocalization({
+	Capture		= "has captured"
+})
+
+-------------------------
 --  Battle of Gilneas  --
 -------------------------
 L = DBM:GetModLocalization("Gilneas")

@@ -229,6 +229,27 @@ L:SetMiscLocalization({
 	GoblinBrokenHorde		= "It's broken again?! I'll fix it... just don't expect the warranty to cover this"
 })
 
+-------------------------
+--  Silvershard Mines  --
+-------------------------
+L = DBM:GetModLocalization("z861")
+
+L:SetGeneralLocalization({
+	name		= "Сверкающие копи"
+})
+
+L:SetTimerLocalization({
+	TimerCart	= "Восстановление вагонетки"
+})
+
+L:SetOptionLocalization({
+	TimerCart	= "Отсчет времени до восстановления вагонетки"
+})
+
+L:SetMiscLocalization({
+	Capture		= "захвачена"
+})
+
 --------------------------
 --  Battle for Gilneas  --
 --------------------------
