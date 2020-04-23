@@ -134,6 +134,7 @@ globals = {
 	"C_Timer",
 	"C_Talent",
 	"TimerFrame",
+	"WorldStateTopCenterFrame",
 
 	-- frames created via CreateFrame
 	"AlwaysUpFrame1",
