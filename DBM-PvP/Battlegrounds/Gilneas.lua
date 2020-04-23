@@ -35,9 +35,9 @@ Gilneas:RemoveOption("HealthFrame")
 Gilneas:RemoveOption("SpeedKillTimer")
 
 local ResPerSec = {
-	[0] = 0.01,
-	[1] = 10/9,
-	[2] = 10/3,
+	[0] = 0,
+	[1] = 1,
+	[2] = 3,
 	[3] = 30
 }
 
@@ -58,14 +58,10 @@ local objectives = {
 	Waterworks = 0
 }
 local function getObjectiveType(id)
-	if id >=6 and id <=12 then
-		return "Lighthouse"
-	elseif id >= 16 and id <= 20 then
-		return "Mines"
-	elseif id >= 26 and id <= 30 then
-		return "Waterworks"
-	else
-		return false
+	if id >= 6 and id <= 12 then return "Lighthouse"
+	elseif id >= 16 and id <= 20 then return "Mines"
+	elseif id >= 26 and id <= 30 then return "Waterworks"
+	else return false
 	end
 end
 local function getObjectiveState(id)
@@ -97,8 +93,8 @@ end
 
 local function get_score()
 	if not bgzone then return 0,0 end
-	local AllyScore		= tonumber(string.match((select(4, GetWorldStateUIInfo(1)) or ""), L.ScoreExpr)) or 0
-	local HordeScore	= tonumber(string.match((select(4, GetWorldStateUIInfo(2)) or ""), L.ScoreExpr)) or 0
+	local AllyScore		= tonumber(string.match((select(3, GetWorldStateUIInfo(1)) or ""), L.ScoreExpr)) or 0
+	local HordeScore	= tonumber(string.match((select(3, GetWorldStateUIInfo(2)) or ""), L.ScoreExpr)) or 0
 	return AllyScore, HordeScore
 end
 
