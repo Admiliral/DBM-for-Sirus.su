@@ -24,7 +24,6 @@ function mod:OnInitialize()
 		cartCount = 0
 	elseif bgzone then
 		bgzone = false
-		self:UnregisterShortTermEvents()
 	end
 end
 
