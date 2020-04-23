@@ -228,6 +228,27 @@ L:SetMiscLocalization({
 })
 
 -------------------------
+--  Slavery Valley  --
+-------------------------
+L = DBM:GetModLocalization("z611")
+
+L:SetGeneralLocalization({
+	name		= "Slavery Valley"
+})
+
+L:SetTimerLocalization({
+	TimerPOI	= "%s",
+})
+
+L:SetOptionLocalization({
+	TimerPOI	= "Show capture timer",
+})
+
+L:SetMiscLocalization({
+
+})
+
+-------------------------
 --  Silvershard Mines  --
 -------------------------
 L = DBM:GetModLocalization("z861")
