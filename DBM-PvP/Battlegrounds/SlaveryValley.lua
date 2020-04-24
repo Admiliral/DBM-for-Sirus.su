@@ -9,6 +9,7 @@ mod:RegisterEvents(
 	"CHAT_MSG_BG_SYSTEM_NEUTRAL",
 	"CHAT_MSG_RAID_BOSS_EMOTE"
 )
+mod:RemoveOption("HealthFrame")
 
 local poi = {}
 

@@ -152,7 +152,7 @@ L:SetOptionLocalization({
 ---------------------
 --  Warsong Gulch  --
 ---------------------
-L = DBM:GetModLocalization("WarsongGulch")
+L = DBM:GetModLocalization("z444")
 
 L:SetGeneralLocalization({
 	name = "Ущелье Песни Войны"
@@ -165,11 +165,13 @@ L:SetMiscLocalization({
 	Alliance 			= "Альянса",
 	Horde 				= "Орды",
 	InfoErrorText		= "Функция выбора флагоносца, будет восстановлена после выхода из режима боя.",
-	ExprFlagPickUp		= "(.+) подымает флаг (%w+)",
-	ExprFlagCaptured	= "(.+) захватывает флаг (%w+)!",
-	ExprFlagReturn		= "(.+) возвращает флаг (%w+) на базу!",
-	FlagAlliance		= "Флаг Альянса: ",
-	FlagHorde			= "Флаг Орды: ",
+
+	ExprFlagPickUp		= "(.+) несет флаг (.+)!",
+	ExprFlagPickUp2		= "Флаг (.+) у (.+)!",
+	ExprFlagDropped		= "(.+) роняет флаг (.+)!",
+	ExprFlagCaptured	= "(.+) захватывает флаг (.+)!",
+	FlagAlliance		= "Флаг Альянса",
+	FlagHorde			= "Флаг Орды",
 	FlagBase			= "База"
 })
 
@@ -247,7 +249,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	Capture		= "захвачена"
+
 })
 
 -------------------------

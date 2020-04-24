@@ -23,21 +23,26 @@ local inviteTimer = mod:NewTimer(60, "TimerInvite", nil, nil, false)
 
 function mod:ZONE_CHANGED_NEW_AREA()
 	if select(2, IsInInstance()) == "pvp" then
-		SendAddonMessage("DBMv4-Ver", "Hi!", "BATTLEGROUND")
+		SendAddonMessage("D4", "H", "BATTLEGROUND")
 		self:Schedule(3, DBM.RequestTimers, DBM)
 		inviteTimer:Stop()
 		SetMapToCurrentZone() -- for GetMapLandmarkInfo()
 	end
 	for i, v in ipairs(DBM:GetModByName("AlteracValley").timers) do v:Stop() end
 	for i, v in ipairs(DBM:GetModByName("EyeoftheStorm").timers) do v:Stop() end
-	for i, v in ipairs(DBM:GetModByName("WarsongGulch").timers) do v:Stop() end
+	for i, v in ipairs(DBM:GetModByName("z444").timers) do v:Stop() end
 	for i, v in ipairs(DBM:GetModByName("ArathiBasin").timers) do v:Stop() end
 	for i, v in ipairs(DBM:GetModByName("IsleofConquest").timers) do v:Stop() end
+	for i, v in ipairs(DBM:GetModByName("z611").timers) do v:Stop() end
+	for i, v in ipairs(DBM:GetModByName("z861").timers) do v:Stop() end
+	for i, v in ipairs(DBM:GetModByName("Gilneas").timers) do v:Stop() end
 	DBM:GetModByName("AlteracValley"):Unschedule()
 	DBM:GetModByName("EyeoftheStorm"):Unschedule()
-	DBM:GetModByName("WarsongGulch"):Unschedule()
+	DBM:GetModByName("z444"):Unschedule()
 	DBM:GetModByName("ArathiBasin"):Unschedule()
-	DBM:GetModByName("IsleofConquest"):Unschedule()
+	DBM:GetModByName("z611"):Unschedule()
+	DBM:GetModByName("z861"):Unschedule()
+	DBM:GetModByName("Gilneas"):Unschedule()
 end
 mod.PLAYER_ENTERING_WORLD = mod.ZONE_CHANGED_NEW_AREA
 mod.OnInitialize = mod.ZONE_CHANGED_NEW_AREA
