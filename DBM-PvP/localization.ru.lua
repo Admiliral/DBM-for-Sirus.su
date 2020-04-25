@@ -167,7 +167,7 @@ L:SetMiscLocalization({
 	InfoErrorText		= "Функция выбора флагоносца, будет восстановлена после выхода из режима боя.",
 
 	ExprFlagPickUp		= "(.+) несет флаг (.+)!",
-	ExprFlagPickUp2		= "Флаг (.+) у (.+)!",
+	ExprFlagPickUp2		= "Флаг (.+) у .+[(](.+)[)]!",
 	ExprFlagDropped		= "(.+) роняет флаг (.+)!",
 	ExprFlagCaptured	= "(.+) захватывает флаг (.+)!",
 	FlagAlliance		= "Флаг Альянса",

@@ -189,7 +189,7 @@ do
 				local sArg1, sArg2
 				local mSide, mNick
 				if locale == "ruRU" and string.match(arg1, L.ExprFlagPickUp2) then
-					sArg2, sArg1 = string.match(arg1, L.ExprFlagPickUp2)
+					sArg1, sArg2 = string.match(arg1, L.ExprFlagPickUp2)
 				else
 					local sArg3, sArg4
 					sArg1, sArg2 = string.match(arg1, L.ExprFlagPickUp)
