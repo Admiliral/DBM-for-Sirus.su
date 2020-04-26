@@ -5114,7 +5114,7 @@ do
 			return
 		end
 		spamProtection[target] = GetTime()
-		local mod = nil -- TODO:
+		local mod = self:GetModByName("z"..tostring(LastInstanceMapID))
 		if mod then
 			self:SendTimerInfo(mod, target)
 		end
