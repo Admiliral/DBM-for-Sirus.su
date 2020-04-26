@@ -6,15 +6,16 @@ mod:SetZone(DBM_DISABLE_ZONE_DETECTION)
 
 mod:RegisterEvents(
 	"ZONE_CHANGED_NEW_AREA",
-	"CHAT_MSG_BG_SYSTEM_HORDE",
-	"CHAT_MSG_BG_SYSTEM_ALLIANCE",
+	"CHAT_MSG_SYSTEM",
 	"CHAT_MSG_BG_SYSTEM_NEUTRAL",
 	"CHAT_MSG_RAID_BOSS_EMOTE",
 	"UPDATE_WORLD_STATES"
 )
 mod:RemoveOption("HealthFrame")
 
-local cartTimer		= mod:NewTimer(9.5, "TimerCart", "Interface\\Icons\\INV_Misc_PocketWatch_01")
+local locale = GetLocale()
+
+local cartTimer		= mod:NewTimer(14.5, "TimerCart", "Interface\\Icons\\INV_Misc_PocketWatch_01")
 
 local bgzone = false
 local cartCount = 0
@@ -34,12 +35,11 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if not bgzone then return end
-	if msg:find(L.Capture) then
+	if msg:find(L.Capture) or (locale == "ruRU" and msg:find(L.Capture2)) then
 		cartCount = cartCount + 1
 		cartTimer:Start(nil, cartCount)
 	end
 end
 
-mod.CHAT_MSG_BG_SYSTEM_ALLIANCE = mod.CHAT_MSG_RAID_BOSS_EMOTE
-mod.CHAT_MSG_BG_SYSTEM_HORDE = mod.CHAT_MSG_RAID_BOSS_EMOTE
+mod.CHAT_MSG_SYSTEM = mod.CHAT_MSG_RAID_BOSS_EMOTE
 mod.CHAT_MSG_BG_SYSTEM_NEUTRAL = mod.CHAT_MSG_RAID_BOSS_EMOTE
