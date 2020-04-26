@@ -1,9 +1,4 @@
--- Arathi mod v3.0
--- rewrite by Tandanu
---
--- thanks to DiabloH
-
-local Arathi	= DBM:NewMod("ArathiBasin", "DBM-PvP", 2)
+local Arathi	= DBM:NewMod("z462", "DBM-PvP", 2)
 local L			= Arathi:GetLocalizedStrings()
 
 Arathi:SetZone(DBM_DISABLE_ZONE_DETECTION)
@@ -256,30 +251,19 @@ do
 			end
 
 		elseif AllyTime > HordeTime then -- Horde wins
-			if self.ScoreFrame1Text and self.ScoreFrame2Text then
-				local AllyPoints = math.floor(math.floor(((HordeTime * ResPerSec[last_alliance_bases]) + last_alliance_score) / 10) * 10)
-				self.ScoreFrame1Text:SetText("("..AllyPoints..")")
-				self.ScoreFrame2Text:SetText("(1600)")
-			end
-
 			winner_is = 2
 			winTimer:Update(get_gametime(), get_gametime()+HordeTime)
 			winTimer:DisableEnlarge()
-			winTimer:UpdateName(L.WinBarText:format(L.Horde))
+			local AllyPoints = math.floor(math.floor(((HordeTime * ResPerSec[last_alliance_bases]) + last_alliance_score) / 10) * 10)
+			winTimer:UpdateName(L.WinBarText:format(AllyPoints, 1600))
 			winTimer:SetColor(hordeColor)
 			winTimer:UpdateIcon("Interface\\Icons\\INV_BannerPVP_01.blp")
-
 		elseif HordeTime > AllyTime then -- Alliance wins
-			if self.ScoreFrame1Text and self.ScoreFrame2Text then
-				local HordePoints = math.floor(math.floor(((AllyTime * ResPerSec[last_horde_bases]) + last_horde_score) / 10) * 10)
-				self.ScoreFrame2Text:SetText("("..HordePoints..")")
-				self.ScoreFrame1Text:SetText("(1600)")
-			end
-
 			winner_is = 1
 			winTimer:Update(get_gametime(), get_gametime()+AllyTime)
 			winTimer:DisableEnlarge()
-			winTimer:UpdateName(L.WinBarText:format(L.Alliance))
+			local HordePoints = math.floor(math.floor(((AllyTime * ResPerSec[last_horde_bases]) + last_horde_score) / 10) * 10)
+			winTimer:UpdateName(L.WinBarText:format(1600, HordePoints))
 			winTimer:SetColor(allyColor)
 			winTimer:UpdateIcon("Interface\\Icons\\INV_BannerPVP_02.blp")
 		end

@@ -51,7 +51,7 @@ L:SetMiscLocalization({
 ----------------------
 --  Alterac Valley  --
 ----------------------
-L = DBM:GetModLocalization("AlteracValley")
+L = DBM:GetModLocalization("z402")
 
 L:SetGeneralLocalization({
 	name = "Alterac Valley"
@@ -79,7 +79,7 @@ L:SetOptionLocalization({
 --------------------
 --  Arathi Basin  --
 --------------------
-L = DBM:GetModLocalization("ArathiBasin")
+L = DBM:GetModLocalization("z462")
 
 L:SetGeneralLocalization({
 	name = "Arathi Basin"
@@ -92,7 +92,7 @@ L:SetMiscLocalization({
 	ScoreExpr	= "(%d+)/1600",
 	Alliance	= "Alliance",
 	Horde		= "Horde",
-	WinBarText	= "%s wins",
+	WinBarText	= "Final: %d - %d",
 	BasesToWin	= "Bases to win: %d",
 	Flag		= "Flag"
 })
@@ -113,7 +113,7 @@ L:SetOptionLocalization({
 ------------------------
 --  Eye of the Storm  --
 ------------------------
-L = DBM:GetModLocalization("EyeoftheStorm")
+L = DBM:GetModLocalization("z541")
 
 L:SetGeneralLocalization({
 	name = "Eye of the Storm"
@@ -126,7 +126,7 @@ L:SetMiscLocalization({
 	ScoreExpr		= "(%d+)/1600",
 	Alliance 		= "Alliance",
 	Horde 			= "Horde",
-	WinBarText 		= "%s wins",
+	WinBarText 		= "Final: %d - %d",
 	Flag			= "Flag",
 	FlagReset 		= "The flag has been reset!",
 	FlagTaken 		= "(.+) has taken the flag!",
@@ -186,7 +186,7 @@ L:SetOptionLocalization({
 ------------------------
 --  Isle of Conquest  --
 ------------------------
-L = DBM:GetModLocalization("IsleofConquest")
+L = DBM:GetModLocalization("z483")
 
 L:SetGeneralLocalization({
 	name = "Isle of Conquest"
@@ -272,7 +272,7 @@ L:SetMiscLocalization({
 -------------------------
 --  Battle of Gilneas  --
 -------------------------
-L = DBM:GetModLocalization("Gilneas")
+L = DBM:GetModLocalization("z916")
 
 L:SetGeneralLocalization({
 	name = "Battle for Gilneas"
@@ -280,9 +280,7 @@ L:SetGeneralLocalization({
 
 L:SetMiscLocalization({
 	ScoreExpr	= "(%d+)/2000",
-	Alliance	= "Alliance",
-	Horde		= "Horde",
-	WinBarText	= "%s wins",
+	WinBarText	= "Final: %d - %d",
 	BasesToWin	= "Bases to win: %d",
 	Flag		= "Flag"
 })
