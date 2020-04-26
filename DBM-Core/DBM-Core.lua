@@ -3190,13 +3190,13 @@ do
 
 	syncHandlers["DSW"] = function(sender)
 		if (DBM:GetRaidRank(sender) ~= 2 or GetNumPartyMembers() == 0) then return end--If not on group, we're probably sender, don't disable status. IF not leader, someone is trying to spoof this, block that too
---		statusWhisperDisabled = true
+		statusWhisperDisabled = true
 		DBM:Debug("Raid leader has disabled status whispers")
 	end
 
 	syncHandlers["DGP"] = function(sender)
 		if (DBM:GetRaidRank(sender) ~= 2 or GetNumPartyMembers() == 0) then return end--If not on group, we're probably sender, don't disable status. IF not leader, someone is trying to spoof this, block that too
---		statusGuildDisabled = true
+		statusGuildDisabled = true
 		DBM:Debug("Raid leader has disabled guild progress messages")
 	end
 
