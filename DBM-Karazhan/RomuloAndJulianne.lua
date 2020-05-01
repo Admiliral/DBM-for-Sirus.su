@@ -4,8 +4,9 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision(("$Revision: 175 $"):sub(12, -3))
 mod:SetCreatureID(17534, 17533)
 
-mod:RegisterCombat("yell", L.RJ_Pull)
-mod:RegisterKill("yell", L.Bogus)--there isn't actually a yell, but we use this to prevent mod from ending combat early using UNIT_DIED after they both die once.
+mod:RegisterCombat("combat", 17534, 17533)
+--mod:RegisterCombat("yell", L.RJ_Pull)
+--mod:RegisterKill("yell", L.Bogus)--there isn't actually a yell, but we use this to prevent mod from ending combat early using UNIT_DIED after they both die once.
 mod:SetWipeTime(25)--guesswork
 
 mod:RegisterEvents(

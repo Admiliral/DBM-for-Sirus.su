@@ -11,11 +11,11 @@ mod:RegisterEvents(
 	"CHAT_MSG_MONSTER_YELL"
 )
 
-local timerNextBearForm      = mod:NewTimer(47, "BearForm", 9634)
-local timerNextTrollForm     = mod:NewTimer(23.5, "TrollForm", 26297)
-local timerNextSilence       = mod:NewCDTimer(9, 42398)
-local timerMangle            = mod:NewTargetTimer(60, 42389)
-local berserkTimer           = mod:NewBerserkTimer(600)
+local timerNextBearForm		= mod:NewTimer(47, "BearForm", 9634)
+local timerNextTrollForm	= mod:NewTimer(23.5, "TrollForm", 26297)
+local timerNextSilence		= mod:NewCDTimer(9, 42398)
+local timerMangle			= mod:NewTargetTimer(60, 42389)
+local berserkTimer			= mod:NewBerserkTimer(600)
 
 mod:AddBoolOption("BearForm", true)
 mod:AddBoolOption("TrollForm", true)

@@ -51,7 +51,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	HorsemanHead				= "Viens donc ici , sombre abruti !",  -- Attention, espace avant la virgule
+	HorsemanHead				= "Viens donc ici , sombre abruti !", -- Attention, espace avant la virgule
 	HorsemanSoldiers			= "Levez-vous, mes recrues ! Au combat sans surseoir ! Au chevalier déchu, donnez enfin victoire !",
 	SayCombatEnd				= "Je la connais trop bien, cette fin importune. Que faut-il au destin pour changer ma fortune ?"
 })

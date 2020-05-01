@@ -46,7 +46,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	HorsemanHead				= "¡Ven aquí, idiota!",  -- Attention, espace avant la virgule
+	HorsemanHead				= "¡Ven aquí, idiota!", -- Attention, espace avant la virgule
 	HorsemanSoldiers			= "¡Soldados alzáos soldados, tomad vuestro acero! Dad la victoria a este deshonrado caballero!",
 	SayCombatEnd				= "Este final a mí me suena. Veamos qué nueva me espera."
 })

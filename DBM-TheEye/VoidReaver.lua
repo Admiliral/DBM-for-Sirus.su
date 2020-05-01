@@ -57,10 +57,10 @@ function mod:OnCombatStart(delay) ---- готово
 	    timerOrbCD:Start()
 	    timerKnockbackCD:Start()
 	     self:ScheduleMethod(23, "Playsound")
-    else
-        berserkTimer:Start()
-        timerNextPounding:Start()
-        timerNextKnockback:Start()
+	else
+		berserkTimer:Start()
+		timerNextPounding:Start()
+		timerNextKnockback:Start()
 	end
 end
 
@@ -75,10 +75,10 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(25778) then
-        timerNextKnockback:Start()
-    elseif args:IsSpellID(34162) then
-        timerNextPounding:Start()
-    end
+		timerNextKnockback:Start()
+	elseif args:IsSpellID(34162) then
+		timerNextPounding:Start()
+	end
 end
 -------------------------хм------------------------------------
 
@@ -130,10 +130,10 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(308467) then	------------?????????????---------------
 		print(args.destName)
 		table.insert(beaconIconTargets, DBM:GetRaidUnitId(args.destName))
-			if (#beaconIconTargets >= 3)then
-				self:SetBeaconIcons()    --Сортируйте и стреляйте как можно раньше, когда у нас есть все цели.
+		if (#beaconIconTargets >= 3)then
+			self:SetBeaconIcons() --Сортируйте и стреляйте как можно раньше, когда у нас есть все цели.
 		end
-	elseif args:IsSpellID(308469) and args:IsPlayer() then	-- Отсчёт до взрыва сферы  +-
+	elseif args:IsSpellID(308469) and args:IsPlayer() then	-- Отсчёт до взрыва сферы +-
 		if args:IsPlayer() then
 			timerScope:Start()
 			warnScope6:Cancel()
@@ -142,11 +142,11 @@ function mod:SPELL_AURA_APPLIED(args)
 			warnScope9:Cancel()
 			warnScope10:Cancel()
 		end
-			warnScope6:Schedule(5)
-			warnScope7:Schedule(7)
-			warnScope8:Schedule(8)
-			warnScope9:Schedule(9)
-			warnScope10:Schedule(10)
+		warnScope6:Schedule(5)
+		warnScope7:Schedule(7)
+		warnScope8:Schedule(8)
+		warnScope9:Schedule(9)
+		warnScope10:Schedule(10)
 	end
 end
 

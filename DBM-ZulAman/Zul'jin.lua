@@ -14,26 +14,26 @@ mod:RegisterEvents(
 	"UNIT_TARGET"
 )
 
-local warnNextPhaseSoon         = mod:NewAnnounce("WarnNextPhaseSoon", 1)
+local warnNextPhaseSoon			= mod:NewAnnounce("WarnNextPhaseSoon", 1)
 
-local timerWhirlwind        = mod:NewCDTimer(17, 17207)
-local timerThrow            = mod:NewCDTimer(10, 43093)
-local warnThrow             = mod:NewAnnounce("WarnThrow", 4, 43093)
+local timerWhirlwind			= mod:NewCDTimer(17, 17207)
+local timerThrow				= mod:NewCDTimer(10, 43093)
+local warnThrow					= mod:NewAnnounce("WarnThrow", 4, 43093)
 
-local timerParalysis        = mod:NewCDTimer(20, 43095)
+local timerParalysis			= mod:NewCDTimer(20, 43095)
 
-local timerJump             = mod:NewCDTimer(20, 43153)
-local warnJump              = mod:NewAnnounce("WarnJump", 4, 43153)
+local timerJump					= mod:NewCDTimer(20, 43153)
+local warnJump					= mod:NewAnnounce("WarnJump", 4, 43153)
 
-local timerBreath           = mod:NewCDTimer(10, 43215)
-local timerFlameWhirl       = mod:NewCDTimer(12, 43213)
-local timerFlamePillar      = mod:NewCDTimer(10, 43216)
+local timerBreath				= mod:NewCDTimer(10, 43215)
+local timerFlameWhirl			= mod:NewCDTimer(12, 43213)
+local timerFlamePillar			= mod:NewCDTimer(10, 43216)
 
-local specWarnFlamePillar	    = mod:NewSpecialWarningRun(43216)
-local specWarnFlamePillarMelee  = mod:NewSpecialWarningRun(43216, "Melee")
-local warnFlamePillar           = mod:NewAnnounce("WarnFlamePillar", 4, 43216)
+local specWarnFlamePillar		= mod:NewSpecialWarningRun(43216)
+local specWarnFlamePillarMelee	= mod:NewSpecialWarningRun(43216, "Melee")
+local warnFlamePillar			= mod:NewAnnounce("WarnFlamePillar", 4, 43216)
 
-local berserkTimer          = mod:NewBerserkTimer(600)
+local berserkTimer				= mod:NewBerserkTimer(600)
 
 local bleedTargets = {}
 local phaseCounter = 1
@@ -54,7 +54,7 @@ local function IsMeleeZ(uId)
 end
 
 local function IsTankZ(uId)
-	return  (select(2, UnitClass(uId)) == "WARRIOR" and select(3, GetTalentTabInfo(3)) >= 13)
+	return (select(2, UnitClass(uId)) == "WARRIOR" and select(3, GetTalentTabInfo(3)) >= 13)
 		or (select(2, UnitClass(uId)) == "DEATHKNIGHT" and UnitAura(uId, L.FrostPresence))
 		or (select(2, UnitClass(uId)) == "PALADIN" and select(3, GetTalentTabInfo(2)) >= 51)
 		or (select(2, UnitClass(uId)) == "DRUID" and UnitAura(uId, L.DriudBearForm))

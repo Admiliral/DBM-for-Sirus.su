@@ -14,12 +14,12 @@ mod:RegisterEvents(
 local isDecurser = select(2, UnitClass("player")) == "DRUID" or select(2, UnitClass("player")) == "MAGE"
 local iconFolder = "Interface\\AddOns\\Dbm-Core\\icon\\%s"
 
-local timerBolts            = mod:NewCDTimer(40, 43383)
-local timerSpecial          = mod:NewTimer(10,"TimerSpecial", 43501)
-local specWarnDecurse       = mod:NewSpecialWarningDispel(43439, isDecurser)
-local specWarnMelee         = mod:NewSpecialWarning("SpecWarnMelee", "Melee")
-local specWarnMove          = mod:NewSpecialWarning("SpecWarnMove")
-local warnSiphon            = mod:NewAnnounce("WarnSiphon", 4, 43501)
+local timerBolts			= mod:NewCDTimer(40, 43383)
+local timerSpecial			= mod:NewTimer(10,"TimerSpecial", 43501)
+local specWarnDecurse		= mod:NewSpecialWarningDispel(43439, isDecurser)
+local specWarnMelee			= mod:NewSpecialWarning("SpecWarnMelee", "Melee")
+local specWarnMove			= mod:NewSpecialWarning("SpecWarnMove")
+local warnSiphon			= mod:NewAnnounce("WarnSiphon", 4, 43501)
 
 mod:AddBoolOption("TimerSpecial", true)
 mod:AddBoolOption("SpecWarnMelee", true)
