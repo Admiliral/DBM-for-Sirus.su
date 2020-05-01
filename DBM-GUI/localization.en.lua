@@ -42,6 +42,9 @@ L.NoSound					= "No sound"
 
 L.IconsInUse				= "Icons used by this mod"
 
+L.Large						= "Large"
+L.Small						= "Small"
+
 -- Tab: Boss Statistics
 L.BossStatistics			= "Boss Statistics"
 L.Statistic_Kills			= "Kills:"
@@ -119,7 +122,7 @@ L.ShowGuildMessagesPlus		= "Also show Mythic+ engage/kill/wipe messages for guil
 L.WhisperMessages			= "Whisper Message Options"
 L.AutoRespond 				= "Auto-respond to whispers while fighting"
 L.WhisperStats 				= "Include kill/wipe stats in whisper responses"
-L.DisableStatusWhisper 		= "Disable status whispers for the entire group (requires Group Leader). Applies only to normal/heroic/mythic raids and mythic+ dungeons"
+L.DisableStatusWhisper 		= "Disable status whispers for the entire group (requires Group Leader)."
 L.DisableGuildStatus 		= "Disable progression messages from being sent to guild for entire group (requires Group Leader)."
 
 -- Tab: Barsetup
@@ -172,7 +175,8 @@ L.CVoiceThree				= "Count Voice 3"
 
 -- Tab: Timers
 L.AreaTitle_BarColors		= "Bar Colors by timer type"
-L.AreaTitle_BarSetup		= "General Bar Options"
+L.AreaTitle_BarSetup		= "Bar Appearance Options"
+L.AreaTitle_Behavior		= "Bar Behavior Options"
 L.AreaTitle_BarSetupSmall 	= "Small Bar Options"
 L.AreaTitle_BarSetupHuge	= "Huge Bar Options"
 L.EnableHugeBar 			= "Enable huge bar (aka Bar 2)"
@@ -190,6 +194,7 @@ L.BarSpark					= "Bar spark"
 L.BarFlash					= "Flash bar about to expire"
 L.BarSort					= "Sort by remaining time"
 L.BarColorByType			= "Color by type"
+L.NoBarFade					= "Use Start/End colors as Small/Large colors instead of gradual color change"
 L.BarInlineIcons			= "Show inline icons"
 L.ShortTimerText			= "Use short timer text (when available)"
 L.StripTimerText			= "Strip CD/Next out of timers"

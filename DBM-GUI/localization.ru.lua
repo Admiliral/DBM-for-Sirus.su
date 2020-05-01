@@ -43,6 +43,9 @@ L.NoSound					= "Без звука"
 
 L.IconsInUse				= "Используемые метки"
 
+L.Large						= "Увеличенный"
+L.Small						= "Уменьшенный"
+
 -- Tab: Boss Statistics
 L.BossStatistics			= "Статистика для босса"
 L.Statistic_Kills			= "Убийства:"
@@ -122,7 +125,7 @@ L.ShowGuildMessagesPlus		= "Так же показывать сообщения 
 L.WhisperMessages			= "Параметры приватных сообщений"
 L.AutoRespond 				= "Включить авто-ответ в бою"
 L.WhisperStats 				= "Добавлять статистику убийств/вайпов в авто-ответ"
-L.DisableStatusWhisper 		= "Отключить ответы на запрос статуса боя шепотом для всей группы (требуется лидер группы). Применяется только для обычных/гер./эпох. рейдов и испытаний/эпох. подземелий"
+L.DisableStatusWhisper 		= "Отключить ответы на запрос статуса боя шепотом для всей группы (требуется лидер группы)."
 L.DisableGuildStatus 		= "Отключить отправку гильдии сообщений о прогрессе для всей группы (требуется лидер группы)."
 
 -- Tab: Barsetup
@@ -176,6 +179,7 @@ L.CVoiceThree				= "Count Voice 3"
 -- Tab: Timers
 L.AreaTitle_BarColors		= "Цвета индикатора по типу таймера"
 L.AreaTitle_BarSetup		= "Параметры основного индикатора"
+L.AreaTitle_Behavior		= "Параметры поведения индикаторов"
 L.AreaTitle_BarSetupSmall 	= "Параметры уменьшенного индикатора"
 L.AreaTitle_BarSetupHuge	= "Параметры увеличенного индикатора"
 L.EnableHugeBar 			= "Включить увеличенный индикатор (Полоса 2)"
@@ -193,6 +197,7 @@ L.BarSpark					= "Искрение индикатора"
 L.BarFlash					= "Мигание когда индикатор скоро исчезнет"
 L.BarSort					= "Сортировать по ставшемуся времени"
 L.BarColorByType			= "Цвет по типу"
+L.NoBarFade					= "Use Start/End colors as Small/Large colors instead of gradual color change"
 L.BarInlineIcons			= "Показывать встроенные иконки"
 L.ShortTimerText			= "Использовать короткий текст таймера (когда доступен)"
 L.StripTimerText            = "Обрезать CD / Следующий из таймеров"
