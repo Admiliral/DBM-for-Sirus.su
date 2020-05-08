@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("20200405141240")
 mod:SetCreatureID(36597)
 mod:RegisterCombat("combat", 36597)
+mod:RegisterKill("yell", L.YellCombatEnd)
 mod:SetUsedIcons(2, 3, 4, 5, 6, 7, 8)
 mod:SetMinSyncRevision(3913)
 
