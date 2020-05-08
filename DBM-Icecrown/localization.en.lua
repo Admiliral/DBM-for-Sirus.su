@@ -548,7 +548,7 @@ L:SetOptionLocalization{
 
 L:SetMiscLocalization{
 	LKPull			= "So the Light's vaunted justice has finally arrived? Shall I lay down Frostmourne and throw myself at your mercy, Fordring?",
-	YellCombatEnd	= "LIGHT GRANT ME ONE FINAL BLESSING! GIVE ME THE STRENGTH... TO SHATTER THESE BONDS!"
+	YellCombatEnd	= "LIGHT GRANT ME ONE FINAL BLESSING! GIVE ME THE STRENGTH... TO SHATTER THESE BONDS!",
 	YellDefile		= "Defile on me!",
 	YellTrap		= "Shadow Trap on me!",
 	YellValk		= "I've been grabbed!",
