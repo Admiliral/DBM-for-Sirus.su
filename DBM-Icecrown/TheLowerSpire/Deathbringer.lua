@@ -28,7 +28,7 @@ local warnRuneofBlood		= mod:NewTargetAnnounce(72410, 3, nil, "Tank|Healer")
 local specwarnMark			= mod:NewSpecialWarningTarget(72444, nil, false, nil, 1, 2)
 local specwarnRuneofBlood	= mod:NewSpecialWarningTaunt(72410, nil, nil, nil, 1, 2)
 
-local timerCombatStart		= mod:NewCombatTimer(50)
+local timerCombatStart		= mod:NewCombatTimer(41)
 local timerRuneofBlood		= mod:NewNextTimer(20, 72410, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerBoilingBlood		= mod:NewNextTimer(15.5, 72441, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON)
 local timerBloodNova		= mod:NewNextTimer(20, 73058, nil, nil, nil, 2)
