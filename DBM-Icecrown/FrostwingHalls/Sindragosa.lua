@@ -274,7 +274,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		warnAirphase:Show()
 		timerNextFrostBreath:Cancel()
 		timerUnchainedMagic:Start(55)
-		timerNextBlisteringCold:Start(80)--Not exact anywhere from 80-110seconds after airphase begin
+		timerNextBlisteringCold:Start(90)--Not exact anywhere from 80-110seconds after airphase begin
 		timerNextAirphase:Start()
 		timerNextGroundphase:Start()
 		warnGroundphaseSoon:Schedule(40)
@@ -286,6 +286,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerNextAirphase:Cancel()
 		timerNextGroundphase:Cancel()
 		warnGroundphaseSoon:Cancel()
-		timerNextBlisteringCold:Start(35)
+		timerNextBlisteringCold:Start(40)
 	end
 end

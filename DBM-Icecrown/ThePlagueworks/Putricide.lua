@@ -170,6 +170,7 @@ function mod:SPELL_CAST_START(args)
 		elseif self:IsDifficulty("heroic25") then
 			self:ScheduleMethod(20, "NextPhase")
 			timerPotions:Start(20)
+			timerMalleableGooCD:Start(20)
 		end
 	end
 end
@@ -179,7 +180,7 @@ function mod:NextPhase()
 	if self.vb.phase == 2 then
 		timerUnstableExperimentCD:Start(5)
 		timerSlimePuddleCD:Start(10)
-		timerMalleableGooCD:Start(5)
+--		timerMalleableGooCD:Start(5)
 		if self:IsDifficulty("heroic10", "heroic25") then
 			timerUnboundPlagueCD:Start(50)
 			warnChokingGasBombSoon:Schedule(0)
@@ -190,11 +191,11 @@ function mod:NextPhase()
 		end
 	elseif self.vb.phase == 3 then
 		timerSlimePuddleCD:Start(15)
-		timerMalleableGooCD:Start(9)
+		timerMalleableGooCD:Start(24)
 		if self:IsDifficulty("heroic10", "heroic25") then
 			timerUnboundPlagueCD:Start(50)
-			timerChokingGasBombCD:Start(34)
-			warnChokingGasBombSoon:Schedule(29)
+			timerChokingGasBombCD:Start(21)
+			warnChokingGasBombSoon:Schedule(16)
 		else
 			timerChokingGasBombCD:Start(22)
 			warnChokingGasBombSoon:Schedule(17)
@@ -234,7 +235,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if msg == L.EmoteMalleable then
+	if msg == L.EmoteMalleable or string.find(msg, L.FindMalleable) then
 		specWarnMalleableGooCast:Show()
 		specWarnMalleableGooCast:Play("watchstep")
 		timerMalleableGooCD:Start()
