@@ -13,6 +13,7 @@ mod:RegisterEvents(
 	"CHAT_MSG_MONSTER_YELL",
 	"SPELL_CAST_START",
 	"SPELL_AURA_APPLIED",
+	"SPELL_AURA_APPLIED_DOSE",
 	"UNIT_TARGET",
 	"SPELL_AURA_REMOVED",
 	"SPELL_CAST_SUCCESS"
@@ -48,6 +49,27 @@ local timerMCCD             = mod:NewCDTimer(70, 36797, nil, nil, nil, 3)
 
 local timerGravity          = mod:NewTimer(32.5, "TimerGravity", "Interface\\Icons\\Spell_Magic_FeatherFall", nil, nil, 4, nil, DBM_CORE_DEADLY_ICON, nil, 2, 4)
 local timerGravityCD        = mod:NewCDTimer(90, 35941, nil, nil, nil, 4, nil, DBM_CORE_DEADLY_ICON, nil, 2, 4)
+
+--------------------------хм------------------------
+
+local warnFurious		= mod:NewStackAnnounce(308732, 2, nil, "Tank|Healer") -- яростный удар
+local warnJustice		= mod:NewStackAnnounce(308741, 2, nil, "Tank|Healer") -- правосудие тьмы
+local warnShadow        = mod:NewSoonAnnounce(308742, 2) -- освященеи тенью (лужа)
+--local warnBombhm        = mod:NewSoonAnnounce(308, 2)--бомба
+
+local timerFuriousCD     = mod:NewCDTimer(7, 308732, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerFurious		= mod:NewTargetTimer(30, 308732, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerJusticeCD    = mod:NewCDTimer(9, 308741, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerJustice		= mod:NewTargetTimer(30, 308741, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerShadowCD		= mod:NewCDTimer(17, 308742, nil, nil, nil, 4)
+--local timerBurningCD    = mod:NewCDTimer(8, 308741, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
+--local timerBurning		= mod:NewTargetTimer(30, 308741, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
+
+
+
+----------------------------------------------------
+
+
 
 mod:AddBoolOption("SetIconOnMC", true)
 
@@ -190,6 +212,9 @@ function mod:SPELL_CAST_START(args)
 		timerGravity:Start()
 		timerGravityCD:Start()
 		warnGravitySoon:Schedule(85)
+    elseif args:IsSpellID(308742) then --освящение тенью
+	    timerShadowCD:Start()	
+		warnShadow:Schedule(0)
 	end
 end
 
@@ -227,8 +252,30 @@ function mod:SPELL_AURA_APPLIED(args)
 			end
 			table.wipe(mincControl)
 		end
+	elseif args:IsSpellID(308732) then --хм яростный удар
+        warnFurious:Show(args.destName, args.amount or 1)	
+		timerFurious:Start(args.destName)
+		timerFuriousCD:Start()	
+	elseif args:IsSpellID(308741) then --хм Правосудие тенью
+		timerJusticeCD:Start()	
+        warnJustice:Show(args.destName, args.amount or 1)	
+		timerJustice:Start(args.destName)	
 	end
 end
+
+function mod:SPELL_AURA_APPLIED_DOSE(args) ---??
+	if args:IsSpellID(308732) then --хм яростный удар
+        warnFurious:Show(args.destName, args.amount or 1)	
+		timerFurious:Start(args.destName)
+		timerFuriousCD:Start()	
+	elseif args:IsSpellID(308741) then --хм Правосудие тенью
+		timerJusticeCD:Start()	
+        warnJustice:Show(args.destName, args.amount or 1)	
+		timerJustice:Start(args.destName)	
+	end
+end
+
+
 
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(36797) then
