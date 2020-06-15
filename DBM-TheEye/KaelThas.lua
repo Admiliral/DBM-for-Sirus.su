@@ -213,7 +213,7 @@ function mod:SPELL_CAST_START(args)
 		timerGravityCD:Start()
 		warnGravitySoon:Schedule(85)
     elseif args:IsSpellID(308742) then --освящение тенью
-	    timerShadowCD:Start()	
+	    timerShadowCD:Start()
 		warnShadow:Schedule(0)
 	end
 end
@@ -253,25 +253,25 @@ function mod:SPELL_AURA_APPLIED(args)
 			table.wipe(mincControl)
 		end
 	elseif args:IsSpellID(308732) then --хм яростный удар
-        warnFurious:Show(args.destName, args.amount or 1)	
+        warnFurious:Show(args.destName, args.amount or 1)
 		timerFurious:Start(args.destName)
-		timerFuriousCD:Start()	
+		timerFuriousCD:Start()
 	elseif args:IsSpellID(308741) then --хм Правосудие тенью
-		timerJusticeCD:Start()	
-        warnJustice:Show(args.destName, args.amount or 1)	
-		timerJustice:Start(args.destName)	
+		timerJusticeCD:Start()
+        warnJustice:Show(args.destName, args.amount or 1)
+		timerJustice:Start(args.destName)
 	end
 end
 
 function mod:SPELL_AURA_APPLIED_DOSE(args) ---??
 	if args:IsSpellID(308732) then --хм яростный удар
-        warnFurious:Show(args.destName, args.amount or 1)	
+        warnFurious:Show(args.destName, args.amount or 1)
 		timerFurious:Start(args.destName)
-		timerFuriousCD:Start()	
+		timerFuriousCD:Start()
 	elseif args:IsSpellID(308741) then --хм Правосудие тенью
-		timerJusticeCD:Start()	
-        warnJustice:Show(args.destName, args.amount or 1)	
-		timerJustice:Start(args.destName)	
+		timerJusticeCD:Start()
+        warnJustice:Show(args.destName, args.amount or 1)
+		timerJustice:Start(args.destName)
 	end
 end
 
