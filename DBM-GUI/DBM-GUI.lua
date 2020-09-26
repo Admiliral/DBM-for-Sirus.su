@@ -398,6 +398,7 @@ do
 		{sound = true, text = "SW 2", value = 2},
 		{sound = true, text = "SW 3", value = 3},
 		{sound = true, text = "SW 4", value = 4},
+		{sound = true, text = "SW 5", value = 5},
 
 		--Inject DBMs custom media that's not available to LibSharedMedia because it uses SoundKit Id (which LSM doesn't support)
 		{sound = true, text = "AirHorn (DBM)", value = "Interface\\AddOns\\DBM-Core\\sounds\\AirHorn.ogg"},
