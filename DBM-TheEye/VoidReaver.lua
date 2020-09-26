@@ -100,7 +100,6 @@ function mod:SPELL_CAST_START(args)  ------- спавн сфер  или это?
 		timerOrbCD:Schedule(2)
 --		timerOrbCast:Schedule(0)
 		warnScope:Schedule(0)
-		warnSpawnOrbs:Schedule(23)
 	elseif args:IsSpellID(308470) then  -------- Тяжкий удар
 		timerKnockbackCD:Start()
 		timerKnockbackCast:Start()
