@@ -55,8 +55,8 @@ local timerGravityCD        = mod:NewCDTimer(90, 35941, nil, nil, nil, 4, nil, D
 local warnFurious		= mod:NewStackAnnounce(308732, 2, nil, "Tank|Healer") -- яростный удар
 local warnJustice		= mod:NewStackAnnounce(308741, 2, nil, "Tank|Healer") -- правосудие тьмы
 local warnShadow        = mod:NewSoonAnnounce(308742, 2) -- освященеи тенью (лужа)
-local warnBombhm        = mod:NewTargetAnnounce(308750, 2) -- бомба 
-local warnVzriv         = mod:NewTargetAnnounce(308797, 2) -- бомба 
+local warnBombhm        = mod:NewTargetAnnounce(308750, 2) -- бомба
+local warnVzriv         = mod:NewTargetAnnounce(308797, 2) -- лужа
 
 local specWarnCata      = mod:NewSpecialWarningRun(308790, nil, nil, nil, 4, 2)
 
@@ -263,7 +263,7 @@ function mod:SPELL_CAST_START(args)
 			timerGravityH:Start()
 			timerGravityHCD:Start()
 			else
-	    	timerGravity:Start()
+			timerGravity:Start()
 			timerGravityCD:Start()
 		    warnGravitySoon:Schedule(85)
 		end
@@ -302,7 +302,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerVzrivCD:Start()
 		warnVzriv:Show(table.concat(VzrivTargets, "<, >"))
 		if self.Options.VzrivIcon then
-			self:SetIcon(targetname, 8, 10)
+			self:SetIcon(args.destName, 8, 10)
 		end
 	end
 end
@@ -333,7 +333,7 @@ function mod:SPELL_AURA_APPLIED(args)
         warnJustice:Show(args.destName, args.amount or 1)
 		timerJustice:Start(args.destName)
 	elseif args:IsSpellID(308749) then --бомба
-		timerBombhmCD:Start()	
+		timerBombhmCD:Start()
 		warnBombhm:Show(table.concat(BombhmTargets, "<, >"))
 	end
 end
