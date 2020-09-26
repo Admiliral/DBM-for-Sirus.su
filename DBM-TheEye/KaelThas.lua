@@ -55,8 +55,8 @@ local timerGravityCD        = mod:NewCDTimer(90, 35941, nil, nil, nil, 4, nil, D
 local warnFurious		= mod:NewStackAnnounce(308732, 2, nil, "Tank|Healer") -- яростный удар
 local warnJustice		= mod:NewStackAnnounce(308741, 2, nil, "Tank|Healer") -- правосудие тьмы
 local warnShadow        = mod:NewSoonAnnounce(308742, 2) -- освященеи тенью (лужа)
-local warnBombhm        = mod:NewTargetAnnounce(308750, 2) --бомба 
-local warnVzriv         = mod:NewTargetAnnounce(308797, 2) --бомба 
+local warnBombhm        = mod:NewTargetAnnounce(308750, 2) -- бомба 
+local warnVzriv         = mod:NewTargetAnnounce(308797, 2) -- бомба 
 
 local specWarnCata      = mod:NewSpecialWarningRun(308790, nil, nil, nil, 4, 2)
 
@@ -79,14 +79,15 @@ local timerGravityHCD        = mod:NewCDTimer(90, 35941, nil, nil, nil, 6, nil, 
 
 ----------------------------------------------------
 
-local Kel = true
+--local Kel = true
 
 
 mod:AddBoolOption("SetIconOnMC", true)
 mod:AddBoolOption("VzrivIcon")
 
 mod.vb.phase = 0
-
+local BombhmTargets = {}
+local VzrivTargets = {}
 local dominateMindTargets = {}
 local dominateMindIcon = 8
 local mincControl = {}
@@ -211,7 +212,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			warnBarrierSoon:Schedule(55)
 			warnPhoenixSoon:Schedule(45)
 			warnMCSoon:Schedule(35)
-			Kel = true
 		elseif msg == L.YellPhase5  then
 			self.vb.phase = 5
 			warnPhase:Show(L.WarnPhase5)
@@ -264,7 +264,7 @@ function mod:SPELL_CAST_START(args)
 			timerGravityHCD:Start()
 			else
 	    	timerGravity:Start()
-		    timerGravityCD:Start()
+			timerGravityCD:Start()
 		    warnGravitySoon:Schedule(85)
 		end
     elseif args:IsSpellID(308742) then --освящение тенью
@@ -300,9 +300,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif args:IsSpellID(308797) then --ВЗРЫВ ТЬМЫ
 		timerVzrivCast:Start()
 		timerVzrivCD:Start()
-		warnVzriv:Show(table.concat(explosiveTargets, "<, >"))
+		warnVzriv:Show(table.concat(VzrivTargets, "<, >"))
 		if self.Options.VzrivIcon then
-		    self:SetIcon(targetname, 8, 10)
+			self:SetIcon(targetname, 8, 10)
 		end
 	end
 end
@@ -333,8 +333,8 @@ function mod:SPELL_AURA_APPLIED(args)
         warnJustice:Show(args.destName, args.amount or 1)
 		timerJustice:Start(args.destName)
 	elseif args:IsSpellID(308749) then --бомба
-	    timerBombhmCD:Start()	
-		warnBombhm:Show(table.concat(explosiveTargets, "<, >"))
+		timerBombhmCD:Start()	
+		warnBombhm:Show(table.concat(BombhmTargets, "<, >"))
 	end
 end
 
@@ -353,7 +353,7 @@ function mod:UNIT_TARGET()
 	end
 end
 
-function mod:KelIcon()
+--[[function mod:KelIcon()
 	if DBM:GetRaidRank() >= 1 then
 		for i = 1, GetNumRaidMembers() do
 			if UnitName("raid"..i.."target") == L.Kel then
@@ -363,6 +363,6 @@ function mod:KelIcon()
 			end
 		end
 	end
-end
+end ]]
 
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
