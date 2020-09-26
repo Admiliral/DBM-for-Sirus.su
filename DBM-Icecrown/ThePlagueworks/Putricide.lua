@@ -14,7 +14,7 @@ mod:RegisterEvents(
 	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REFRESH",
 	"SPELL_AURA_REMOVED",
-	"CHAT_MSG_RAID_BOSS_EMOTE",
+--	"CHAT_MSG_RAID_BOSS_EMOTE",
 	"UNIT_HEALTH"
 )
 
@@ -235,7 +235,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if msg == L.EmoteMalleable then
+	if msg == L.EmoteMalleable or string.find(msg, L.FindMalleable) then
 		specWarnMalleableGooCast:Show()
 		specWarnMalleableGooCast:Play("watchstep")
 		timerMalleableGooCD:Start()
