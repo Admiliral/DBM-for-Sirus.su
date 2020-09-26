@@ -24,3 +24,5 @@ Tidewalker.lua
 TheLurkerBelow.lua
 Leotheras.lua
 Vashj.lua
+Gorelac.lua
+TrashMobs.lua

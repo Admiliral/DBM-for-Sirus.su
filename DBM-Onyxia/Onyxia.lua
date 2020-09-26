@@ -31,7 +31,7 @@ local timerWhelps			= mod:NewTimer(105, "TimerWhelps", 10697)
 local timerAchieve			= mod:NewAchievementTimer(300, 4405, "TimerSpeedKill")
 local timerAchieveWhelps	= mod:NewAchievementTimer(10, 4406, "TimerWhelps")
 
-mod:AddBoolOption("SoundWTF3", true, "sound")
+
 
 mod.vb.warned_preP2 = false
 mod.vb.warned_preP3 = false
@@ -43,11 +43,6 @@ function mod:OnCombatStart(delay)
 	self.vb.warned_preP2 = false
 	self.vb.warned_preP3 = false
 	timerAchieve:Start(-delay)
-	if self.Options.SoundWTF3 then
-		DBM:PlaySoundFile("Interface\\AddOns\\DBM-Onyxia\\sounds\\dps-very-very-slowly.ogg")
-		self:Schedule(20, DBM.PlaySoundFile, DBM, "Interface\\AddOns\\DBM-Onyxia\\sounds\\hit-it-like-you-mean-it.ogg")
-		self:Schedule(30, DBM.PlaySoundFile, DBM, "Interface\\AddOns\\DBM-Onyxia\\sounds\\now-hit-it-very-hard-and-fast.ogg")
-	end
 end
 
 function mod:OnCombatEnd(wipe)
@@ -59,9 +54,6 @@ function mod:Whelps()
 		timerWhelps:Start()
 		warnWhelpsSoon:Schedule(95)
 		self:ScheduleMethod(105, "Whelps")
-		-- we replay sounds as long as p2 is running
-		DBM:PlaySoundFile("Interface\\AddOns\\DBM-Onyxia\\sounds\\i-dont-see-enough-dots.ogg")
-		self:Schedule(35, DBM.PlaySoundFile, DBM, "Interface\\AddOns\\DBM-Onyxia\\sounds\\throw-more-dots.ogg")
 	end
 end
 
@@ -74,8 +66,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerAchieveWhelps:Start()
 		timerNextFlameBreath:Cancel()
 		self:ScheduleMethod(5, "Whelps")
-		self:Schedule(10, DBM.PlaySoundFile, DBM, "Interface\\AddOns\\DBM-Onyxia\\sounds\\throw-more-dots.ogg")
-		self:Schedule(17, DBM.PlaySoundFile, DBM, "Interface\\AddOns\\DBM-Onyxia\\sounds\\whelps-left-side-even-side-handle-it.ogg")
 	elseif msg == L.YellP3 or msg:find(L.YellP3) then
 		self.vb.phase = 3
 		warnPhase3:Show()
@@ -84,10 +74,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerNextDeepBreath:Stop()
 		warnWhelpsSoon:Cancel()
 --		preWarnDeepBreath:Cancel()
-		self:Schedule(20, DBM.PlaySoundFile, DBM, "Interface\\AddOns\\DBM-Onyxia\\sounds\\now-hit-it-very-hard-and-fast.ogg")
-		self:Schedule(35, DBM.PlaySoundFile, DBM, "Interface\\AddOns\\DBM-Onyxia\\sounds\\i-dont-see-enough-dots.ogg")
-		self:Schedule(50, DBM.PlaySoundFile, DBM, "Interface\\AddOns\\DBM-Onyxia\\sounds\\hit-it-like-you-mean-it.ogg")
-		self:Schedule(65, DBM.PlaySoundFile, DBM, "Interface\\AddOns\\DBM-Onyxia\\sounds\\throw-more-dots.ogg")
 	end
 end
 
@@ -104,17 +90,7 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
-function mod:SPELL_DAMAGE(args)
-	if args:IsSpellID(68867, 69286) and args:IsPlayer() and self.Options.SoundWTF3 then		-- Tail Sweep
-		DBM:PlaySoundFile("Interface\\AddOns\\DBM-Onyxia\\sounds\\watch-the-tail.ogg")
-	end
-end
 
-function mod:UNIT_DIED(args)
-	if self:IsInCombat() and args:IsPlayer() and self.Options.SoundWTF3 then
-		DBM:PlaySoundFile("Interface\\AddOns\\DBM-Onyxia\\sounds\\thats-a-fucking-fifty-dkp-minus.ogg")
-	end
-end
 
 function mod:UNIT_HEALTH(uId)
 	if self.vb.phase == 1 and not self.vb.warned_preP2 and self:GetUnitCreatureId(uId) == 10184 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.67 then

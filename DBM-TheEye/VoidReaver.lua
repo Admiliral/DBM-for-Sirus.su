@@ -20,11 +20,6 @@ local warnPhase2				= mod:NewAnnounce("Phase2", 2)  -- Спавн сфер
 local warnSpawnOrbs				= mod:NewAnnounce("SpawnOrbs", 2)  -- Спавн сфер
 local warnKnockback				= mod:NewSoonAnnounce(308470, 2, nil, "Tank|Healer|RemoveEnrage")  -- тяжкий удар
 local warnScope					= mod:NewSoonAnnounce(308984, 2, nil, "Tank|Healer|RemoveEnrage")  -- Сферы
-local warnScope6				= mod:NewAnnounce("warnScope6", 2)  -- Отсчёт сфер
-local warnScope7				= mod:NewAnnounce("warnScope7", 2)  -- Отсчёт сфер
-local warnScope8				= mod:NewAnnounce("warnScope8", 2)  -- Отсчёт сфер
-local warnScope9				= mod:NewAnnounce("warnScope9", 2)  -- Отсчёт сфер
-local warnScope10				= mod:NewAnnounce("warnScope10", 2) -- Отсчёт сфер
 local warnBah					= mod:NewAnnounce("Bah", 2)  -- Сферы
 
 -----обычка-----
@@ -136,22 +131,12 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(308469) and args:IsPlayer() then	-- Отсчёт до взрыва сферы +-
 		if args:IsPlayer() then
 			timerScope:Start()
-			warnScope6:Cancel()
-			warnScope7:Cancel()
-			warnScope8:Cancel()
-			warnScope9:Cancel()
-			warnScope10:Cancel()
 		end
-		warnScope6:Schedule(5)
-		warnScope7:Schedule(7)
-		warnScope8:Schedule(8)
-		warnScope9:Schedule(9)
-		warnScope10:Schedule(10)
 	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(308469) and args:IsPlayer() then	------- ну типа понял
+	if args:IsSpellID(308469) and args:IsPlayer() then	
 		if args:IsPlayer() then
 		warnBah:Schedule(0)
 		end

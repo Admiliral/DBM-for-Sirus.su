@@ -29,7 +29,7 @@
 local Revision = ("$Revision: 55 $"):sub(12, -3)
 
 local default_bartext = "%spell: %player"
-local default_bartextwtarget = "%spell: %player on %target"	-- Added by Florin Patan
+local default_bartextwtarget = "%spell: от %player в %target"	-- Added by Florin Patan
 local default_settings = {
 	enabled = true,
 	showlocal = true,
@@ -45,14 +45,14 @@ local default_settings = {
 		{ spell = 48792, bartext = "%spell on %player", cooldown = 12 },-- Death Knight: Icebound Fortitude Duration (for Healers to see how long cooldown runs)
 		{ spell = 498, bartext = "%spell on %player", cooldown = 12 },	-- Paladin: Divine Protection Duration (for Healers to see how long cooldown runs)
 		{ spell = 61336, bartext = "%spell on %player", cooldown = 20 },-- Druid: Survival Instincts Duration (for Healers to see how long cooldown runs)
-		{ spell = 48477, bartext = default_bartext, cooldown = 600 },	-- Druid: Rebirth (Rank 7)
-		{ spell = 29166, bartext = default_bartext, cooldown = 180 },	-- Druid: Innervate
+		{ spell = 48477, bartext = default_bartextwtarget, cooldown = 600 },	-- Druid: Rebirth (Rank 7)
+		{ spell = 29166, bartext = default_bartextwtarget, cooldown = 180 },	-- Druid: Innervate
 		{ spell = 5209, bartext = default_bartext, cooldown = 180 }, 	-- Druid: Challenging Roar (AE Taunt)
-		{ spell = 33206, bartext = "%spell on %target", cooldown = 8 }, -- Priest: Pain Suppression Duration (for Healers to see how long cooldown runs)
-		{ spell = 6940, bartext = "%spell on %target", cooldown = 12 }, -- Paladin: Hand of Sacrifice Duration (for Healers to see how long cooldown runs)
+		{ spell = 33206, bartext = default_bartextwtarget, cooldown = 8 }, -- Priest: Pain Suppression Duration (for Healers to see how long cooldown runs)
+		{ spell = 6940, bartext = default_bartextwtarget, cooldown = 12 }, -- Paladin: Hand of Sacrifice Duration (for Healers to see how long cooldown runs)
 		{ spell = 64205, bartext = default_bartext, cooldown = 10 },	-- Paladin: Divine Sacrifice Duration (for Healers to see how long cooldown runs)
-		{ spell = 34477, bartext = default_bartext, cooldown = 30 },	-- Hunter: Missdirect
-		{ spell = 57934, bartext = default_bartext, cooldown = 30 },	-- Rogue: Tricks of the Trade
+		{ spell = 34477, bartext = default_bartextwtarget, cooldown = 30 },	-- Hunter: Missdirect
+		{ spell = 57934, bartext = default_bartextwtarget, cooldown = 30 },	-- Rogue: Tricks of the Trade
 		{ spell = 32182, bartext = default_bartext, cooldown = 300 },	-- Shaman: Heroism (alliance)
 		{ spell = 2825, bartext = default_bartext, cooldown = 300 },	-- Shaman: Bloodlust (horde)
 		{ spell = 20608, bartext = default_bartext, cooldown = 1800 },	-- Shaman: Reincarnation
@@ -105,7 +105,7 @@ do
 		local createnewentry
 		local CurCount = 0
 		local panel = DBM_GUI:CreateNewPanel(L.TabCategory_SpellsUsed, "option")
-		local generalarea = panel:CreateArea(L.AreaGeneral, nil, 150, true)
+		local generalarea = panel:CreateArea(L.AreaGeneral, nil, 175, true)
 		local auraarea = panel:CreateArea(L.AreaAuras, nil, 20, true)
 
 		local function regenerate()
@@ -215,7 +215,7 @@ do
 				CurCount = CurCount + 1
 				local spellid = area:CreateEditBox(L.SpellID, "", 75)
 				spellid.guikey = CurCount
-				spellid:SetPoint("TOPLEFT", area.frame, "TOPLEFT", 40, 15-(CurCount*35))
+				spellid:SetPoint("TOPLEFT", area.frame, "TOPLEFT", 40, 15-(CurCount*40))
 				spellid:SetScript("OnTextChanged", onchange_spell("spell"))
 				spellid:SetScript("OnShow", onshow_spell("spell"))
 				spellid:SetNumeric(true)
@@ -240,9 +240,9 @@ do
 				enableit:SetPoint("LEFT", cooldown, "RIGHT", 5, 0)
 
 				getadditionalid:ClearAllPoints()
-				getadditionalid:SetPoint("RIGHT", spellid, "LEFT", -15, 0)
-				area.frame:SetHeight( area.frame:GetHeight() + 35 )
-				area.frame:GetParent():SetHeight( area.frame:GetParent():GetHeight() + 35 )
+				getadditionalid:SetPoint("RIGHT", spellid, "LEFT", -20, 0)
+				area.frame:SetHeight( area.frame:GetHeight() + 40 )
+				area.frame:GetParent():SetHeight( area.frame:GetParent():GetHeight() + 40 )
 
 				panel:SetMyOwnHeight()
 				if DBM_GUI_OptionsFramePanelContainer.displayedFrame and CurCount > 1 then

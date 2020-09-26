@@ -13,7 +13,8 @@ mod:RegisterEvents(
 	"SPELL_DISPEL",
 	"SPELL_CAST_START",
 	"SPELL_CAST_SUCCESS",
-	"SPELL_AURA_APPLIED"
+	"SPELL_AURA_APPLIED",
+	"SWING_DAMAGE"
 )
 
 --------------------------нормал--------------------------
@@ -23,10 +24,10 @@ local warnAddsSoon		= mod:NewAnnounce("WarnAddsSoon", 3, 55342)
 
 local specWarnWrathN	= mod:NewSpecialWarningRun(42783, nil, nil, nil, 1, 2)
 
-local timerAdds			= mod:NewTimer(60, "TimerAdds", 55342, "RemoveEnrage", nil, 5, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 4)
+local timerAdds			= mod:NewTimer(60, "TimerAdds", 55342, "RemoveEnrage", nil, 5, nil, DBM_CORE_ENRAGE_ICON)
 local timerPriestsN		= mod:NewTimer(14, "TimerPriests", 47788)
-local timerWrathN		= mod:NewTargetTimer(6, 42783, nil, "RemoveEnrage", nil, 5, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 4)
-local timerNextWrathN	= mod:NewCDTimer(21, 42783, nil, "RemoveEnrage", nil, 5, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 4)
+local timerWrathN		= mod:NewTargetTimer(6, 42783, nil, "RemoveEnrage", nil, 5, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 5)
+local timerNextWrathN	= mod:NewCDTimer(21, 42783, nil, "RemoveEnrage", nil, 5, nil, DBM_CORE_ENRAGE_ICON)
 
 --------------------------героик--------------------------
 
@@ -46,17 +47,19 @@ local specWarnWrathH	= mod:NewSpecialWarningRun(308548, nil, nil, nil, 1, 2) -- 
 local specWarnFlashVoid = mod:NewSpecialWarningLookAway(308585, nil, nil, nil, 2, 2) -- фир 2 фаза
 
 local timerNextHeal		= mod:NewTimer(15, "TimerNextHeal", 308561, "RemoveEnrage", nil, 1, DBM_CORE_INTERRUPT_ICON)
-local timerNextGates	= mod:NewTimer(40, "TimerNextGates", 308545, "Tank|Healer", nil, 3, DBM_CORE_TANK_ICON, nil, 1, 4)
+local timerNextGates	= mod:NewTimer(40, "TimerNextGates", 308545, "Tank|Healer", nil, 3, DBM_CORE_TANK_ICON)
 local timerNextRing		= mod:NewTimer(18, "TimerNextRing", 308563, "RemoveEnrage", nil, 3, DBM_CORE_HEROIC_ICON)
 local timerNextStar		= mod:NewTimer(12, "TimerNextStar", 308565, "Healer", nil, 5, DBM_CORE_HEALER_ICON)
-local timerNextHelp		= mod:NewTimer(40, "TimerNextHelp", 308558, "Tank|Healer", nil, 3, DBM_CORE_TANK_ICON, nil, 1, 4)
-local timerWrathH		= mod:NewTargetTimer(6, 308548, nil, "RemoveEnrage", nil, 1, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 4)
-local timerNextWrathH	= mod:NewCDTimer(43, 308548, nil, "RemoveEnrage", nil, 1, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 4)
-local timerFlashVoid    = mod:NewCDTimer(75, 308585, nil, "RemoveEnrage", nil, 6, nil, DBM_CORE_HEROIC_ICON, nil, 1, 4)
+local timerNextHelp		= mod:NewTimer(40, "TimerNextHelp", 308558, "Tank|Healer", nil, 3, DBM_CORE_TANK_ICON)
+local timerWrathH		= mod:NewTargetTimer(6, 308548, nil, "RemoveEnrage", nil, 1, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 5)
+local timerNextWrathH	= mod:NewCDTimer(43, 308548, nil, "RemoveEnrage", nil, 1, nil, DBM_CORE_ENRAGE_ICON)
+local timerFlashVoid    = mod:NewCDTimer(75, 308585, nil, "RemoveEnrage", nil, 6, nil, DBM_CORE_HEROIC_ICON)
 
 local priestsN = true
 local priestsH = true
 local provid = true
+
+mod:AddBoolOption("Zrec")
 
 mod.vb.phase = 0
 
@@ -201,5 +204,15 @@ function mod:UNIT_TARGET()
 		self:PriestHIcon()
 	elseif provid then
 	    self:ProvidIcon()
+	end
+end
+
+function mod:SWING_DAMAGE(args)
+	if args:GetDestCreatureID() == 3410  and args:IsSrcTypePlayer() then
+		if args.sourceName ~= UnitName("player") then
+			if self.Options.Zrec then
+				DBM.Arrow:ShowRunTo(args.sourceName, 0, 0)
+			end
+		end
 	end
 end

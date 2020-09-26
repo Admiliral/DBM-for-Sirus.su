@@ -17,7 +17,9 @@ L:SetTimerLocalization{
 L:SetWarningLocalization{
 	WarnMarkOfHydross       = "Знак Гидроса %s%%",
 	WarnMarkOfCorruption    = "Знак порчи %s%%",
-	SpecWarnThreatReset     = "Сброс угрозы - АСТАНАВИТЕСЬ!!!!"
+	SpecWarnThreatReset     = "Сброс угрозы - АСТАНАВИТЕСЬ!!!!",
+	Yad                     = "ГРЯЗНАЯ ФАЗА, БЕГИТЕ В ЛУЖУ",
+	Chis                    = "Чистая фаза"
 }
 
 L:SetOptionLocalization{
@@ -25,13 +27,19 @@ L:SetOptionLocalization{
 	TimerMarkOfCorruption   = DBM_CORE_AUTO_TIMER_OPTIONS.next:format(38219, GetSpellInfo(38219) or "unknown"),
 	WarnMarkOfHydross       = DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(38215, GetSpellInfo(38215) or "unknown"),
 	WarnMarkOfCorruption    = DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(38219, GetSpellInfo(38219) or "unknown"),
-	SpecWarnThreatReset     = "Спец. предупреждение о сбрасывании угрозы"
+	SpecWarnThreatReset     = "Спец. предупреждение о сбрасывании угрозы",
+	SetIconOnSklepTargets   = "Объявлять метки целей заклинания $spell:309046 в рейд-чат\n(требуются права помощника)",
+	SetIconOnKorTargets     = "Объявлять метки целей заклинания $spell:309065 в рейд-чат\n(требуются права помощника)",
+	Yad                     = "Объявлять перефазу ",
+	Chis                    = "Объявлять перефазу  "
 }
 
 L:SetMiscLocalization{
 	YellPull = "Я не позволю вам вмешиваться!",
 	YellPoison = "Агрррхх, яд.",
-	YellWater = "Так лучше, намного лучше."
+	YellWater = "Так лучше, намного лучше.",
+	SetIconOnSklepTargets	= "Водяная гробница {rt%d} установлена на: %s",
+	SetIconOnKorTargets	= "Коррозия {rt%d} установлена на: %s",
 }
 
 
@@ -166,3 +174,20 @@ L:SetMiscLocalization{
 	YellPhase3              = "Вам не пора прятаться?",
 	TaintedElemental        = "Нечистый элементаль"
 }
+
+--Gorelac
+L = DBM:GetModLocalization("Gorelac")
+
+L:SetGeneralLocalization{
+	name           = "Горе'лац"
+}
+
+
+--TrashMobs
+L = DBM:GetModLocalization("TrashMobs")
+
+L:SetGeneralLocalization{
+	name           = "Трэш мобы"
+}
+
+

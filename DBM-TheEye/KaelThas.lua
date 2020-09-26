@@ -5,7 +5,7 @@ mod:SetRevision(("$Revision: 163 $"):sub(12, -3))
 
 mod:SetCreatureID(19622)
 mod:RegisterCombat("yell", L.YellPhase1)
-mod:SetUsedIcons(6, 7, 8)
+mod:SetUsedIcons(5, 6, 7, 8)
 mod:AddBoolOption("RemoveWeaponOnMindControl", true)
 
 mod:RegisterEvents(
@@ -47,7 +47,7 @@ local timerBarrierCD        = mod:NewCDTimer(70, 36815, nil, nil, nil, 3)
 local timerPhoenixCD        = mod:NewCDTimer(60, 36723, nil, nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)
 local timerMCCD             = mod:NewCDTimer(70, 36797, nil, nil, nil, 3)
 
-local timerGravity          = mod:NewTimer(32.5, "TimerGravity", "Interface\\Icons\\Spell_Magic_FeatherFall", nil, nil, 4, nil, DBM_CORE_DEADLY_ICON, nil, 2, 4)
+local timerGravity          = mod:NewTimer(32.5, "TimerGravity", "Interface\\Icons\\Spell_Magic_FeatherFall", nil, nil, 4, nil, DBM_CORE_DEADLY_ICON, nil, 2, 5)
 local timerGravityCD        = mod:NewCDTimer(90, 35941, nil, nil, nil, 4, nil, DBM_CORE_DEADLY_ICON, nil, 2, 4)
 
 --------------------------хм------------------------
@@ -55,13 +55,23 @@ local timerGravityCD        = mod:NewCDTimer(90, 35941, nil, nil, nil, 4, nil, D
 local warnFurious		= mod:NewStackAnnounce(308732, 2, nil, "Tank|Healer") -- яростный удар
 local warnJustice		= mod:NewStackAnnounce(308741, 2, nil, "Tank|Healer") -- правосудие тьмы
 local warnShadow        = mod:NewSoonAnnounce(308742, 2) -- освященеи тенью (лужа)
---local warnBombhm        = mod:NewSoonAnnounce(308, 2)--бомба
+local warnBombhm        = mod:NewTargetAnnounce(308750, 2)--бомба 
+local warnVzriv         = mod:NewTargetAnnounce(308797, 2)--бомба 
+
+local specWarnCata      = mod:NewSpecialWarningRun(308790, nil, nil, nil, 4, 2)
 
 local timerFuriousCD     = mod:NewCDTimer(7, 308732, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerFurious		= mod:NewTargetTimer(30, 308732, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerJusticeCD    = mod:NewCDTimer(9, 308741, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerJustice		= mod:NewTargetTimer(30, 308741, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerShadowCD		= mod:NewCDTimer(17, 308742, nil, nil, nil, 4)
+local timerBombhmCD		= mod:NewCDTimer(35, 308750, nil, nil, nil, 1)
+local timerCataCD		= mod:NewCDTimer(126, 308790, nil, nil, nil, 2)
+local timerCataCast		= mod:NewCastTimer(9, 308790, nil, nil, nil, 2)
+local timerVzrivCD		= mod:NewCDTimer(60, 308797, nil, nil, nil, 2)
+local timerVzrivCast    = mod:NewCastTimer(5, 308797, nil, nil, nil, 2)
+local timerGravityH          = mod:NewTimer(60, "TimerGravity", "Interface\\Icons\\Spell_Magic_FeatherFall", nil, nil, 6, nil, DBM_CORE_DEADLY_ICON)
+local timerGravityHCD        = mod:NewCDTimer(90, 35941, nil, nil, nil, 6, nil, DBM_CORE_DEADLY_ICON)
 --local timerBurningCD    = mod:NewCDTimer(8, 308741, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
 --local timerBurning		= mod:NewTargetTimer(30, 308741, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
 
@@ -69,9 +79,11 @@ local timerShadowCD		= mod:NewCDTimer(17, 308742, nil, nil, nil, 4)
 
 ----------------------------------------------------
 
+local Kel = true
 
 
 mod:AddBoolOption("SetIconOnMC", true)
+mod:AddBoolOption("VzrivIcon")
 
 mod.vb.phase = 0
 
@@ -117,61 +129,96 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L.YellSang then
-		timerTalaTarget:Cancel()
-		warnNextAdd:Show(L.NamesAdds["Lord Sanguinar"])
-		timerNextAdd:Start(12.5, L.NamesAdds["Lord Sanguinar"])
-		timerRoarCD:Start(33)
-	elseif msg == L.YellCaper then
-		timerRoarCD:Cancel()
-		warnNextAdd:Show(L.NamesAdds["Capernian"])
-		timerNextAdd:Start(7, L.NamesAdds["Capernian"])
-		DBM.RangeCheck:Show(10)
-	elseif msg == L.YellTelon then
-		DBM.RangeCheck:Hide()
-		warnConflagrateSoon:Cancel()
-		timerConflagrateCD:Cancel()
-		warnNextAdd:Show(L.NamesAdds["Telonicus"])
-		timerNextAdd:Start(8.4, L.NamesAdds["Telonicus"])
-		warnBombSoon:Schedule(13)
-		timerBombCD:Start(18)
-	elseif msg == L.YellPhase2 then
-		self.vb.phase = 2
-		warnBombSoon:Cancel()
-		timerBombCD:Cancel()
-		warnPhase:Show(L.WarnPhase2)
-		timerPhase3:Start()
-	elseif msg == L.YellPhase3  then
-		self.vb.phase = 3
-		warnPhase:Show(L.WarnPhase3)
-		timerPhase4:Start()
-		timerRoarCD:Start()
-		warnBombSoon:Schedule(10)
-		timerBombCD:Start(15)
-		DBM.RangeCheck:Show(10)
-	elseif msg == L.YellPhase4  then
-		self.vb.phase = 4
-		warnPhase:Show(L.WarnPhase4)
-		timerPhase4:Cancel()
-		DBM.RangeCheck:Hide()
-		timerRoarCD:Cancel()
-		warnBombSoon:Cancel()
-		timerBombCD:Cancel()
-		warnConflagrateSoon:Cancel()
-		timerConflagrateCD:Cancel()
-		timerMCCD:Start(40)
-		timerBarrierCD:Start(60)
-		timerPhoenixCD:Start(50)
-		warnBarrierSoon:Schedule(55)
-		warnPhoenixSoon:Schedule(45)
-		warnMCSoon:Schedule(35)
-	elseif msg == L.YellPhase5  then
-		self.vb.phase = 5
-		warnPhase:Show(L.WarnPhase5)
-		timerMCCD:Cancel()
-		warnMCSoon:Cancel()
-		timerGravityCD:Start()
-		warnGravitySoon:Schedule(85)
+	if mod:IsDifficulty("heroic25") then
+		if msg == L.YellSang then
+		    timerTalaTarget:Cancel()
+		    warnNextAdd:Show(L.NamesAdds["Lord Sanguinar"])
+		    timerNextAdd:Start(12.5, L.NamesAdds["Lord Sanguinar"])
+		elseif msg == L.YellCaper then
+			timerRoarCD:Cancel()
+			warnNextAdd:Show(L.NamesAdds["Capernian"])
+			timerNextAdd:Start(7, L.NamesAdds["Capernian"])
+			DBM.RangeCheck:Show(10)
+		elseif msg == L.YellTelon then
+			DBM.RangeCheck:Hide()
+			warnConflagrateSoon:Cancel()
+			timerConflagrateCD:Cancel()
+			warnNextAdd:Show(L.NamesAdds["Telonicus"])
+			timerNextAdd:Start(8.4, L.NamesAdds["Telonicus"])
+		elseif msg == L.YellPhase3  then
+			self.vb.phase = 3
+			warnPhase:Show(L.WarnPhase3)
+			timerPhase4:Start()
+			timerRoarCD:Start()
+			warnBombSoon:Schedule(10)
+			timerBombCD:Start(15)
+			DBM.RangeCheck:Show(10)
+		elseif msg == L.YellPhase4  then
+			self.vb.phase = 4
+			warnPhase:Show(L.WarnPhase4)
+			timerPhase4:Cancel()
+			DBM.RangeCheck:Hide()
+		elseif msg == L.YellPhase5  then
+			self.vb.phase = 5
+			warnPhase:Show(L.WarnPhase5)
+		end
+	else
+		if msg == L.YellSang then
+		    timerTalaTarget:Cancel()
+			warnNextAdd:Show(L.NamesAdds["Lord Sanguinar"])
+			timerNextAdd:Start(12.5, L.NamesAdds["Lord Sanguinar"])
+			timerRoarCD:Start(33)
+		elseif msg == L.YellCaper then
+			timerRoarCD:Cancel()
+			warnNextAdd:Show(L.NamesAdds["Capernian"])
+			timerNextAdd:Start(7, L.NamesAdds["Capernian"])
+			DBM.RangeCheck:Show(10)
+		elseif msg == L.YellTelon then
+			DBM.RangeCheck:Hide()
+			warnConflagrateSoon:Cancel()
+			timerConflagrateCD:Cancel()
+			warnNextAdd:Show(L.NamesAdds["Telonicus"])
+			timerNextAdd:Start(8.4, L.NamesAdds["Telonicus"])
+			warnBombSoon:Schedule(13)
+			timerBombCD:Start(18)
+		elseif msg == L.YellPhase2 then
+			self.vb.phase = 2
+			warnBombSoon:Cancel()
+			timerBombCD:Cancel()
+			warnPhase:Show(L.WarnPhase2)
+			timerPhase3:Start()
+		elseif msg == L.YellPhase3  then
+			self.vb.phase = 3
+			warnPhase:Show(L.WarnPhase3)
+			timerPhase4:Start()
+			timerRoarCD:Start()
+			warnBombSoon:Schedule(10)
+			timerBombCD:Start(15)
+			DBM.RangeCheck:Show(10)
+		elseif msg == L.YellPhase4  then
+			self.vb.phase = 4
+			warnPhase:Show(L.WarnPhase4)
+			timerPhase4:Cancel()
+			DBM.RangeCheck:Hide()
+			timerRoarCD:Cancel()
+			warnBombSoon:Cancel()
+			timerBombCD:Cancel()
+			warnConflagrateSoon:Cancel()
+			timerConflagrateCD:Cancel()
+			timerMCCD:Start(40)
+			timerBarrierCD:Start(60)
+			timerPhoenixCD:Start(50)
+			warnBarrierSoon:Schedule(55)
+			warnPhoenixSoon:Schedule(45)
+			warnMCSoon:Schedule(35)
+		elseif msg == L.YellPhase5  then
+			self.vb.phase = 5
+			warnPhase:Show(L.WarnPhase5)
+			timerMCCD:Cancel()
+			warnMCSoon:Cancel()
+			timerGravityCD:Start()
+			warnGravitySoon:Schedule(85)
+		end
 	end
 end
 
@@ -199,6 +246,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 --		else
 --			self:Schedule(0.9, showDominateMindWarning)
 --		end
+
 	end
 end
 
@@ -209,13 +257,28 @@ function mod:SPELL_CAST_START(args)
 		warnBombSoon:Schedule(20)
 		timerBombCD:Start()
 	elseif args:IsSpellID(35941) then
-		timerGravity:Start()
-		timerGravityCD:Start()
-		warnGravitySoon:Schedule(85)
+	    if mod:IsDifficulty("heroic25") then
+			timerGravityH:Start()
+		    timerGravityHCD:Start()
+		else
+	    	timerGravity:Start()
+		    timerGravityCD:Start()
+		    warnGravitySoon:Schedule(85)
+		end
     elseif args:IsSpellID(308742) then --освящение тенью
 	    timerShadowCD:Start()
 		warnShadow:Schedule(0)
+    elseif args:IsSpellID(308790) then --катаклизм
+	    timerCataCD:Start()
+		timerCataCast:Start()
+	    specWarnCata:Show()
+		DBM.RangeCheck:Show(40, GetRaidTargetIndex)
+		self:ScheduleMethod(10, "Timer")
 	end
+end
+
+function mod:Timer()
+		DBM.RangeCheck:Show(10)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
@@ -232,6 +295,13 @@ function mod:SPELL_CAST_SUCCESS(args)
 		warnBarrierSoon:Schedule(65)
 	elseif args:IsSpellID(36731) then
 		timerFlameStrike:Start()
+	elseif args:IsSpellID(308797) then --ВЗРЫВ ТЬМЫ
+		timerVzrivCast:Start()
+		timerVzrivCD:Start()
+		warnVzriv:Show(table.concat(explosiveTargets, "<, >"))
+		if self.Options.VzrivIcon then
+		    self:SetIcon(targetname, 8, 10)
+		end
 	end
 end
 
@@ -260,20 +330,12 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerJusticeCD:Start()
         warnJustice:Show(args.destName, args.amount or 1)
 		timerJustice:Start(args.destName)
+	elseif args:IsSpellID(308749) then --бомба
+	    timerBombhmCD:Start()	
+		warnBombhm:Show(table.concat(explosiveTargets, "<, >"))
 	end
 end
 
-function mod:SPELL_AURA_APPLIED_DOSE(args) ---??
-	if args:IsSpellID(308732) then --хм яростный удар
-        warnFurious:Show(args.destName, args.amount or 1)
-		timerFurious:Start(args.destName)
-		timerFuriousCD:Start()
-	elseif args:IsSpellID(308741) then --хм Правосудие тенью
-		timerJusticeCD:Start()
-        warnJustice:Show(args.destName, args.amount or 1)
-		timerJustice:Start(args.destName)
-	end
-end
 
 
 
@@ -288,3 +350,17 @@ function mod:UNIT_TARGET()
 		self:AxeIcon()
 	end
 end
+
+function mod:KelIcon()
+	if DBM:GetRaidRank() >= 1 then
+		for i = 1, GetNumRaidMembers() do
+			if UnitName("raid"..i.."target") == L.Kel then
+				Kel = false
+				SetRaidTarget("raid"..i.."target", 5)
+				break
+			end
+		end
+	end
+end
+
+mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

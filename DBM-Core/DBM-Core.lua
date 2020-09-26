@@ -69,7 +69,7 @@ local function showRealDate(curseDate)
 end
 
 DBM = {
-	Revision = parseCurseDate("20200516140000"),
+	Revision = parseCurseDate("20200926170000"),
 	DisplayVersion = "5.40", -- the string that is shown as version
 	ReleaseRevision = releaseDate(2020, 5, 16) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
@@ -349,6 +349,7 @@ DBM.Defeat = {
 	{text = "Thorim: Failures",			value = "Sound\\Creature\\Thorim\\UR_Thorim_P1Wipe01.wav", length = 4},
 	{text = "Valithria: Failures",		value = "Sound\\Creature\\ValithriaDreamwalker\\IC_Valithria_Berserk01.wav", length = 4},
 	{text = "Yogg-Saron: Laugh",		value = "Sound\\Creature\\YoggSaron\\UR_YoggSaron_Slay01.wav", length = 4},
+	{text = "Neigra",	             	value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\Ne_igra.ogg", length = 4},
 }
 --Music uses file data IDs
 DBM.Music = {--Contains all music media, period
@@ -9242,6 +9243,7 @@ do
 		__index = setmetatable({
 			timer_berserk = DBM_CORE_OPTION_TIMER_BERSERK,
 			timer_combat = DBM_CORE_OPTION_TIMER_COMBAT,
+			HealthFrame = DBM_CORE_OPTION_HEALTH_FRAME
 		}, returnKey)
 	}
 	local defaultMiscLocalization = {
