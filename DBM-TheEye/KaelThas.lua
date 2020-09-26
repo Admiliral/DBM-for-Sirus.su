@@ -55,8 +55,8 @@ local timerGravityCD        = mod:NewCDTimer(90, 35941, nil, nil, nil, 4, nil, D
 local warnFurious		= mod:NewStackAnnounce(308732, 2, nil, "Tank|Healer") -- яростный удар
 local warnJustice		= mod:NewStackAnnounce(308741, 2, nil, "Tank|Healer") -- правосудие тьмы
 local warnShadow        = mod:NewSoonAnnounce(308742, 2) -- освященеи тенью (лужа)
-local warnBombhm        = mod:NewTargetAnnounce(308750, 2)--бомба 
-local warnVzriv         = mod:NewTargetAnnounce(308797, 2)--бомба 
+local warnBombhm        = mod:NewTargetAnnounce(308750, 2) --бомба 
+local warnVzriv         = mod:NewTargetAnnounce(308797, 2) --бомба 
 
 local specWarnCata      = mod:NewSpecialWarningRun(308790, nil, nil, nil, 4, 2)
 
@@ -65,7 +65,7 @@ local timerFurious		= mod:NewTargetTimer(30, 308732, nil, "Tank|Healer", nil, 5,
 local timerJusticeCD    = mod:NewCDTimer(9, 308741, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerJustice		= mod:NewTargetTimer(30, 308741, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerShadowCD		= mod:NewCDTimer(17, 308742, nil, nil, nil, 4)
-local timerBombhmCD		= mod:NewCDTimer(35, 308750, nil, nil, nil, 1)
+local timerBombhmCD		= mod:NewCDTimer(35, 308749, nil, nil, nil, 1)
 local timerCataCD		= mod:NewCDTimer(126, 308790, nil, nil, nil, 2)
 local timerCataCast		= mod:NewCastTimer(9, 308790, nil, nil, nil, 2)
 local timerVzrivCD		= mod:NewCDTimer(60, 308797, nil, nil, nil, 2)
@@ -211,6 +211,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			warnBarrierSoon:Schedule(55)
 			warnPhoenixSoon:Schedule(45)
 			warnMCSoon:Schedule(35)
+			Kel = true
 		elseif msg == L.YellPhase5  then
 			self.vb.phase = 5
 			warnPhase:Show(L.WarnPhase5)
@@ -218,6 +219,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			warnMCSoon:Cancel()
 			timerGravityCD:Start()
 			warnGravitySoon:Schedule(85)
+
 		end
 	end
 end
@@ -259,8 +261,8 @@ function mod:SPELL_CAST_START(args)
 	elseif args:IsSpellID(35941) then
 	    if mod:IsDifficulty("heroic25") then
 			timerGravityH:Start()
-		    timerGravityHCD:Start()
-		else
+			timerGravityHCD:Start()
+			else
 	    	timerGravity:Start()
 		    timerGravityCD:Start()
 		    warnGravitySoon:Schedule(85)

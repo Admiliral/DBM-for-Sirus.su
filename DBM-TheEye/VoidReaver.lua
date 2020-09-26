@@ -135,7 +135,7 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(308469) and args:IsPlayer() then	
+	if args:IsSpellID(308469) and args:IsPlayer() then
 		if args:IsPlayer() then
 		warnBah:Schedule(0)
 		end

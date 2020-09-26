@@ -29,12 +29,9 @@ mod.vb.phase = 0
 
 
 function mod:OnCombatStart()
-	berserkTimer:Start()
 	self.vb.phase = 1
 	if mod:IsDifficulty("heroic25") then
-
 	else
-
 	end
 end
 
