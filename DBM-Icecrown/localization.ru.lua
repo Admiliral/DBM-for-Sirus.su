@@ -587,12 +587,14 @@ L:SetOptionLocalization({
 	SpecWarnWildFlameNear		= "Спец-предупреждение, когда $spell:306502 около вас",
 	TimerFreezing				= "Отсчет времени до заморозки $spell:306523",
 	SetIconOnExplosiveTargets	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(306487),
-	RangeFrame					= "Показывать игроков в окне проверки дистанции"
+	RangeFrame					= "Показывать игроков в окне проверки дистанции",
+	Knop			= "Автоматически прожимать кнопку при $spell:306483"
 })
 
 L:SetMiscLocalization({
 	infect		= "заразил",
 	blackIce	= "Черный лед",
 	YellPull	= "Джайна... Зачем...",
-	YellStart	= "Джайна? Что ты делаешь? Оставь его, это не тот Артас, которого ты знала!"
+	YellStart	= "Джайна? Что ты делаешь? Оставь его, это не тот Артас, которого ты знала!",
+	Knop		= "/Cast Щит света",
 })

@@ -20,6 +20,8 @@ local warningCurse			= mod:NewSpellAnnounce(43127, 3)
 
 local timerCurseCD			= mod:NewNextTimer(31, 43127)
 
+------------------ХМ------------------
+
 local timerInvCD            = mod:NewCDTimer(21, 305251)
 local timerChargeCD         = mod:NewCDTimer(11, 305258)
 local timerSufferingCD      = mod:NewCDTimer(21, 305259)
@@ -27,13 +29,13 @@ local timerCharge2CD        = mod:NewCDTimer(15, 305263)
 local timerTrampCD          = mod:NewCDTimer(15, 305264)
 local warnPhase2Soon        = mod:NewAnnounce("WarnPhase2Soon", 1)
 
-local Phase = 1
+self.vb.phase = 0
 local lastCurse = 0
 local phaseCounter = true
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 34972, "Attumen the Huntsman")
-	Phase = 1
+	self.vb.phase = 1
 	phaseCounter = true
 	if mod:IsDifficulty("heroic10") then
 		timerInvCD:Start(20)
@@ -49,7 +51,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warningCurse:Show()
 		timerCurseCD:Show()
 		warningCurseSoon:Cancel()
-		if Phase == 2 then
+		if self.vb.phase == 2 then
 			timerCurseCD:Start(41)
 			warningCurseSoon:Schedule(36)
 		else
@@ -87,7 +89,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.DBM_ATH_YELL_1 then
-		Phase = 2
+		self.vb.phase = 2
 		warnPhase2:Show()
 		warningCurseSoon:Cancel()
 		timerCurseCD:Start(25)

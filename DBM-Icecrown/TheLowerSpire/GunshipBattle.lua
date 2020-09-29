@@ -111,6 +111,9 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(69705) then
+		if mod:IsDifficulty("heroic10", "normal10") then
+		warnBelowZero:Show(40)
+		else
 		warnBelowZero:Show()
 	end
 end

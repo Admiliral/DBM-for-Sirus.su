@@ -10,21 +10,23 @@ mod:RegisterEvents(
 	"SPELL_CAST_START",
 	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED",
+	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED",
 	"CHAT_MSG_MONSTER_YELL"
 )
 
 
-local timerCombatStart		= mod:NewTimer(54, "TimerCombatStart", 2457, nil, nil, 3)
-local timerSummonElemenCD	= mod:NewCDTimer(47, 306454, nil, nil, nil, 3, nil, DBM_CORE_TANK_ICON) --1я фаза элементали
-local timerArcaneStormCD	= mod:NewCDTimer(72, 306464, nil, nil, nil, 1, nil, DBM_CORE_MAGIC_ICON) --шторм кд
-local timerArcaneStorm 		= mod:NewCastTimer(10, 306464, nil, nil, nil, 1, nil, DBM_CORE_MAGIC_ICON) --шторм каст
-local timerUnstableMagicCD	= mod:NewCDTimer(22, 306468, nil, nil, nil, 3, nil, DBM_CORE_DISEASE_ICON)--нестабилка коректить
-local timerRaysCD	        = mod:NewCDTimer(28, 306485, nil, nil, nil, 3, nil, DBM_CORE_INTERRUPT_ICON) --лучи
-local timerMeteorCD	        = mod:NewCDTimer(35, 306491, nil, nil, nil, 3, nil, DBM_CORE_MAGIC_ICON)--метеор
+local timerCombatStart		= mod:NewTimer(54, "TimerCombatStart", 2457, nil, nil, 6)
+local timerSummonElemenCD	= mod:NewCDTimer(47, 306454, nil, nil, nil, 1, nil, DBM_CORE_TANK_ICON) --1я фаза элементали
+local timerArcaneStormCD	= mod:NewCDTimer(72, 306464, nil, nil, nil, 2, nil, DBM_CORE_MAGIC_ICON) --шторм кд
+local timerArcaneStorm 		= mod:NewCastTimer(10, 306464, nil, nil, nil, 2, nil, DBM_CORE_MAGIC_ICON) --шторм каст
+local timerUnstableMagicCD	= mod:NewCDTimer(22, 306468, nil, nil, nil, 4, nil, DBM_CORE_DISEASE_ICON)--нестабилка коректить
+local timerRaysCD	        = mod:NewCDTimer(28, 306485, nil, nil, nil, 2, nil, DBM_CORE_INTERRUPT_ICON) --лучи
+local timerMeteorCD	        = mod:NewCDTimer(35, 306491, nil, nil, nil, 2, nil, DBM_CORE_MAGIC_ICON)--метеор
 local timerFirewhirlCD	    = mod:NewCDTimer(65, 306495, nil, nil, nil, 3, nil)
-local timerCollapse 		= mod:NewCastTimer(20, 306500, nil, nil, nil, 3, nil) --коллапс
-local timerIceWrathCD       = mod:NewCDTimer(180, 306545, nil, nil, nil, 3, nil, DBM_CORE_MAGIC_ICON) --купол
+local timerCollapse 		= mod:NewCastTimer(20, 306500, nil, nil, nil, 2, nil) --коллапс
+local timerPhase2 		    = mod:NewCastTimer(10, 306483, nil, nil, nil, 6, nil) --фаза 2
+local timerIceWrathCD       = mod:NewCDTimer(180, 306545, nil, nil, nil, 6, nil, DBM_CORE_MAGIC_ICON) --купол
 local timerFreezing 		= mod:NewTimer(6, "TimerFreezing", 306523, nil, nil, 3)
 
 local warnNextPhase         = mod:NewAnnounce("WarnNextPhase", 1)
@@ -36,12 +38,13 @@ local warnExplosiveFlame	= mod:NewTargetAnnounce(306487, 4)
 local warnWildFlame         = mod:NewTargetAnnounce(306502, 4)
 local warnVengefulIce       = mod:NewTargetAnnounce(306535, 4)
 local warnIceMark           = mod:NewTargetAnnounce(306523, 4)
+local warnStak              = mod:NewStackAnnounce(306455, 4)
 
-local specWarnArcaneStorm   = mod:NewSpecialWarningMoveAway(306464, nil, nil, nil, 1, 5) --шторм разбегитесь
-local specWarnUnstableMagic = mod:NewSpecialWarningYou(306468, nil, nil, nil, 1, 2) --нестабильная магия
-local specWarnRays          = mod:NewSpecialWarningSpell(306485, nil, nil, nil, 1, 2)
-local specWarnExplosive     = mod:NewSpecialWarningRun(306487, nil, nil, nil, 1, 5)-- взрывоопасный пламень
-local specWarnWildFlame     = mod:NewSpecialWarningMove(306502, nil, nil, nil, 1, 5)--Дикое пламя
+local specWarnArcaneStorm   = mod:NewSpecialWarningMoveAway(306464, nil, nil, nil, 3, 5) --шторм разбегитесь
+local specWarnUnstableMagic = mod:NewSpecialWarningYou(306468, nil, nil, nil, 2, 2) --нестабильная магия
+local specWarnRays          = mod:NewSpecialWarningSpell(306485, nil, nil, nil, 2, 2)
+local specWarnExplosive     = mod:NewSpecialWarningRun(306487, nil, nil, nil, 4, 5)-- взрывоопасный пламень
+local specWarnWildFlame     = mod:NewSpecialWarningMove(306502, nil, nil, nil, 4, 5)--Дикое пламя
 local specWarnWildFlameNear = mod:NewSpecialWarning("SpecWarnWildFlameNear", 306545, nil, nil, 1, 2)
 local specWarnVengefulIce   = mod:NewSpecialWarningMove(306535, nil, nil, nil, 1, 2)
 local specWarnIceWrath      = mod:NewSpecialWarning("SpecWarnIceWrath", nil, nil, nil, 1, 2)
@@ -53,6 +56,7 @@ local berserkTimer			= mod:NewBerserkTimer(1802)
 
 mod:AddBoolOption("SetIconOnExplosiveTargets", true)
 mod:AddBoolOption("RangeFrame")
+mod:AddBoolOption("Knop")
 
 mod.vb.phase = 1
 local explosiveTargets = {}
@@ -70,9 +74,6 @@ function mod:OnCombat()
 	timerUnstableMagicCD:Start(26)
 	warnArcaneStormSoon:Schedule(71)
 	warnUnstableMagicSoon:Schedule(23)
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(10)
-	end
 end
 
 function mod:WildFlame()
@@ -80,9 +81,16 @@ function mod:WildFlame()
 	table.wipe(wildFlameTargets)
 end
 
+
+
+
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(306464) then
 		specWarnArcaneStorm:Show() -- Шторм
+		if self.Options.RangeFrame then
+			DBM.RangeCheck:Show(10)
+			self:ScheduleMethod(11, "Range")
+		end
 	elseif args:IsSpellID(306468) then
 		specWarnUnstableMagic:Show()
 		timerUnstableMagicCD:Start()
@@ -99,6 +107,10 @@ function mod:SPELL_CAST_START(args)
 		timerRaysCD:Start(17)
 		timerMeteorCD:Start(29)
 		timerFirewhirlCD:Start(60)
+		timerPhase2:Start()
+		if self.Options.Knop then
+			self:ScheduleMethod(3, "Timer")
+		end
 	elseif args:IsSpellID(306485) then
 		timerRaysCD:Start()
 		specWarnRays:Show()
@@ -109,6 +121,14 @@ function mod:SPELL_CAST_START(args)
 	elseif args:IsSpellID(306545) then  -- Dome phase
 		specWarnIceWrath:Show()
 	end
+end
+
+function mod:Range()
+		DBM.RangeCheck:Show(10)
+end
+
+function mod:Timer()
+	SendChatMessage(L.Knop, "SAY")
 end
 
 function mod:SPELL_AURA_APPLIED(args)
@@ -182,6 +202,8 @@ function mod:SPELL_AURA_APPLIED(args)
 			table.wipe(iceMarkTargets)
 		end
 		timerFreezing:Start()
+	elseif args:IsSpellID(306455) then -- Стаки
+        warnStak:Show(args.destName, args.amount or 1)
 	end
 end
 
@@ -223,3 +245,5 @@ function mod:OnCombatEnd(wipe)
 		DBM.RangeCheck:Hide()
 	end
 end
+
+mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
