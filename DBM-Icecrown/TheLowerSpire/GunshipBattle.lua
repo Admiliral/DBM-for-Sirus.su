@@ -59,8 +59,8 @@ function mod:OnCombatStart(delay)
 		timerBelowZeroCD:Start(75-delay)
 	else
 		DBM:FireCustomEvent("DBM_EncounterStart", 37540, "Icecrown Gunship Battle")
-		if mod:IsDifficulty("heroic10") then
-			timerBelowZeroCD:Start(80-delay)
+		if mod:IsDifficulty("heroic10", "normal10") then
+			timerBelowZeroCD:Start(85-delay)
 		else
 			timerBelowZeroCD:Start(80-delay)
 		end
@@ -69,6 +69,7 @@ function mod:OnCombatStart(delay)
 		self:ScheduleMethod(57, "Adds")
 	end
 end
+
 
 function mod:OnCombatEnd(wipe)
 	if UnitFactionGroup("player") == "Alliance" then
@@ -111,9 +112,6 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(69705) then
-		if mod:IsDifficulty("heroic10", "normal10") then
-		warnBelowZero:Show(40)
-		else
 		warnBelowZero:Show()
 	end
 end
