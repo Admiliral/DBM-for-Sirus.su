@@ -29,7 +29,7 @@ local timerCharge2CD        = mod:NewCDTimer(15, 305263)
 local timerTrampCD          = mod:NewCDTimer(15, 305264)
 local warnPhase2Soon        = mod:NewAnnounce("WarnPhase2Soon", 1)
 
-self.vb.phase = 0
+mod.vb.phase = 0
 local lastCurse = 0
 local phaseCounter = true
 
