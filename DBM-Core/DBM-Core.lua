@@ -295,7 +295,7 @@ DBM.DefaultOptions = {
 	ShortTimerText = true,
 	ChatFrame = "DEFAULT_CHAT_FRAME",
 	CoreSavedRevision = 1,
-	
+
 	-- ни живы ни мертвы
 	ShowFakedRaidWarnings = false,
 	DontSendBossAnnounces = false,
