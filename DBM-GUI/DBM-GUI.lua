@@ -1472,6 +1472,7 @@ local function CreateOptionsMenu()
 		local raidwarnoptions = RaidWarningPanel:CreateArea(L.RaidWarning_Header, nil, 420, true)
 
 		local ShowWarningsInChat 	= raidwarnoptions:CreateCheckButton(L.ShowWarningsInChat, true, nil, "ShowWarningsInChat")
+		local ShowFakedRaidWarnings 	= raidwarnoptions:CreateCheckButton(L.ShowFakedRaidWarnings,  true, nil, "ShowFakedRaidWarnings")
 		local WarningIconLeft		= raidwarnoptions:CreateCheckButton(L.WarningIconLeft,  true, nil, "WarningIconLeft")
 		local WarningIconRight 		= raidwarnoptions:CreateCheckButton(L.WarningIconRight,  true, nil, "WarningIconRight")
 		local WarningIconChat 		= raidwarnoptions:CreateCheckButton(L.WarningIconChat,  true, nil, "WarningIconChat")
@@ -4026,6 +4027,11 @@ do
 		button:SetScript("OnShow",  function(self) self:SetChecked(mod.Options.Enabled) end)
 		button:SetPoint('TOPLEFT', panel.frame, "TOPLEFT", 8, -14)
 		button:SetScript("OnClick", function(self) mod:Toggle()	end)
+		
+		local button = panel:CreateCheckButton(L.Mod_EnableAnnounce, true)
+		button:SetScript("OnShow",  function(self) self:SetChecked(mod.Options.Announce) end)
+		button:SetPoint('TOPLEFT', panel.frame, "TOPLEFT", 8, -40)
+		button:SetScript("OnClick", function(self) mod.Options.Announce = not not self:GetChecked() end)
 
 		for _, catident in pairs(mod.categorySort) do
 			category = mod.optionCategories[catident]

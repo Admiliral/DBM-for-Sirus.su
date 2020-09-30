@@ -69,9 +69,9 @@ local function showRealDate(curseDate)
 end
 
 DBM = {
-	Revision = parseCurseDate("20200928225100"),
+	Revision = parseCurseDate("20200930210000"),
 	DisplayVersion = "5.40", -- the string that is shown as version
-	ReleaseRevision = releaseDate(2020, 5, 16) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
+	ReleaseRevision = releaseDate(2020, 9, 30) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
 
@@ -182,6 +182,8 @@ DBM.DefaultOptions = {
 	HideTooltips = false,
 	DisableSFX = false,
 	EnableModels = true,
+	GUIWidth = 800,
+	GUIHeight = 600,
 	RangeFrameFrames = "radar",
 	RangeFrameUpdates = "Average",
 	RangeFramePoint = "CENTER",
@@ -293,10 +295,13 @@ DBM.DefaultOptions = {
 	ShortTimerText = true,
 	ChatFrame = "DEFAULT_CHAT_FRAME",
 	CoreSavedRevision = 1,
+	
+	-- ни живы ни мертвы
+	ShowFakedRaidWarnings = false,
+	DontSendBossAnnounces = false,
 
 	-- these keys are not in live
 	StatusEnabled = true,
-	ShowFakedRaidWarnings = false,
 	Memes = false,
 	ShowLoadMessage = true,
 	ShowKillMessage = true,
@@ -316,7 +321,6 @@ DBM.DefaultOptions = {
 	HealthFrameGrowUp = false,
 	HealthFrameLocked = false,
 	HealthFrameWidth = 200,
-	DontSendBossAnnounces = false,
 	DontSendBossWhispers = false,
 }
 
@@ -1021,6 +1025,7 @@ do
 				"RAID_ROSTER_UPDATE",
 				"PARTY_MEMBERS_CHANGED",
 				"CHAT_MSG_ADDON",
+                "CHAT_MSG_RAID_WARNING",
 				"PLAYER_REGEN_DISABLED",
 				"PLAYER_REGEN_ENABLED",
 				"UNIT_DIED",
@@ -6327,6 +6332,11 @@ do
 	-- TODO: this function is an abomination, it needs to be rewritten. Also: check if these work-arounds are still necessary
 	function announcePrototype:Show(...) -- todo: reduce amount of unneeded strings
 		if not self.option or self.mod.Options[self.option] then
+			if self.mod.Options.Announce and not DBM.Options.DontSendBossAnnounces and (DBM:GetRaidRank() > 0 or (GetNumRaidMembers() == 0 and GetNumPartyMembers() >= 1)) then
+				local message = pformat(self.text, select(1, ...))
+				message = message:gsub("|3%-%d%((.-)%)", "%1") -- for |3-id(text) encoding in russian localization
+				SendChatMessage(("*** %s ***"):format(message), GetNumRaidMembers() > 0 and "RAID_WARNING" or "PARTY")
+			end
 			if DBM.Options.DontShowBossAnnounces then return end	-- don't show the announces if the spam filter option is set
 			if DBM.Options.DontShowTargetAnnouncements and (self.announceType == "target" or self.announceType == "targetcount") and not self.noFilter then return end--don't show announces that are generic target announces
 			local argTable = {...}
@@ -6379,8 +6389,17 @@ do
 			if DBM.Options.ShowWarningsInChat then
 				if not DBM.Options.WarningIconChat then
 					text = text:gsub(textureExp, "") -- textures @ chat frame can (and will) distort the font if using certain combinations of UI scale, resolution and font size TODO: is this still true as of cataclysm?
-				end
+					if DBM.Options.ShowFakedRaidWarnings then
+						for i = 1, select("#", GetFramesRegisteredForEvent("CHAT_MSG_RAID_WARNING")) do
+							local frame = select(i, GetFramesRegisteredForEvent("CHAT_MSG_RAID_WARNING"))
+							if frame ~= RaidWarningFrame and frame:GetScript("OnEvent") then
+								frame:GetScript("OnEvent")(frame, "CHAT_MSG_RAID_WARNING", text, UnitName("player"), GetDefaultLanguage("player"), "", UnitName("player"), "", 0, 0, "", 0, 99, "")
+							end
+						end
+					end
+				else
 				self.mod:AddMsg(text, nil)
+				end
 			end
 			if self.sound > 0 then
 				if self.sound > 1 and DBM.Options.ChosenVoicePack ~= "None" and not voiceSessionDisabled and self.sound <= SWFilterDisabed then return end
