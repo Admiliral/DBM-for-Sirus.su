@@ -4029,11 +4029,11 @@ do
 		button:SetPoint('TOPLEFT', panel.frame, "TOPLEFT", 8, -14)
 		button:SetScript("OnClick", function(self) mod:Toggle()	end)
 
-		local buttonn = panel:CreateCheckButton(L.Mod_EnableAnnounce, true)
+		--[[local buttonn = panel:CreateCheckButton(L.Mod_EnableAnnounce, true)
 		buttonn:SetScript("OnShow",  function(self) self:SetChecked(mod.Options.Announce) end)
 		buttonn:SetPoint('TOPLEFT', panel.frame, "TOPLEFT", 8, -40)
 		buttonn:SetScript("OnClick", function(self) mod.Options.Announce = not not self:GetChecked() end)
-
+]]
 		for _, catident in pairs(mod.categorySort) do
 			category = mod.optionCategories[catident]
 			if category then
