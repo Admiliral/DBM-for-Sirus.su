@@ -4030,6 +4030,7 @@ do
 
 		local button = panel:CreateCheckButton(L.Mod_EnableAnnounce, true)
 		button:SetScript("OnShow",  function(self) self:SetChecked(mod.Options.Announce) end)
+		button:SetPoint('TOPLEFT', panel.frame, "TOPLEFT", 8, -40)
 		button:SetScript("OnClick", function(self) mod.Options.Announce = not not self:GetChecked() end)
 
 		for _, catident in pairs(mod.categorySort) do
