@@ -4023,7 +4023,7 @@ do
 		reset:SetScript("OnClick", function(self)
 			DBM:LoadModDefaultOption(mod)
 		end)
-		
+
 		local button = panel:CreateCheckButton(L.Mod_Enabled, true)
 		button:SetScript("OnShow",  function(self) self:SetChecked(mod.Options.Enabled) end)
 		button:SetPoint('TOPLEFT', panel.frame, "TOPLEFT", 8, -14)
