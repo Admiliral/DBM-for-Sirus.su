@@ -62,7 +62,7 @@ function mod:SPELL_CAST_START(args)
 	elseif args:IsSpellID(305134) then
 		targetShattered = self:GetBossTarget(17257)
 		warnDevastatingStrike:Show(targetShattered)
-		specwarnDevastatingStrike:Show(targetShattered)
+		specWarnDevastatingStrike:Show(targetShattered)
 		timerDevastatingStrikeCD:Start()
 	elseif args:IsSpellID(30616) then
 		specWarnNova:Show(args.sourceName)
