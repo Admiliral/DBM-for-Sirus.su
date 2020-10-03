@@ -5,6 +5,7 @@ mod:SetRevision(("$Revision: 4413 $"):sub(12, -3))
 mod:SetCreatureID(3392)
 mod:RegisterCombat("yell", L.YellPull)
 mod:SetUsedIcons(2, 3, 4, 5, 6, 7, 8)
+mod:SetMinSyncRevision(3392)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START",
@@ -17,7 +18,7 @@ mod:RegisterEvents(
 
 
 local timerCombatStart		= mod:NewTimer(54, "TimerCombatStart", 2457, nil, nil, 6)
-local timerSummonElemenCD	= mod:NewCDTimer(47, 306454, nil, nil, nil, 1, nil, DBM_CORE_TANK_ICON) --1я фаза элементали
+local timerSummonElemenCD	= mod:NewCDTimer(46, 306454, nil, nil, nil, 1, nil, DBM_CORE_TANK_ICON) --1я фаза элементали
 local timerArcaneStormCD	= mod:NewCDTimer(72, 306464, nil, nil, nil, 2, nil, DBM_CORE_MAGIC_ICON) --шторм кд
 local timerArcaneStorm 		= mod:NewCastTimer(10, 306464, nil, nil, nil, 2, nil, DBM_CORE_MAGIC_ICON) --шторм каст
 local timerUnstableMagicCD	= mod:NewCDTimer(22, 306468, nil, nil, nil, 4, nil, DBM_CORE_DISEASE_ICON)--нестабилка коректить
@@ -109,7 +110,7 @@ function mod:SPELL_CAST_START(args)
 		timerFirewhirlCD:Start(60)
 		timerPhase2:Start()
 		if self.Options.Knop then
-			self:ScheduleMethod(3, "Timer")
+			self:ScheduleMethod(1, "Timer")
 		end
 	elseif args:IsSpellID(306485) then
 		timerRaysCD:Start()
