@@ -20,9 +20,7 @@ L:SetWarningLocalization{
 	WarnPhase2Soon = "Скоро 2-я фаза",
 	WarnPhase2 = "ФАЗА 2 БЕЕГИИТЕЕ",
 	WarnFlamefal0 = "Перья полетели, БЕГИТЕ!!!",
-	WarnPhoenixScream2 = "КРИК ЧЕРЕЗ 2 СЕКУНДЫ, ОТВЕРНИТЕСЬ!!!",
-	WarnPhoenixScream1 = "КРИК ЧЕРЕЗ 1 СЕКУНДУ, ОТВЕРНИТЕСЬ!!!",
-	WarnPhoenixScream0 = "{Череп}{Череп}{Череп}!!!КРИК!!!{Череп}{Череп}{Череп}",
+
 	WarnFireSign = "Знак огня"
 }
 
@@ -39,9 +37,6 @@ L:SetOptionLocalization{
 	WarnPhase2 = "Начало фазы 2 $spell:308649 ",
 	WarnSupernova = "Предупреждение о ваших стаках $spell:308636",
 	WarnFlamefal0 = "Предупреждение, что перья полетели!!!",
-	WarnPhoenixScream2 = "Объявление в рейд, что крик будет через 2 секунды!!!",
-	WarnPhoenixScream1 = "Объявление в рейд, что крик будет через 1 секунду!!!",
-	WarnPhoenixScream0 = "Объявление в рейд, что крик прошёл!!!",
 	WarnFireSign = "Объявить в рейд о касте знака огня"
 }
 

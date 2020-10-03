@@ -46,9 +46,6 @@ local berserkTimerN				= mod:NewBerserkTimer(1200)
 -- Heroic
 local warnNextPhase				= mod:NewAnnounce("Фаза", 1) -- перефаза
 local warnFireSign			    = mod:NewAnnounce("WarnFireSign", 2) -- Знак огня
-local warnPhoenixScream2		= mod:NewAnnounce("WarnPhoenixScream2", 2) -- Крик феникса
-local warnPhoenixScream1		= mod:NewAnnounce("WarnPhoenixScream1", 2) -- Крик феникса
-local warnPhoenixScream0		= mod:NewAnnounce("WarnPhoenixScream0", 2) -- Крик феникса
 local warnSupernova				= mod:NewAnnounce("WarnSupernova", 2, 308636, false) -- предупреждение о стаках суперновой
 
 local specWarnPhase2Soon		= mod:NewSpecialWarning("WarnPhase2Soon", 1) -- Вторая фаза
@@ -177,9 +174,6 @@ function mod:SPELL_CAST_START(args)
 	    timerPhoenixScreamCast:Start()
 		timerPhoenixScreamCD:Start()
 		specWarnPhoenixScream:Show()
-		warnPhoenixScream2:Schedule(0)
-		warnPhoenixScream1:Schedule(1)
-		warnPhoenixScream0:Schedule(2)
 	elseif args:IsSpellID(308663) then -- Знак феникса: Рассеяность
 		timerScatteringCast:Start()
 	elseif args:IsSpellID(308664) then -- Знак феникса: Слабость

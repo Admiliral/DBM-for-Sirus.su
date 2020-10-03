@@ -51,7 +51,6 @@ function mod:OnCombatStart(delay) ---- готово
 	    timerLoadCD:Start()
 	    timerOrbCD:Start()
 	    timerKnockbackCD:Start()
-	     self:ScheduleMethod(23, "Playsound")
 	else
 		berserkTimer:Start()
 		timerNextPounding:Start()
@@ -86,7 +85,6 @@ do ---?????????
 			table.sort(beaconIconTargets, sort_by_group)
 			local beaconIcons = 8
 			for i, v in ipairs(beaconIconTargets) do
-					SendChatMessage("Сферы на: ", L.BeaconIconSet:format(beaconIcons, UnitName(v)), GetNumRaidMembers() > 0 and "RAID_WARNING" or "RAID")
 				self:SetIcon(UnitName(v), beaconIcons,20)
 				beaconIcons = beaconIcons - 1
 			end
@@ -98,7 +96,6 @@ end
 function mod:SPELL_CAST_START(args)  ------- спавн сфер  или это?
 	if 	args:IsSpellID(308984) then
 		timerOrbCD:Schedule(2)
---		timerOrbCast:Schedule(0)
 		warnScope:Schedule(0)
 	elseif args:IsSpellID(308470) then  -------- Тяжкий удар
 		timerKnockbackCD:Start()
