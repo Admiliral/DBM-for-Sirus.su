@@ -57,7 +57,7 @@ local berserkTimer			= mod:NewBerserkTimer(1802)
 
 mod:AddBoolOption("SetIconOnExplosiveTargets", true)
 mod:AddBoolOption("RangeFrame")
-mod:AddBoolOption("Knop")
+--mod:AddBoolOption("Knop")
 
 mod.vb.phase = 1
 local explosiveTargets = {}
@@ -109,9 +109,9 @@ function mod:SPELL_CAST_START(args)
 		timerMeteorCD:Start(29)
 		timerFirewhirlCD:Start(60)
 		timerPhase2:Start()
-		if self.Options.Knop then
+--[[		if self.Options.Knop then
 			self:ScheduleMethod(1, "Timer")
-		end
+		end]]
 	elseif args:IsSpellID(306485) then
 		timerRaysCD:Start()
 		specWarnRays:Show()
