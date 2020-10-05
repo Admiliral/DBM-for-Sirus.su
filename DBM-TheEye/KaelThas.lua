@@ -310,9 +310,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 		end
 		if mod.Options.AnnounceVzriv then
 			if DBM:GetRaidRank() > 0 then
-				SendChatMessage(L.Klei:format(VzrivIcon, args.destName), "RAID_WARNING")
+				SendChatMessage(L.Vzriv:format(VzrivIcon, args.destName), "RAID_WARNING")
 			else
-				SendChatMessage(L.Klei:format(VzrivIcon, args.destName), "RAID")
+				SendChatMessage(L.Vzriv:format(VzrivIcon, args.destName), "RAID")
 			end
 		end
 	end
