@@ -336,7 +336,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			table.wipe(mincControl)
 		end
 	elseif args:IsSpellID(308732) then --хм яростный удар
-    	warnFurious:Show(args.destName, args.amount or 1)
+		warnFurious:Show(args.destName, args.amount or 1)
 		timerFurious:Start(args.destName)
 		timerFuriousCD:Start()
 	elseif args:IsSpellID(308741) then --хм Правосудие тенью
@@ -347,7 +347,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerBombhmCD:Start()
 		warnBombhm:Show(table.concat(BombhmTargets, "<, >"))
 	elseif args:IsSpellID(308756) then --хм искрящий удар
-    	warnIsc:Show(args.destName, args.amount or 1)
+		warnIsc:Show(args.destName, args.amount or 1)
 		timerIsc:Start(args.destName)
 	end
 end
