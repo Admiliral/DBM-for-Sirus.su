@@ -54,6 +54,7 @@ local timerGravityCD        = mod:NewCDTimer(90, 35941, nil, nil, nil, 4, nil, D
 
 local warnFurious		= mod:NewStackAnnounce(308732, 2, nil, "Tank|Healer") -- яростный удар
 local warnJustice		= mod:NewStackAnnounce(308741, 2, nil, "Tank|Healer") -- правосудие тьмы
+local warnIsc		= mod:NewStackAnnounce(308756, 2, nil, "Tank|Healer") -- Искрящий
 local warnShadow        = mod:NewSoonAnnounce(308742, 2) -- освященеи тенью (лужа)
 local warnBombhm        = mod:NewTargetAnnounce(308750, 2) -- бомба
 local warnVzriv         = mod:NewTargetAnnounce(308797, 2) -- лужа
@@ -64,6 +65,7 @@ local timerFuriousCD     = mod:NewCDTimer(7, 308732, nil, "Tank|Healer", nil, 5,
 local timerFurious		= mod:NewTargetTimer(30, 308732, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerJusticeCD    = mod:NewCDTimer(9, 308741, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerJustice		= mod:NewTargetTimer(30, 308741, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerIsc	    	= mod:NewTargetTimer(15, 308756, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerShadowCD		= mod:NewCDTimer(17, 308742, nil, nil, nil, 4)
 local timerBombhmCD		= mod:NewCDTimer(35, 308749, nil, nil, nil, 1)
 local timerCataCD		= mod:NewCDTimer(126, 308790, nil, nil, nil, 2)
@@ -82,12 +84,14 @@ local timerGravityHCD        = mod:NewCDTimer(120, 35941, nil, nil, nil, 6, nil,
 --local Kel = true
 
 
-mod:AddBoolOption("SetIconOnMC", true)
-mod:AddBoolOption("VzrivIcon")
+mod:AddSetIconOption("SetIconOnMC", 36797, true, true, {6, 7, 8})
+mod:AddSetIconOption("VzrivIcon", 308742, true, true, {8})
+mod:AddBoolOption("AnnounceVzriv", false)
 
 mod.vb.phase = 0
 local BombhmTargets = {}
 local VzrivTargets = {}
+local VzrivIcon = 8
 local dominateMindTargets = {}
 local dominateMindIcon = 8
 local mincControl = {}
@@ -304,6 +308,13 @@ function mod:SPELL_CAST_SUCCESS(args)
 		if self.Options.VzrivIcon then
 			self:SetIcon(args.destName, 8, 10)
 		end
+		if mod.Options.AnnounceVzriv then
+			if DBM:GetRaidRank() > 0 then
+				SendChatMessage(L.Klei:format(VzrivIcon, args.destName), "RAID_WARNING")
+			else
+				SendChatMessage(L.Klei:format(VzrivIcon, args.destName), "RAID")
+			end
+		end
 	end
 end
 
@@ -325,7 +336,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			table.wipe(mincControl)
 		end
 	elseif args:IsSpellID(308732) then --хм яростный удар
-        warnFurious:Show(args.destName, args.amount or 1)
+    	warnFurious:Show(args.destName, args.amount or 1)
 		timerFurious:Start(args.destName)
 		timerFuriousCD:Start()
 	elseif args:IsSpellID(308741) then --хм Правосудие тенью
@@ -335,6 +346,9 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(308749) then --бомба
 		timerBombhmCD:Start()
 		warnBombhm:Show(table.concat(BombhmTargets, "<, >"))
+	elseif args:IsSpellID(308756) then --хм искрящий удар
+    	warnIsc:Show(args.destName, args.amount or 1)
+		timerIsc:Start(args.destName)
 	end
 end
 

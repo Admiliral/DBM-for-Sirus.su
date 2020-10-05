@@ -150,7 +150,8 @@ L:SetOptionLocalization{
 	TimerGravity = "Отсчет времени до окончания $spell:35941",
 	RemoveWeaponOnMindControl   = "Убирать оружие на МК.",
 	SetIconOnMC = "Устанавливать иконки на цели заклинания $spell:36797",
-	VzrivIcon = DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(308797)
+	VzrivIcon = DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(308797),
+	AnnounceVzriv			= "Объявлять игроков, на кого установлен взрыв, в рейд чат"
 }
 
 L:SetMiscLocalization{
@@ -170,5 +171,6 @@ L:SetMiscLocalization{
 	WarnPhase5 = "Фаза 5",
 	TalaTarget = "смотрит на |3%-3%([%w\128-\255]+%).",
 	Axe = "Сокрушение",
-	Kel = "Кель'тас Солнечный Скиталец"
+	Kel = "Кель'тас Солнечный Скиталец",
+	Vzriv		= "Взрыв {rt%d} установлен на %s"
 }
