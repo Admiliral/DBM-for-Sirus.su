@@ -28,18 +28,20 @@ L:SetOptionLocalization{
 	WarnMarkOfHydross       = DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(38215, GetSpellInfo(38215) or "unknown"),
 	WarnMarkOfCorruption    = DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(38219, GetSpellInfo(38219) or "unknown"),
 	SpecWarnThreatReset     = "Спец. предупреждение о сбрасывании угрозы",
-	SetIconOnSklepTargets   = "Объявлять метки целей заклинания $spell:309046 в рейд-чат\n(требуются права помощника)",
-	SetIconOnKorTargets     = "Объявлять метки целей заклинания $spell:309065 в рейд-чат\n(требуются права помощника)",
+	SetIconOnSklepTargets   = "Устанавливать иконки на цели $spell:309046",
+	SetIconOnKorTargets     = "Устанавливать иконки на цели $spell:309065",
 	Yad                     = "Объявлять перефазу ",
-	Chis                    = "Объявлять перефазу  "
+	Chis                    = "Объявлять перефазу  ",
+	AnnounceSklep	     	= "Объявлять игроков, на кого установлен $spell:309046, в рейд чат",
+	AnnounceKor  			= "Объявлять игроков, на кого установлена $spell:309065, в рейд чат "
 }
 
 L:SetMiscLocalization{
 	YellPull = "Я не позволю вам вмешиваться!",
 	YellPoison = "Агрррхх, яд.",
 	YellWater = "Так лучше, намного лучше.",
-	SetIconOnSklepTargets	= "Водяная гробница {rt%d} установлена на: %s",
-	SetIconOnKorTargets	= "Коррозия {rt%d} установлена на: %s",
+	SklepIcon	= "Водяная гробница {rt%d} установлена на: %s",
+	KorIcon	= "Коррозия {rt%d} установлена на: %s"
 }
 
 
@@ -86,19 +88,27 @@ L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
+	WarnPhase2Soon			= "Скоро переход в фазу 2",
 }
 
 L:SetOptionLocalization{
 	TimerDemon = "Отсчет времени до превращения в демона",
 	TimerNormal = "Отсчет времени до конца формы демона",
 	TimerInnerDemons = DBM_CORE_AUTO_TIMER_OPTIONS.active:format(37676, GetSpellInfo(37676) or "unknown"),
-	SetIconOnDemonTargets = "Устанавливать иконки на цели демонов"
+	KleiIcon		= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(310496),
+	SetIconOnDemonTargets = "Устанавливать иконки на цели демонов",
+	SetIconOnPepelTargets = "Устанавливать иконки на цели испепеления",
+	WarnPhase2Soon			= "Предупреждать заранее о переходе в фазу 2 (на ~37%)",
+	AnnounceKlei			= "Объявлять игроков, на кого установлено клеймо, в рейд чат",
+	AnnouncePepel			= "Объявлятьв игроков, на кого установлено испепеление, в рейд чат "
 }
 
 L:SetMiscLocalization{
 	YellPull        = "Наконец-то мое заточение окончено!",
 	YellDemon       = "Прочь, жалкий эльф. Настало мое время!",
-	YellShadow      = "Нет... нет! Что вы наделали? Я – главный! Слышишь меня? Я... Ааааах! Мне его... не удержать."
+	YellShadow      = "Нет... нет! Что вы наделали? Я – главный! Слышишь меня? Я... Ааааах! Мне его... не удержать.",
+	PepelIcon	= "Испепеление {rt%d} установлено на %s",
+	Klei		= "Клеймо {rt%d} установлено на %s"
 }
 
 --LurkerBelow
@@ -137,8 +147,27 @@ L:SetGeneralLocalization{
 	name           = "Повелитель глубин Каратресс"
 }
 
+L:SetTimerLocalization{
+	TimerKaraTarget = "Преследование на %s"
+}
+
+L:SetWarningLocalization{
+	WarnKaraTarget = "Каратес преследует %s",
+	SpecWarnKaraTarget = "Вас преследует Каратес - бегите"
+}
+
+L:SetOptionLocalization{
+	WarnPhase2Soon			= "Предупреждать заранее о переходе в фазу 2 (на ~52%)",
+	SetIconOnSvazTargets = "Устанавливать иконки на цели испепеления",
+	AnnounceSvaz			= "Объявлятьв игроков, на кого установлено $spell:309261, в рейд чат ",
+	WarnKaraTarget = "Обьявлять цели преследуемые Каратесом",
+	SpecWarnKaraTarget = "Спец. предупреждение для преследуемого Каратесом",
+	TimerKaraTarget          = "Отсчет времени до смены цели Каратеса"
+}
+
 L:SetMiscLocalization{
-	YellPull        = "Стража, к бою! У нас гости..."
+	YellPull        = "Стража, к бою! У нас гости...",
+	SvazIcon	= "Пламенная свзь {rt%d} установлена на %s",
 }
 
 --Vashj
@@ -172,7 +201,8 @@ L:SetOptionLocalization{
 L:SetMiscLocalization{
 	YellPhase2              = "Время пришло! Не щадите никого!",
 	YellPhase3              = "Вам не пора прятаться?",
-	TaintedElemental        = "Нечистый элементаль"
+	TaintedElemental        = "Нечистый элементаль",
+	KaraTarget = "смотрит на |3%-3%([%w\128-\255]+%).",
 }
 
 --Gorelac
