@@ -29,7 +29,7 @@ local timerBoned			= mod:NewAchievementTimer(8, 4610)
 
 local berserkTimer			= mod:NewBerserkTimer(600)
 
-mod:AddBoolOption("SetIconOnImpale", true)
+mod:AddSetIconOption("SetIconOnImpale", 69062, true, true, {6, 7, 8})
 
 mod.vb.impaleIcon = 8
 

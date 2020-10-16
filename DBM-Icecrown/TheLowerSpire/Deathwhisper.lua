@@ -47,9 +47,9 @@ local timerTouchInsignificance		= mod:NewTargetTimer(30, 71204, nil, "Tank|Heale
 
 local berserkTimer					= mod:NewBerserkTimer(600)
 
-mod:AddBoolOption("SetIconOnDominateMind", true)
-mod:AddBoolOption("SetIconOnDeformedFanatic", true)
-mod:AddBoolOption("SetIconOnEmpoweredAdherent", false)
+mod:AddSetIconOption("SetIconOnDominateMind", 71289, true, true, {6})
+mod:AddSetIconOption("SetIconOnDeformedFanatic", 70900, true, true, {5, 6, 7, 8})
+mod:AddSetIconOption("SetIconOnEmpoweredAdherent", 70901, true, true, {5, 6, 7, 8})
 mod:AddBoolOption("ShieldHealthFrame", true, "misc")
 mod:AddBoolOption("RemoveWeaponOnMindControl", true)
 mod:AddBoolOption("RemoveShadowResistanceBuffs", true)

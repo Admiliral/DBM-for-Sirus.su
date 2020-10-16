@@ -588,7 +588,8 @@ L:SetOptionLocalization({
 	TimerFreezing				= "Отсчет времени до заморозки $spell:306523",
 	SetIconOnExplosiveTargets	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(306487),
 	RangeFrame					= "Показывать игроков в окне проверки дистанции",
-	Knop			= "Автоматически прожимать кнопку при $spell:306483"
+	Knop			= "Автоматически прожимать кнопку при $spell:306483",
+	AnnounceExplosive			= "Объявлятьв игроков, на кого установлено $spell:306487, в рейд чат "
 })
 
 L:SetMiscLocalization({
@@ -597,4 +598,5 @@ L:SetMiscLocalization({
 	YellPull	= "Джайна... Зачем...",
 	YellStart	= "Джайна? Что ты делаешь? Оставь его, это не тот Артас, которого ты знала!",
 	Knop		= "/Cast Щит света",
+	ExplosiveIcon	= "Пламень {rt%d} установлен на %s",
 })

@@ -6,6 +6,7 @@ mod:SetCreatureID(3392)
 mod:RegisterCombat("yell", L.YellPull)
 mod:SetUsedIcons(2, 3, 4, 5, 6, 7, 8)
 mod:SetMinSyncRevision(3392)
+--mod:SetModelID(3392)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START",
@@ -55,20 +56,21 @@ local specWarnIceSpears     = mod:NewSpecialWarningSpell(306537, "Ranged", nil, 
 
 local berserkTimer			= mod:NewBerserkTimer(1802)
 
-mod:AddBoolOption("SetIconOnExplosiveTargets", true)
+mod:AddSetIconOption("SetIconOnExplosiveTargets", 306487, true, true, {3, 4, 5, 6, 7, 8})
+mod:AddBoolOption("Announceexplosive", false)
 mod:AddBoolOption("RangeFrame")
---mod:AddBoolOption("Knop")
+mod:AddBoolOption("Knop")
 
 mod.vb.phase = 1
-local explosiveTargets = {}
-local explosiveIcons = 8
+local ExplosiveTargets = {}
+local ExplosiveIcons = 8
 local wildFlameTargets = {}
 local vengerfulIceTargets = {}
 local iceMarkTargets = {}
 
 function mod:OnCombat()
 	self.vb.phase = 1
-	explosiveIcons = 8
+	ExplosiveIcons = 8
 	berserkTimer:Start()
 	timerSummonElemenCD:Start(27)
 	timerArcaneStormCD:Start(74)
@@ -82,7 +84,32 @@ function mod:WildFlame()
 	table.wipe(wildFlameTargets)
 end
 
-
+do
+	local function sort_by_group(v1, v2)
+		return DBM:GetRaidSubgroup(UnitName(v1)) < DBM:GetRaidSubgroup(UnitName(v2))
+	end
+	function mod:SetExplosiveIcons()
+		table.sort(ExplosiveTargets, sort_by_group)
+		for i, v in ipairs(ExplosiveTargets) do
+			if mod.Options.AnnounceExplosive then
+				if DBM:GetRaidRank() > 0 then
+					SendChatMessage(L.ExplosiveIcon:format(ExplosiveIcons, UnitName(v)), "RAID_WARNING")
+				else
+					SendChatMessage(L.ExplosiveIcon:format(ExplosiveIcons, UnitName(v)), "RAID")
+				end
+			end
+			if self.Options.SetIconOnExplosiveTargets then
+				self:SetIcon(UnitName(v), ExplosiveIcons, 6)
+			end
+			ExplosiveIcons = ExplosiveIcons - 1
+		end
+		if #ExplosiveTargets >= 6 then
+			warnExplosiveFlame:Show(table.concat(ExplosiveTargets, "<, >"))
+			table.wipe(ExplosiveTargets)
+			ExplosiveIcons = 8
+		end
+	end
+end
 
 
 function mod:SPELL_CAST_START(args)
@@ -109,9 +136,9 @@ function mod:SPELL_CAST_START(args)
 		timerMeteorCD:Start(29)
 		timerFirewhirlCD:Start(60)
 		timerPhase2:Start()
---[[		if self.Options.Knop then
+		if self.Options.Knop then
 			self:ScheduleMethod(1, "Timer")
-		end]]
+		end
 	elseif args:IsSpellID(306485) then
 		timerRaysCD:Start()
 		specWarnRays:Show()
@@ -151,19 +178,11 @@ function mod:SPELL_AURA_APPLIED(args)
 			timerMeteorCD:Start(20)
 		end
 	elseif args:IsSpellID(306487) then
-		explosiveTargets[#explosiveTargets + 1] = args.destName
+		ExplosiveTargets[#ExplosiveTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnExplosive:Show()
 		end
-		if self.Options.SetIconOnExplosiveTargets then
-			self:SetIcon(args.destName, explosiveIcons, 6)
-			explosiveIcons = explosiveIcons - 1
-		end
-		if #explosiveTargets >= 6 then
-			warnExplosiveFlame:Show(table.concat(explosiveTargets, "<, >"))
-			table.wipe(explosiveTargets)
-			explosiveIcons = 8
-		end
+		self:ScheduleMethod(0.1, "SetExplosiveIcons")
 	elseif args:IsSpellID(306502) then -- дикое пламя
 		if args:IsPlayer() then
 			specWarnWildFlame:Show()

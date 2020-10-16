@@ -36,13 +36,13 @@ local warnShamblingEnrage	= mod:NewTargetAnnounce(72143, 3, nil, "Tank|Healer|Re
 local warnNecroticPlague	= mod:NewTargetAnnounce(73912, 4) --Phase 1+ Ability
 local warnNecroticPlagueJump= mod:NewAnnounce("WarnNecroticPlagueJump", 4, 73912) --Phase 1+ Ability
 local warnInfest			= mod:NewSpellAnnounce(73779, 3, nil, "Healer") --Phase 1 & 2 Ability
-local warnPhase2Soon		= mod:NewPhaseAnnounce(2)
+local warnPhase2Soon		= mod:NewPrePhaseAnnounce(2)
 local valkyrWarning			= mod:NewAnnounce("ValkyrWarning", 3, 71844)--Phase 2 Ability
 local warnDefileSoon		= mod:NewSoonAnnounce(73708, 3)	--Phase 2+ Ability
 local warnSoulreaper		= mod:NewSpellAnnounce(73797, 4, nil, "Tank|Healer") --Phase 2+ Ability
 local warnDefileCast		= mod:NewTargetAnnounce(72762, 4) --Phase 2+ Ability
 local warnSummonValkyr		= mod:NewSpellAnnounce(69037, 3, 71844) --Phase 2 Add
-local warnPhase3Soon		= mod:NewPhaseAnnounce(3)
+local warnPhase3Soon		= mod:NewPrePhaseAnnounce(3)
 local warnSummonVileSpirit	= mod:NewSpellAnnounce(70498, 2) --Phase 3 Add
 local warnHarvestSoul		= mod:NewTargetAnnounce(74325, 4) --Phase 3 Ability
 local warnTrapCast			= mod:NewTargetAnnounce(73539, 3) --Phase 1 Heroic Ability
@@ -540,20 +540,20 @@ function mod:NextPhase()
 		warnShamblingSoon:Schedule(15)
 		timerShamblingHorror:Start(20)
 		timerDrudgeGhouls:Start(10)
-		timerNecroticPlagueCD:Start(27)
+		timerNecroticPlagueCD:Start(32)
 		if mod:IsDifficulty("heroic10") or mod:IsDifficulty("heroic25") then
 			timerTrapCD:Start()
 		end
 	elseif self.vb.phase == 2 then
 		timerSummonValkyr:Start(20)
 		timerSoulreaperCD:Start(40)
-		timerDefileCD:Start(38)
+		timerDefileCD:Start(35)
 		timerInfestCD:Start(14)
 		warnDefileSoon:Schedule(33)
 	elseif self.vb.phase == 3 then
 		timerVileSpirit:Start(20)
 		timerSoulreaperCD:Start(40)
-		timerDefileCD:Start(38)
+		timerDefileCD:Start(35)
 		timerHarvestSoulCD:Start(14)
 		warnDefileSoon:Schedule(33)
 	end
