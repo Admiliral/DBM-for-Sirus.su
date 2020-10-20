@@ -1,8 +1,8 @@
 local mod	= DBM:NewMod("Jaina", "DBM-Icecrown", 5)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20201020220000")
-mod:SetCreatureID(200000)
+mod:SetRevision(("$Revision: 4413 $"):sub(12, -3))
+mod:SetCreatureID(3392)
 mod:RegisterCombat("yell", L.YellPull)
 mod:SetUsedIcons(2, 3, 4, 5, 6, 7, 8)
 mod:SetMinSyncRevision(3392)
@@ -30,7 +30,6 @@ local timerCollapse 		= mod:NewCastTimer(20, 306500, nil, nil, nil, 2, nil) --к
 local timerPhase2 		    = mod:NewCastTimer(10, 306483, nil, nil, nil, 6, nil) --фаза 2
 local timerIceWrathCD       = mod:NewCDTimer(180, 306545, nil, nil, nil, 6, nil, DBM_CORE_MAGIC_ICON) --купол
 local timerFreezing 		= mod:NewTimer(6, "TimerFreezing", 306523, nil, nil, 3)
-local timerFire  	     	= mod:NewTargetTimer(10, 306504, nil, "Tank", nil, 4, nil, DBM_CORE_TANK_ICON)
 
 local warnNextPhase         = mod:NewAnnounce("WarnNextPhase", 1)
 local warnUnstableMagicSoon = mod:NewSoonAnnounce(306468, 2)
@@ -42,7 +41,6 @@ local warnWildFlame         = mod:NewTargetAnnounce(306502, 4)
 local warnVengefulIce       = mod:NewTargetAnnounce(306535, 4)
 local warnIceMark           = mod:NewTargetAnnounce(306523, 4)
 local warnStak              = mod:NewStackAnnounce(306455, 4)
-local warnFire              = mod:NewStackAnnounce(306504, 3, nil, "Tank")
 
 local specWarnArcaneStorm   = mod:NewSpecialWarningMoveAway(306464, nil, nil, nil, 3, 5) --шторм разбегитесь
 local specWarnUnstableMagic = mod:NewSpecialWarningYou(306468, nil, nil, nil, 2, 2) --нестабильная магия
@@ -59,7 +57,7 @@ local specWarnIceSpears     = mod:NewSpecialWarningSpell(306537, "Ranged", nil, 
 local berserkTimer			= mod:NewBerserkTimer(1802)
 
 mod:AddSetIconOption("SetIconOnExplosiveTargets", 306487, true, true, {3, 4, 5, 6, 7, 8})
-mod:AddBoolOption("AnnounceExplosive", false)
+mod:AddBoolOption("Announceexplosive", false)
 mod:AddBoolOption("RangeFrame")
 --mod:AddBoolOption("Knop")
 
@@ -138,7 +136,7 @@ function mod:SPELL_CAST_START(args)
 		timerMeteorCD:Start(29)
 		timerFirewhirlCD:Start(60)
 		timerPhase2:Start()
-		--[[if self.Options.Knop then
+--[[		if self.Options.Knop then
 			self:ScheduleMethod(1, "Timer")
 		end]]
 	elseif args:IsSpellID(306485) then
@@ -154,12 +152,12 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:Range()
-	DBM.RangeCheck:Hide()
+		DBM.RangeCheck:Show(10)
 end
 
---[[function mod:Timer()
+function mod:Timer()
 	SendChatMessage(L.Knop, "SAY")
-end]]
+end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(306464) then
@@ -224,11 +222,8 @@ function mod:SPELL_AURA_APPLIED(args)
 			table.wipe(iceMarkTargets)
 		end
 		timerFreezing:Start()
-	elseif args:IsSpellID(306455) then -- Стаки на 1 фазе
-		warnStak:Show(args.destName, args.amount or 1)
-	elseif args:IsSpellID(306504) then -- Стаки на танке
-		warnFire:Show(args.destName, args.amount or 1)
-		timerFire:Start(args.destName)
+	elseif args:IsSpellID(306455) then -- Стаки
+        warnStak:Show(args.destName, args.amount or 1)
 	end
 end
 

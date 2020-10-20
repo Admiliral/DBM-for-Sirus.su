@@ -27,8 +27,8 @@ local warnVileSludge        = mod:NewTargetAnnounce(38246, 3)
 
 local specWarnThreatReset   = mod:NewSpecialWarning("SpecWarnThreatReset", "-Tank|-Healer")
 
-local timerMarkOfHydross    = mod:NewTimer(15, "TimerMarkOfHydross", 38215, nil, nil, 7)
-local timerMarkOfCorruption = mod:NewTimer(15, "TimerMarkOfCorruption", 38219, nil, nil, 7)
+local timerMarkOfHydross    = mod:NewTimer(15, "TimerMarkOfHydross", 38215)
+local timerMarkOfCorruption = mod:NewTimer(15, "TimerMarkOfCorruption", 38219)
 
 local berserkTimer          = mod:NewBerserkTimer(600)
 

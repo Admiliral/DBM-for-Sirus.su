@@ -284,7 +284,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:Timer()
-	DBM.RangeCheck:Hide()
+		DBM.RangeCheck:Show(10)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)

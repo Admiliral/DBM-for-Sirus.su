@@ -22,4 +22,3 @@ VoidReaver.lua
 Solarian.lua
 Alar.lua
 KaelThas.lua
-Trash.lua
