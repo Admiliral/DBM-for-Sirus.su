@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("VoidReaver", "DBM-TheEye", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 163 $"):sub(12, -3))
+mod:SetRevision("20201021025000")
 
 mod:SetCreatureID(19516)
 mod:RegisterCombat("combat")
@@ -15,42 +15,90 @@ mod:RegisterEvents(
 	"SPELL_CAST_START"
 )
 
-local warnPhase1				= mod:NewAnnounce("Phase1", 2)  -- Спавн сфер
-local warnPhase2				= mod:NewAnnounce("Phase2", 2)  -- Спавн сфер
-local warnSpawnOrbs				= mod:NewAnnounce("SpawnOrbs", 2)  -- Спавн сфер
-local warnKnockback				= mod:NewSoonAnnounce(308470, 2, nil, "Tank|Healer|RemoveEnrage")  -- тяжкий удар
-local warnScope					= mod:NewSoonAnnounce(308984, 2, nil, "Tank|Healer|RemoveEnrage")  -- Сферы
-local warnBah					= mod:NewAnnounce("Bah", 2)  -- Сферы
-
 -----обычка-----
 local timerNextPounding         = mod:NewCDTimer(14, 34162, nil, nil, nil, 1)
 local timerNextKnockback        = mod:NewCDTimer(30, 25778, nil, "Healer", nil, 5, DBM_CORE_HEALER_ICON)
 ------героик------
 
-local timerScope				= mod:NewBuffActiveTimer(10, 308469, nil, "Tank|RemoveEnrage", nil, 5, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 5) -- Баф сферы
+local warnPhase1				= mod:NewAnnounce("Phase1", 2) -- Фаза пониженного урона
+local warnPhase2				= mod:NewAnnounce("Phase2", 2) -- Фаза повышенного урона
+local warnKnockback				= mod:NewSoonAnnounce(308470, 2, nil, "Tank|Healer|RemoveEnrage")  -- тяжкий удар
+local warnMagnet                = mod:NewTargetAnnounce(308467, 4) -- Сфера магнетизм
+local warnSign                  = mod:NewTargetAnnounce(308471, 4) -- Знак
 
-local timerKnockbackCD			= mod:NewCDTimer(7, 308470, nil, "Tank|RemoveEnrage", nil, 5, nil, DBM_CORE_TANK_ICON) -- тяжкий удар
-local timerOrbCD				= mod:NewCDTimer(26, 308466, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
-local timerLoadCD				= mod:NewCDTimer(60, 308465, nil, nil, nil, 1, nil, DBM_CORE_ENRAGE_ICON)
-local timerReloadCD				= mod:NewCDTimer(60, 308474, nil, nil, nil, 2, nil, DBM_CORE_DAMAGE_ICON)
+--local warnSpawnOrbs				= mod:NewAnnounce("SpawnOrbs", 2)
+--local warnScope					= mod:NewSoonAnnounce(308984, 2, nil, "Tank|Healer|RemoveEnrage")  -- Сферы
+--local warnBah					= mod:NewAnnounce("Bah", 2)  -- Сферы
 
-local timerKnockbackCast		= mod:NewCastTimer(2, 308470, nil, "Healer", nil, 5, DBM_CORE_HEALER_ICON) -- тяжкий удар
+local specWarnSign       = mod:NewSpecialWarningRun(308471, nil, nil, nil, 1, 4) -- Знак
+local specWarnMagnet       = mod:NewSpecialWarningRun(308467, nil, nil, nil, 1, 4) -- Магнетизм
+
+
+
+
+local timerOrbCD				= mod:NewCDTimer(26, 308466, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Таймер чародейской сферы
+local timerLoadCD				= mod:NewCDTimer(60, 308465, nil, nil, nil, 1, nil, DBM_CORE_ENRAGE_ICON) -- Таймер 1 фазы
+local timerReloadCD				= mod:NewCDTimer(60, 308474, nil, nil, nil, 2, nil, DBM_CORE_DAMAGE_ICON) -- Таймер 2 фазы
+local timerKnockbackCD			= mod:NewCDTimer(7, 308470, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- тяжкий удар
+local timerKnockbackCast		= mod:NewCastTimer(2, 308470, nil, "Tank|Healer", nil, 5, DBM_CORE_HEALER_ICON) -- тяжкий удар
+local timerSignCD		       = mod:NewCDTimer(8, 308471, nil, nil, nil, 7) -- Знак
+
+--local timerScope				= mod:NewBuffActiveTimer(10, 308469, nil, "Tank|RemoveEnrage", nil, 5, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 5) -- Баф сферы
 
 local berserkTimer				= mod:NewBerserkTimer(600)
 
-
-mod:AddBoolOption("RangeFrame", true)
-
+mod:AddSetIconOption("SetIconOnSignTargets", 308471, true, true, {3, 4, 5, 6, 7, 8})
+mod:AddBoolOption("AnnounceSign", false)
 
 local beaconIconTargets	= {}
+local MagnetTargets = {}
+local SignTargets = {}
+local SignIcons = 8
 
-function mod:OnCombatStart(delay) ---- готово
+mod.vb.phase = 0
+
+do
+	local function sort_by_group(v1, v2)
+		return DBM:GetRaidSubgroup(UnitName(v1)) < DBM:GetRaidSubgroup(UnitName(v2))
+	end
+	function mod:SetSignIcons()
+		table.sort(SignTargets, sort_by_group)
+		if #SignTargets <= 6 then
+			for i, v in ipairs(SignTargets) do
+				if mod.Options.AnnounceSign then
+					if DBM:GetRaidRank() > 0 then
+						SendChatMessage(L.SignIcon:format(SignIcons, UnitName(v)), "RAID_WARNING")
+					else
+						SendChatMessage(L.SignIcon:format(SignIcons, UnitName(v)), "RAID")
+					end
+				end
+				if self.Options.SetIconOnSignTargets then
+					self:SetIcon(UnitName(v), SignIcons, 8)
+				end
+				SignIcons = SignIcons - 1
+			end
+		end
+		warnSign:Show(table.concat(SignTargets, "<, >"))
+		table.wipe(SignTargets)
+		SignIcons = 8
+	end
+	function mod:SetMagnetIcons()
+		table.sort(MagnetTargets, sort_by_group)
+		if #MagnetTargets >= 3 then
+			warnMagnet:Show(table.concat(MagnetTargets, "<, >"))
+			table.wipe(MagnetTargets)
+		end
+	end
+end
+
+function mod:OnCombatStart(delay)
 	table.wipe(beaconIconTargets)
 	DBM:FireCustomEvent("DBM_EncounterStart", 19516, "Void Reaver")
 	if mod:IsDifficulty("heroic25") then
 	    timerLoadCD:Start()
 	    timerOrbCD:Start()
-	    timerKnockbackCD:Start()
+		timerKnockbackCD:Start()
+		DBM.RangeCheck:Show(7, GetRaidTargetIndex)
 	else
 		berserkTimer:Start()
 		timerNextPounding:Start()
@@ -58,7 +106,7 @@ function mod:OnCombatStart(delay) ---- готово
 	end
 end
 
-function mod:OnCombatEnd(wipe) --- не трогать
+function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 19516, "Void Reaver", wipe)
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Hide()
@@ -74,41 +122,16 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerNextPounding:Start()
 	end
 end
+
 -------------------------хм------------------------------------
 
-do ---?????????
-	local function sort_by_group(v1, v2)
-		return DBM:GetRaidSubgroup(UnitName(v1)) < DBM:GetRaidSubgroup(UnitName(v2))
-	end
-	function mod:SetBeaconIcons()
-		if DBM:GetRaidRank() > 0 then
-			table.sort(beaconIconTargets, sort_by_group)
-			local beaconIcons = 8
-			for i, v in ipairs(beaconIconTargets) do
-				self:SetIcon(UnitName(v), beaconIcons,20)
-				beaconIcons = beaconIcons - 1
-			end
-			table.wipe(beaconIconTargets)
-		end
-	end
-end
-
-function mod:SPELL_CAST_START(args)  ------- спавн сфер  или это?
-	if 	args:IsSpellID(308984) then
-		timerOrbCD:Schedule(2)
-		warnScope:Schedule(0)
-	elseif args:IsSpellID(308470) then  -------- Тяжкий удар
+function mod:SPELL_CAST_START(args)
+	if args:IsSpellID(308470) then  -- Тяжкий удар
 		timerKnockbackCD:Start()
 		timerKnockbackCast:Start()
 		warnKnockback:Schedule(0)
 	end
 end
-
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-
-end
---]]
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(308465) then --- 1 фаза
@@ -118,23 +141,31 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(308473) then  --- 2 фаза
 		timerReloadCD:Start()
 		warnPhase2:Schedule(0)
-	elseif args:IsSpellID(308467) then	------------?????????????---------------
-		print(args.destName)
-		table.insert(beaconIconTargets, DBM:GetRaidUnitId(args.destName))
-		if (#beaconIconTargets >= 3)then
-			self:SetBeaconIcons() --Сортируйте и стреляйте как можно раньше, когда у нас есть все цели.
-		end
-	elseif args:IsSpellID(308469) and args:IsPlayer() then	-- Отсчёт до взрыва сферы +-
+	elseif args:IsSpellID(308471) then
+		SignTargets[#SignTargets + 1] = args.destName
 		if args:IsPlayer() then
-			timerScope:Start()
+			specWarnSign:Show()
 		end
+		self:UnscheduleMethod("SetSignIcons")
+		self:ScheduleMethod(0.1, "SetSignIcons")
+		timerSignCD:Start()
+	elseif args:IsSpellID(308467) then
+		MagnetTargets[#MagnetTargets + 1] = args.destName
+		if args:IsPlayer() then
+			specWarnMagnet:Show()
+		end
+		self:UnscheduleMethod("SetMagnetIcons")
+		self:ScheduleMethod(0.1, "SetMagnetIcons")
+		timerOrbCD:Start()
 	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(308469) and args:IsPlayer() then
 		if args:IsPlayer() then
-		warnBah:Schedule(0)
+
 		end
 	end
 end
+
+mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

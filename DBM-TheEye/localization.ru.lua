@@ -97,23 +97,20 @@ L:SetGeneralLocalization{
 }
 
 L:SetWarningLocalization{
-
-	WarnScope = "{Череп}{Череп}{Череп}На %s {Череп}{Череп}{Череп} >%d< стаков{Череп}{Череп}{Череп}",
-	SpawnOrbs = "ВНИМАНИЕ!!! СПАВН СФЕР!!!",
 	Phase1 = "ВНИМАНИЕ!!! ФАЗА ПОНИЖЕННОГО УРОНА!!!",
-	Phase2 = "ВНИМАНИЕ!!! ФАЗА ПОВЫШЕННОГО УРОНА!!!",
-	Bah = "Можно взрывать сферу"
+	Phase2 = "ВНИМАНИЕ!!! ФАЗА ПОВЫШЕННОГО УРОНА!!!"
 }
 
 L:SetOptionLocalization{
-	SpawnOrbs = "Предупреждать о спавне сфер",
 	Phase1 = "Предупреждать о фазе с пониженным уроном",
 	Phase2 = "Предупреждать о фазе с повышенным уроном",
-	Bah = "Разрешение на взрыв сферы"
+	SetIconOnSignTargets     = "Устанавливать иконки на цели $spell:308471",
+	AnnounceSign	     	= "Объявлять игроков, на кого установлен $spell:308471, в рейд чат"
 }
 
 L:SetMiscLocalization{
-	YellPull = "Внимание! Вы подлежите уничтожению!"
+	YellPull = "Внимание! Вы подлежите уничтожению!",
+	SignIcon	= "Водяная гробница {rt%d} установлена на: %s"
 }
 
 --KaelThas
@@ -173,4 +170,12 @@ L:SetMiscLocalization{
 	Axe = "Сокрушение",
 	Kel = "Кель'тас Солнечный Скиталец",
 	Vzriv		= "Взрыв {rt%d} установлен на %s"
+}
+
+
+--Trash
+L = DBM:GetModLocalization("Trash")
+
+L:SetGeneralLocalization{
+	name = "Трэш мобы"
 }
