@@ -36,7 +36,7 @@ local specWarnMagnet       = mod:NewSpecialWarningRun(308467, nil, nil, nil, 1, 
 
 
 
-local timerOrbCD				= mod:NewCDTimer(45, 308466, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Таймер чародейской сферы
+local timerOrbCD				= mod:NewCDTimer(30, 308466, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Таймер чародейской сферы
 local timerLoadCD				= mod:NewCDTimer(60, 308465, nil, nil, nil, 1, nil, DBM_CORE_ENRAGE_ICON) -- Таймер 1 фазы
 local timerReloadCD				= mod:NewCDTimer(60, 308474, nil, nil, nil, 2, nil, DBM_CORE_DAMAGE_ICON) -- Таймер 2 фазы
 local timerKnockbackCD			= mod:NewCDTimer(7, 308470, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- тяжкий удар
@@ -134,6 +134,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(308473) then  --- 2 фаза
 		timerReloadCD:Start()
 		warnPhase2:Schedule(0)
+		timerOrbCD:Start(60)
 	elseif args:IsSpellID(308471) then
 		SignTargets[#SignTargets + 1] = args.destName
 		if args:IsPlayer() then
