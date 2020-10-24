@@ -131,10 +131,10 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerLoadCD:Start()
 		timerOrbCD:Start()
 		warnPhase1:Schedule(0)
+		timerOrbCD:Start(60)
 	elseif args:IsSpellID(308473) then  --- 2 фаза
 		timerReloadCD:Start()
 		warnPhase2:Schedule(0)
-		timerOrbCD:Start(60)
 	elseif args:IsSpellID(308471) then
 		SignTargets[#SignTargets + 1] = args.destName
 		if args:IsPlayer() then
