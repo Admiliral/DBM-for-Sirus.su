@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Curator", "DBM-Karazhan")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 163 $"):sub(12, -3))
+mod:SetRevision("2020102500000")
 mod:SetCreatureID(34438,34436,34437)
 --mod:SetCreatureID(15691)
 --mod:RegisterCombat("yell", L.DBM_CURA_YELL_PULL)
@@ -56,14 +56,17 @@ mod:RegisterEvents(
 -- 	end
 -- end
 
-local timerAnnihilationCD        = mod:NewCDTimer(23, 305312)
-local specWarnAnnihilationKick   = mod:NewSpecialWarning("Прерывание")
-local timerCondCD                = mod:NewCDTimer(11, 305305)
-local specWarnCond               = mod:NewSpecialWarningYou(305305)
-local timerRunesCD               = mod:NewCDTimer(25, 305296)
-local timerRunesBam              = mod:NewTimer(8, "TimerRunesBam", 305314)
-local specWarnRunes              = mod:NewSpecialWarningRun(305296)
+
 local warnUnstableTar            = mod:NewAnnounce("WarnUnstableTar", 3, 305309)
+
+local specWarnAnnihilationKick   = mod:NewSpecialWarning("Прерывание")
+local specWarnCond               = mod:NewSpecialWarningYou(305305)
+local specWarnRunes              = mod:NewSpecialWarningRun(305296)
+
+local timerAnnihilationCD        = mod:NewCDTimer(23, 305312, nil, nil, nil, 2)
+local timerCondCD                = mod:NewCDTimer(11, 305305, nil, nil, nil, 2)
+local timerRunesCD               = mod:NewCDTimer(25, 305296, nil, nil, nil, 1)
+local timerRunesBam              = mod:NewTimer(8, "TimerRunesBam", 305314, nil, nil, 2)
 
 local unstableTargets = {}
 

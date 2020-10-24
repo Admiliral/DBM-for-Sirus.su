@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Nightbane", "DBM-Karazhan")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 176 $"):sub(12, -3))
+mod:SetRevision("2020102500000")
 mod:SetCreatureID(17225)
 --mod:RegisterCombat("yell", L.DBM_NB_YELL_PULL)
 mod:RegisterCombat("combat", 17225)
@@ -49,11 +49,6 @@ mod:RegisterEvents(
 -- 	end
 -- end
 --
--- function mod:SPELL_CAST_SUCCESS(args)
--- 	if args:IsSpellID(37098) then
--- 		warningBone:Show()
--- 	end
--- end
 --
 -- function mod:SPELL_AURA_APPLIED(args)
 -- 	if args:IsSpellID(30129) and args:IsPlayer() then
@@ -78,10 +73,15 @@ mod:RegisterEvents(
 -- 	end
 -- end
 
-local timerGrievingFireCD		= mod:NewCDTimer(13, 305375)
-local timerConflCD			    = mod:NewCDTimer(30, 305377)
-local specWarnPyromancer	    = mod:NewSpecialWarningYou(305382)
 local warnPyromancer			= mod:NewTargetAnnounce(305382, 3)
+
+local specWarnPyromancer	    = mod:NewSpecialWarningYou(305382, nil, nil, nil, 1, 3)
+
+local timerGrievingFireCD		= mod:NewCDTimer(13, 305375, nil, nil, nil, 2)
+local timerPyroCD	          	= mod:NewCDTimer(90, 305380, nil, nil, nil,3)
+local timerConflCD			    = mod:NewCDTimer(30, 305377, nil, nil, nil, 3, nil, DBM_CORE_TANK_ICON)
+local timerNightbane		    = mod:NewTimer(34, "timerNightbane", "Interface\\Icons\\Ability_Mount_Undeadhorse", nil, nil, 6)
+
 
 local pyromancerTargets		= {}
 local alivePyromancers      = 0
@@ -91,7 +91,7 @@ local isPyroFirst = true
 local isStart = true
 
 mod:AddBoolOption("RemoveWeaponOnMindControl", true)
-mod:AddBoolOption("SetIconOnPyromancer", true)
+mod:AddSetIconOption("SetIconOnPyromancer",305382, true, true, {6, 7, 8})
 mod:AddBoolOption("AnnouncePyromancerIcons", true)
 
 function mod:OnCombatStart(delay)
@@ -101,6 +101,7 @@ function mod:OnCombatStart(delay)
 	elseif mod:IsDifficulty("heroic10") and isStart then
 		timerGrievingFireCD:Start()
 		timerConflCD:Start()
+		timerPyroCD:Start()
 		table.wipe(pyromancerTargets)
 		groundPhase = 0
 		alivePyromancers = 0
@@ -144,6 +145,14 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
+function mod:SPELL_CAST_SUCCESS(args)
+	if args:IsSpellID(305380) then
+		timerPyroCD:Start()
+-- 	elseif args:IsSpellID(37098) then
+-- 		warningBone:Show()
+ 	end
+end
+
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(305382) then
 		if args:IsPlayer() then
@@ -182,6 +191,7 @@ function mod:SPELL_AURA_REMOVED(args)
 end
  function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L.DBM_NB_EMOTE_PULL then
+		timerNightbane:Start()
 		isStart = true
 	end
  end

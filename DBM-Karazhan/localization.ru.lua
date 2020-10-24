@@ -279,7 +279,7 @@ L:SetWarningLocalization{
 }
 
 L:SetTimerLocalization{
-	timerNightbane			= "Nightbane incoming",
+	timerNightbane			= "Начало",
 	timerAirPhase			= "Воздушная фаза"
 }
 
@@ -287,16 +287,16 @@ L:SetOptionLocalization{
 	SetIconOnPyromancer     = "Устанавливать иконки на Пиромантов",
 	AnnouncePyromancerIcons = "Анонсировать Пиромантов",
 	RemoveWeaponOnMindControl = "Снимать оружие при подчинении",
-	DBM_NB_AIR_WARN			= "Show warning for Air Phase",
-	PrewarnGroundPhase		= "Show pre-warnings for Ground Phase",
-	timerNightbane			= "Show timer for Nightbane summon",
-	timerAirPhase			= "Show timer for Air Phase duration"
+	DBM_NB_AIR_WARN			= "Показать предупреждение для воздушной фазы",
+	PrewarnGroundPhase		= "Показать предварительные предупреждения для наземной фазы",
+	timerNightbane			= "Показать таймер для вызова",
+	timerAirPhase			= "Показать таймер продолжительности воздушной фазы"
 }
 
 L:SetMiscLocalization{
 	Pyromancer              = "Пиромант",
 	Hypothermia             = "Переохлаждение",
-	PyromancerIconSet       = "Pyromancer icon {rt%d} set on %s",
+	PyromancerIconSet       = "Знак пироманта {rt%d} установлен на %s",
 	DBM_NB_EMOTE_PULL		= "Древнее существо пробуждается вдалеке...",
 	DBM_NB_YELL_PULL		= "Ну и глупцы! Я быстро покончу с вашими страданиями!",
 	DBM_NB_YELL_AIR			= "Жалкий гнус! Я изгоню тебя из воздуха!",

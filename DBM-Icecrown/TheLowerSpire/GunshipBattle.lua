@@ -56,7 +56,7 @@ function mod:OnCombatStart(delay)
 		timerAdds:Start(62-delay)
 		warnAddsSoon:Schedule(57)
 		self:ScheduleMethod(62, "Adds")
-		timerBelowZeroCD:Start(75-delay)
+		timerBelowZeroCD:Start(85-delay)
 	else
 		DBM:FireCustomEvent("DBM_EncounterStart", 37540, "Icecrown Gunship Battle")
 		if mod:IsDifficulty("heroic10", "normal10") then

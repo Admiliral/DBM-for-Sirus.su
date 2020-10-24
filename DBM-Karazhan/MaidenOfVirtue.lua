@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Maiden", "DBM-Karazhan")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 164 $"):sub(12, -3))
+mod:SetRevision("2020102500000")
 mod:SetCreatureID(16457)
 mod:RegisterCombat("combat")
 
@@ -60,12 +60,14 @@ mod:RegisterEvents(
 -- end
 
 
-local timerRepentanceCD		= mod:NewCDTimer(68, 305277)
-local timerGroundCD		    = mod:NewCDTimer(20, 305271)
-local specWarnGround	    = mod:NewSpecialWarningYou(305271)
+local timerRepentanceCD		= mod:NewCDTimer(68, 305277, nil, nil, nil, 2)
+local timerGroundCD		    = mod:NewCDTimer(20, 305271, nil, nil, nil, 3)
+
+local specWarnGround	    = mod:NewSpecialWarningYou(305271, nil, nil, nil, 3, 2)
 
 local ground = true
 
+mod:AddSetIconOption("GroundIcon", 305271, true, true, {8})
 mod:AddBoolOption("HealthFrame", true)
 
 function mod:OnCombatStart(delay)
@@ -141,6 +143,9 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		if args:IsPlayer() then
 	        specWarnGround:Show()
+		end
+		if self.Options.GroundIcon then
+			self:SetIcon(args.destName, 8, 5)
 		end
 	elseif args:IsSpellID(305285) then
 		showShieldHealthBar(self, args.destGUID, args.spellName, 600000)

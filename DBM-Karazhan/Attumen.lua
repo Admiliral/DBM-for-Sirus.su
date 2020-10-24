@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Attumen", "DBM-Karazhan")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 183 $"):sub(12, -3))
+mod:SetRevision("2020102500000")
 mod:SetCreatureID(15550, 34972, 34972)
 mod:RegisterCombat("combat", 34972)
 
@@ -13,21 +13,30 @@ mod:RegisterEvents(
 	"UNIT_HEALTH"
 )
 
+------------------ОБ------------------
+
 local warnPhase2			= mod:NewPhaseAnnounce(2)
 local warnPhase3			= mod:NewPhaseAnnounce(3)
+local warnPhase2Soon        = mod:NewPrePhaseAnnounce(2)
+
 local warningCurseSoon		= mod:NewSoonAnnounce(43127, 2)
 local warningCurse			= mod:NewSpellAnnounce(43127, 3)
 
-local timerCurseCD			= mod:NewNextTimer(31, 43127)
+local timerCurseCD			= mod:NewNextTimer(31, 43127, nil, nil, nil, 3)
 
 ------------------ХМ------------------
 
-local timerInvCD            = mod:NewCDTimer(21, 305251)
-local timerChargeCD         = mod:NewCDTimer(11, 305258)
-local timerSufferingCD      = mod:NewCDTimer(21, 305259)
-local timerCharge2CD        = mod:NewCDTimer(15, 305263)
-local timerTrampCD          = mod:NewCDTimer(15, 305264)
-local warnPhase2Soon        = mod:NewAnnounce("WarnPhase2Soon", 1)
+local specWarnMezair		= mod:NewSpecialWarningDodge(305258, nil, nil, nil, 2, 2)
+
+local timerInvCD            = mod:NewCDTimer(21, 305251, nil, nil, nil, 3) -- Незримое присутствие
+local timerChargeCD         = mod:NewCDTimer(11, 305258, nil, nil, nil, 2) -- Галоп фаза 2
+local timerCharge2CD        = mod:NewCDTimer(15, 305263, nil, nil, nil, 2) -- Галоп фаза 3
+local timerChargeCast       = mod:NewCastTimer(3, 305258, nil, nil, nil, 2) -- Галоп каст
+local timerSufferingCD      = mod:NewCDTimer(21, 305259, nil, nil, nil, 3) -- Разделенные муки
+local timerTrampCD          = mod:NewCDTimer(15, 305264, nil, nil, nil, 3) -- Могучий топот
+
+
+
 
 mod.vb.phase = 0
 local lastCurse = 0
@@ -47,7 +56,7 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(43127, 29833) and GetTime() - lastCurse > 5 then
+	if args:IsSpellID(43127, 29833) and GetTime() - lastCurse > 5 then -- Обычка
 		warningCurse:Show()
 		timerCurseCD:Show()
 		warningCurseSoon:Cancel()
@@ -59,7 +68,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			warningCurseSoon:Schedule(26)
 		end
 		lastCurse = GetTime()
-	elseif args:IsSpellID(305265) then
+	elseif args:IsSpellID(305265) then -- ???????
 		timerChargeCD:Start()
 		timerSufferingCD:Start()
 		timerInvCD:Cancel()
@@ -67,7 +76,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 
-function mod:SPELL_AURA_REMOVED(args)
+function mod:SPELL_AURA_REMOVED(args) -- ???????
 	if args:IsSpellID(305265) then
 		timerCharge2CD:Start()
 		timerTrampCD:Start(20)
@@ -76,19 +85,23 @@ function mod:SPELL_AURA_REMOVED(args)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(305258) then
+	if args:IsSpellID(305258) then -- галоп
 		timerChargeCD:Start()
-	elseif args:IsSpellID(305251) then
-		timerInvCD:Start()
-	elseif args:IsSpellID(305263) then
+		timerChargeCast:Start()
+		specWarnMezair:Show()
+	elseif args:IsSpellID(305263) then -- галоп2
 		timerCharge2CD:Start()
-	elseif args:IsSpellID(305259) then
+		timerChargeCast:Start()
+		specWarnMezair:Show()
+	elseif args:IsSpellID(305251) then -- незримое присутствие
+		timerInvCD:Start()
+	elseif args:IsSpellID(305259) then -- муки
 		timerSufferingCD:Start()
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L.DBM_ATH_YELL_1 then
+	if msg == L.DBM_ATH_YELL_1 then -- 2 фаза
 		self.vb.phase = 2
 		warnPhase2:Show()
 		warningCurseSoon:Cancel()
@@ -97,7 +110,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:UNIT_HEALTH(uId)
-	if (self:GetUnitCreatureId(uId) == 15550 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.52 and phaseCounter) then
+	if (self:GetUnitCreatureId(uId) == 15550 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.52 and phaseCounter) then -- фаза
 		phaseCounter = false
 		warnPhase2Soon:Show()
 	end

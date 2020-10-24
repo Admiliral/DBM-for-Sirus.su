@@ -110,7 +110,7 @@ L:SetOptionLocalization{
 
 L:SetMiscLocalization{
 	YellPull = "Внимание! Вы подлежите уничтожению!",
-	SignIcon	= "Водяная гробница {rt%d} установлена на: %s"
+	SignIcon	= "Чародейский знак {rt%d} установлен на: %s"
 }
 
 --KaelThas

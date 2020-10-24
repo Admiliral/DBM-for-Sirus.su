@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("VoidReaver", "DBM-TheEye", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20201021025000")
+mod:SetRevision("20201025000000")
 
 mod:SetCreatureID(19516)
 mod:RegisterCombat("combat")
@@ -30,18 +30,18 @@ local warnSign                  = mod:NewTargetAnnounce(308471, 4) -- Знак
 --local warnScope					= mod:NewSoonAnnounce(308984, 2, nil, "Tank|Healer|RemoveEnrage")  -- Сферы
 --local warnBah					= mod:NewAnnounce("Bah", 2)  -- Сферы
 
-local specWarnSign       = mod:NewSpecialWarningRun(308471, nil, nil, nil, 1, 4) -- Знак
+local specWarnSign       = mod:NewSpecialWarningRun(308471, nil, nil, nil, 3, 4) -- Знак
 local specWarnMagnet       = mod:NewSpecialWarningRun(308467, nil, nil, nil, 1, 4) -- Магнетизм
 
 
 
 
-local timerOrbCD				= mod:NewCDTimer(26, 308466, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Таймер чародейской сферы
+local timerOrbCD				= mod:NewCDTimer(45, 308466, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Таймер чародейской сферы
 local timerLoadCD				= mod:NewCDTimer(60, 308465, nil, nil, nil, 1, nil, DBM_CORE_ENRAGE_ICON) -- Таймер 1 фазы
 local timerReloadCD				= mod:NewCDTimer(60, 308474, nil, nil, nil, 2, nil, DBM_CORE_DAMAGE_ICON) -- Таймер 2 фазы
 local timerKnockbackCD			= mod:NewCDTimer(7, 308470, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- тяжкий удар
 local timerKnockbackCast		= mod:NewCastTimer(2, 308470, nil, "Tank|Healer", nil, 5, DBM_CORE_HEALER_ICON) -- тяжкий удар
-local timerSignCD		       = mod:NewCDTimer(8, 308471, nil, nil, nil, 7) -- Знак
+local timerSignCD		       = mod:NewCDTimer(16, 308471, nil, nil, nil, 7) -- Знак
 
 --local timerScope				= mod:NewBuffActiveTimer(10, 308469, nil, "Tank|RemoveEnrage", nil, 5, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 5) -- Баф сферы
 
@@ -82,13 +82,6 @@ do
 		table.wipe(SignTargets)
 		SignIcons = 8
 	end
-	function mod:SetMagnetIcons()
-		table.sort(MagnetTargets, sort_by_group)
-		if #MagnetTargets >= 3 then
-			warnMagnet:Show(table.concat(MagnetTargets, "<, >"))
-			table.wipe(MagnetTargets)
-		end
-	end
 end
 
 function mod:OnCombatStart(delay)
@@ -98,7 +91,7 @@ function mod:OnCombatStart(delay)
 	    timerLoadCD:Start()
 	    timerOrbCD:Start()
 		timerKnockbackCD:Start()
-		DBM.RangeCheck:Show(7, GetRaidTargetIndex)
+		DBM.RangeCheck:Show(15)
 	else
 		berserkTimer:Start()
 		timerNextPounding:Start()
@@ -154,10 +147,16 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args:IsPlayer() then
 			specWarnMagnet:Show()
 		end
-		self:UnscheduleMethod("SetMagnetIcons")
-		self:ScheduleMethod(0.1, "SetMagnetIcons")
 		timerOrbCD:Start()
+		self:UnscheduleMethod("Magnet")
+		self:ScheduleMethod(0.1, "Magnet")
+
 	end
+end
+
+function mod:Magnet()
+	warnMagnet:Show(table.concat(MagnetTargets, "<, >"))
+	table.wipe(MagnetTargets)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
