@@ -1,7 +1,7 @@
 ﻿local mod	= DBM:NewMod("Vashj", "DBM-Serpentshrine")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 163 $"):sub(12, -3))
+mod:SetRevision("20201025140000")
 
 mod:SetCreatureID(21212)
 mod:RegisterCombat("combat", 21212)
@@ -14,7 +14,8 @@ mod:RegisterEvents(
 	"UNIT_DIED",
 	"UNIT_TARGET",
 	"SPELL_AURA_REMOVED",
-	"CHAT_MSG_LOOT"
+	"CHAT_MSG_LOOT",
+	"SWING_DAMAGE"
 )
 
 local warnCore           = mod:NewAnnounce("WarnCore", 3, 38132)
@@ -25,10 +26,12 @@ local warnElemental      = mod:NewAnnounce("WarnElemental", 4)
 local specWarnCore       = mod:NewSpecialWarningYou(38132)
 local specWarnCharge     = mod:NewSpecialWarningRun(38280)
 
-local timerStrider       = mod:NewTimer(66, "Strider", "Interface\\Icons\\INV_Misc_Fish_13")
-local timerElemental     = mod:NewTimer(53, "TaintedElemental", "Interface\\Icons\\Spell_Nature_ElementalShields")
-local timerNaga          = mod:NewTimer(47.5, "Naga", "Interface\\Icons\\INV_Misc_MonsterHead_02")
-local timerCharge        = mod:NewTargetTimer(20, 38280)
+local timerStrider       = mod:NewTimer(66, "Strider", "Interface\\Icons\\INV_Misc_Fish_13", nil, nil, 1)
+local timerElemental     = mod:NewTimer(53, "TaintedElemental", "Interface\\Icons\\Spell_Nature_ElementalShields", nil, nil, 1)
+local timerNaga          = mod:NewTimer(47.5, "Naga", "Interface\\Icons\\INV_Misc_MonsterHead_02", nil, nil, 1)
+local timerCharge        = mod:NewTargetTimer(20, 38280, nil, nil, nil, 4)
+
+mod:AddBoolOption("Elem")
 
 local ti = true
 
@@ -48,6 +51,16 @@ end
 function mod:ElementalSoon()
 	ti = true
 	warnElemental:Show()
+end
+
+function mod:SWING_DAMAGE(args)
+	if args:GetDestCreatureID() == 22009  and args:IsSrcTypePlayer() then
+		if args.sourceName ~= UnitName("player") then
+			if self.Options.Elem then
+				DBM.Arrow:ShowRunTo(args.sourceName, 0, 0)
+			end
+		end
+	end
 end
 
 function mod:TaintedIcon()
@@ -113,6 +126,7 @@ function mod:UNIT_DIED(args)
 	if args.destName == L.TaintedElemental then
 		timerElemental:Start()
 		self:ScheduleMethod(48, "ElementalSoon")
+		DBM.Arrow:Hide()
 	end
 end
 
