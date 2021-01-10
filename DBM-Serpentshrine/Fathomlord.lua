@@ -124,6 +124,10 @@ function mod:OnCombatStart()
 	if mod:IsDifficulty("heroic25") then
 		self.vb.phase = 1
 		berserkTimer:Start()
+		local warned_preP1 = false
+		local warned_preP2 = false
+		local warned_P1 = false
+		local warned_P2 = false
 	else -- Обычка
 		berserkTimer:Start()
 		timerNovaCD:Start()
@@ -134,10 +138,6 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 21214, "Fathom-Lord Karathress", wipe)
-	local warned_preP1 = false
-	local warned_preP2 = false
-	local warned_P1 = false
-	local warned_P2 = false
 end
 
 --[[function mod:CHAT_MSG_MONSTER_EMOTE(msg)
@@ -152,23 +152,26 @@ end
 end]]
 
 function mod:UNIT_HEALTH(uId)
-	if self.vb.phase == 1 and not warned_preP1 and self:GetUnitCreatureId(uId) == 21214 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.43 then
-		warned_preP1 = true
-		warnPhase2Soon:Show()
-	end
-	if self.vb.phase == 1 and not warned_preP2 and self:GetUnitCreatureId(uId) == 21214 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.18 then
-		warned_preP2 = true
-		warnPhase2Soon:Show()
-	end
-	if self.vb.phase == 1 and not warned_preP1 and self:GetUnitCreatureId(uId) == 21214 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.40 then
-		warned_P1 = true
-		warnPhase2:Show()
-		timerPhaseCast:Start()
-	end
-	if self.vb.phase == 1 and not warned_preP2 and self:GetUnitCreatureId(uId) == 21214 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.15 then
-		warned_P2 = true
-		warnPhase2:Show()
-		timerPhaseCast:Start()
+	if mod:IsDifficulty("heroic25") then
+		if self.vb.phase == 1 and not warned_preP1 and self:GetUnitCreatureId(uId) == 21214 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.43 then
+			warned_preP1 = true
+			warnPhase2Soon:Show()
+		end
+		if self.vb.phase == 1 and not warned_preP1 and self:GetUnitCreatureId(uId) == 21214 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.40 then
+			warned_P1 = true
+			warnPhase2:Show()
+			timerPhaseCast:Start()
+			self.vb.phase = 2
+		end
+		if self.vb.phase == 2 and not warned_preP2 and self:GetUnitCreatureId(uId) == 21214 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.18 then
+			warned_preP2 = true
+			warnPhase2Soon:Show()
+		end
+		if self.vb.phase == 2 and not warned_preP2 and self:GetUnitCreatureId(uId) == 21214 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.15 then
+			warned_P2 = true
+			warnPhase2:Show()
+			timerPhaseCast:Start()
+		end
 	end
 end
 
