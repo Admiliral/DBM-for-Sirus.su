@@ -419,10 +419,10 @@ L:SetWarningLocalization{
 }
 
 L:SetTimerLocalization{
-	TimerPortalsOpen		= "Открытие порталов",
-	TimerPortalsClose		= "Закрытие порталов",
-	TimerBlazingSkeleton	= "Исторгающий пламя скелет",
-	TimerAbom				= "След. поганище?"
+	TimerPortalsOpen		= "Откр. порталов",
+	TimerPortalsClose		= "Закр. порталов",
+	TimerBlazingSkeleton	= "Ист. пламя скелет",
+	TimerAbom				= "След. поганище"
 }
 
 L:SetOptionLocalization{

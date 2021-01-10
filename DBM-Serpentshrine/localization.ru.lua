@@ -168,6 +168,7 @@ L:SetOptionLocalization{
 L:SetMiscLocalization{
 	YellPull        = "Стража, к бою! У нас гости...",
 	SvazIcon	= "Пламенная свзь {rt%d} установлена на %s",
+	KaraTarget = "смотрит на |3%-3%([%w\128-\255]+%)."
 }
 
 --Vashj
@@ -186,7 +187,8 @@ L:SetTimerLocalization{
 L:SetWarningLocalization{
 	WarnCore             = "%s получил порченую магму",
 	WarnPhase            = "Фаза %d",
-	WarnElemental        = "Нечистый элементаль на подходе"
+	WarnElemental        = "Нечистый элементаль на подходе",
+	SpecWarnStaticAngerNear	= "Статический заряд рядом - отойдите."
 }
 
 L:SetOptionLocalization{
@@ -196,14 +198,16 @@ L:SetOptionLocalization{
 	TaintedElemental      = "Отсчет времени до следующего Нечистого элементаля",
 	Naga                  = "Отсчет времени до следующего Гвардейца",
 	WarnElemental         = "Объявлять о прибытии Нечистый элементаль",
-	Elem				  = "Показывать стрелку на Нечистого элементаля"
+	Elem				  = "Показывать стрелку на Нечистого элементаля",
+	AnnounceStatic			= "Объявлятьв игроков, на кого установлено $spell:310636, в рейд чат ",
+	SpecWarnStaticAngerNear		= "Спец-предупреждение, когда $spell:310636 около вас"
 }
 
 L:SetMiscLocalization{
 	YellPhase2              = "Время пришло! Не щадите никого!",
 	YellPhase3              = "Вам не пора прятаться?",
 	TaintedElemental        = "Нечистый элементаль",
-	KaraTarget = "смотрит на |3%-3%([%w\128-\255]+%).",
+	StaticIcons	= "Статический заряд {rt%d} установлен на %s"
 }
 
 --Gorelac
