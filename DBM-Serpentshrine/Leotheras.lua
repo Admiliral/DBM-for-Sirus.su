@@ -27,7 +27,7 @@ local timerNormal           = mod:NewTimer(60, "TimerNormal", "Interface\\Icons\
 local timerInnerDemons      = mod:NewTimer(32.5, "TimerInnerDemons", 11446)
 local timerWhirlwind        = mod:NewCastTimer(12, 37640)
 local timerWhirlwindCD      = mod:NewCDTimer(19, 37640)
-
+	
 local berserkTimer          = mod:NewBerserkTimer(600)
 
 

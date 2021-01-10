@@ -134,6 +134,10 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 21214, "Fathom-Lord Karathress", wipe)
+	local warned_preP1 = false
+	local warned_preP2 = false
+	local warned_P1 = false
+	local warned_P2 = false
 end
 
 --[[function mod:CHAT_MSG_MONSTER_EMOTE(msg)
@@ -231,7 +235,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args:IsPlayer() then
 			specWarnOko:Show()
 			timerOkoCast:Start()
-		end	
+		end
 -----------Шарккис-----------
 	elseif args:IsSpellID(309262) then -- Пламенная связь
 		SvazTargets[#SvazTargets + 1] = args.destName

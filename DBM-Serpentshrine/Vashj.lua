@@ -183,7 +183,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args:IsPlayer() then
 			specWarnCore:Show()
 		end
-	elseif spellId == 310636 then -- хм заряд 
+	elseif spellId == 310636 then -- хм заряд
 		if args:IsPlayer() then
 			specWarnStaticAnger:Show()
 		else
@@ -204,7 +204,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		StaticTargets[#StaticTargets + 1] = args.destName
 		self:UnscheduleMethod("StaticAngerIcons")
 		self:ScheduleMethod(0.1, "StaticAngerIcons")
-	elseif spellId == 310659 then -- хм заряд 
+	elseif spellId == 310659 then -- хм заряд
 		if args:IsPlayer() then
 			specWarnStaticAnger:Show()
 		else
