@@ -157,7 +157,7 @@ function mod:UNIT_HEALTH(uId)
 			warned_preP1 = true
 			warnPhase2Soon:Show()
 		end
-		if self.vb.phase == 1 and not warned_preP1 and self:GetUnitCreatureId(uId) == 21214 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.40 then
+		if self.vb.phase == 1 and not warned_P1 and self:GetUnitCreatureId(uId) == 21214 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.40 then
 			warned_P1 = true
 			warnPhase2:Show()
 			timerPhaseCast:Start()
@@ -167,7 +167,7 @@ function mod:UNIT_HEALTH(uId)
 			warned_preP2 = true
 			warnPhase2Soon:Show()
 		end
-		if self.vb.phase == 2 and not warned_preP2 and self:GetUnitCreatureId(uId) == 21214 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.15 then
+		if self.vb.phase == 2 and not warned_P2 and self:GetUnitCreatureId(uId) == 21214 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.15 then
 			warned_P2 = true
 			warnPhase2:Show()
 			timerPhaseCast:Start()
