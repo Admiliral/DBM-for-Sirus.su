@@ -149,9 +149,9 @@ function mod:SPELL_AURA_APPLIED(args)
 
 		if self.Options.SetIconOnOverwhelmingPower then
 			if mod:IsDifficulty("heroic10") then
-				self:SetIcon(args.destName, 8, 60) -- skull for 60 seconds (until meltdown)	
+				self:SetIcon(args.destName, 8, 60) -- skull for 60 seconds (until meltdown)
 			else
-				self:SetIcon(args.destName, 8, 35) -- skull for 35 seconds (until meltdown)	
+				self:SetIcon(args.destName, 8, 35) -- skull for 35 seconds (until meltdown)
 			end
 		end
 	elseif args:IsSpellID(312786, 312785, 312432, 312433) then	-- Светящиеся придатки

@@ -97,7 +97,7 @@ function mod:UNIT_DIED(args)
 			else
 				warnCatDied:Show(catLives)
 				timerDefender:Start()
-         	end
+			end
 			if self.Options.HealthFrame then
 				DBM.BossHealth:RemoveBoss(34035)
 				DBM.BossHealth:AddBoss(34035, L.Defender:format(catLives))
