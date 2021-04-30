@@ -69,8 +69,8 @@ local function showRealDate(curseDate)
 end
 
 DBM = {
-	Revision = parseCurseDate("20210501000000"),
-	DisplayVersion = "5.46", -- the string that is shown as version
+	Revision = parseCurseDate("20210501020000"),
+	DisplayVersion = "5.47", -- the string that is shown as version
 	ReleaseRevision = releaseDate(2021, 05, 01) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
@@ -5804,6 +5804,7 @@ local function getTalentpointsSpent(spellID)
 end
 
 local specFlags ={
+	["Dps"] = "IsDps",
 	["Tank"] = "IsTank",
 	["Healer"] = "IsHealer",
 	["Melee"] = "IsMelee",
@@ -5837,6 +5838,8 @@ function bossModPrototype:GetRoleFlagValue(flag)
 	end
 	return false
 end
+
+
 
 function bossModPrototype:IsMelee()
 	return select(2, UnitClass("player")) == "ROGUE"
@@ -5916,6 +5919,19 @@ function bossModPrototype:IsHealer()
 		or (select(2, UnitClass("player")) == "SHAMAN" and select(3, GetTalentTabInfo(3)) >= 51)
 		or (select(2, UnitClass("player")) == "DRUID" and select(3, GetTalentTabInfo(3)) >= 51)
 		or (select(2, UnitClass("player")) == "PRIEST" and select(3, GetTalentTabInfo(3)) < 51)
+end
+
+function bossModPrototype:IsDps()
+	return (select(2, UnitClass("player")) == "WARRIOR" and select(3, GetTalentTabInfo(3)) < 13)
+		or (select(2, UnitClass("player")) == "PALADIN" and select(3, GetTalentTabInfo(3)) >= 51)
+		or select(2, UnitClass("player")) == "HUNTER"
+		or select(2, UnitClass("player")) == "ROGUE"
+		or (select(2, UnitClass("player")) == "PRIEST" and select(3, GetTalentTabInfo(3)) >= 51)
+		or (select(2, UnitClass("player")) == "SHAMAN" and select(3, GetTalentTabInfo(3)) < 51)
+		or select(2, UnitClass("player")) == "MAGE"
+		or select(2, UnitClass("player")) == "WARLOCK"
+		or (select(2, UnitClass("player")) == "DEATHKNIGHT" and not IsDeathKnightTank())
+		or (select(2, UnitClass("player")) == "DRUID" and select(3, GetTalentTabInfo(3)) < 51 and IsDruidTank())
 end
 
 function bossModPrototype:IsWeaponDependent(uId)

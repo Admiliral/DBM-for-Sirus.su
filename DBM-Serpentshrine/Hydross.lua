@@ -44,6 +44,8 @@ local specWarnChis      = mod:NewSpecialWarning("Chis", 309055, nil, nil, 1, 6) 
 
 local specWarnSklep     = mod:NewSpecialWarningRun(309046, nil, nil, nil, 1, 4) -- лужа
 local specWarnKor       = mod:NewSpecialWarningRun(309065, nil, nil, nil, 1, 4) -- коррозия
+local yellSklep		= mod:NewYell(309046)
+local yellKor		= mod:NewYell(309065)
 
 local timerSklepCD		= mod:NewCDTimer(32, 309046, nil, nil, nil, 3) -- лужа
 local timerKorCD		= mod:NewCDTimer(32, 309065, nil, nil, nil, 3) -- коррозия
@@ -62,8 +64,8 @@ mod:AddBoolOption("AnnounceKor", false)
 mod.vb.phase = 0
 local SklepTargets = {}
 local KorTargets = {}
-local SklepIcons = 8
-local KorIcons = 8
+mod.vb.SklepIcon = 8
+mod.vb.KorlIcon = 8
 
 do
 	local function sort_by_group(v1, v2)
@@ -74,20 +76,20 @@ do
 		for i, v in ipairs(SklepTargets) do
 			if mod.Options.AnnounceSklep then
 				if DBM:GetRaidRank() > 0 then
-					SendChatMessage(L.SklepIcon:format(SklepIcons, UnitName(v)), "RAID_WARNING")
+					SendChatMessage(L.SklepIcon:format(self.vb.SklepIcons, UnitName(v)), "RAID_WARNING")
 				else
-					SendChatMessage(L.SklepIcon:format(SklepIcons, UnitName(v)), "RAID")
+					SendChatMessage(L.SklepIcon:format(self.vb.SklepIcons, UnitName(v)), "RAID")
 				end
 			end
 			if self.Options.SetIconOnSklepTargets then
-				self:SetIcon(UnitName(v), SklepIcons, 10)
+				self:SetIcon(UnitName(v), self.vb.SklepIcons, 10)
 			end
-			SklepIcons = SklepIcons - 1
+			self.vb.SklepIcons = self.vb.SklepIcons - 1
 		end
 		if #SklepTargets >= 3 then
 			warnSklep:Show(table.concat(SklepTargets, "<, >"))
 			table.wipe(SklepTargets)
-			SklepIcons = 8
+			self.vb.SklepIcons = 8
 		end
 	end
 	function mod:SetKorIcons()
@@ -95,20 +97,20 @@ do
 		for i, v in ipairs(KorTargets) do
 			if mod.Options.AnnounceKor then
 				if DBM:GetRaidRank() > 0 then
-					SendChatMessage(L.KorIcon:format(KorIcons, UnitName(v)), "RAID_WARNING")
+					SendChatMessage(L.KorIcon:format(self.vb.KorIcon, UnitName(v)), "RAID_WARNING")
 				else
-					SendChatMessage(L.KorIcon:format(KorIcons, UnitName(v)), "RAID")
+					SendChatMessage(L.KorIcon:format(self.vb.KorIcon, UnitName(v)), "RAID")
 				end
 			end
 			if self.Options.SetIconOnKorTargets then
-				self:SetIcon(UnitName(v), KorIcons)
+				self:SetIcon(UnitName(v), self.vb.KorIcon)
 			end
-			KorIcons = KorIcons - 1
+			self.vb.KorIcon = self.vb.KorIcon - 1
 		end
 		if #KorTargets >= 3 then
 			warnKor:Show(table.concat(KorTargets, "<, >"))
 			table.wipe(KorTargets)
-			KorIcons = 8
+			self.vb.KorIcon = 8
 		end
 	end
 end
@@ -117,8 +119,8 @@ end
 function mod:OnCombatStart()
 	berserkTimer:Start()
 	self.vb.phase = 1
-	SklepIcons = 8
-	KorIcons = 8
+	self.vb.SklepIcons = 8
+	self.vb.KorIcon = 8
 	if mod:IsDifficulty("heroic25") then
 	timerArrowCD:Start()
 	timerSklepCD:Start()
@@ -157,6 +159,7 @@ function mod:SPELL_AURA_APPLIED(args) -- все хм --
 		SklepTargets[#SklepTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnSklep:Show()
+			yellSklep:Yell()
 		end
 		self:ScheduleMethod(0.1, "SetSklepIcons")
 		timerSklepCD:Start()
@@ -164,6 +167,7 @@ function mod:SPELL_AURA_APPLIED(args) -- все хм --
 		KorTargets[#KorTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnKor:Show()
+			yellKor:Yell()
 		end
 		self:ScheduleMethod(0.1, "SetKorIcons")
 		timerKorCD:Start()
