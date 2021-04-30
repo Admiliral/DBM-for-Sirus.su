@@ -11,7 +11,7 @@ L:SetGeneralLocalization{
 
 L:SetTimerLocalization{
 }
-	
+
 L:SetMiscLocalization{
 	YellPull	= "Hostile entities detected. Threat assessment protocol active. Primary target engaged. Time minus 30 seconds to re-evaluation.",
 	Emote		= "%%s pursues (%S+)%."
@@ -59,11 +59,11 @@ L:SetGeneralLocalization{
 	name = "Razorscale"
 }
 
-L:SetWarningLocalization{	
+L:SetWarningLocalization{
 	warnTurretsReadySoon		= "Last turret ready in 20 seconds",
 	warnTurretsReady			= "Last turret ready",
 	SpecWarnDevouringFlameCast	= "Devouring Flame on you",
-	WarnDevouringFlameCast		= "Devouring Flame on >%s<" 
+	WarnDevouringFlameCast		= "Devouring Flame on >%s<"
 }
 
 L:SetTimerLocalization{
@@ -307,7 +307,7 @@ L:SetMiscLocalization{
 	YellPhase2	= "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
 	YellKill	= "Stay your arms! I yield!",
 	ChargeOn	= "Lightning Charge: %s",
-	Charge		= "Lightning Charge fails (this try): %s" 
+	Charge		= "Lightning Charge fails (this try): %s"
 }
 
 -------------
@@ -407,7 +407,7 @@ L:SetMiscLocalization{
 	MobPhase1		= "Leviathan Mk II",
 	MobPhase2		= "VX-001",
 	MobPhase3		= "Aerial Command Unit",
-	YellPull		= "We haven't much time, friends! You're going to help me test out my latest and greatest creation. Now, before you change your minds, remember that you kind of owe it to me after the mess you made with the XT-002.",	
+	YellPull		= "We haven't much time, friends! You're going to help me test out my latest and greatest creation. Now, before you change your minds, remember that you kind of owe it to me after the mess you made with the XT-002.",
 	YellHardPull	= "Self-destruct sequence initiated",
 	YellPhase2		= "WONDERFUL! Positively marvelous results! Hull integrity at 98.9 percent! Barely a dent! Moving right along.",
 	YellPhase3		= "Thank you, friends! Your efforts have yielded some fantastic data! Now, where did I put-- oh, there it is.",
@@ -476,7 +476,7 @@ L:SetWarningLocalization{
 	SpecWarnSanity 					= "%d Sanity remaining",
 	SpecWarnGuardianLow				= "Stop attacking this Guardian",
 	SpecWarnMadnessOutNow			= "Induce Madness ending - Move out",
-	WarnBrainPortalSoon				= "Brain Portal in 3 seconds",	
+	WarnBrainPortalSoon				= "Brain Portal in 3 seconds",
 	SpecWarnFervor					= "Sara's Fervor on you",
 	SpecWarnFervorCast				= "Sara's Fervor is being cast on you",
 	SpecWarnMaladyNear				= "Malady of the Mind on %s near you",

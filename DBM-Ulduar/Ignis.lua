@@ -56,7 +56,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerSlagPot:Start(args.destName)
 		if self.Options.SlagPotIcon then
 			self:SetIcon(args.destName, 8, 10)
-                end						
-		
+                end
     end
 end

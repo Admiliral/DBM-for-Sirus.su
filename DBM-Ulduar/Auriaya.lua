@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Auriaya", "DBM-Ulduar")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 4133 $"):sub(12, -3))
+mod:SetRevision("20210501000000")
 
 mod:SetCreatureID(33515)
 mod:RegisterCombat("combat")
@@ -43,7 +43,7 @@ local timerSonic		= mod:NewCastTimer(312954)
 
 mod:AddBoolOption("HealthFrame", true)
 
-local isFeared			= false
+--local isFeared			= false
 local catLives = 9
 
 function mod:OnCombatStart(delay)
@@ -75,16 +75,16 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerNextSwarm:Start()
 	elseif args:IsSpellID(312972) then -- Feral Essence
 		DBM.BossHealth:AddBoss(34035, L.Defender:format(9))
-	elseif args:IsSpellID(312955) and args:IsPlayer() then
-		isFeared = true		
+	--[[elseif args:IsSpellID(312955) and args:IsPlayer() then
+		isFeared = true]]
 	end
 end
 
-function mod:SPELL_AURA_REMOVED(args)
+--[[function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(312955) and args:IsPlayer() then
-		isFeared = false	
+		isFeared = false
 	end
-end
+end]]
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)

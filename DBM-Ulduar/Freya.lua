@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Freya", "DBM-Ulduar")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20210429165500")
+mod:SetRevision("20210501000000")
 
 mod:SetCreatureID(32906)
 mod:RegisterCombat("yell", L.YellPull)
@@ -59,8 +59,8 @@ function mod:OnCombatEnd(wipe)
 	DBM.BossHealth:Hide()
 	if not wipe then
 		if DBM.Bars:GetBar(L.TrashRespawnTimer) then
-			DBM.Bars:CancelBar(L.TrashRespawnTimer) 
-		end	
+			DBM.Bars:CancelBar(L.TrashRespawnTimer)
+		end
 	end
 end
 
@@ -74,7 +74,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnTremor:Show()
 		timerTremorCD:Start()
 	end
-end 
+end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(62678) then -- Summon Allies of Nature
@@ -110,7 +110,7 @@ function mod:SPELL_AURA_APPLIED(args)
 
 	elseif args:IsSpellID(312885, 312888, 312535, 312532) and args:IsPlayer() then
 		specWarnBeam:Show()
-	end 
+	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)

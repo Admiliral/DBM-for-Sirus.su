@@ -30,7 +30,7 @@ local timerOverload				= mod:NewCastTimer(6, 312782)
 local timerLightningWhirl		= mod:NewCastTimer(5, 312784)
 local specwarnLightningTendrils	= mod:NewSpecialWarningRun(312786)
 local timerLightningTendrils	= mod:NewBuffActiveTimer(27, 312786)
-local specwarnOverload			= mod:NewSpecialWarningRun(312782) 
+local specwarnOverload			= mod:NewSpecialWarningRun(312782)
 local specwarnStaticDisruption		= mod:NewSpecialWarningMoveAway(312770)
 mod:AddBoolOption("AlwaysWarnOnOverload", true, "announce")
 mod:AddBoolOption("PlaySoundOnOverload", true)
@@ -43,8 +43,8 @@ local timerFusionPunchCast		= mod:NewCastTimer(3, 312769)
 local timerFusionPunchActive	= mod:NewTargetTimer(4,312769)
 local warnOverwhelmingPower		= mod:NewTargetAnnounce(312772, 2)
 local timerOverwhelmingPower	= mod:NewTargetTimer(25, 312772)
-local warnStaticDisruption		= mod:NewTargetAnnounce(312770, 3) 
-local timerStaticDisruption		= mod:NewTargetAnnounce(30, 312770) 
+local warnStaticDisruption		= mod:NewTargetAnnounce(312770, 3)
+local timerStaticDisruption		= mod:NewTargetAnnounce(30, 312770)
 local specwarnFusionPunch       = mod:NewSpecialWarningDefensive(312769, mod:IsTank())
 mod:AddBoolOption("SetIconOnOverwhelmingPower")
 mod:AddBoolOption("SetIconOnStaticDisruption")
@@ -93,9 +93,9 @@ local function warnStaticDisruptionTargets()
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(312766, 312413) then -- Supercharge - Unleashes one last burst of energy as the caster dies, increasing all allies damage by 25% and granting them an additional ability.	
+	if args:IsSpellID(312766, 312413) then -- Supercharge - Unleashes one last burst of energy as the caster dies, increasing all allies damage by 25% and granting them an additional ability.
 		warnSupercharge:Show()
-	elseif args:IsSpellID(312780, 312427) then	-- Цепная молния 
+	elseif args:IsSpellID(312780, 312427) then	-- Цепная молния
 		warnChainlight:Show()
 	elseif args:IsSpellID(312784, 312783, 312430, 312431) then	-- Вихрь молний
 		timerLightningWhirl:Start()
@@ -138,7 +138,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			end
 		end
 	elseif args:IsSpellID(312774, 312775, 312421, 312422) and not args:IsDestTypePlayer() then		-- Рунический щит
-		timerShieldofRunes:Start()		
+		timerShieldofRunes:Start()
 	elseif args:IsSpellID(312771, 312772, 312418, 312419) then	-- Переполняющая энергия
 		warnOverwhelmingPower:Show(args.destName)
 		if mod:IsDifficulty("heroic10") then
@@ -149,15 +149,12 @@ function mod:SPELL_AURA_APPLIED(args)
 
 		if self.Options.SetIconOnOverwhelmingPower then
 			if mod:IsDifficulty("heroic10") then
-				self:SetIcon(args.destName, 8, 60) -- skull for 60 seconds (until meltdown)
-				
+				self:SetIcon(args.destName, 8, 60) -- skull for 60 seconds (until meltdown)	
 			else
-				self:SetIcon(args.destName, 8, 35) -- skull for 35 seconds (until meltdown)
-				
+				self:SetIcon(args.destName, 8, 35) -- skull for 35 seconds (until meltdown)	
 			end
-			
 		end
-	elseif args:IsSpellID(312786, 312785, 312432, 312433) then	-- Светящиеся придатки 
+	elseif args:IsSpellID(312786, 312785, 312432, 312433) then	-- Светящиеся придатки
 		timerLightningTendrils:Start()
 		specwarnLightningTendrils:Show()
 		if self.Options.PlaySoundLightningTendrils then
@@ -165,11 +162,10 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif args:IsSpellID(312770, 312417) then	-- Static Disruption (Hard Mode)
 		disruptTargets[#disruptTargets + 1] = args.destName
-		if self.Options.SetIconOnStaticDisruption then 
+		if self.Options.SetIconOnStaticDisruption then
 			self:SetIcon(args.destName, disruptIcon, 20)
 			disruptIcon = disruptIcon - 1
 		end
-		
 		self:Unschedule(warnStaticDisruptionTargets)
 		self:Schedule(0.3, warnStaticDisruptionTargets)
 	end

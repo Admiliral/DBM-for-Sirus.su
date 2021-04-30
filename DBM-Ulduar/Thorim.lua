@@ -29,14 +29,14 @@ mod:AddBoolOption("AnnounceFails", false, "announce")
 local enrageTimer				= mod:NewBerserkTimer(369)
 local timerStormhammer			= mod:NewCastTimer(16, 312889)
 local timerChainlightning       = mod:NewCDTimer(16, 312895)
-local timerLightningCharge	 	= mod:NewCDTimer(16, 312897) 
+local timerLightningCharge	 	= mod:NewCDTimer(16, 312897)
 local timerUnbalancingStrike	= mod:NewCastTimer(26, 312898)
 local timerHardmode				= mod:NewTimer(181, "TimerHardmode", 312898)
 
 mod:AddBoolOption("RangeFrame")
 mod:AddBoolOption("YellOnUnbalancingStrike", true)
 
-local lastcharge				= {} 
+local lastcharge = {}
 
 function mod:OnCombatStart(delay)
 	enrageTimer:Start()
@@ -44,7 +44,7 @@ function mod:OnCombatStart(delay)
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(8)
 	end
-	table.wipe(lastcharge) 
+	table.wipe(lastcharge)
 end
 
 local sortedFailsC = {}
@@ -79,8 +79,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnUnbalancingStrike:Show(args.destName)
 		if self.Options.YellOnUnbalancingStrike and args:IsPlayer() then
 			SendChatMessage(L.YellUnbalancingStrike, "SAY")
-	end
-		
+		end
 	elseif args:IsSpellID(312911, 312910, 312558, 312557) then	-- Runic Detonation
 		self:SetIcon(args.destName, 8, 5)
 		warningBomb:Show(args.destName)
@@ -95,7 +94,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerStormhammer:Schedule(2)
 	elseif args:IsSpellID(312897, 312896) then   	-- Lightning Charge
 		warnLightningCharge:Show()
-		timerLightningCharge:Start()	
+		timerLightningCharge:Start()
 	elseif args:IsSpellID(312898, 312545) then	-- Unbalancing Strike
 		timerUnbalancingStrike:Start()
 	elseif args:IsSpellID(312895) then

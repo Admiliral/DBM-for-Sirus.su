@@ -43,10 +43,9 @@ function mod:OnCombatStart(delay)
 	if mod:IsDifficulty("heroic10") then 																--10
 		DBM.RangeCheck:Show(10)
 		timerTympanicTantrumCD:Start(35-delay)
-	else 
+	else
 		DBM.RangeCheck:Show(10)																			--25
 		timerTympanicTantrumCD:Start(50-delay)
-		
 	end
 end
 
@@ -85,20 +84,16 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args:IsPlayer() then
 			specWarnGravityBomb:Show()
 			if self.Options.YellOnGravityBomb then
-				
 				SendChatMessage(L.YellGravityBomb, "SAY")
-		end
+			end
 		end
 		if self.Options.SetIconOnGravityBombTarget then
 			self:SetIcon(args.destName, 8, 9)
-			
 		end
-		
 		warnGravityBomb:Show(args.destName)
 		timerGravityBomb:Start(args.destName)
 	elseif args:IsSpellID(312945) then
 		timerHeart:Start()
-		
 	end
 end
 
@@ -114,7 +109,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
-do 
+do
 	local lastConsumption = 0
 	function mod:SPELL_DAMAGE(args)
 		if args:IsSpellID(64208, 312948) and args:IsPlayer() and time() - lastConsumption > 2 then		-- Hard mode void zone

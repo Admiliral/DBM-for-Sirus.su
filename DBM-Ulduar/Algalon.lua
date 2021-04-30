@@ -8,7 +8,7 @@ local L		= mod:GetLocalizedStrings()
 --]]
 
 
-mod:SetRevision("20210430133000")
+mod:SetRevision("20210501000000")
 mod:SetCreatureID(32871)
 
 mod:RegisterCombat("yell", L.YellPull)
@@ -55,19 +55,19 @@ local warned_star = false
 function mod:OnCombatStart(delay)
 	warned_preP2 = false
 	warned_star = false
-	local text = select(3, GetWorldStateUIInfo(1)) 
+	local text = select(3, GetWorldStateUIInfo(1))
 	local _, _, time = string.find(text, L.PullCheck)
-	if not time then 
-        	time = 60 
+	if not time then
+        	time = 60
     	end
 	time = tonumber(time)
 	if time == 60 then
 		timerCombatStart:Start(26.5-delay)
 		self:ScheduleMethod(26.5-delay, "startTimers")	-- 26 seconds roleplaying
-	else 
+	else
 		timerCombatStart:Start(-delay)
 		self:ScheduleMethod(8-delay, "startTimers")	-- 8 seconds roleplaying
-	end 
+	end
 end
 
 function mod:startTimers()

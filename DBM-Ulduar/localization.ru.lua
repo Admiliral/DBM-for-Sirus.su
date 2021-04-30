@@ -13,7 +13,7 @@ L:SetGeneralLocalization{
 
 L:SetTimerLocalization{
 }
-	
+
 L:SetMiscLocalization{
 	YellPull	= "Обнаружены противники. Запуск протокола оценки угрозы. Главная цель выявлена. Повторный анализ через 30 секунд.",
 	Emote		= "%%s наводится на (%S+)%."
@@ -63,11 +63,11 @@ L:SetGeneralLocalization{
 	name = "Острокрылая"
 }
 
-L:SetWarningLocalization{	
+L:SetWarningLocalization{
 	warnTurretsReadySoon		= "Гарпунные пушки будут собраны через 20 секунд",
 	warnTurretsReady			= "Гарпунные пушки собраны",
 	SpecWarnDevouringFlameCast	= "Лавовая бомба на вас",
-	WarnDevouringFlameCast		= "Лавовая бомба на |3-5(>%s<)" 
+	WarnDevouringFlameCast		= "Лавовая бомба на |3-5(>%s<)"
 }
 
 L:SetTimerLocalization{
@@ -146,8 +146,7 @@ L:SetOptionLocalization{
 	SetIconOnStaticDisruption	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312770),
 	AlwaysWarnOnOverload		= "Всегда предупреждать при $spell:312782\n(иначе, только когда босс в цели)",
 	PlaySoundOnOverload			= "Звуковой сигнал при $spell:312782",
-	PlaySoundDeathRune			= "Звуковой сигнал при $spell:312777",
-	
+	PlaySoundDeathRune			= "Звуковой сигнал при $spell:312777"
 }
 
 L:SetMiscLocalization{
@@ -322,7 +321,7 @@ L:SetMiscLocalization{
 	YellPhase2	= "Бесстыжие выскочки, вы решили бросить вызов мне лично? Я сокрушу вас всех!",
 	YellKill	= "Придержите мечи! Я сдаюсь.",
 	ChargeOn	= "Разряд молнии: %s",
-	Charge		= "Попали под Разряд молнии (в этом бою): %s" 
+	Charge		= "Попали под Разряд молнии (в этом бою): %s"
 }
 
 -------------
@@ -497,7 +496,7 @@ L:SetWarningLocalization{
 	SpecWarnSanity 					= "Осталось %d Здравомыслия",
 	SpecWarnGuardianLow				= "Прекратите атаковать этого Стража",
 	SpecWarnMadnessOutNow			= "Доведение до помешательства заканчивается - выбегайте",
-	WarnBrainPortalSoon				= "Провал Безумия через 3 секунды",	
+	WarnBrainPortalSoon				= "Провал Безумия через 3 секунды",
 	SpecWarnFervor					= "Рвение Сары на вас",
 	SpecWarnFervorCast				= "Рвение Сары накладывается на вас",
 	SpecWarnMaladyNear				= "Душевная болезнь на |3-5(%s) около вас",

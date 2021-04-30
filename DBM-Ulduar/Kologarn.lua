@@ -82,12 +82,11 @@ function mod:OnSync(msg, target)
 		if target == UnitName("player") then
 			specWarnEyebeam:Show()
 			if self.Options.PlaySoundOnEyebeam then
-				PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav") 
+				PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
 			end
-			
-		end 
+		end
 		if self.Options.SetIconOnEyebeamTarget then
-			self:SetIcon(target, 5, 8) 
+			self:SetIcon(target, 5, 8)
 		end
 	end
 end
@@ -123,7 +122,7 @@ end
 function mod:SPELL_AURA_APPLIED_DOSE(args)
 	if args:IsSpellID(312748) then		        -- Хруст доспеха (25-man only)
 		warnCrunchArmor:Show(args.destName)
-        if args.amount >= 2 then 
+        if args.amount >= 2 then
             if args:IsPlayer() then
                 specWarnCrunchArmor2:Show(args.amount)
             end

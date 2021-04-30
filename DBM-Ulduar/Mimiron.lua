@@ -56,7 +56,7 @@ local timerNextFlameSuppressant	= mod:NewNextTimer(10, 312793)
 local timerNextFlames			= mod:NewNextTimer(27.5, 312803)
 local timerNextFrostBomb        = mod:NewNextTimer(30, 64623) --Ледяная бомба
 local timerBombExplosion		= mod:NewCastTimer(15, 312804)
-local timerNextRockets		    = mod:NewNextTimer(20, 63041) 
+local timerNextRockets		    = mod:NewNextTimer(20, 63041)
 
 mod:AddBoolOption("PlaySoundOnShockBlast", isMelee)
 mod:AddBoolOption("PlaySoundOnDarkGlare", true)
@@ -67,7 +67,7 @@ mod:AddBoolOption("YellOnblastWarn", true)
 mod:AddBoolOption("YellOnshellWarn", true)
 
 local hardmode = false
-local phase						= 0 
+local phase = 0
 local lootmethod, masterlooterRaidID
 
 local spinningUp				= GetSpellInfo(312794)
@@ -143,7 +143,6 @@ function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(312792) then
 		if phase == 1 and self.Options.ShockBlastWarningInP1 or phase == 4 and self.Options.ShockBlastWarningInP4 then
 			warnShockBlast:Show()
-		
 		end
 		if( GetLocale() == "frFR") then
 			warnShockBlast:Show()
@@ -210,12 +209,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerNextDarkGlare:Schedule(19)			-- 4 (cast spinup) + 15 sec (cast dark glare)
 		DBM:Schedule(0.15, show_warning_for_spinup)	-- wait 0.15 and then announce it, otherwise it will sometimes fail
 		lastSpinUp = GetTime()
-	
 	elseif args:IsSpellID(312793) then
 		timerNextFlameSuppressant:Start()
-	
 	elseif args:IsSpellID(63041) then
-		timernextrockets:Start()
+		timerNextRockets:Start()
 	end
 
 end
@@ -239,7 +236,6 @@ function mod:NextPhase()
 		if self.Options.HealthFrame then
 			DBM.BossHealth:Clear()
 			DBM.BossHealth:AddBoss(33651, L.MobPhase2)
-			
 		end
 		if self.Options.RangeFrame then
 			DBM.RangeCheck:Hide()
@@ -284,7 +280,7 @@ function mod:NextPhase()
 	end
 end
 
-do 
+do
 	local count = 0
 	local last = 0
 	local lastPhaseChange = 0

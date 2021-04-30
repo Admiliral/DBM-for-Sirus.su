@@ -52,18 +52,18 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(312817, 312816,312464,312463) then --Ледяные дуновения
 		timerFrozenBlows:Start()
-	elseif args:IsSpellID(312831, 312478) then -- Грозовая туча 
+	elseif args:IsSpellID(312831, 312478) then -- Грозовая туча
 		warnStormCloud:Show(args.destName)
 		if self.Options.YellOnStormCloud and args:IsPlayer() then
 			SendChatMessage(L.YellCloud, "SAY")
 		end
-		if self.Options.SetIconOnStormCloud then 
+		if self.Options.SetIconOnStormCloud then
 			self:SetIcon(args.destName, 8, 6)
 		end
 	end
 end
 
-do 
+do
 	local lastbitingcold = 0
 	function mod:SPELL_DAMAGE(args)
 		if args:IsSpellID(312819, 312466) and args:IsPlayer() and time() - lastbitingcold > 4 then		-- Трескучий мороз
