@@ -6,7 +6,7 @@ mod:SetRevision("20210501000000")
 mod:SetCreatureID(32906)
 mod:RegisterCombat("yell", L.YellPull)
 mod:RegisterKill("yell", L.YellKill)
-mod:SetUsedIcons(6, 7, 8)
+mod:SetUsedIcons(4, 5, 6, 7, 8)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START",
@@ -30,32 +30,49 @@ local warnSimulKill			= mod:NewAnnounce("WarnSimulKill", 1)
 local warnFury				= mod:NewTargetAnnounce(312881, 2)
 local warnRoots				= mod:NewTargetAnnounce(312860, 2)
 
-local specWarnFury			= mod:NewSpecialWarningYou(312881)
-local specWarnTremor		= mod:NewSpecialWarningCast(312856)	-- Hard mode
-local specWarnBeam			= mod:NewSpecialWarningMove(312888)	-- Hard mode
+local specWarnLifebinder	= mod:NewSpecialWarningSwitch(62869, "Dps", nil, nil, 1, 2)
+local specWarnFury			= mod:NewSpecialWarningMoveAway(312881, nil, nil, nil, 1, 2)
+local yellFury				= mod:NewYell(312881)
+local yellRoots				= mod:NewYell(312860)
+local specWarnTremor		= mod:NewSpecialWarningCast(312856, "SpellCaster", nil, 2, 1, 2)	-- Hard mode
+local specWarnBeam			= mod:NewSpecialWarningMove(312888, nil, nil, nil, 1, 2)	-- Hard mode
+
 
 local enrage 				= mod:NewBerserkTimer(600)
-local timerAlliesOfNature	= mod:NewNextTimer(60, 62678)
-local timerSimulKill		= mod:NewTimer(12, "TimerSimulKill")
-local timerFury				= mod:NewTargetTimer(10, 312881)
-local timerTremorCD 		= mod:NewCDTimer(28, 312856)
+local timerAlliesOfNature	= mod:NewNextTimer(60, 62678, nil, nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)
+local timerSimulKill		= mod:NewTimer(12, "TimerSimulKill", nil, nil, nil, 5, DBM_CORE_DAMAGE_ICON)
+local timerFury				= mod:NewTargetTimer(10, 312881, nil, nil, nil, 2)
+local timerTremorCD 		= mod:NewCDTimer(28, 312856, nil, nil, nil, 2)
+local timerLifebinderCD 	= mod:NewCDTimer(38.2, 62869, nil, nil, nil, 1)
+local timerRootsCD 			= mod:NewCDTimer(29.6, 312856, nil, nil, nil, 3)
 
+
+mod:AddSetIconOption("SetIconOnFury", 312881, false, false, {7, 8})
+mod:AddSetIconOption("SetIconOnRoots", 312860, false, false, {6, 5, 4})
 mod:AddBoolOption("HealthFrame", true)
-mod:AddBoolOption("PlaySoundOnFury")
-mod:AddBoolOption("YellOnRoots", true, "announce")
+
+--[[mod:AddBoolOption("PlaySoundOnFury")
+mod:AddBoolOption("YellOnRoots", true, "announce")]]
 
 local adds		= {}
 local rootedPlayers 	= {}
-local altIcon 		= true
 local killTime		= 0
-local iconId		= 6
+mod.vb.iconId = 6
+mod.vb.phase = 1
+mod.vb.altIcon = true
 
 function mod:OnCombatStart(delay)
+	DBM:FireCustomEvent("DBM_EncounterStart", 32906, "Freya")
+	self.vb.altIcon = true
+	self.vb.iconId = 6
+	self.vb.phase = 1
 	enrage:Start()
 	table.wipe(adds)
+	timerAlliesOfNature:Start(10-delay)
 end
 
 function mod:OnCombatEnd(wipe)
+	DBM:FireCustomEvent("DBM_EncounterEnd", 32906, "Freya", wipe)
 	DBM.BossHealth:Hide()
 	if not wipe then
 		if DBM.Bars:GetBar(L.TrashRespawnTimer) then
@@ -72,6 +89,7 @@ end
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(312842, 312856, 312503, 312489) then
 		specWarnTremor:Show()
+		specWarnTremor:Play("stopcast")
 		timerTremorCD:Start()
 	end
 end
@@ -79,37 +97,44 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(62678) then -- Summon Allies of Nature
 		timerAlliesOfNature:Start()
+
+	elseif args:IsSpellID(62619) and self:GetUnitCreatureId(args.sourceName) == 33228 then -- Pheromones spell, cast by newly spawned Eonar's Gift second they spawn to allow melee to dps them while protector is up.
+		specWarnLifebinder:Show()
+		specWarnLifebinder:Play("targetchange")
+		timerLifebinderCD:Start()
 	elseif args:IsSpellID(312881, 312880, 312528, 312527) then -- Nature's Fury
-		altIcon = not altIcon	--Alternates between Skull and X
-		self:SetIcon(args.destName, altIcon and 7 or 8, 10)
-		warnFury:Show(args.destName)
-		if args:IsPlayer() then -- only cast on players; no need to check destFlags
-			if self.Options.PlaySoundOnFury then
-				PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
-			end
-			specWarnFury:Show()
+		if self.Options.SetIconOnFury then
+			self.vb.altIcon = not self.vb.altIcon	--Alternates between Skull and X
+			self:SetIcon(args.destName, self.vb.altIcon and 7 or 8, 10)
 		end
-		timerFury:Start(args.destName)
+		if args:IsPlayer() then -- only cast on players; no need to check destFlags
+			specWarnFury:Show()
+			specWarnFury:Play("runout")
+			yellFury:Yell()
+			if self.Options.RangeFrame then
+				DBM.RangeCheck:Show(8)
+			end
+		else
+			warnFury:Show(args.destName)
+		end
+	elseif args.spellId == 63601 then
+			timerRootsCD:Start()
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(312843, 312860, 312507, 312490) then
-		iconId = iconId - 1
-		self:SetIcon(args.destName, iconId, 15)
-		table.insert(rootedPlayers, args.destName)
-		self:Unschedule(showRootWarning)
-		if #rootedPlayers >= 3 then
-			showRootWarning()
-		else
-			self:Schedule(0.5, showRootWarning)
+		warnRoots:CombinedShow(0.5, args.destName)
+		if args:IsPlayer() then
+			yellRoots:Yell()
 		end
-		if self.Options.YellOnRoots and args:IsPlayer() then
-			SendChatMessage(L.YellRoots, "SAY")
-	end
-
+		self.vb.iconId = self.vb.iconId - 1
+		if self.Options.SetIconOnRoots then
+			self:SetIcon(args.destName, self.vb.iconId, 15)
+		end
 	elseif args:IsSpellID(312885, 312888, 312535, 312532) and args:IsPlayer() then
 		specWarnBeam:Show()
+		specWarnBeam:Play("runaway")
 	end
 end
 
@@ -118,7 +143,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		warnPhase2:Show()
 	elseif args:IsSpellID(312843, 312860, 312507, 312490) then
 		self:RemoveIcon(args.destName)
-		iconId = iconId + 1
+		mod.vb.iconId = mod.vb.iconId + 1
 	end
 end
 

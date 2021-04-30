@@ -53,6 +53,8 @@ local warned_preP2 = false
 local warned_star = false
 
 function mod:OnCombatStart(delay)
+	DBM:FireCustomEvent("DBM_EncounterStart", 32871, "Algalon")
+
 	warned_preP2 = false
 	warned_star = false
 	local text = select(3, GetWorldStateUIInfo(1))
@@ -68,6 +70,10 @@ function mod:OnCombatStart(delay)
 		timerCombatStart:Start(-delay)
 		self:ScheduleMethod(8-delay, "startTimers")	-- 8 seconds roleplaying
 	end
+end
+
+function mod:OnCombatEnd(wipe)
+	DBM:FireCustomEvent("DBM_EncounterEnd", 32871, "Algalon", wipe)
 end
 
 function mod:startTimers()
