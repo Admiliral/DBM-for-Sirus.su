@@ -70,7 +70,7 @@ end
 
 DBM = {
 	Revision = parseCurseDate("20210501000000"),
-	DisplayVersion = "5.45", -- the string that is shown as version
+	DisplayVersion = "5.46", -- the string that is shown as version
 	ReleaseRevision = releaseDate(2021, 05, 01) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
@@ -5809,8 +5809,11 @@ local specFlags ={
 	["Melee"] = "IsMelee",
 	["Ranged"] = "IsRanged",
 	["Physical"] = "IsPhysical",
+	["SpellCaster"] = "IsSpellCaster",
+	["HasInterrupt"] = "IsHasInterrupt",
 	["RemoveEnrage"] = "CanRemoveEnrage",
 	["MagicDispeller"] = "IsMagicDispeller",
+
 }
 
 function bossModPrototype:GetRoleFlagValue(flag)
@@ -5856,6 +5859,22 @@ end
 
 function bossModPrototype:IsPhysical()
 	return self:IsMelee() or select(2, UnitClass("player")) == "HUNTER"
+end
+
+function bossModPrototype:IsSpellCaster()
+	return select(2, UnitClass("player")) == "MAGE"
+		or select(2, UnitClass("player")) == "WARLOCK"
+		or select(2, UnitClass("player")) == "PRIEST"
+		or (select(2, UnitClass("player")) == "PALADIN" and select(3, GetTalentTabInfo(1)) >= 51)
+		or (select(2, UnitClass("player")) == "SHAMAN" and select(3, GetTalentTabInfo(2)) < 51)
+		or (select(2, UnitClass("player")) == "DRUID" and select(3, GetTalentTabInfo(2)) < 51)
+end
+
+function bossModPrototype:IsHasInterrupt()
+	return select(2, UnitClass("player")) == "ROGUE"
+		or select(2, UnitClass("player")) == "WARRIOR"
+		or select(2, UnitClass("player")) == "MAGE"
+		or select(2, UnitClass("player")) == "SHAMAN"
 end
 
 function bossModPrototype:CanRemoveEnrage()
