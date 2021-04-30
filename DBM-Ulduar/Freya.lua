@@ -143,7 +143,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		warnPhase2:Show()
 	elseif args:IsSpellID(312843, 312860, 312507, 312490) then
 		self:RemoveIcon(args.destName)
-		iconId = iconId + 1
+		mod.vb.iconId = mod.vb.iconId + 1
 	end
 end
 

@@ -96,7 +96,7 @@ end
 local function warnStaticDisruptionTargets()
 	warnStaticDisruption:Show(table.concat(disruptTargets, "<, >"))
 	table.wipe(disruptTargets)
-	diself.vb.disruptIcon = 7
+	self.vb.disruptIcon = 7
 end
 
 function mod:SPELL_CAST_START(args)
