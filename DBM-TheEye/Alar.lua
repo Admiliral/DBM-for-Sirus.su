@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Alar", "DBM-TheEye", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 163 $"):sub(12, -3))
+mod:SetRevision("20210130153000")
 
 mod:SetCreatureID(19514)
 mod:RegisterCombat("combat", 19514)
@@ -44,10 +44,6 @@ local timerNextBomb				= mod:NewCDTimer(46, 35181)
 local berserkTimerN				= mod:NewBerserkTimer(1200)
 
 -- Heroic
-local warnNextPhase				= mod:NewAnnounce("Фаза", 1) -- перефаза
-local warnFireSign			    = mod:NewAnnounce("WarnFireSign", 2) -- Знак огня
-local warnSupernova				= mod:NewAnnounce("WarnSupernova", 2, 308636, false) -- предупреждение о стаках суперновой
-
 local specWarnPhase2Soon		= mod:NewSpecialWarning("WarnPhase2Soon", 1) -- Вторая фаза
 local specWarnPhase2			= mod:NewSpecialWarning("WarnPhase2", 1) -- Вторая фаза
 local specWarnFlamefall			= mod:NewSpecialWarningSpell(308987, nil, nil, nil, 1, 2) -- Падение пламени
@@ -55,15 +51,10 @@ local specWarnAnimated			= mod:NewSpecialWarningSpell(308633, nil, nil, nil, 1, 
 local specWarnFireSign			= mod:NewSpecialWarningSpell(308638, nil, nil, nil, 1, 2) -- Знак огня
 local specWarnPhoenixScream     = mod:NewSpecialWarningSpell(308671, nil, nil, nil, 1, 2)  -- Крик феникса
 
---local specWarnSupernova		= mod:NewSpecialWarningStack(308636, nil, 3) -- Сверхновая
-local specWarnFeather			= mod:NewSpecialWarning("SpecWarnFeather") -- Перо на вас
-local specWarnFeatherNear		= mod:NewSpecialWarning("SpecWarnFeatherNear") -- Перо около вас
-
 local timerAnimatedCD			= mod:NewCDTimer(70, 308633, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON) -- Ожившее плямя
 local timerFireSignCD			= mod:NewCDTimer(39, 308638, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON) -- Знак огня
 local timerFlamefallCD			= mod:NewCDTimer(31, 308987, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON) -- Перезарядка перьев
 local timerPhoenixScreamCD		= mod:NewCDTimer(20, 308671, nil, nil, nil, 1, nil, DBM_CORE_HEROIC_ICON) -- Крик феникса
-local timerSupernova			= mod:NewBuffActiveTimer(5, 308636, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON) -- таймер суперновой
 
 
 local timerAnimatedCast			= mod:NewCastTimer(2, 308633, nil, nil, nil, 2) -- Ожившее плямя
@@ -185,16 +176,6 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(35383) and args:IsPlayer() then
-		specWarnPatch:Show()
-	elseif args:IsSpellID(308636) then	--Instability (casters)
-		if args:IsPlayer() then
-			warnSupernova:Show(args.amount or 1)
-		end
-		timerSupernova:Start()
-	end
-end
 
 function mod:UNIT_HEALTH(uId)
 	if not warned_preP1 and self:GetUnitCreatureId(uId) == 19514 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.07 then

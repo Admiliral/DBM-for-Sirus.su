@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("VoidReaver", "DBM-TheEye", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20201025000000")
+mod:SetRevision("20210130153000")
 
 mod:SetCreatureID(19516)
 mod:RegisterCombat("combat")
@@ -22,7 +22,7 @@ local timerNextKnockback        = mod:NewCDTimer(30, 25778, nil, "Healer", nil, 
 
 local warnPhase1				= mod:NewAnnounce("Phase1", 2) -- Фаза пониженного урона
 local warnPhase2				= mod:NewAnnounce("Phase2", 2) -- Фаза повышенного урона
-local warnKnockback				= mod:NewSoonAnnounce(308470, 2, nil, "Tank|Healer|RemoveEnrage")  -- тяжкий удар
+--local warnKnockback				= mod:NewSoonAnnounce(308470, 2, nil, "Tank|Healer|RemoveEnrage")  -- тяжкий удар
 local warnMagnet                = mod:NewTargetAnnounce(308467, 4) -- Сфера магнетизм
 local warnSign                  = mod:NewTargetAnnounce(308471, 4) -- Знак
 
@@ -39,11 +39,8 @@ local specWarnMagnet       = mod:NewSpecialWarningRun(308467, nil, nil, nil, 1, 
 local timerOrbCD				= mod:NewCDTimer(30, 308466, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Таймер чародейской сферы
 local timerLoadCD				= mod:NewCDTimer(60, 308465, nil, nil, nil, 1, nil, DBM_CORE_ENRAGE_ICON) -- Таймер 1 фазы
 local timerReloadCD				= mod:NewCDTimer(60, 308474, nil, nil, nil, 2, nil, DBM_CORE_DAMAGE_ICON) -- Таймер 2 фазы
-local timerKnockbackCD			= mod:NewCDTimer(7, 308470, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- тяжкий удар
-local timerKnockbackCast		= mod:NewCastTimer(2, 308470, nil, "Tank|Healer", nil, 5, DBM_CORE_HEALER_ICON) -- тяжкий удар
 local timerSignCD		       = mod:NewCDTimer(16, 308471, nil, nil, nil, 7) -- Знак
 
---local timerScope				= mod:NewBuffActiveTimer(10, 308469, nil, "Tank|RemoveEnrage", nil, 5, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 5) -- Баф сферы
 
 local berserkTimer				= mod:NewBerserkTimer(600)
 
@@ -90,7 +87,7 @@ function mod:OnCombatStart(delay)
 	if mod:IsDifficulty("heroic25") then
 	    timerLoadCD:Start()
 	    timerOrbCD:Start()
-		timerKnockbackCD:Start()
+		--timerKnockbackCD:Start()
 		DBM.RangeCheck:Show(15)
 	else
 		berserkTimer:Start()
@@ -117,14 +114,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 -------------------------хм------------------------------------
-
-function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(308470) then  -- Тяжкий удар
-		timerKnockbackCD:Start()
-		timerKnockbackCast:Start()
-		warnKnockback:Schedule(0)
-	end
-end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(308465) then --- 1 фаза
@@ -160,12 +149,12 @@ function mod:Magnet()
 	table.wipe(MagnetTargets)
 end
 
-function mod:SPELL_AURA_REMOVED(args)
+--[[function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(308469) and args:IsPlayer() then
 		if args:IsPlayer() then
 
 		end
 	end
-end
+end]]
 
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

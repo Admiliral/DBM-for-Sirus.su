@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Tidewalker", "DBM-Serpentshrine")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20201130210000")
+mod:SetRevision("20210130153000")
 
 mod:SetCreatureID(21213)
 mod:RegisterCombat("yell", L.YellPull)
@@ -31,7 +31,6 @@ local warnVzglad          = mod:NewStackAnnounce(310136, 5, nil, "Tank|Healer") 
 local warnZemla           = mod:NewSoonAnnounce(310152, 2) -- Землетрясение
 local warnHwat            = mod:NewTargetAnnounce(310144, 3) -- Хватка
 local warnSuh             = mod:NewTargetAnnounce(310155, 3) -- Обезвоживание
---local warnMurlok          = mod:NewSpellAnnounce(310231, 1) -- Земля
 local warnKrik            = mod:NewSpellAnnounce(310151, 2) -- Земля
 local warnTop             = mod:NewSpellAnnounce(310140, 2) -- Топот
 local warnMon             = mod:NewSpellAnnounce(310137, 4) -- Топот
@@ -41,7 +40,7 @@ local warnPhase2     	  = mod:NewPhaseAnnounce(2)
 local specWarnZemla       = mod:NewSpecialWarningMoveAway(310152, nil, nil, nil, 3, 5) -- Землетрясение
 
 local timerVzglad	      = mod:NewTargetTimer(60, 310136, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- Взгляд
-local timerHwatCD         = mod:NewCDTimer(30, 310144, nil, nil, nil, 3) -- хватка
+local timerHwatCD         = mod:NewCDTimer(32, 310144, nil, nil, nil, 3) -- хватка
 local timerHwat           = mod:NewTargetTimer(3, 310144, nil, nil, nil, 3)
 local timerZemlaCast      = mod:NewCastTimer(5, 310152, nil, nil, nil, 1) -- Землетрясение
 local timerZemlaCD        = mod:NewCDTimer(13, 310152, nil, nil, nil, 1) -- Землетрясение
@@ -50,9 +49,6 @@ local timerTopCD          = mod:NewCDTimer(12, 310140, nil, nil, nil, 2)
 local timerMonCD          = mod:NewCDTimer(12, 310137, nil, nil, nil, 4)
 local timerKrikCD          = mod:NewCDTimer(28, 310151, nil, nil, nil, 2)
 local timerSuhCD          = mod:NewCDTimer(20, 310155, nil, nil, nil, 1)
-
---[[local timerMurlokCast     = mod:NewCastTimer(3, 309231, nil, nil, nil, 1)
-local timerMurlokCD       = mod:NewCDTimer(20, 309231, nil, nil, nil, 1)]]
 
 local berserkTimerhm      = mod:NewBerserkTimer(420)
 

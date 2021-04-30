@@ -6,7 +6,7 @@ local L = DBM_GUI_Translations
 L.MainFrame = "Deadly Boss Mods"
 
 L.TranslationByPrefix		= "Адаптация под Sirus - "
-L.TranslationBy 			= " Admiiral, Крольчонок"
+L.TranslationBy 			= " Admiiral, Крольчонок, Waini"
 L.Website					= "Посетите наш форум для обсуждения и поддержки на |cFF73C2FBhttps://forum.sirus.su/threads/dbm-dlja-sirusa.89486|r"
 L.WebsiteButton				= "Форум"
 

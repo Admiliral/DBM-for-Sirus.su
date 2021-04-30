@@ -53,7 +53,7 @@ local specWarnAnig          = mod:NewSpecialWarningDodge(310508, nil, nil, nil, 
 local specWarnVzg           = mod:NewSpecialWarningDodge(310516, nil, nil, nil, 3, 2)
 local specWarnVost          = mod:NewSpecialWarningSoak(310503, nil, nil, nil, 1, 2)
 local specWarnPechat        = mod:NewSpecialWarningSoak(310487, nil, nil, nil, 1, 2)
-local specWarnPepel         = mod:NewSpecialWarningRun(310514, nil, nil, nil, 1, 4)
+local specWarnPepel         = mod:NewSpecialWarningYou(310514, nil, nil, nil, 1, 4)
 
 local timerRass	        	= mod:NewTargetTimer(40, 310480, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- Рассеченая душа
 local timerKogti	    	= mod:NewTargetTimer(40, 310502, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- Когти

@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("KaelThas", "DBM-TheEye")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 163 $"):sub(12, -3))
+mod:SetRevision("20210214160000")
 
 mod:SetCreatureID(19622)
 mod:RegisterCombat("yell", L.YellPhase1)
@@ -60,6 +60,7 @@ local warnBombhm        = mod:NewTargetAnnounce(308750, 2) -- бомба
 local warnVzriv         = mod:NewTargetAnnounce(308797, 2) -- лужа
 
 local specWarnCata      = mod:NewSpecialWarningRun(308790, nil, nil, nil, 4, 2)
+local specWarnVzriv     = mod:NewSpecialWarningRun(308797, nil, nil, nil, 3, 3)
 
 local timerFuriousCD     = mod:NewCDTimer(7, 308732, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerFurious		= mod:NewTargetTimer(30, 308732, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
@@ -302,6 +303,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif args:IsSpellID(36731) then
 		timerFlameStrike:Start()
 	elseif args:IsSpellID(308797) then --ВЗРЫВ ТЬМЫ
+		if args:IsPlayer() then
+			specWarnVzriv:Show()
+		end
 		timerVzrivCast:Start()
 		timerVzrivCD:Start()
 		warnVzriv:Show(table.concat(VzrivTargets, "<, >"))

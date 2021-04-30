@@ -14,13 +14,10 @@ L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
-	WarnPhase2soon = "Скоро фаза 2",
-	WarnHandOfMagt = "Печать Магтеридона"
+
 }
 
 L:SetOptionLocalization{
-	WarnPhase2soon = "Анонсировать переход на вторую фазу",
-	WarnHandOfMagt = "Спец предупреждение для целей Печати",
 	Pull = "Отсчет времени до активации босса"
 }
 
