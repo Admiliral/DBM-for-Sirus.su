@@ -24,7 +24,8 @@ local warnFlameBrittle			= mod:NewSpecialWarningSwitch(62382, "Dps")
 local enrage 					= mod:NewBerserkTimer(480)
 local timerFlameJetsCast		= mod:NewCastTimer(2.7, 312727)
 local timerActivateConstruct	= mod:NewCDCountTimer(30, 62488, nil, nil, nil, 1)
-local timerScorchCooldown		= mod:NewNextTimer(25, 312730, nil, nil, nil, 2)
+local timerScorchCooldown		= mod:NewNextTimer(20.5, 312730, nil, nil, nil, 5)
+local timerFlameJetsCooldown	= mod:NewCDTimer(23.5, 312727, nil, nil, nil, 2)
 local timerScorchCast			= mod:NewCastTimer(3, 312730, nil, nil, nil, 5)
 local timerSlagPot				= mod:NewTargetTimer(10, 312731, nil, nil, nil, 3)
 local timerAchieve				= mod:NewAchievementTimer(240, 2930)
@@ -36,9 +37,14 @@ mod:AddSetIconOption("SlagPotIcon", 312731, false, false, {8})
 
 function mod:OnCombatStart(delay)
 	self.vb.ConstructCount = 0
+	DBM:FireCustomEvent("DBM_EncounterStart", 33118, "Ignis")
 	timerAchieve:Start()
 	timerScorchCooldown:Start(12-delay)
 	timerActivateConstruct:Start(11-delay)
+end
+
+function mod:OnCombatEnd(wipe)
+	DBM:FireCustomEvent("DBM_EncounterEnd", 33118, "Ignis", wipe)
 end
 
 function mod:SPELL_CAST_START(args)
