@@ -241,7 +241,6 @@ function mod:NextPhase()
         end
 
 	elseif self.vb.phase == 3 then
-	
 		timerDarkGlareCast:Cancel()
 		timerNextDarkGlare:Cancel()
 		timerNextFrostBomb:Cancel()
