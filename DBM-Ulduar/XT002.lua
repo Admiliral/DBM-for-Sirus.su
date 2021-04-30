@@ -99,7 +99,6 @@ function mod:SPELL_AURA_REMOVED(args)
 		end
 	elseif args:IsSpellID(312945) then
 		timerHeart:Start()
-	
 	end
 end
 
