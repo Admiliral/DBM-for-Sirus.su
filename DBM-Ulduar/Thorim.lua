@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Thorim", "DBM-Ulduar")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20200405141241")
+mod:SetRevision("20210501000000")
 mod:SetCreatureID(32865)
 mod:SetUsedIcons(8)
 
@@ -39,6 +39,7 @@ mod:AddBoolOption("YellOnUnbalancingStrike", true)
 local lastcharge = {}
 
 function mod:OnCombatStart(delay)
+	DBM:FireCustomEvent("DBM_EncounterStart", 32865, "Thorim")
 	enrageTimer:Start()
 	timerHardmode:Start()
 	if self.Options.RangeFrame then
@@ -53,6 +54,7 @@ local function sortFails1C(e1, e2)
 end
 
 function mod:OnCombatEnd()
+	DBM:FireCustomEvent("DBM_EncounterEnd", 32865, "Thorim", wipe)
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Hide()
 	end
