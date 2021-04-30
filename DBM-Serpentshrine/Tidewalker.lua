@@ -50,7 +50,7 @@ local timerMonCD          = mod:NewCDTimer(12, 310137, nil, nil, nil, 4)
 local timerKrikCD          = mod:NewCDTimer(28, 310151, nil, nil, nil, 2)
 local timerSuhCD          = mod:NewCDTimer(20, 310155, nil, nil, nil, 1)
 
-local berserkTimerhm      = mod:NewBerserkTimer(420)
+local berserkTimerhm      = mod:NewBerserkTimer(360)
 
 mod:AddSetIconOption("SetIconOnSuhTargets", 310155, true, true, {4, 5, 6, 7, 8})
 
