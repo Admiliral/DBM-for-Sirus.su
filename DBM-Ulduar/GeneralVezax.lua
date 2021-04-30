@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("GeneralVezax", "DBM-Ulduar")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20210501000000")
+mod:SetRevision("202104251754")
 
 mod:SetCreatureID(33271)
 mod:RegisterCombat("yell", L.YellPull)

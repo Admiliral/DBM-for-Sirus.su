@@ -130,6 +130,6 @@ end
 
 --[[function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.YellPhase2 then
-		
+
 	end
 end]]

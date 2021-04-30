@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Auriaya", "DBM-Ulduar")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20210501000000")
+mod:SetRevision(("$Revision: 4133 $"):sub(12, -3))
 
 mod:SetCreatureID(33515)
 mod:RegisterCombat("combat")

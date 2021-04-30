@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Freya_Elders", "DBM-Ulduar")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20210501000000")
+mod:SetRevision(("$Revision: 1192 $"):sub(12, -3))
 
 -- passive mod to provide information for multiple fight (trash respawn)
 -- mod:SetCreatureID(32914, 32915, 32913)

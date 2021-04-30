@@ -108,7 +108,6 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(308562) then -- кольцо
-		specWarnRing:Show(args.sourceName)
 		warnRing:Schedule(0)
 	elseif args:IsSpellID(308558) then -- послушники
 		timerNextHelp:Schedule(80)
