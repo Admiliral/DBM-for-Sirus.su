@@ -150,7 +150,7 @@ function mod:SPELL_AURA_APPLIED(args)
             timerCrunch10:Start(args.destName)  -- We track duration timer only in 10-man since it's only 6sec and tanks don't switch.
 		end
 	elseif args:IsSpellID(312748) then		        -- Хруст доспеха (25-man only)
-		warnCrunchArmor:Show(args.destName)
+		local amount = args.amount or 1
 		if args.amount >= 2 then
 			if args:IsPlayer() then
 				specWarnCrunchArmor2:Show(amount)
