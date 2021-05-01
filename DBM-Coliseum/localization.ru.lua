@@ -176,7 +176,7 @@ L:SetWarningLocalization{
 	SpecWarnSwitchTarget		= "Смена цели",
 	SpecWarnKickNow				= "Прерывание",
 	WarningTouchDebuff			= "Отрицательный эффект на |3-5(>%s<)",
-	WarningPoweroftheTwins		= "Сила близнецов - больше исцеления на |3-3(>%s<)",
+	WarningPoweroftheTwins2		= "Сила близнецов - больше исцеления на |3-3(>%s<)",
 	SpecWarnPoweroftheTwins		= "Сила близнецов"
 }
 
@@ -195,7 +195,7 @@ L:SetOptionLocalization{
 	SpecialWarnOnDebuff			= "Спец-предупреждение, когда отрицательный эффект",
 	SetIconOnDebuffTarget		= "Установить метку на получившего отрицательный эффект (героический режим)",
 	WarningTouchDebuff			= "Объявлять цели, получившие отрицательный эффект",
-	WarningPoweroftheTwins		= "Объявлять цель под воздействем Силы близнецов",
+	WarningPoweroftheTwins2		= "Объявлять цель под воздействем Силы близнецов",
 	SpecWarnPoweroftheTwins		= "Спец-предупреждение, когда на вас Сила близнецов"
 }
 
@@ -220,9 +220,9 @@ L:SetWarningLocalization{
 	WarnSubmerge			= "Ануб'арак зарывается",
 	WarnSubmergeSoon		= "Зарывание через 10 сек",
 	specWarnSubmergeSoon	= "Зарывание через 10 сек!",
-	SpecWarnPursue			= "Вас преследуют - бегите",
+	--SpecWarnPursue			= "Вас преследуют - бегите",
 	warnAdds				= "Помощники",
-	SpecWarnShadowStrike	= "Теневой удар - прерывание"
+	--SpecWarnShadowStrike	= "Теневой удар - прерывание"
 }
 
 L:SetMiscLocalization{
@@ -239,14 +239,14 @@ L:SetOptionLocalization{
 	WarnSubmerge			= "Предупреждение о зарывании",
 	WarnSubmergeSoon		= "Предупреждать заранее о зарывании",
 	specWarnSubmergeSoon	= "Спец-предупреждение о скором зарывании",
-	SpecWarnPursue			= "Спец-предупреждение, когда вас преследуют",
+	--SpecWarnPursue			= "Спец-предупреждение, когда вас преследуют",
 	warnAdds				= "Предупреждение о призыве помощников",
 	timerAdds				= "Отсчет времени до призыва помощников",
 	TimerEmerge				= "Отсчет времени до появления",
 	TimerSubmerge			= "Отсчет времени до зарывания",
 	PlaySoundOnPursue		= "Звуковой сигнал, если вас преследуют",
 	PursueIcon				= "Устанавливать метки на преследуемых",
-	SpecWarnShadowStrike	= "Спец-предупреждение для $spell:66134 (для прерывания)",
+	--SpecWarnShadowStrike	= "Спец-предупреждение для $spell:66134 (для прерывания)",
 	RemoveHealthBuffsInP3	= "Удалять усиления здоровья в начале фазы 3",
 	SetIconsOnPCold         = "Устанавливать метки на цели заклинания $spell:68510",
 	AnnouncePColdIcons		= "Объявлять метки целей заклинания $spell:68510 в рейд-чат\n(требуются права лидера или помощника)",
