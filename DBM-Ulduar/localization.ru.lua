@@ -499,7 +499,6 @@ L:SetWarningLocalization{
 	WarnBrainPortalSoon				= "Провал Безумия через 3 секунды",
 	SpecWarnFervor					= "Рвение Сары на вас",
 	SpecWarnFervorCast				= "Рвение Сары накладывается на вас",
-	SpecWarnMaladyNear				= "Душевная болезнь на |3-5(%s) около вас",
 	specWarnBrainPortalSoon			= "Скоро Провал Безумия"
 }
 
@@ -515,16 +514,9 @@ L:SetOptionLocalization{
 	SpecWarnGuardianLow				= "Спец-предупреждение, когда у Стража (в фазе 1) мало здоровья (для бойцов)",
 	WarnBrainPortalSoon				= "Предупреждать заранее о Провале Безумия",
 	SpecWarnMadnessOutNow			= "Спец-предупреждение незадолго до окончания $spell:313003",
-	SetIconOnFearTarget				= "Устанавливать метки на цели заклинания $spell:313029",
 	SpecWarnFervorCast				= "Спец-предупреждение, когда на вас накладывается $spell:312989\n(должна быть в цели или фокусе хотя бы у одного члена рейда)",
 	specWarnBrainPortalSoon			= "Спец-предупреждение о следующем Провале Безумия",
-	WarningSqueeze					= "Кричать, когда на вас Выдавливание",
 	NextPortal						= "Отсчет времени до следующего Провала Безумия",
-	SetIconOnFervorTarget			= "Устанавливать метки на цели заклинания $spell:312989",
-	ShowSaraHealth					= "Показывать здоровье Сары в фазе 1 (должна быть в цели или фокусе хотя бы у одного члена рейда)",
-	SpecWarnMaladyNear				= "Спец-предупреждение о $spell:312029 около вас",
-	SetIconOnBrainLinkTarget		= "Устанавливать метки на цели заклинания $spell:312995",
 	MaladyArrow						= "Показывать стрелку, когда $spell:313029 около вас",
-	YellOnDeathCoil                 = "Кричать, когда на вас $spell:313029"
 }
 
