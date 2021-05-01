@@ -18,6 +18,8 @@ local specWarnFistofStone	= mod:NewSpecialWarningSpell(312853, "Tank", nil, nil,
 local specWarnGroundTremor	= mod:NewSpecialWarningCast(312856, "SpellCaster")
 
 local timerImpale			= mod:NewTargetTimer(20, 312859, nil, "Healer|Tank", nil, 5)
+local timerStoneCD 		    = mod:NewCDTimer(71, 312853)
+local timerCoreCD 		    = mod:NewCDTimer(39.6, 312842)
 
 mod:AddBoolOption("PlaySoundOnFistOfStone", false)
 mod:AddBoolOption("TrashRespawnTimer", true, "timer")
@@ -35,19 +37,25 @@ mod:AddBoolOption("TrashRespawnTimer", true, "timer")
 -- Elder Brightleaf: 32915
 -- Elder Stonebark: 32914
 --
+function mod:OnCombatStart(delay)
+    timerStoneCD:Start(26)
+	timerCoreCD:Start()
+end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(312853,312500) then 					-- Fists of Stone
+	if args:IsSpellID(62344, 300893, 312500, 312853) then 					-- Fists of Stone
 		specWarnFistofStone:Show()
 		specWarnFistofStone:Play("justrun")
-	elseif args:IsSpellID(312842, 312856, 312503, 312489) then		-- Ground Tremor
+	elseif args:IsSpellID(62325, 62932, 312489, 312503, 312842, 312856) then		-- Ground Tremor
 		specWarnGroundTremor:Show()
 		specWarnGroundTremor:Play("stopcast")
+	elseif args:IsSpellID(312857) then
+        timerCoreCD:Start()
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(312506, 312859) then 			-- Impale
+	if args:IsSpellID(62310, 62928, 312506, 312859) then 			-- Impale
 		if not args:IsPlayer() then
 			specWarnImpale:Show(args.destName)
 			specWarnImpale:Play("tauntboss")
@@ -66,7 +74,7 @@ function mod:UNIT_DIED(args)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(312506, 312859) then 			-- Impale
+	if args:IsSpellID(62310, 62928, 312506, 312859) then 			-- Impale
 		timerImpale:Stop(args.destName)
 	end
 end

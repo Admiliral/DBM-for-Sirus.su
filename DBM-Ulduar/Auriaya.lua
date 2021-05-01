@@ -14,7 +14,7 @@ mod:RegisterEvents(
 	"UNIT_DIED"
 )
 
-local warnSwarm 		= mod:NewTargetAnnounce(312971, 2)
+local warnSwarm 		= mod:NewTargetAnnounce(312956, 2)
 local warnFearSoon	 	= mod:NewSoonAnnounce(312955, 1)
 local warnCatDied 		= mod:NewAnnounce("WarnCatDied", 3, 312972)
 local warnCatDiedOne	= mod:NewAnnounce("WarnCatDiedOne", 3, 312972)
@@ -23,6 +23,7 @@ local specWarnFear 			= mod:NewSpellAnnounce(312955, nil, nil, nil, 2, 2)
 local specWarnBlast		= mod:NewSpecialWarningInterrupt(64389, "HasInterrupt", nil, 2, 1, 2)
 local specWarnVoid 		= mod:NewSpecialWarningMove(312971, nil, nil, nil, 1, 2)
 local specWarnSonic			= mod:NewSpellAnnounce(312954, nil, nil, nil, 2, 2)
+local specWarnCat			= mod:NewSpecialWarningAddsCustom(312972, nil, nil, nil, 2, 2)
 
 local enrageTimer		= mod:NewBerserkTimer(600)
 local timerDefender 	= mod:NewTimer(35, "timerDefender", 64455, nil, nil, 1)
@@ -52,16 +53,16 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(312953, 312600) then -- Sentinel Blast
+	if args:IsSpellID(64678, 64389, 312600, 312953) then -- Sentinel Blast
 		specWarnBlast:Show(args.sourceName)
 		specWarnBlast:Play("kickcast")
-	elseif args:IsSpellID(312955) then -- Terrifying Screech
+	elseif args:IsSpellID(64386, 312602, 312955) then -- Terrifying Screech
 		timerFear:Start()
 		timerNextFear:Schedule(2)
 		warnFearSoon:Schedule(34)
 		specWarnFear:Show()
 		specWarnFear:Play("fearsoon")
-	elseif args:IsSpellID(312954, 312601) then --Sonic Screech
+	elseif args:IsSpellID(64688, 64422, 312601, 312954) then --Sonic Screech
 		timerSonic:Start()
 		timerNextSonic:Start()
 		specWarnSonic:Show(TANK)
@@ -70,10 +71,11 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(312956) then -- Guardian Swarm
+	if args:IsSpellID(64396, 312603, 312956) then -- Guardian Swarm
 		warnSwarm:Show(args.destName)
 		timerNextSwarm:Start()
-	elseif args:IsSpellID(312972) then -- Feral Essence
+	elseif args:IsSpellID(64455, 312619, 312972) then -- Feral Essence
+		specWarnCat:Show(args.destName)
 		DBM.BossHealth:AddBoss(34035, L.Defender:format(9))
 	--[[elseif args:IsSpellID(312955) and args:IsPlayer() then
 		isFeared = true]]
@@ -111,7 +113,7 @@ function mod:UNIT_DIED(args)
 end
 
 function mod:SPELL_DAMAGE(args)
-	if args:IsSpellID(312963,312962,312971) and args:IsPlayer() then -- Feral Defender Void Zone
+	if args:IsSpellID(64459, 64675, 312610, 312963) and args:IsPlayer() then -- Feral Defender Void Zone
 		specWarnVoid:Show()
 		specWarnVoid:Play("runaway")
 	end
