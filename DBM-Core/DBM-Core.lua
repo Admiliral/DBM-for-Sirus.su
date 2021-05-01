@@ -333,6 +333,9 @@ DBM.Counts = {
 	{text = "Moshne",					value = "Mosh",		path = "Interface\\AddOns\\DBM-Core\\Sounds\\Mosh\\", max = 5},
 	{text = "Anshlun (ptBR)",			value = "Anshlun",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Anshlun\\", max = 10},
 	{text = "Neryssa (ptBR)",			value = "Neryssa",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Neryssa\\", max = 10},
+	{text = "Alarak",			   		value = "Alarak",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Alarak\\", max = 10},
+	{text = "Nadi",						value = "Nadi",		path = "Interface\\AddOns\\DBM-Core\\Sounds\\Nadi\\", max = 5},
+	{text = "Tani",						value = "Tani",		path = "Interface\\AddOns\\DBM-Core\\Sounds\\Tani\\", max = 10},
 }
 --Sounds use SoundKit Ids (not file data ids)
 DBM.Victory = {
@@ -340,6 +343,9 @@ DBM.Victory = {
 	{text = "Random",					value = "Random"},
 	{text = "Blakbyrd: FF Fanfare",		value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\bbvictory.ogg", length = 4},
 	{text = "SMG: FF Fanfare",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\SmoothMcGroove_Fanfare.ogg", length = 4},
+	{text = "AlarakRakshir",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\AlarakRakshir.ogg", length = 4},
+	{text = "VorazunHistory",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\VorazunHistory.ogg", length = 4},
+	{text = "VorazunGG",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\VorazunGG.ogg", length = 4},
 }
 DBM.Defeat = {
 	{text = "None",						value = "None"},
