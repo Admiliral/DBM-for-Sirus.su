@@ -67,6 +67,7 @@ mod.vb.Guardians = 0
 mod.vb.numberOfPlayers = 1
 
 function mod:OnCombatStart(delay)
+	DBM:FireCustomEvent("DBM_EncounterStart", 33288, "YoggSaron")
 	self.vb.numberOfPlayers = DBM:GetNumRealGroupMembers()
 	self.vb.brainLinkIcon = 2
 	self.vb.beaconIcon = 8
@@ -81,7 +82,8 @@ function mod:OnCombatStart(delay)
 	end
 end
 
-function mod:OnCombatEnd()
+function mod:OnCombatEnd(wipe)
+	DBM:FireCustomEvent("DBM_EncounterEnd", 33288, "YoggSaron", wipe)
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end
