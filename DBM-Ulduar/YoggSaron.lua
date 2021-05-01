@@ -18,7 +18,6 @@ mod:RegisterEvents(
 
 
 local warnMadness 					= mod:NewCastAnnounce(313003, 2)
---local warnFervorCast 				= mod:NewCastAnnounce(312989, 3)
 local warnSqueeze					= mod:NewTargetAnnounce(313031, 3)
 local warnFervor					= mod:NewTargetAnnounce(312989, 4)
 local warnDeafeningRoarSoon			= mod:NewPreWarnAnnounce(313000, 5, 3)
@@ -31,17 +30,14 @@ local warnBrainLink 				= mod:NewTargetAnnounce(312995, 3)
 local warnBrainPortalSoon			= mod:NewAnnounce("WarnBrainPortalSoon", 2, 57687)
 local warnEmpowerSoon				= mod:NewSoonAnnounce(313014, 4)
 
---local specWarnGuardianLow 			= mod:NewSpecialWarning("SpecWarnGuardianLow", false)
 local specWarnBrainLink 			= mod:NewSpecialWarningYou(312995, nil, nil, nil, 1, 2)
 local specWarnSanity 				= mod:NewSpecialWarning("SpecWarnSanity")
 local specWarnMadnessOutNow			= mod:NewSpecialWarning("SpecWarnMadnessOutNow")
---local specWarnBrainPortalSoon		= mod:NewSpecialWarning("specWarnBrainPortalSoon", false)
 local specWarnDeafeningRoar			= mod:NewSpecialWarningSpell(313000, nil, nil, nil, 1, 2)
 local specWarnFervor				= mod:NewSpecialWarningYou(312989, nil, nil, nil, 1, 2)
 local specWarnMalady				= mod:NewSpecialWarningYou(313029, nil, nil, nil, 1, 2)
-local specWarnFervorCast			= mod:NewSpecialWarning(313029, nil, nil, nil, 1, 2)
-local specWarnMaladyNear			= mod:NewSpecialWarning(313029, nil, nil, nil, 1, 2)
-local yellSqueeze					= mod:NewYell(64125)
+local specWarnMaladyNear			= mod:NewSpecialWarningClose(313029, nil, nil, nil, 1, 2)
+local yellSqueeze					= mod:NewYell(313031)
 
 
 local enrageTimer					= mod:NewBerserkTimer(900)
@@ -49,22 +45,17 @@ local timerFervor					= mod:NewTargetTimer(15, 312989, nil, false, 2)
 local brainportal					= mod:NewTimer(20, "NextPortal", 57687, nil, nil, 5)
 local timerLunaricGaze				= mod:NewCastTimer(4, 312002, nil, nil, nil, 2)
 local timerNextLunaricGaze			= mod:NewCDTimer(8.5, 312002, nil, nil, nil, 2)
-local timerEmpower					= mod:NewCDTimer(46, 64465, nil, nil, nil, 3)
-local timerEmpowerDuration			= mod:NewBuffActiveTimer(10, 64465, nil, nil, nil, 3)
+local timerEmpower					= mod:NewCDTimer(46, 313014, nil, nil, nil, 3)
+local timerEmpowerDuration			= mod:NewBuffActiveTimer(10, 313014, nil, nil, nil, 3)
 local timerMadness 					= mod:NewCastTimer(60, 313003, nil, nil, nil, 5)
 local timerCastDeafeningRoar		= mod:NewCastTimer(2.3, 313000, nil, nil, nil, 2)
 local timerNextDeafeningRoar		= mod:NewNextTimer(30, 313000, nil, nil, nil, 2)
 local timerAchieve					= mod:NewAchievementTimer(420, 3012)
 
---mod:AddBoolOption("ShowSaraHealth")
-
---mod:AddBoolOption("MaladyArrow")
---mod:AddBoolOption("YellOnDeathCoil", true)
-
 mod:AddSetIconOption("SetIconOnFearTarget", 312995, true, false, {6})
 mod:AddSetIconOption("SetIconOnFervorTarget", 312995, false, false, {7})
 mod:AddSetIconOption("SetIconOnBrainLinkTarget", 312995, true, false, {1, 2})
-mod:AddSetIconOption("SetIconOnBeacon", 64465, true, true, {1, 2, 3, 4, 5, 6, 7, 8}) --- ??????
+mod:AddSetIconOption("SetIconOnBeacon", 313014, true, true, {1, 2, 3, 4, 5, 6, 7, 8}) --- ??????
 --mod:AddInfoFrameOption(212647) --???
 
 mod.vb.phase = 1
@@ -137,7 +128,7 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(64144) and self:GetUnitCreatureId(args.sourceGUID) == 33966 then
 		warnCrusherTentacleSpawned:Show()
-	elseif args.spellId == 64465 and self:AntiSpam(3, 4) then
+	elseif args.spellId == 313014 and self:AntiSpam(3, 4) then
 		timerEmpower:Start()
 		timerEmpowerDuration:Start()
 		warnEmpowerSoon:Schedule(40)
@@ -211,7 +202,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnP2:Show()
 	elseif args:IsSpellID(313028, 312002) then	-- Lunatic Gaze (reduces sanity)
 		timerLunaricGaze:Start()
-	elseif args.spellId == 64465 then
+	elseif args.spellId == 313014 then
 		if self.Options.SetIconOnBeacon then
 			self:ScanForMobs(args.destGUID, 2, self.vb.beaconIcon, 1, 0.2, 10, "SetIconOnBeacon")
 		end
@@ -233,7 +224,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerNextLunaricGaze:Start()
 	elseif args:IsSpellID(313029, 312993) and self.Options.SetIconOnFearTarget then   -- Malady of the Mind (Death Coil)
 		self:SetIcon(args.destName, 0)
-	elseif args.spellId == 64465 then
+	elseif args.spellId == 313014 then
 		if self.Options.SetIconOnBeacon then
 			self:ScanForMobs(args.destGUID, 2, 0, 1, 0.2, 12, "SetIconOnBeacon")
 		end
