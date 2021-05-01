@@ -78,9 +78,6 @@ local warnBladestorm		= mod:NewSpellAnnounce(65947, 4)
 local warnHeroism			= mod:NewSpellAnnounce(65983, 3)
 local warnBloodlust			= mod:NewSpellAnnounce(65980, 3)
 local warnHandofFreedom		= mod:NewTargetAnnounce(68758, 2)
-local warnHandofProt		= mod:NewTargetAnnounce(66009, 3)
-local warnDivineShield		= mod:NewSpellAnnounce(66010, 3)
-local warnIceBlock			= mod:NewSpellAnnounce(65802, 3)
 local warnShadowstep		= mod:NewSpellAnnounce(66178, 2)
 local warnDeathgrip			= mod:NewTargetAnnounce(66017, 2)
 local warnCyclone			= mod:NewTargetAnnounce(65859, 1, nil, false)
@@ -147,7 +144,7 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
-	if (spellId == 65817 or args:IsSpellID(68142, 68143, 68144)) and destGUID == UnitGUID("player") and self:AntiSpam() then
+	if (spellId == 65817 or spellId == 68142 or spellId == 68143 or spellId == 68144) and destGUID == UnitGUID("player") and self:AntiSpam() then
 		specWarnHellfire:Show()
 		specWarnHellfire:Play("runaway")
 	end

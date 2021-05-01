@@ -69,10 +69,10 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
-		if args:IsSpellID(66877, 67070, 67071, 67072) and destGUID == UnitGUID("player") and self:AntiSpam(3, 1) then		-- Legion Flame
+		if (spellId == 66877 or spellId == 67070 or spellId == 67071 or spellId == 67072) and destGUID == UnitGUID("player") and self:AntiSpam(3, 1) then		-- Legion Flame
 			specWarnFlameGTFO:Show()
 			specWarnFlameGTFO:Play("runaway")
-		elseif args:IsSpellID(66496, 68716, 68717, 68718) and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then	-- Fel Inferno
+		elseif(spellId == 66496 or spellId == 68716 or spellId == 68717 or spellId == 68718) and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then	-- Fel Inferno
 			specWarnFelInferno:Show()
 		specWarnFelInferno:Play("runaway")
 	end

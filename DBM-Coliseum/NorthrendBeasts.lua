@@ -246,10 +246,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if (args:IsSpellID(66320, 67472, 67473, 67475) or spellId == 66317) and destGUID == UnitGUID("player") and self:AntiSpam(3, 1) then	-- Fire Bomb (66317 is impact damage, not avoidable but leaving in because it still means earliest possible warning to move. Other 4 are tick damage from standing in it)
+	if (spellId == 66317 or spellId == 66320 or spellId == 67472 or spellId == 67473 or spellId == 67475) and destGUID == UnitGUID("player") and self:AntiSpam(3, 1) then	-- Fire Bomb (66317 is impact damage, not avoidable but leaving in because it still means earliest possible warning to move. Other 4 are tick damage from standing in it)
 		specWarnGTFO:Show(spellName)
 		specWarnGTFO:Play("runaway")
-	elseif args:IsSpellID(66881, 67638, 67639, 67640) and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then							-- Slime Pool
+	elseif (spellId == 66881 or spellId == 67638 or spellId == 67639 or spellId == 67640) and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then							-- Slime Pool
 		specWarnGTFO:Show(spellName)
 		specWarnGTFO:Play("runaway")
 	end

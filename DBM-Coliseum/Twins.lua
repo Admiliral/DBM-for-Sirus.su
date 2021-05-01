@@ -100,7 +100,7 @@ function mod:SpecialAbility(debuff)
 	warnSpecial:Schedule(40)
 end
 
-function mod:resetDebuff()
+local function resetDebuff(self)
 	self.vb.debuffIcon = 8
 end
 
