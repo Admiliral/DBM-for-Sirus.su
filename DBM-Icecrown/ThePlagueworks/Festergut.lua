@@ -40,7 +40,7 @@ local timerGooCD			= mod:NewNextTimer(10, 72549, nil, nil, nil, 3)
 local berserkTimer			= mod:NewBerserkTimer(300)
 
 mod:AddBoolOption("RangeFrame", "Ranged")
-mod:AddBoolOption("SetIconOnGasSpore", true)
+mod:AddSetIconOption("SetIconOnGasSpore", 69279, true, true, {6, 7, 8}) -- тух
 mod:AddBoolOption("AnnounceSporeIcons", false)
 mod:AddBoolOption("AchievementCheck", false, "announce")
 

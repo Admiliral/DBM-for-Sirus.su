@@ -45,9 +45,10 @@ local timerEssenceoftheBloodQueen	= mod:NewBuffFadesTimer(60, 71473, nil, nil, n
 
 local berserkTimer					= mod:NewBerserkTimer(320)
 
-mod:AddBoolOption("BloodMirrorIcon", false)
-mod:AddBoolOption("SwarmingShadowsIcon", true)
-mod:AddBoolOption("SetIconOnDarkFallen", true)
+
+mod:AddSetIconOption("BloodMirrorIcon", 70838, true, true, {7})
+mod:AddSetIconOption("SwarmingShadowsIcon", 71266, true, true, {8})
+mod:AddSetIconOption("SetIconOnDarkFallen", 71340, true, true, {4, 5, 6})
 mod:AddBoolOption("RangeFrame", true)
 
 local pactTargets = {}

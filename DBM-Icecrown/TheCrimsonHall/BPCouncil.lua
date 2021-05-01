@@ -51,8 +51,8 @@ local timerShadowPrison			= mod:NewBuffFadesTimer(10, 72999, nil, nil, nil, 5) -
 
 local berserkTimer				= mod:NewBerserkTimer(600)
 
-mod:AddBoolOption("EmpoweredFlameIcon", true)
-mod:AddBoolOption("ActivePrinceIcon", false)
+mod:AddSetIconOption("EmpoweredFlameIcon", 72040, true, true, {7})
+mod:AddSetIconOption("ActivePrinceIcon", "ActivePrinceIcon", true, true, {8})
 mod:AddBoolOption("RangeFrame", true)
 mod:AddBoolOption("VortexArrow")
 mod:AddBoolOption("BypassLatencyCheck", false)--Use old scan method without syncing or latency check (less reliable but not dependant on other DBM users in raid)

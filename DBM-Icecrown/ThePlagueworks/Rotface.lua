@@ -43,7 +43,7 @@ local timerOozeExplosion		= mod:NewCastTimer(4, 69839, nil, nil, nil, 2)
 local timerVileGasCD			= mod:NewNextTimer(30, 72272, nil, nil, nil, 3)
 
 mod:AddBoolOption("RangeFrame", "Ranged")
-mod:AddBoolOption("InfectionIcon", true)
+mod:AddSetIconOption("InfectionIcon", 71224, true, true, {7, 8}) --гнил
 mod:AddBoolOption("TankArrow")
 
 local RFVileGasTargets	= {}

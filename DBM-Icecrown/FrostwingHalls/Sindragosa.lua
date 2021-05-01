@@ -51,8 +51,9 @@ local timerMysticAchieve		= mod:NewAchievementTimer(30, 4620, "AchievementMystic
 
 local berserkTimer				= mod:NewBerserkTimer(600)
 
-mod:AddBoolOption("SetIconOnFrostBeacon", true)
-mod:AddBoolOption("SetIconOnUnchainedMagic", true)
+
+mod:AddSetIconOption("SetIconOnFrostBeacon", 70126, true, true, {4, 5, 6, 7, 8})
+mod:AddSetIconOption("SetIconOnUnchainedMagic", 69762, true, true, {4, 5, 6, 7, 8})
 mod:AddBoolOption("ClearIconsOnAirphase", true)
 mod:AddBoolOption("AnnounceFrostBeaconIcons", false)
 mod:AddBoolOption("AchievementCheck", false, "announce")

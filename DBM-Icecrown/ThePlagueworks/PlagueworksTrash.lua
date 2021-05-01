@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("PlagueworksTrash", "DBM-Icecrown", 2)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("20200405141240")
+mod:SetCreatureID(36880)
 
 mod:RegisterEvents(
 	"SPELL_AURA_APPLIED",
@@ -16,15 +17,15 @@ local warnZombies		= mod:NewSpellAnnounce(71159, 2)
 local warnMortalWound	= mod:NewAnnounce("WarnMortalWound", 2, 71127, false)
 local warnDecimateSoon	= mod:NewSoonAnnounce(71123, 3)
 
-local specWarnDecimate		= mod:NewSpecialWarningSpell(71123)
+local specWarnDecimate		= mod:NewSpecialWarningSpell(71123, nil, nil, nil, 1, 2)
 local specWarnMortalWound	= mod:NewSpecialWarningStack(71127, nil, 5)
 local specWarnTrap			= mod:NewSpecialWarning("SpecWarnTrap")
-local specWarnBlightBomb	= mod:NewSpecialWarningSpell(71088)
+local specWarnBlightBomb	= mod:NewSpecialWarningSpell(71088, nil, nil, nil, 1, 2)
 
-local timerZombies		= mod:NewNextTimer(20, 71159)
-local timerMortalWound	= mod:NewTargetTimer(15, 71127)
-local timerDecimate		= mod:NewNextTimer(33, 71123)
-local timerBlightBomb	= mod:NewCastTimer(5, 71088)
+local timerZombies		= mod:NewNextTimer(20, 71159, nil, nil, nil, 1)
+local timerMortalWound	= mod:NewTargetTimer(15, 71127, nil, nil, nil, 3)
+local timerDecimate		= mod:NewNextTimer(33, 71123, nil, nil, nil, 2)
+local timerBlightBomb	= mod:NewCastTimer(5, 71088, nil, nil, nil, 3)
 
 mod:RemoveOption("HealthFrame")
 

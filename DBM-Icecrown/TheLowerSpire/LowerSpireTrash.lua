@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("LowerSpireTrash", "DBM-Icecrown", 1)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("20200405141240")
+mod:SetCreatureID(37007)
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6, 7, 8)
 
 mod:RegisterEvents(
@@ -14,17 +15,17 @@ local warnDisruptingShout		= mod:NewSpellAnnounce(71022, 2)
 local warnDarkReckoning			= mod:NewTargetAnnounce(69483, 3)
 local warnDeathPlague			= mod:NewTargetAnnounce(72865, 4)
 
-local specWarnDisruptingShout	= mod:NewSpecialWarningCast(71022)
-local specWarnDarkReckoning		= mod:NewSpecialWarningMove(69483)
-local specWarnDeathPlague		= mod:NewSpecialWarningYou(72865)
+local specWarnDisruptingShout	= mod:NewSpecialWarningCast(71022, nil, nil, nil, 1, 2)
+local specWarnDarkReckoning		= mod:NewSpecialWarningMove(69483, nil, nil, nil, 1, 2)
+local specWarnDeathPlague		= mod:NewSpecialWarningYou(72865, nil, nil, nil, 1, 2)
 local specWarnTrap				= mod:NewSpecialWarning("SpecWarnTrap")
 
-local timerDisruptingShout		= mod:NewCastTimer(3, 71022)
-local timerDarkReckoning		= mod:NewTargetTimer(8, 69483)
-local timerDeathPlague			= mod:NewTargetTimer(15, 72865)
+local timerDisruptingShout		= mod:NewCastTimer(3, 71022, nil, nil, nil, 5)
+local timerDarkReckoning		= mod:NewTargetTimer(8, 69483, nil, nil, nil, 2)
+local timerDeathPlague			= mod:NewTargetTimer(15, 72865, nil, nil, nil, 7)
 
-mod:AddBoolOption("SetIconOnDarkReckoning", true)
-mod:AddBoolOption("SetIconOnDeathPlague", true)
+mod:AddSetIconOption("SetIconOnDarkReckoning", 69483, true, true, {5, 6, 7, 8})
+mod:AddSetIconOption("SetIconOnDeathPlague", 72865, true, true, {8})
 mod:RemoveOption("HealthFrame")
 
 local DeathPlagueTargets = {}

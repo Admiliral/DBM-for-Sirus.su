@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("FrostwingHallTrash", "DBM-Icecrown", 4)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("20200405141240")
+mod:SetCreatureID(37126)
 
 mod:RegisterEvents(
 	"SPELL_AURA_APPLIED",
@@ -14,10 +15,10 @@ local warnConflag		= mod:NewTargetAnnounce(71785, 4)
 local warnBanish		= mod:NewTargetAnnounce(71298, 3)
 
 local specWarnGosaEvent	= mod:NewSpecialWarning("SpecWarnGosaEvent")
-local specWarnBlade		= mod:NewSpecialWarningMove(70305)
+local specWarnBlade		= mod:NewSpecialWarningMove(70305, nil, nil, nil, 1, 2)
 
-local timerConflag		= mod:NewTargetTimer(10, 71785)
-local timerBanish		= mod:NewTargetTimer(6, 71298)
+local timerConflag		= mod:NewTargetTimer(10, 71785, nil, nil, nil, 3)
+local timerBanish		= mod:NewTargetTimer(6, 71298, nil, nil, nil, 3)
 
 mod:RemoveOption("HealthFrame")
 

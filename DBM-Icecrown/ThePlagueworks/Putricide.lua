@@ -63,11 +63,10 @@ local timerMutatedSlash				= mod:NewTargetTimer(20, 70542, nil, nil, nil, 5, nil
 local timerRegurgitatedOoze			= mod:NewTargetTimer(20, 70539, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
 
 local berserkTimer					= mod:NewBerserkTimer(600)
-
-mod:AddBoolOption("OozeAdhesiveIcon")
-mod:AddBoolOption("GaseousBloatIcon")
-mod:AddBoolOption("MalleableGooIcon")
-mod:AddBoolOption("UnboundPlagueIcon")					-- icon on the player with active buff
+mod:AddSetIconOption("OozeAdhesiveIcon", 70447, true, true, {8})
+mod:AddSetIconOption("GaseousBloatIcon", 70672, true, true, {7})
+mod:AddSetIconOption("MalleableGooIcon", 72295, true, true, {6})
+mod:AddSetIconOption("UnboundPlagueIcon", 72856, true, true, {5})
 mod:AddBoolOption("GooArrow")
 mod:AddBoolOption("BypassLatencyCheck", false)--Use old scan method without syncing or latency check (less reliable but not dependant on other DBM users in raid)
 
