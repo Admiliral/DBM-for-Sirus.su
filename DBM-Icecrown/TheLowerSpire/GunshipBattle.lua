@@ -6,12 +6,12 @@ local addsIcon
 if UnitFactionGroup("player") == "Alliance" then
 	mod:RegisterCombat("yell", L.PullAlliance)
 	mod:RegisterKill("yell", L.KillAlliance)
-	mod:SetCreatureID(37215)	-- Orgrim's Hammer
+	mod:SetCreatureID(37187)	-- Orgrim's Hammer
 	addsIcon = 23334
 else
 	mod:RegisterCombat("yell", L.PullHorde)
 	mod:RegisterKill("yell", L.KillHorde)
-	mod:SetCreatureID(37540)	-- The Skybreaker
+	mod:SetCreatureID(37200)	-- The Skybreaker
 	addsIcon = 23336
 end
 mod:SetMinCombatTime(50)

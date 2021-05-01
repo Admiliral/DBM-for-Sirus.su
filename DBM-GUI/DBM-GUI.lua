@@ -1022,7 +1022,7 @@ function UpdateAnimationFrame(mod)
 		DBM_BossPreview:SetScript("OnUpdate", FixCameraAnimationFrame)
 	else
 		local _, y, z = DBM_BossPreview:GetPosition()
-		DBM_BossPreview:SetPosition(0.4, y, z)
+		DBM_BossPreview:SetPosition(0.2, y, z)
 	end
 	if mod.modelSoundShort and DBM.Options.ModelSoundValue == "Short" then
 		DBM:PlaySoundFile(mod.modelSoundShort)
@@ -1036,8 +1036,8 @@ local function CreateAnimationFrame()
 	local mobstyle = CreateFrame('DressUpModel', "DBM_BossPreview", DBM_GUI_OptionsFramePanelContainer)
 	mobstyle:SetPoint("BOTTOMRIGHT", DBM_GUI_OptionsFramePanelContainer, "BOTTOMRIGHT", -5, 5)
 	mobstyle:SetWidth(300)
-	mobstyle:SetHeight(230)
-	mobstyle:SetRotation(0)
+	mobstyle:SetHeight(300)
+	mobstyle:SetRotation(0.1)
 	mobstyle:SetClampRectInsets(0, 0, 24, 0)
 	return mobstyle
 end

@@ -69,7 +69,7 @@ local function showRealDate(curseDate)
 end
 
 DBM = {
-	Revision = parseCurseDate("20210501100000"),
+	Revision = parseCurseDate("20210501140000"),
 	DisplayVersion = "5.47", -- the string that is shown as version
 	ReleaseRevision = releaseDate(2021, 05, 01) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
@@ -5931,7 +5931,7 @@ function bossModPrototype:IsDps()
 		or select(2, UnitClass("player")) == "MAGE"
 		or select(2, UnitClass("player")) == "WARLOCK"
 		or (select(2, UnitClass("player")) == "DEATHKNIGHT" and not IsDeathKnightTank())
-		or (select(2, UnitClass("player")) == "DRUID" and select(3, GetTalentTabInfo(3)) < 51 and IsDruidTank())
+		or (select(2, UnitClass("player")) == "DRUID" and (select(3, GetTalentTabInfo(1)) >= 51) or (select(3, GetTalentTabInfo(2)) >= 51 and not IsDruidTank()))
 end
 
 function bossModPrototype:IsWeaponDependent(uId)
