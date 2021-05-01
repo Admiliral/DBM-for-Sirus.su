@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("IronCouncil", "DBM-Ulduar")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20210429163000")
+mod:SetRevision("20210501003000")
 
 mod:SetCreatureID(32927)
 mod:RegisterCombat("combat", 32867, 32927, 32857)

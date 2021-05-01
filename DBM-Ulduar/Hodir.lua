@@ -26,7 +26,7 @@ local specWarnBitingCold	= mod:NewSpecialWarningMove(312819, nil, nil, nil, 1, 2
 
 local enrageTimer			= mod:NewBerserkTimer(475)
 local timerFlashFreeze		= mod:NewCastTimer(9, 312818, nil, nil, nil, 2)
-local timerFrozenBlows		= mod:NewBuffActiveTimer(20, 312816, 63512, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON..DBM_CORE_L.HEALER_ICON)
+local timerFrozenBlows		= mod:NewBuffActiveTimer(20, 312816, 63512, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON..DBM_CORE_HEALER_ICON)
 local timerFlashFrCD		= mod:NewCDTimer(50, 312818, nil, nil, nil, 2)
 local timerAchieve			= mod:NewAchievementTimer(179, 3182, "TimerSpeedKill")
 

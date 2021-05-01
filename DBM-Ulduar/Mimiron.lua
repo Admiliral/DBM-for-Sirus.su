@@ -69,8 +69,6 @@ mod:AddBoolOption("YellOnshellWarn", true)
 mod.vb.hardmode = false
 mod.vb.phase = 0
 mod.vb.napalmShellIcon = 7
-local lootmethod, masterlooterRaidID
-
 local spinningUp = DBM:GetSpellInfo(312794)
 local lastSpinUp = 0
 mod.vb.is_spinningUp = false

@@ -34,7 +34,7 @@ local specWarnEyebeam			= mod:NewSpecialWarningYou(312765, nil, nil, nil, 4, 2)
 local yellBeam					= mod:NewYell(63346)
 
 local timerCrunch10             = mod:NewTargetTimer(6, 312395)
-local timerNextSmash			= mod:NewCDTimer(20.4, 64003, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
+local timerNextSmash			= mod:NewCDTimer(20.4, 64003, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerNextShockwave		= mod:NewCDTimer(18, 312752)
 local timerNextEyebeam			= mod:NewCDTimer(18.2, 63346, nil, nil, nil, 3)
 local timerNextGrip				= mod:NewCDTimer(20, 64292, nil, nil, nil, 3)

@@ -31,8 +31,8 @@ local specWarnAnimus			= mod:NewSpecialWarningSwitch("ej17651", nil, nil, nil, 1
 
 local timerEnrage				= mod:NewBerserkTimer(600)
 local timerSearingFlamesCast	= mod:NewCastTimer(2, 312977)
-local timerSurgeofDarkness		= mod:NewBuffActiveTimer(10, 312981, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
-local timerNextSurgeofDarkness	= mod:NewBuffActiveTimer(61.7, 312981, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
+local timerSurgeofDarkness		= mod:NewBuffActiveTimer(10, 312981, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerNextSurgeofDarkness	= mod:NewBuffActiveTimer(61.7, 312981, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerSaroniteVapors		= mod:NewNextCountTimer(30, 312985, nil, nil, nil, 5)
 local timerShadowCrashCD		= mod:NewCDTimer(12, 312978, nil, "Ranged", nil, 3)
 local timerLifeLeech			= mod:NewTargetTimer(10, 312974, nil, false, 2, 3)
@@ -81,6 +81,7 @@ function mod:OnCombatStart(delay)
 	self.vb.vaporsCount = 0
 	timerShadowCrashCD:Start(10.9-delay)
 	timerLifeLeechCD:Start(16.9-delay)
+	timerSaroniteVapors:Start(30-delay, 1)
 	timerEnrage:Start(-delay)
 	timerHardmode:Start(-delay)
 	timerNextSurgeofDarkness:Start(-delay)
