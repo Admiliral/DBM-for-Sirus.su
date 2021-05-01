@@ -1035,8 +1035,8 @@ local function CreateAnimationFrame()
 	modelFrameCreated = true
 	local mobstyle = CreateFrame('DressUpModel', "DBM_BossPreview", DBM_GUI_OptionsFramePanelContainer)
 	mobstyle:SetPoint("BOTTOMRIGHT", DBM_GUI_OptionsFramePanelContainer, "BOTTOMRIGHT", -5, 5)
-	mobstyle:SetWidth(300)
-	mobstyle:SetHeight(300)
+	mobstyle:SetWidth(525)
+	mobstyle:SetHeight(488)
 	mobstyle:SetRotation(0.1)
 	mobstyle:SetClampRectInsets(0, 0, 24, 0)
 	return mobstyle

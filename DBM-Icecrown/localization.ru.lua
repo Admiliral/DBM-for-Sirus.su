@@ -475,10 +475,11 @@ L:SetOptionLocalization{
 	WarnInstability			= "Предупреждение о ваших стаках $spell:69766",
 	WarnChilledtotheBone	= "Предупреждение о ваших стаках $spell:70106",
 	WarnMysticBuffet		= "Предупреждение о ваших стаках $spell:70128",
-	AnnounceFrostBeaconIcons= "Объявлять метки целей заклинания $spell:70126 в рейд-чат\n(требуются права помощника)",
+	AnnounceFrostBeaconIcons = "Объявлять метки целей заклинания $spell:70126 в рейд-чат\n(требуются права помощника)",
 	SetIconOnFrostBeacon	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(70126),
 	SetIconOnUnchainedMagic	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(69762),
 	ClearIconsOnAirphase	= "Снимать все метки перед воздушной фазой",
+	AchievementCheck		= "Объявлять в рейде предупреждения о достижении 'Все, что вы можете съесть'\n(требуется права помощника)",
 	RangeFrame				= "Показывать игроков с метками в окне проверки дистанции (10 норм., 20 гер.)"
 }
 

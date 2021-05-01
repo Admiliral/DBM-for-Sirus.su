@@ -3,6 +3,7 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("20200405141240")
 mod:SetUsedIcons(1, 2)
+mod:SetCreatureID(37571)
 
 mod:RegisterEvents(
 	"SPELL_AURA_APPLIED",
@@ -13,9 +14,9 @@ local warnBloodMirror		= mod:NewTargetAnnounce(70451, 3, nil, "Healer")
 local warnBloodSap			= mod:NewTargetAnnounce(70432, 4)
 local warnChainsofShadow	= mod:NewTargetAnnounce(70645, 3)
 
-local timerBloodMirror		= mod:NewTargetTimer(30, 70451, nil, "Healer")
-local timerBloodSap			= mod:NewTargetTimer(8, 70432)
-local timerChainsofShadow	= mod:NewTargetTimer(10, 70645)
+local timerBloodMirror		= mod:NewTargetTimer(30, 70451, nil, "Healer", nil, 3)
+local timerBloodSap			= mod:NewTargetTimer(8, 70432, nil, nil, nil, 3)
+local timerChainsofShadow	= mod:NewTargetTimer(10, 70645, nil, nil, nil, 3)
 
 mod:AddBoolOption("BloodMirrorIcon", false)
 mod:RemoveOption("HealthFrame")
