@@ -18,20 +18,18 @@ mod:RegisterEvents(
 local warnLightBomb					= mod:NewTargetAnnounce(312941, 3)
 local warnGravityBomb				= mod:NewTargetAnnounce(312943, 3)
 
-local specWarnLightBomb				= mod:NewSpecialWarningYou(312941)
-local specWarnGravityBomb			= mod:NewSpecialWarningYou(312943)
-local specWarnConsumption			= mod:NewSpecialWarningMove(312948)									--Hard mode void zone dropped by Gravity Bomb
+local specWarnLightBomb				= mod:NewSpecialWarningYou(312941, nil, nil, nil, 1, 2)
+local specWarnGravityBomb			= mod:NewSpecialWarningYou(312943, nil, nil, nil, 1, 2)
+local specWarnConsumption			= mod:NewSpecialWarningMove(312948, nil, nil, nil, 1, 2)									--Hard mode void zone dropped by Gravity Bomb
 local yellGravityBomb				= mod:NewYell(312943)
 local yellLightBomb					= mod:NewYell(312941)
 local BerserkTimer					= mod:NewBerserkTimer(600)
-local timerTympanicTantrum			= mod:NewBuffActiveTimer(8, 312939)
-local timerTympanicTantrumCD		= mod:NewCDTimer(79, 312939)
-local timerHeart					= mod:NewCastTimer(30, 312945)
-local timerLightBomb				= mod:NewTargetTimer(9, 312941)
-local timerGravityBomb				= mod:NewTargetTimer(9, 312943)
-local timerAchieve					= mod:NewAchievementTimer(205, 2938, "TimerSpeedKill")
-
-
+local timerTympanicTantrum			= mod:NewBuffActiveTimer(8, 312939, nil, nil, nil, 5, nil, DBM_CORE_L_HEALER_ICON)
+local timerTympanicTantrumCD		= mod:NewCDTimer(79, 312939, nil, nil, nil, 2, nil, DBM_CORE_L_HEALER_ICON)
+local timerHeart					= mod:NewCastTimer(30, 312945, nil, nil, nil, 6, nil, DBM_CORE_L_DAMAGE_ICON)
+local timerLightBomb				= mod:NewTargetTimer(9, 312941, nil, nil, nil, 3)
+local timerGravityBomb				= mod:NewTargetTimer(9, 312943, nil, nil, nil, 3)
+local timerAchieve					= mod:NewAchievementTimer(205, 2938)
 
 
 mod:AddSetIconOption("SetIconOnLightBombTarget", 312941, true, true, {7})
@@ -61,11 +59,12 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(62775, 312587, 312940) and args.auraType == "DEBUFF" then							-- Tympanic Tantrum
+	if args:IsSpellID(62775, 312587, 312940) then							-- Tympanic Tantrum
 		timerTympanicTantrum:Start()
 	elseif args:IsSpellID(63018, 65121, 312588, 312941) then 											-- Ополяющий свет
 		if args:IsPlayer() then
 			specWarnLightBomb:Show()
+			specWarnLightBomb:Play("runout")
 			yellLightBomb:Yell()
 		end
 		if self.Options.SetIconOnLightBombTarget then
@@ -76,6 +75,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(63024, 64234, 312590, 312943) then											-- Gravity Bomb
 		if args:IsPlayer() then
 			specWarnGravityBomb:Show()
+			specWarnGravityBomb:Play("runout")
 			yellGravityBomb:Yell()
 		end
 		if self.Options.SetIconOnGravityBombTarget then
