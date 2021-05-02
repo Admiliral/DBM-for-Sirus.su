@@ -113,8 +113,8 @@ function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(305345) then
 		warningHandCast:Show()
 		timerHandCD:Start()
-		if args:IsPlayer() then 
-            warnSound:Play("fireinthe")           -- CS 1.6 (couter_terorrists_voice) 
+		if args:IsPlayer() then
+            warnSound:Play("fireinthe")           -- CS 1.6 (couter_terorrists_voice)
         end
 	end
 end

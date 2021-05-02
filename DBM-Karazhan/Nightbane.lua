@@ -99,7 +99,7 @@ function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 17225, "Nightbane")
 	if mod:IsDifficulty("normal10") then
 
-	elseif mod:IsDifficulty("heroic10") and isStart then
+	elseif mod:IsDifficulty("heroic10") and self.vb.isStart then
 		timerGrievingFireCD:Start()
 		timerConflCD:Start()
 		timerPyroCD:Start()

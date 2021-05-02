@@ -176,7 +176,7 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(72293) then		-- Mark of the Fallen Champion
 		self.vb.Mark = self.vb.Mark + 1
-		warnMark:Show(self.vb.Mark, args.destName)
+		specwarnMark:Show(self.vb.Mark, args.destName)
 		specwarnMark:Show(args.destName)
 	elseif args:IsSpellID(72385, 72441, 72442, 72443) then	-- Boiling Blood
 		boilingBloodTargets[#boilingBloodTargets + 1] = args.destName

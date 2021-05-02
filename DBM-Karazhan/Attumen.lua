@@ -58,7 +58,7 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(43127, 29833) and GetTime() - lastCurse > 5 then -- Обычка
+	if args:IsSpellID(43127, 29833) and GetTime() - self.vb.lastCurse > 5 then -- Обычка
 		warningCurse:Show()
 		timerCurseCD:Show()
 		warningCurseSoon:Cancel()
@@ -88,7 +88,7 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(305258) then -- галоп
-		if self.vb.cena then 
+		if self.vb.cena then
             warnSound:Play("jhoncena")
             self.vb.cena = false
         end
@@ -99,7 +99,7 @@ function mod:SPELL_CAST_START(args)
 		timerCharge2CD:Start()
 		timerChargeCast:Start()
 		specWarnMezair:Show()
-		if self.vb.cena then 
+		if self.vb.cena then
             warnSound:Play("jhoncena")
             self.vb.cena = false
         end
@@ -120,7 +120,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:UNIT_HEALTH(uId)
-	if (self:GetUnitCreatureId(uId) == 15550 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.52 and phaseCounter) then -- фаза
+	if (self:GetUnitCreatureId(uId) == 15550 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.52 and self.vb.phaseCounter) then -- фаза
 		warnSound:Play("idisuda")
 		self.vb.phaseCounter = false
 		warnPhase2Soon:Show()

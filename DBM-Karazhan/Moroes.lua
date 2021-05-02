@@ -161,8 +161,8 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self.Options.MarkIcon then
 			self:SetIcon(args.destName, 8, 7)
 		end
-	elseif args:IsSpellID(305478) then 
-        if args:IsPlayer() then 
+	elseif args:IsSpellID(305478) then
+        if args:IsPlayer() then
 			local name = {"djeban","sexgay","cigan","hardbass","upkicks"} --танец
 			name  = name[math.random(#name)]
 			warnSound:Play(name)
