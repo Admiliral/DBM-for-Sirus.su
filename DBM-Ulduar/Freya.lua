@@ -30,7 +30,7 @@ local warnSimulKill			= mod:NewAnnounce("WarnSimulKill", 1)
 local warnFury				= mod:NewTargetAnnounce(312881, 2)
 local warnRoots				= mod:NewTargetAnnounce(312860, 2)
 
-local specWarnLifebinder	= mod:NewSpecialWarningSwitch(62869, "Dps", nil, nil, 1, 2)
+local specWarnLifebinder	= mod:NewSpecialWarningSwitch(62568, "Dps", nil, nil, 1, 2)
 local specWarnFury			= mod:NewSpecialWarningMoveAway(312881, nil, nil, nil, 1, 2)
 local yellFury				= mod:NewYell(312881)
 local yellRoots				= mod:NewYell(312860)
@@ -46,7 +46,7 @@ local timerTremorCD 		= mod:NewCDTimer(28, 312842, nil, nil, nil, 2)
 local timerMobCD 		    = mod:NewCDTimer(300, 312842, nil, nil, nil, 1)
 local timerBoom 		    = mod:NewCDTimer(31, 312883, nil, nil, nil, 2)
 local timerDarCD 		    = mod:NewCDTimer(26, 64185, nil, nil, nil, 2)
-local timerLifebinderCD 	= mod:NewCDTimer(38.2, 62869, nil, nil, nil, 1)
+local timerLifebinderCD 	= mod:NewCDTimer(38.2, 62568, nil, nil, nil, 1)
 local timerRootsCD 			= mod:NewCDTimer(29.6, 312856, nil, nil, nil, 3)
 
 
@@ -105,7 +105,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerAlliesOfNature:Start()
 	elseif args:IsSpellID(312883) then
 		timerBoom:Start(8)
-	elseif args:IsSpellID(62619) and self:GetUnitCreatureId(args.sourceName) == 33228 then -- Pheromones spell, cast by newly spawned Eonar's Gift second they spawn to allow melee to dps them while protector is up.
+	elseif args:IsSpellID(62619, 62568, 312882) and self:GetUnitCreatureId(args.sourceName) == 33228 then -- Pheromones spell, cast by newly spawned Eonar's Gift second they spawn to allow melee to dps them while protector is up.
 		specWarnLifebinder:Show()
 		specWarnLifebinder:Play("targetchange")
 		timerLifebinderCD:Start()
