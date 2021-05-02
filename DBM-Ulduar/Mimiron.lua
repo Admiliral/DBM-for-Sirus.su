@@ -94,9 +94,9 @@ function mod:OnCombatStart(delay)
 	self:NextPhase()
 	timerPlasmaBlastCD:Start(-delay)
 	timerShockBlastCD:Start(28-delay)
-	--[[if DBM:GetRaidRank() == 2 then
+	if DBM:GetRaidRank() == 2 then
 		lootmethod, _ , masterlooterRaidID = GetLootMethod()
-	end]]
+	end
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(10)
 	end
@@ -147,7 +147,6 @@ function mod:CHAT_MSG_LOOT(msg)
 	local player, itemID = msg:match(L.LootMsg)
 	if player and itemID and tonumber(itemID) == 46029 and self:IsInCombat() then
 		lootannounce:Show(player)
-		self:SendSync("LootMsg", player)
 	end
 end
 
