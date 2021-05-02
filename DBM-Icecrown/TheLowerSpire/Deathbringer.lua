@@ -21,9 +21,9 @@ local warnAddsSoon			= mod:NewPreWarnAnnounce(72173, 10, 3)
 local warnAdds				= mod:NewSpellAnnounce(72173, 4)
 local warnFrenzy			= mod:NewSpellAnnounce(72737, 2, nil, "Tank|Healer")
 local warnBloodNova			= mod:NewSpellAnnounce(73058, 2)
-local warnMark				= mod:NewTargetCountAnnounce(72444, 4)
 local warnBoilingBlood		= mod:NewTargetAnnounce(72441, 2, nil, "Healer")
 local warnRuneofBlood		= mod:NewTargetAnnounce(72410, 3, nil, "Tank|Healer")
+local warnSound				= mod:NewSoundAnnounce()
 
 local specwarnMark			= mod:NewSpecialWarningTarget(72444, nil, false, nil, 1, 2)
 local specwarnRuneofBlood	= mod:NewSpecialWarningTaunt(72410, nil, nil, nil, 1, 2)
@@ -39,20 +39,19 @@ local enrageTimer			= mod:NewBerserkTimer(480)
 mod:AddBoolOption("RangeFrame", "Ranged")
 mod:AddBoolOption("RunePowerFrame", true, "misc")
 mod:AddSetIconOption("BeastIcons", 72173, true, true, {1, 2, 3, 4, 5, 6, 7, 8})
-mod:AddBoolOption("BoilingBloodIcons", false)
+mod:AddSetIconOption("BoilingBloodIcons", 72385, true, true, {1, 2, 3, 4, 5, 6, 7, 8})
 mod:RemoveOption("HealthFrame")
 
 mod.vb.Mark = 0
-
+mod.vb.boilingBloodIcon 	= 8
 local warned_preFrenzy = false
 local boilingBloodTargets = {}
-local boilingBloodIcon 	= 8
 local spamBloodBeast = 0
 
-local function warnBoilingBloodTargets()
+local function warnBoilingBloodTargets(self)
 	warnBoilingBlood:Show(table.concat(boilingBloodTargets, "<, >"))
 	table.wipe(boilingBloodTargets)
-	boilingBloodIcon = 8
+	self.vb.boilingBloodIcon = 8
 end
 
 function mod:OnCombatStart(delay)
@@ -74,7 +73,7 @@ function mod:OnCombatStart(delay)
 	timerBoilingBlood:Start(19-delay)
 	table.wipe(boilingBloodTargets)
 	warned_preFrenzy = false
-	boilingBloodIcon = 8
+	self.vb.boilingBloodIcon = 8
 	self.vb.Mark = 0
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(12)
@@ -183,8 +182,8 @@ function mod:SPELL_AURA_APPLIED(args)
 		boilingBloodTargets[#boilingBloodTargets + 1] = args.destName
 		timerBoilingBlood:Start()
 		if self.Options.BoilingBloodIcons then
-			self:SetIcon(args.destName, boilingBloodIcon, 15)
-			boilingBloodIcon = boilingBloodIcon - 1
+			self:SetIcon(args.destName, self.vb.boilingBloodIcon, 15)
+			self.vb.boilingBloodIcon = self.vb.boilingBloodIcon - 1
 		end
 		self:Unschedule(warnBoilingBloodTargets)
 		if (mod:IsDifficulty("normal10") or mod:IsDifficulty("heroic10")) or ((mod:IsDifficulty("normal25") or mod:IsDifficulty("heroic25")) and #boilingBloodTargets >= 3) then	-- Boiling Blood
@@ -213,7 +212,13 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L.PullAlliance, 1, true) then
 		timerCombatStart:Start()
+		self:ScheduleMethod(48, "Sound")
 	elseif msg:find(L.PullHorde, 1, true) then
 		timerCombatStart:Start(79)
+		self:ScheduleMethod(78, "Sound")
 	end
+end
+
+function mod:Sound()
+	warnSound:Play("swamp")
 end

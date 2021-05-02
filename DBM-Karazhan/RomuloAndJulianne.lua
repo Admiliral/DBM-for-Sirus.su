@@ -1,7 +1,7 @@
 ﻿local mod	= DBM:NewMod("RomuloAndJulianne", "DBM-Karazhan")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 175 $"):sub(12, -3))
+mod:SetRevision("20210502220000")
 mod:SetCreatureID(17534, 17533)
 
 mod:RegisterCombat("combat", 17534, 17533)
@@ -33,9 +33,8 @@ local timerCombatStart	= mod:NewTimer(55, "TimerCombatStart", 2457)
 mod:AddBoolOption("HealthFrame", true)
 
 local phases = {}
-local JulianneDied = 0
-local RomuloDied = 0
-
+mod.vb.JulianneDied = 0
+mod.vb.RomuloDied = 0
 mod.vb.phase = 0
 
 local function updateHealthFrame(phase)--WIP
@@ -58,9 +57,14 @@ local function updateHealthFrame(phase)--WIP
 end
 
 function mod:OnCombatStart(delay)
+	DBM:FireCustomEvent("DBM_EncounterStart", 17534, "RomuloAndJulianne")
 	updateHealthFrame(1)
-	JulianneDied = 0
-	RomuloDied = 0
+	self.vb.JulianneDied = 0
+	self.vb.RomuloDied = 0
+end
+
+function mod:OnCombatEnd(wipe)
+	DBM:FireCustomEvent("DBM_EncounterEnd", 17534, "RomuloAndJulianne", wipe)
 end
 
 function mod:SPELL_CAST_START(args)
@@ -106,8 +110,8 @@ function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 17534 then
 		if self.vb.phase == 3 then--Only want to remove from boss health frame first time they die, and kill only in phase 3.
-			JulianneDied = GetTime()
-			if (GetTime() - RomuloDied) < 10 then
+			self.vb.JulianneDied = GetTime()
+			if (GetTime() - self.vb.RomuloDied) < 10 then
 				mod:EndCombat()
 			end
 		else
@@ -116,8 +120,8 @@ function mod:UNIT_DIED(args)
 		end
 	elseif cid == 17533 then
 		if self.vb.phase == 3 then--Only want to remove from boss health frame first time they die, and kill only in phase 3.
-			RomuloDied = GetTime()
-			if (GetTime() - JulianneDied) < 10 then
+			self.vb.RomuloDied = GetTime()
+			if (GetTime() - self.vb.JulianneDied) < 10 then
 				mod:EndCombat()
 			end
 		else

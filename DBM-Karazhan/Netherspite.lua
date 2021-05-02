@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Netherspite", "DBM-Karazhan")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 161 $"):sub(12, -3))
+mod:SetRevision("20210502220000")
 mod:SetCreatureID(15689)
 mod:RegisterCombat("combat")
 
@@ -35,10 +35,12 @@ local specWarnGates			= mod:NewSpecialWarningYou(305403)
 local warnGates			    = mod:NewTargetAnnounce(305403, 3)
 local timerBreatheCD        = mod:NewCDTimer(13, 305407)
 
+local warnSound						= mod:NewSoundAnnounce()
+
 local berserkTimer			= mod:NewBerserkTimer(540)
 
 local gatesTargets = {}
-local breatheCount = 0
+mod.vb.breatheCount = 0
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 15689, "Netherspite")
@@ -62,11 +64,11 @@ function mod:SPELL_CAST_START(args)
 		warningBreathCast:Show()
 		timerBreathCast:Start()
 	elseif args:IsSpellID(305407) then
-		if breatheCount < 4 then
+		if self.vb.breatheCount < 4 then
 			timerBreatheCD:Show()
-			breatheCount = breatheCount + 1
+			self.vb.breatheCount = self.vb.breatheCount + 1
 		else
-			breatheCount = 0
+			self.vb.breatheCount = 0
 		end
 	end
 end
@@ -88,6 +90,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			table.wipe(gatesTargets)
 		end
 	elseif args:IsSpellID(305408, 305409) then
+		warnSound:Play("run")
 		timerRepentance:Start()
 		timerPortals:Start()
 		timerNormalPhase:Start()

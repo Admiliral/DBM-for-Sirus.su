@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Attumen", "DBM-Karazhan")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("2020102500000")
+mod:SetRevision("20210502220000")
 mod:SetCreatureID(15550, 34972, 34972)
 mod:RegisterCombat("combat", 34972)
 
@@ -35,17 +35,19 @@ local timerChargeCast       = mod:NewCastTimer(3, 305258, nil, nil, nil, 2) -- �
 local timerSufferingCD      = mod:NewCDTimer(21, 305259, nil, nil, nil, 3) -- Разделенные муки
 local timerTrampCD          = mod:NewCDTimer(15, 305264, nil, nil, nil, 3) -- Могучий топот
 
-
+local warnSound						= mod:NewSoundAnnounce()
 
 
 mod.vb.phase = 0
-local lastCurse = 0
-local phaseCounter = true
+mod.vb.lastCurse = 0
+mod.vb.phaseCounter = true
+mod.vb.cena = true
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 34972, "Attumen the Huntsman")
 	self.vb.phase = 1
-	phaseCounter = true
+	self.vb.cena = true
+	self.vb.phaseCounter = true
 	if mod:IsDifficulty("heroic10") then
 		timerInvCD:Start(20)
 	end
@@ -67,7 +69,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			timerCurseCD:Start()
 			warningCurseSoon:Schedule(26)
 		end
-		lastCurse = GetTime()
+		mod.vb.lastCurse = GetTime()
 	elseif args:IsSpellID(305265) then -- ???????
 		timerChargeCD:Start()
 		timerSufferingCD:Start()
@@ -86,6 +88,10 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(305258) then -- галоп
+		if self.vb.cena then 
+            warnSound:Play("jhoncena")
+            self.vb.cena = false
+        end
 		timerChargeCD:Start()
 		timerChargeCast:Start()
 		specWarnMezair:Show()
@@ -93,6 +99,10 @@ function mod:SPELL_CAST_START(args)
 		timerCharge2CD:Start()
 		timerChargeCast:Start()
 		specWarnMezair:Show()
+		if self.vb.cena then 
+            warnSound:Play("jhoncena")
+            self.vb.cena = false
+        end
 	elseif args:IsSpellID(305251) then -- незримое присутствие
 		timerInvCD:Start()
 	elseif args:IsSpellID(305259) then -- муки
@@ -111,7 +121,8 @@ end
 
 function mod:UNIT_HEALTH(uId)
 	if (self:GetUnitCreatureId(uId) == 15550 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.52 and phaseCounter) then -- фаза
-		phaseCounter = false
+		warnSound:Play("idisuda")
+		self.vb.phaseCounter = false
 		warnPhase2Soon:Show()
 	end
 end

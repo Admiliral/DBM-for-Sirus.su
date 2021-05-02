@@ -69,9 +69,9 @@ local function showRealDate(curseDate)
 end
 
 DBM = {
-	Revision = parseCurseDate("20210501190000"),
-	DisplayVersion = "5.48", -- the string that is shown as version
-	ReleaseRevision = releaseDate(2021, 05, 01) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
+	Revision = parseCurseDate("20210502210000"),
+	DisplayVersion = "5.49", -- the string that is shown as version
+	ReleaseRevision = releaseDate(2021, 05, 02) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
 
@@ -6360,6 +6360,8 @@ do
 			text = DBM_CORE_AUTO_ANNOUNCE_TEXTS[announceType]:format(tostring(spellId))
 		elseif announceType == "stagechange" then
 			text = DBM_CORE_AUTO_ANNOUNCE_TEXTS.spell
+		elseif announceType == "sound" then
+			text = DBM_CORE_AUTO_ANNOUNCE_TEXTS.sound
 		else
 			text = DBM_CORE_AUTO_ANNOUNCE_TEXTS[announceType]:format(spellName)
 		end
@@ -6698,6 +6700,11 @@ do
 	function bossModPrototype:NewMoveToAnnounce(spellId, color, ...)
 		return newAnnounce(self, "moveto", spellId, color or 3, ...)
 	end
+
+	function bossModPrototype:NewSoundAnnounce(color, ...)
+		return newAnnounce(self, "sound", 0, ...)
+	end
+
 end
 
 --------------------

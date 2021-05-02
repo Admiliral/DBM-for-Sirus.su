@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Aran", "DBM-Karazhan")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 166 $"):sub(12, -3))
+mod:SetRevision("20210502220000")
 mod:SetCreatureID(16524)
 mod:RegisterCombat("combat")
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6, 7, 8)
@@ -21,6 +21,7 @@ local warningBlizzard		= mod:NewSpellAnnounce(29969, 3)
 local warningElementals		= mod:NewSpellAnnounce(37053, 3)
 local warningChains			= mod:NewTargetAnnounce(29991, 2)
 local warningFlameTargets	= mod:NewTargetAnnounce(29946, 4)
+local warnSound						= mod:NewSoundAnnounce()
 
 local specWarnDontMove		= mod:NewSpecialWarning("DBM_ARAN_DO_NOT_MOVE")
 local specWarnArcane		= mod:NewSpecialWarningRun(29973)
@@ -43,29 +44,29 @@ local warnFreeze            = mod:NewAnnounce("WarnFreeze", 4, 305328)
 
 local berserkTimer			= mod:NewBerserkTimer(900)
 
-mod:AddBoolOption("WreathIcons", true)
-mod:AddBoolOption("ElementalIcons", true)
+mod:AddSetIconOption("WreathIcons", 29946, true, true, {5, 6, 7, 8})
+mod:AddSetIconOption("ElementalIcons", 29962, true, true, {6, 7, 8})
 
 local beastIcon = {}
 local WreathTargets = {}
-local flameWreathIcon = 8
-local famCounter = 1
+mod.vb.flameWreathIcon = 8
+mod.vb.famCounter = 1
 
-local function warnFlameWreathTargets()
+local function warnFlameWreathTargets(self)
 	warningFlameTargets:Show(table.concat(WreathTargets, "<, >"))
 	table.wipe(WreathTargets)
-	flameWreathIcon = 8
+	self.vb.flameWreathIcon = 8
 end
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 16524, "Shade of Aran")
 	if mod:IsDifficulty("normal10") then
 		berserkTimer:Start(-delay)
-		flameWreathIcon = 8
+		self.vb.flameWreathIcon = 8
 		table.wipe(WreathTargets)
 	elseif mod:IsDifficulty("heroic10") then
 		timerSpecialHeroic:Start()
-		famCounter = 1
+		self.vb.famCounter = 1
 	end
 end
 
@@ -96,8 +97,13 @@ function mod:SPELL_CAST_START(args)
 		timerSpecialHeroic:Start()
 	elseif args:IsSpellID(305326) then
 		if args.destName == UnitName("player") then
+			warnSound:Play("run")
 			specWarnFreeze:Show()
 		end
+	elseif args:IsSpellID(305331) then
+		local name = {"tobecon","dramatic"}
+		name  = name[math.random(#name)]
+        warnSound:Play(name)
 	end
 end
 
@@ -112,8 +118,8 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnDontMove:Show()
 		end
 		if self.Options.WreathIcons then
-			self:SetIcon(args.destName, flameWreathIcon, 20)
-			flameWreathIcon = flameWreathIcon - 1
+			self:SetIcon(args.destName, self.vb.flameWreathIcon, 20)
+			self.vb.flameWreathIcon = self.vb.flameWreathIcon - 1
 		end
 		self:Unschedule(warnFlameWreathTargets)
 		self:Schedule(0.3, warnFlameWreathTargets)
@@ -186,11 +192,11 @@ end
 
 function mod:UNIT_DIED(args)
 	if args.destName == L.Familliar then
-		if famCounter == 3 then
+		if self.vb.famCounter == 3 then
 			timerSpecialHeroic:Start()
-			famCounter = 1
+			self.vb.famCounter = 1
 		else
-			famCounter = famCounter + 1
+			self.vb.famCounter = self.vb.famCounter + 1
 		end
 	end
 end

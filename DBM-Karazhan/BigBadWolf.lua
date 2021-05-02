@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("BigBadWolf", "DBM-Karazhan")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 163 $"):sub(12, -3))
+mod:SetRevision("20210502220000")
 mod:SetCreatureID(17521)
 mod:RegisterCombat("yell", L.DBM_BBW_YELL_1)
 
@@ -14,13 +14,15 @@ local warningFear		= mod:NewSpellAnnounce(30752, 3)
 local warningRRHSoon	= mod:NewSoonAnnounce(30753, 3)
 local warningRRH		= mod:NewTargetAnnounce(30753, 4)
 
-local specWarnRRH		= mod:NewSpecialWarningYou(30753)
+local specWarnRRH		= mod:NewSpecialWarningYou(30753, nil, nil, nil, 4, 2)
 
-local timerRRH			= mod:NewTargetTimer(20, 30753)
-local timerRRHCD		= mod:NewNextTimer(30, 30753)
-local timerFearCD		= mod:NewNextTimer(24, 30752)
+local timerRRH			= mod:NewTargetTimer(20, 30753, nil, nil, nil, 3)
+local timerRRHCD		= mod:NewNextTimer(30, 30753, nil, nil, nil, 3)
+local timerFearCD		= mod:NewNextTimer(24, 30752, nil, nil, nil, 2)
 
 mod:AddBoolOption("RRHIcon")
+mod:AddSetIconOption("RRHIcon", 69762, true, true, {8})
+
 
 local lastFear = 0
 

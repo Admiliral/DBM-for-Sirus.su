@@ -237,6 +237,7 @@ DBM_CORE_AUTO_ANNOUNCE_OPTIONS.stagechange	= "Объявлять смены фа
 DBM_CORE_AUTO_ANNOUNCE_OPTIONS.prestage 	= "Предупреждать заранее о фазе %s"
 DBM_CORE_AUTO_ANNOUNCE_OPTIONS.count 		= "Предупреждение для $spell:%s (со счетчиком)"
 DBM_CORE_AUTO_ANNOUNCE_OPTIONS.stack 		= "Объявлять количество стаков $spell:%s"
+DBM_CORE_AUTO_ANNOUNCE_OPTIONS.sound		= "Включить звуковое сопровождение (Если установлен DBM-VoisePack)"
 
 DBM_CORE_AUTO_SPEC_WARN_TEXTS.spell				= "%s!"
 DBM_CORE_AUTO_SPEC_WARN_TEXTS.ends				= "%s заканчивается"

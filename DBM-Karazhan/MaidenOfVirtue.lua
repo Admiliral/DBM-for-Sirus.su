@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Maiden", "DBM-Karazhan")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("2020102500000")
+mod:SetRevision("20210502220000")
 mod:SetCreatureID(16457)
 mod:RegisterCombat("combat")
 
@@ -65,7 +65,9 @@ local timerGroundCD		    = mod:NewCDTimer(20, 305271, nil, nil, nil, 3)
 
 local specWarnGround	    = mod:NewSpecialWarningYou(305271, nil, nil, nil, 3, 2)
 
-local ground = true
+local warnSound						= mod:NewSoundAnnounce()
+
+mod.vb.ground = true
 
 mod:AddSetIconOption("GroundIcon", 305271, true, true, {8})
 mod:AddBoolOption("HealthFrame", true)
@@ -80,7 +82,7 @@ function mod:OnCombatStart(delay)
 	if self.Options.HealthFrame then
 		DBM.BossHealth:Show(L.name)
 	end
-	ground = true
+	self.vb.ground = true
 end
 
 function mod:OnCombatEnd(wipe)
@@ -91,9 +93,12 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(305286) then
+		local name = {"tobecon","dramatic"}
+		name  = name[math.random(#name)]
+		warnSound:Play(name)
 		timerRepentanceCD:Start()
 		timerGroundCD:Start(30)
-		ground = true
+		self.vb.ground = true
 	end
 end
 
@@ -137,12 +142,13 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(305271) then
-		if ground then
+		if self.vb.ground then
 			timerGroundCD:Start()
-			ground = false
+			self.vb.ground = false
 		end
 		if args:IsPlayer() then
 	        specWarnGround:Show()
+			warnSound:play("bochok")
 		end
 		if self.Options.GroundIcon then
 			self:SetIcon(args.destName, 8, 5)

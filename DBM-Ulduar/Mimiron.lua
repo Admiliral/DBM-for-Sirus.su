@@ -95,7 +95,7 @@ function mod:OnCombatStart(delay)
 	timerPlasmaBlastCD:Start(-delay)
 	timerShockBlastCD:Start(28-delay)
 	if DBM:GetRaidRank() == 2 then
-		lootmethod, _, masterlooterRaidID = GetLootMethod()
+		lootmethod, _ , masterlooterRaidID = GetLootMethod()
 	end
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(10)

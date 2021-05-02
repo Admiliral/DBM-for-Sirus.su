@@ -29,6 +29,7 @@ local warnDarkEmpowerment			= mod:NewSpellAnnounce(70901, 4)
 local warnPhase2					= mod:NewPhaseAnnounce(2, 1)
 local warnTouchInsignificance		= mod:NewStackAnnounce(71204, 2, nil, "Tank|Healer")
 local warnDarkMartyrdom				= mod:NewSpellAnnounce(72499, 4)
+local warnSound						= mod:NewSoundAnnounce()
 
 local specWarnCurseTorpor			= mod:NewSpecialWarningYou(71237, nil, nil, nil, 1, 2)
 local specWarnDeathDecay			= mod:NewSpecialWarningMove(72108, nil, nil, nil, 1, 2)

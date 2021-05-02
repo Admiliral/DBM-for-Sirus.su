@@ -3212,6 +3212,8 @@ local function CreateOptionsMenu()
 		local Sounds = MixinSharedMedia3("sound", {
 			{text = L.NoSound,			value = "None"},
 			{text = "Muradin: Charge",	value = "Sound\\Creature\\MuradinBronzebeard\\IC_Muradin_Saurfang02.wav", sound = true},
+			{text = "Mango",	value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\pull_mango.ogg", sound = true},
+
 		})
 
 		local eventSoundsPanel	 	= DBM_GUI_Frame:CreateNewPanel(L.Panel_EventSounds, "option")

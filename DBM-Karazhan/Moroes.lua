@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Moroes", "DBM-Karazhan")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("2020102500000")
+mod:SetRevision("20210502220000")
 mod:SetCreatureID(15687, 19875, 19874, 19872, 17007, 19876, 19873)--Moroes
 --19875, 19874, 19872, 17007, 19876, 19873--all the adds, for future use
 --mod:RegisterCombat("yell", L.DBM_MOROES_YELL_START)
@@ -92,16 +92,22 @@ local timerDeathMarkCD			= mod:NewCDTimer(25, 305470, nil, nil, nil, 3, nil, DBM
 local timerPhase2				= mod:NewTimer(180, "Phase2", 40810, nil, nil, 6)
 local timerDanceCD			    = mod:NewCDTimer(20, 305472, nil, nil, nil, 7)
 
+local warnSound						= mod:NewSoundAnnounce()
+
 local berserkTimer				= mod:NewBerserkTimer(525)
 
 mod:AddSetIconOption("MarkIcon", 305470, true, true, {8})
 
 mod.vb.phase = 0
+mod.vb.ora = true
+mod.vb.phase2 = false
 
+function mod:resetOra()
+    mod.vb.ora = true
+end
 
 
 function mod:phase2warn()
-	warnPhase2Soon:Show()
 	timerDeathMarkCD:Schedule(2)
 	self:ScheduleMethod(2, "phase2")
 end
@@ -114,7 +120,9 @@ end
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 15687, "Moroes")
 	if mod:IsDifficulty("heroic10") then
+		warnSound:play("ya_vas_ne_zval")
 		self.vb.phase = 1
+		self.vb.phase2 = false
 		timerDanceCD:Start()
 		timerPhase2:Start()
 		self:ScheduleMethod(178, "phase2warn")
@@ -128,9 +136,11 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(305464) then
+	if args:IsSpellID(305464) and self.vb.phase2 then
+		warnSound:Play("taa")
 		timerPierceCD:Start()
-	elseif args:IsSpellID(305463) then
+	elseif args:IsSpellID(305463) and self.vb.phase2 then
+		warnSound:Play("sha")
 		timerWoundCD:Start()
 	elseif args:IsSpellID(305472) then -- танец
 		warnDanceSoon:Show(17)
@@ -143,6 +153,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(305470) then -- метка
 		if args:IsPlayer() then
 			specWarnMark:Show()
+			warnSound:Play("omaeva")
 		end
 		warnDeathMark:Show(args.destName)
 		timerDeathMark:Start(args.destName)
@@ -150,5 +161,20 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self.Options.MarkIcon then
 			self:SetIcon(args.destName, 8, 7)
 		end
-	end
+	elseif args:IsSpellID(305478) then 
+        if args:IsPlayer() then 
+			local name = {"djeban","sexgay","cigan","hardbass","upkicks"} --танец
+			name  = name[math.random(#name)]
+			warnSound:Play(name)
+        end
+	elseif args:IsSpellID(305460) then
+        if self.vb.ora then
+			local name = {"ora", "muda", "atata"} --танец
+			name  = name[math.random(#name)]
+			warnSound:Play(name)
+            self.vb.ora = false
+            self:ScheduleMethod(5, "resetOra")
+        end
+    end
 end
+
