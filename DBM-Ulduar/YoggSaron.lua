@@ -125,7 +125,7 @@ function mod:SPELL_CAST_START(args)
 		warnMadness:Show()
 		brainportal:Schedule(60)
 		warnBrainPortalSoon:Schedule(78)
-		specWarnBrainPortalSoon:Schedule(78)
+		--specWarnBrainPortalSoon:Schedule(78)
 		specWarnMadnessOutNow:Schedule(55)
 	elseif args:IsSpellID(313000) then		--Deafening Roar
 		timerNextDeafeningRoar:Start()
