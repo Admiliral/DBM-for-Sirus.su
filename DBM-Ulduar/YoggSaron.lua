@@ -13,7 +13,8 @@ mod:RegisterEvents(
 	"SPELL_SUMMON",
 	"SPELL_AURA_APPLIED",
 	"SPELL_AURA_REMOVED",
-	"SPELL_AURA_REMOVED_DOSE"
+	"SPELL_AURA_REMOVED_DOSE",
+	"UNIT_HEALTH"
 )
 
 
@@ -43,16 +44,18 @@ local yellSqueeze					= mod:NewYell(313031)
 local enrageTimer					= mod:NewBerserkTimer(900)
 local timerFervor					= mod:NewTargetTimer(15, 312989, nil, false, 2)
 local brainportal					= mod:NewTimer(20, "NextPortal", 57687, nil, nil, 5)
-local timerLunaricGaze				= mod:NewCastTimer(4, 312027, nil, nil, nil, 2)
-local timerNextLunaricGaze			= mod:NewCDTimer(8.0, 312027, nil, nil, nil, 2)
+local timerLunaricGaze				= mod:NewCastTimer(4, 313027, nil, nil, nil, 2)
+local timerNextLunaricGaze			= mod:NewCDTimer(8.0, 313027, nil, nil, nil, 2)
 local timerEmpower					= mod:NewCDTimer(46, 313014, nil, nil, nil, 3)
 local timerEmpowerDuration			= mod:NewBuffActiveTimer(10, 313014, nil, nil, nil, 3)
 local timerMadness 					= mod:NewCastTimer(60, 313003, nil, nil, nil, 5)
+local timerMadnessCD				= mod:NewCDTimer(30, 313003, nil, nil, nil, 5)
 local timerCastDeafeningRoar		= mod:NewCastTimer(2.3, 313000, nil, nil, nil, 2)
 local timerNextDeafeningRoar		= mod:NewNextTimer(20, 313000, nil, nil, nil, 2)
 local timerAchieve					= mod:NewAchievementTimer(420, 3012)
 
 mod:AddSetIconOption("SetIconOnFearTarget", 312995, true, false, {6})
+mod:AddBoolOption("ShowSaraHealth")
 mod:AddSetIconOption("SetIconOnFervorTarget", 312995, false, false, {7})
 mod:AddSetIconOption("SetIconOnBrainLinkTarget", 312995, true, false, {1, 2})
 mod:AddSetIconOption("SetIconOnBeacon", 313014, true, true, {1, 2, 3, 4, 5, 6, 7, 8}) --- ??????
@@ -64,22 +67,28 @@ local SanityBuff = DBM:GetSpellInfo(63050)
 mod.vb.brainLinkIcon = 2
 mod.vb.beaconIcon = 8
 mod.vb.Guardians = 0
-mod.vb.numberOfPlayers = 1
+--mod.vb.numberOfPlayers = 1
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 33288, "YoggSaron")
-	self.vb.numberOfPlayers = DBM:GetNumRealGroupMembers()
+	--self.vb.numberOfPlayers = DBM:GetNumRealGroupMembers()
 	self.vb.brainLinkIcon = 2
 	self.vb.beaconIcon = 8
 	self.vb.Guardians = 0
 	self.vb.phase = 1
 	enrageTimer:Start()
 	timerAchieve:Start()
+	if self.Options.ShowSaraHealth and not self.Options.HealthFrame then
+		DBM.BossHealth:Show(L.name)
+	end
+	if self.Options.ShowSaraHealth then
+		DBM.BossHealth:AddBoss(33134, L.Sara)
+	end
 	table.wipe(brainLinkTargets)
-	if self.Options.InfoFrame then
+	--[[if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(SanityBuff)
 		DBM.InfoFrame:Show(30, "playerdebuffstacks", 63050, 2)--Sorted lowest first (highest first is default of arg not given)
-	end
+	end]]
 end
 
 function mod:OnCombatEnd(wipe)
@@ -89,9 +98,9 @@ function mod:OnCombatEnd(wipe)
 	end
 end
 
-function mod:OnTimerRecovery()
+--[[function mod:OnTimerRecovery()
 	self.vb.numberOfPlayers = DBM:GetNumRealGroupMembers()
-end
+end]]
 
 function mod:FervorTarget(targetname, uId)
 	if not targetname then return end
@@ -103,7 +112,7 @@ end
 
 local function warnBrainLinkWarning(self)
 	warnBrainLink:Show(table.concat(brainLinkTargets, "<, >"))
-	--timerBrainLinkCD:Start()--VERIFY ME
+	timerBrainLinkCD:Start()--VERIFY ME
 	table.wipe(brainLinkTargets)
 	self.vb.brainLinkIcon = 2
 end
@@ -112,7 +121,7 @@ function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(313003) then	-- Induce Madness
 		timerMadness:Start()
 		warnMadness:Show()
-		--brainportal:Schedule(60)
+		brainportal:Schedule(60)
 		--warnBrainPortalSoon:Schedule(78)
 		--specWarnBrainPortalSoon:Schedule(78)
 		specWarnMadnessOutNow:Schedule(55)
@@ -137,6 +146,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif args:IsSpellID(313001, 313002, 313027, 313028) and self:AntiSpam(3, 3) then	-- Lunatic Gaze
 		timerLunaricGaze:Start()
 		brainportal:Start(60)
+		timerMadnessCD:Start()
 		warnBrainPortalSoon:Schedule(55)
 	end
 end
@@ -199,9 +209,15 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif args:IsSpellID(63894) and self.vb.phase < 2 then	-- Shadowy Barrier of Yogg-Saron (this is happens when p2 starts)
 		self.vb.phase = 2
-		brainportal:Start(25)
+		brainportal:Schedule(60)
 		warnBrainPortalSoon:Schedule(20)
 		warnP2:Show()
+		if self.Options.ShowSaraHealth then
+			DBM.BossHealth:RemoveBoss(33134)
+			if not self.Options.HealthFrame then
+				DBM.BossHealth:Hide()
+			end
+		end
 	elseif args:IsSpellID(313028, 312002) then	-- Lunatic Gaze (reduces sanity)
 		timerLunaricGaze:Start()
 	elseif args.spellId == 313014 then
@@ -222,7 +238,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		self:SetIcon(args.destName, 0)
 	elseif args.spellId == 63894 then		-- Shadowy Barrier removed from Yogg-Saron (start p3)
 		self:SendSync("Phase3")			-- Sync this because you don't get it in your combat log if you are in brain room.
-	elseif args:IsSpellID(313028, 312002) and self:AntiSpam(3, 2) then	-- Lunatic Gaze
+	elseif args:IsSpellID(313028, 313002) and self:AntiSpam(3, 2) then	-- Lunatic Gaze
 		timerNextLunaricGaze:Start()
 	elseif args:IsSpellID(313029, 312993) and self.Options.SetIconOnFearTarget then   -- Malady of the Mind (Death Coil)
 		self:SetIcon(args.destName, 0)
@@ -243,18 +259,20 @@ function mod:SPELL_AURA_REMOVED_DOSE(args)
 	end
 end
 
+
+
 function mod:OnSync(msg)
 	if msg == "Phase3" then
 		self.vb.phase = 3
 		brainportal:Cancel()
 		warnBrainPortalSoon:Cancel()
-		--timerMaladyCD:Cancel()
-		--timerBrainLinkCD:Cancel()
+		timerMaladyCD:Cancel()
+		timerBrainLinkCD:Cancel()
 		timerEmpower:Start()
-		if self.vb.numberOfPlayers == 1 then
+		--[[if self.vb.numberOfPlayers == 1 then
 			timerMadness:Cancel()
 			specWarnMadnessOutNow:Cancel()
-		end
+		end]]
 		warnP3:Show()
 		warnEmpowerSoon:Schedule(40)
 		timerNextDeafeningRoar:Start(30)
