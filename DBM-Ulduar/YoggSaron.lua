@@ -51,16 +51,16 @@ local timerNextLunaricGaze			= mod:NewCDTimer(8.0, 313027, nil, nil, nil, 2)
 local timerEmpower					= mod:NewCDTimer(46, 313014, nil, nil, nil, 3)
 local timerEmpowerDuration			= mod:NewBuffActiveTimer(10, 313014, nil, nil, nil, 3)
 local timerMadness 					= mod:NewCastTimer(60, 313003, nil, nil, nil, 5)
-local timerMadnessCD				= mod:NewCDTimer(30, 313003, nil, nil, nil, 5)
+local timerMadnessCD				= mod:NewCDTimer(90, 313003, nil, nil, nil, 3)
 local timerCastDeafeningRoar		= mod:NewCastTimer(2.3, 313000, nil, nil, nil, 2)
 local timerNextDeafeningRoar		= mod:NewNextTimer(20, 313000, nil, nil, nil, 2)
 local timerAchieve					= mod:NewAchievementTimer(420, 3013)
 
-mod:AddSetIconOption("SetIconOnFearTarget", 312995, true, false, {6})
+mod:AddSetIconOption("SetIconOnFearTarget", 313029, true, false, {6})
 mod:AddBoolOption("ShowSaraHealth")
-mod:AddSetIconOption("SetIconOnFervorTarget", 312995, false, false, {7})
-mod:AddSetIconOption("SetIconOnBrainLinkTarget", 312995, true, false, {1, 2})
-mod:AddSetIconOption("SetIconOnBeacon", 313014, true, true, {1, 2, 3, 4, 5, 6, 7, 8}) --- ??????
+mod:AddSetIconOption("SetIconOnFervorTarget", 312989, false, false, {7})
+mod:AddSetIconOption("SetIconOnBrainLinkTarget", 312995, true, false, {7, 8})
+mod:AddSetIconOption("SetIconOnBeacon", 313014, false, true, {1, 2, 3, 4, 5, 6, 7, 8}) --- ??????
 --mod:AddInfoFrameOption(212647) --???
 
 mod.vb.phase = 1
@@ -145,10 +145,13 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerEmpower:Start()
 		timerEmpowerDuration:Start()
 		warnEmpowerSoon:Schedule(40)
+	elseif args:IsSpellID(313003) then
+		brainportal:Start(30)
+		timerMadnessCD:Start(30)
 	elseif args:IsSpellID(313001, 313002, 313027, 313028) and self:AntiSpam(3, 3) then	-- Lunatic Gaze
 		timerLunaricGaze:Start()
 		brainportal:Start(60)
-		timerMadnessCD:Start()
+		timerMadnessCD:Start(30)
 		warnBrainPortalSoon:Schedule(55)
 	end
 end
