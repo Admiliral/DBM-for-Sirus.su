@@ -46,12 +46,13 @@ local timerMaladyCD					= mod:NewCDTimer(18.1, 313029, nil, nil, nil, 3)
 local timerBrainLinkCD				= mod:NewCDTimer(32, 312995, nil, nil, nil, 3)
 local timerFervor					= mod:NewTargetTimer(15, 312989, nil, false, 2)
 local brainportal					= mod:NewTimer(20, "NextPortal", 57687, nil, nil, 5)
+local brainportal2					= mod:NewCDTimer(60, 63894, nil, nil, nil, 3)
 local timerLunaricGaze				= mod:NewCastTimer(4, 313027, nil, nil, nil, 2)
 local timerNextLunaricGaze			= mod:NewCDTimer(8.0, 313027, nil, nil, nil, 2)
 local timerEmpower					= mod:NewCDTimer(46, 313014, nil, nil, nil, 3)
 local timerEmpowerDuration			= mod:NewBuffActiveTimer(10, 313014, nil, nil, nil, 3)
 local timerMadness 					= mod:NewCastTimer(60, 313003, nil, nil, nil, 5)
-local timerMadnessCD				= mod:NewCDTimer(90, 313003, nil, nil, nil, 3)
+local timerMadnessCD				= mod:NewCDTimer(15, 313003, nil, nil, nil, 3)
 local timerCastDeafeningRoar		= mod:NewCastTimer(2.3, 313000, nil, nil, nil, 2)
 local timerNextDeafeningRoar		= mod:NewNextTimer(20, 313000, nil, nil, nil, 2)
 local timerAchieve					= mod:NewAchievementTimer(420, 3013)
@@ -123,7 +124,6 @@ function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(313003) then	-- Induce Madness
 		timerMadness:Start()
 		warnMadness:Show()
-		brainportal:Schedule(60)
 		warnBrainPortalSoon:Schedule(78)
 		--specWarnBrainPortalSoon:Schedule(78)
 		specWarnMadnessOutNow:Schedule(55)
@@ -145,13 +145,11 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerEmpower:Start()
 		timerEmpowerDuration:Start()
 		warnEmpowerSoon:Schedule(40)
-	elseif args:IsSpellID(313003) then
-		brainportal:Start(30)
-		timerMadnessCD:Start(30)
 	elseif args:IsSpellID(313001, 313002, 313027, 313028) and self:AntiSpam(3, 3) then	-- Lunatic Gaze
 		timerLunaricGaze:Start()
 		brainportal:Start(60)
-		timerMadnessCD:Start(30)
+		brainportal2:Start(90)
+		--timerMadnessCD:Start(90)
 		warnBrainPortalSoon:Schedule(55)
 	end
 end
@@ -197,6 +195,8 @@ function mod:SPELL_AURA_APPLIED(args)
 				end
 			end
 		end
+	elseif args:IsSpellID(34072) then
+		brainportal2:Start()
 	elseif args:IsSpellID(64126, 313031) then	-- Squeeze
 		warnSqueeze:Show(args.destName)
 		if args:IsPlayer() then
@@ -214,11 +214,12 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif args:IsSpellID(63894) and self.vb.phase < 2 then	-- Shadowy Barrier of Yogg-Saron (this is happens when p2 starts)
 		self.vb.phase = 2
-		brainportal:Schedule(60)
-		warnBrainPortalSoon:Schedule(20)
 		warnP2:Show()
+		brainportal2:Start(60)
+		timerMadnessCD:Start()
+		warnBrainPortalSoon:Schedule(57)
 		if self.Options.ShowSaraHealth then
-			DBM.BossHealth:RemoveBoss(33134)
+			DBM.BossHealth:RemoveBoss(33890)
 			if not self.Options.HealthFrame then
 				DBM.BossHealth:Hide()
 			end
@@ -273,7 +274,8 @@ function mod:OnSync(msg)
 		warnBrainPortalSoon:Cancel()
 		timerMaladyCD:Cancel()
 		timerBrainLinkCD:Cancel()
-		timerEmpower:Start()
+		timerMadnessCD:Stops()
+		timerEmpower:Cancel()
 		--[[if self.vb.numberOfPlayers == 1 then
 			timerMadness:Cancel()
 			specWarnMadnessOutNow:Cancel()
