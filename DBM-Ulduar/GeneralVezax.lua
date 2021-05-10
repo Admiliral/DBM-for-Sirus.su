@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("GeneralVezax", "DBM-Ulduar")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("202104251754") 
+mod:SetRevision("202104251754")
 mod:SetCreatureID(33271)
 mod:SetUsedIcons(7, 8)
 
@@ -56,7 +56,7 @@ end
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(312977) then	-- Searing Flames
 		timerSearingFlamesCast:Start()
-	elseif args:IsSpellID(312981) then 
+	elseif args:IsSpellID(312981) then
 		specWarnSurgeDarkness:Show()
 		timerNextSurgeofDarkness:Start()
 	end
@@ -75,7 +75,7 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(312981) then	
+	if args:IsSpellID(312981) then
 		timerSurgeofDarkness:Stop()
 	end
 end
