@@ -34,6 +34,7 @@ local warnEmpowerSoon				= mod:NewSoonAnnounce(313014, 4)
 local specWarnBrainLink 			= mod:NewSpecialWarningYou(312995, nil, nil, nil, 1, 2)
 local specWarnSanity 				= mod:NewSpecialWarning("SpecWarnSanity")
 local specWarnMadnessOutNow			= mod:NewSpecialWarning("SpecWarnMadnessOutNow")
+local specWarnLunaricGaze			= mod:NewSpecialWarningSpell(313002, nil, nil, nil, 1, 2)
 local specWarnDeafeningRoar			= mod:NewSpecialWarningSpell(313000, nil, nil, nil, 1, 2)
 local specWarnFervor				= mod:NewSpecialWarningYou(312989, nil, nil, nil, 1, 2)
 local specWarnMalady				= mod:NewSpecialWarningYou(313029, nil, nil, nil, 1, 2)
@@ -46,9 +47,9 @@ local timerMaladyCD					= mod:NewCDTimer(18.1, 313029, nil, nil, nil, 3)
 local timerBrainLinkCD				= mod:NewCDTimer(32, 312995, nil, nil, nil, 3)
 local timerFervor					= mod:NewTargetTimer(15, 312989, nil, false, 2)
 local brainportal					= mod:NewTimer(20, "NextPortal", 57687, nil, nil, 5)
-local brainportal2					= mod:NewCDTimer(60, 63894, nil, nil, nil, 3)
-local timerLunaricGaze				= mod:NewCastTimer(4, 313027, nil, nil, nil, 2)
-local timerNextLunaricGaze			= mod:NewCDTimer(8.0, 313027, nil, nil, nil, 2)
+local brainportal2					= mod:NewCDTimer(60, 64775, nil, nil, nil, 3)
+local timerLunaricGaze				= mod:NewCastTimer(4, 313002, nil, nil, nil, 2)
+local timerNextLunaricGaze			= mod:NewCDTimer(8.5, 313002, nil, nil, nil, 2)
 local timerEmpower					= mod:NewCDTimer(46, 313014, nil, nil, nil, 3)
 local timerEmpowerDuration			= mod:NewBuffActiveTimer(10, 313014, nil, nil, nil, 3)
 local timerMadness 					= mod:NewCastTimer(60, 313003, nil, nil, nil, 5)
@@ -121,7 +122,7 @@ local function warnBrainLinkWarning(self)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(313003) then	-- Induce Madness
+	if args:IsSpellID(312650, 313003) then	-- Induce Madness
 		timerMadness:Start()
 		warnMadness:Show()
 		warnBrainPortalSoon:Schedule(78)
@@ -178,7 +179,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		else
 			self:Schedule(0.5, warnBrainLinkWarning, self)
 		end
-	elseif args:IsSpellID(63830, 63881, 312993, 313029) then   -- Malady of the Mind (Death Coil)
+	elseif args:IsSpellID(63830, 63881, 312993, 313029) then   -- Душевная болезнь (Death Coil)
 		if self.Options.SetIconOnFearTarget then
 			self:SetIcon(args.destName, 6)
 		end
@@ -195,8 +196,8 @@ function mod:SPELL_AURA_APPLIED(args)
 				end
 			end
 		end
-	elseif args:IsSpellID(34072) then
-		brainportal2:Start()
+	--elseif args:IsSpellID(34072) then ---------------------
+		--brainportal2:Start()
 	elseif args:IsSpellID(64126, 313031) then	-- Squeeze
 		warnSqueeze:Show(args.destName)
 		if args:IsPlayer() then
@@ -212,7 +213,8 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnFervor:Show()
 			specWarnFervor:Play("targetyou")
 		end
-	elseif args:IsSpellID(63894) and self.vb.phase < 2 then	-- Shadowy Barrier of Yogg-Saron (this is happens when p2 starts)
+	--elseif args:IsSpellID(63894, 64775) and self.vb.phase < 2 then	-- Shadowy Barrier of Yogg-Saron (this is happens when p2 starts)
+	elseif args.spellId == 64775 and self.vb.phase < 2 then
 		self.vb.phase = 2
 		warnP2:Show()
 		brainportal2:Start(60)
@@ -224,8 +226,9 @@ function mod:SPELL_AURA_APPLIED(args)
 				DBM.BossHealth:Hide()
 			end
 		end
-	elseif args:IsSpellID(313028, 312002) then	-- Lunatic Gaze (reduces sanity)
+	elseif args:IsSpellID(313001, 313002, 313027, 313028) then	-- Взгляд безумца (reduces sanity)
 		timerLunaricGaze:Start()
+		specWarnLunaricGaze:Show()
 	elseif args.spellId == 313014 then
 		if self.Options.SetIconOnBeacon then
 			self:ScanForMobs(args.destGUID, 2, self.vb.beaconIcon, 1, 0.2, 10, "SetIconOnBeacon")
@@ -242,9 +245,9 @@ function mod:SPELL_AURA_REMOVED(args)
 		self:SetIcon(args.destName, 0)
 	elseif args.spellId == 312989 and self.Options.SetIconOnFervorTarget then	-- Sara's Fervor
 		self:SetIcon(args.destName, 0)
-	elseif args.spellId == 63894 then		-- Shadowy Barrier removed from Yogg-Saron (start p3)
+	elseif args:IsSpellID(63894, 64775) then		-- Shadowy Barrier removed from Yogg-Saron (start p3)
 		self:SendSync("Phase3")			-- Sync this because you don't get it in your combat log if you are in brain room.
-	elseif args:IsSpellID(313028, 313002) and self:AntiSpam(3, 2) then	-- Lunatic Gaze
+	elseif args:IsSpellID(313001, 313002, 313027, 313028) and self:AntiSpam(3, 2) then	-- Lunatic Gaze
 		timerNextLunaricGaze:Start()
 	elseif args:IsSpellID(313029, 312993) and self.Options.SetIconOnFearTarget then   -- Malady of the Mind (Death Coil)
 		self:SetIcon(args.destName, 0)
