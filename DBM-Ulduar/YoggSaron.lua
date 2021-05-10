@@ -49,7 +49,7 @@ local timerFervor					= mod:NewTargetTimer(15, 312989, nil, false, 2)
 local brainportal					= mod:NewTimer(20, "NextPortal", 57687, nil, nil, 5)
 local brainportal2					= mod:NewCDTimer(60, 64775, nil, nil, nil, 3)
 local timerLunaricGaze				= mod:NewCastTimer(4, 313002, nil, nil, nil, 2)
-local timerNextLunaricGaze			= mod:NewCDTimer(8.5, 313002, nil, nil, nil, 2)
+local timerNextLunaricGaze			= mod:NewCDTimer(10, 313002, nil, nil, nil, 2)
 local timerEmpower					= mod:NewCDTimer(46, 313014, nil, nil, nil, 3)
 local timerEmpowerDuration			= mod:NewBuffActiveTimer(10, 313014, nil, nil, nil, 3)
 local timerMadness 					= mod:NewCastTimer(60, 313003, nil, nil, nil, 5)
@@ -213,8 +213,8 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnFervor:Show()
 			specWarnFervor:Play("targetyou")
 		end
-	--elseif args:IsSpellID(63894, 64775) and self.vb.phase < 2 then	-- Shadowy Barrier of Yogg-Saron (this is happens when p2 starts)
-	elseif args.spellId == 64775 and self.vb.phase < 2 then
+	elseif args:IsSpellID(63894, 64775) and self.vb.phase < 2 then	-- Shadowy Barrier of Yogg-Saron (this is happens when p2 starts)
+	--elseif args.spellId == 64775 and self.vb.phase < 2 then
 		self.vb.phase = 2
 		warnP2:Show()
 		brainportal2:Start(60)
@@ -228,7 +228,9 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif args:IsSpellID(313001, 313002, 313027, 313028) then	-- Взгляд безумца (reduces sanity)
 		timerLunaricGaze:Start()
+		if self.vb.phase == 3 then
 		specWarnLunaricGaze:Show()
+		end
 	elseif args.spellId == 313014 then
 		if self.Options.SetIconOnBeacon then
 			self:ScanForMobs(args.destGUID, 2, self.vb.beaconIcon, 1, 0.2, 10, "SetIconOnBeacon")
@@ -274,6 +276,7 @@ function mod:OnSync(msg)
 	if msg == "Phase3" then
 		self.vb.phase = 3
 		brainportal:Cancel()
+		brainportal2:Cancel()
 		warnBrainPortalSoon:Cancel()
 		timerMaladyCD:Cancel()
 		timerBrainLinkCD:Cancel()
