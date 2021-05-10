@@ -27,7 +27,7 @@ local specWarnLifeLeechYou		= mod:NewSpecialWarningMoveAway(312974, nil, nil, ni
 local yellLifeLeech				= mod:NewYell(312974)
 local specWarnLifeLeechNear 	= mod:NewSpecialWarningClose(312974, nil, nil, 2, 1, 2)
 local specWarnSearingFlames		= mod:NewSpecialWarningInterruptCount(312977, "HasInterrupt", nil, nil, 1, 2)-- ????????
-local specWarnAnimus			= mod:NewSpecialWarningSwitch("ej17651", nil, nil, nil, 1, 2)-- ????????????????
+--local specWarnAnimus			= mod:NewSpecialWarningSwitch("ej17651", nil, nil, nil, 1, 2)-- ????????????????
 
 local timerEnrage				= mod:NewBerserkTimer(600)
 local timerSearingFlamesCast	= mod:NewCastTimer(2, 312977)
@@ -50,7 +50,7 @@ mod:AddSetIconOption("SetIconOnLifeLeach", 312974, true, false, {7})
 
 mod.vb.interruptCount = 0
 mod.vb.vaporsCount = 0
-local animusName = DBM:EJ_GetSectionInfo(17651)
+--local animusName = DBM:EJ_GetSectionInfo(17651)
 
 function mod:ShadowCrashTarget(targetname, uId)
 	if not targetname then return end
@@ -159,8 +159,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 			end
 		end
 	elseif args.spellId == 63364 then ---????????
-		specWarnAnimus:Show()
-		specWarnAnimus:Play("bigmob")
+		--specWarnAnimus:Show()
+		--specWarnAnimus:Play("bigmob")
 	end
 end
 
