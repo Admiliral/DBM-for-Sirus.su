@@ -486,6 +486,7 @@ L:SetMiscLocalization{
 	YellPull 			= "Скоро мы сразимся с главарем этих извергов! Обратите гнев и ненависть против его прислужников!",
 	YellPhase2	 		= "Я – это сон наяву.",
 	Sara 				= "Сара",
+	Mozg				= "Мозг Йог-Сарона",
 	WarningYellSqueeze	= "Выдавливание на мне! Помогите!"
 }
 
@@ -503,7 +504,8 @@ L:SetWarningLocalization{
 }
 
 L:SetTimerLocalization{
-	NextPortal	= "Провал Безумия"
+	NextPortal	= "Провал Безумия",
+	NextPortal2 = "Перезарядка Портала"
 }
 
 L:SetOptionLocalization{
