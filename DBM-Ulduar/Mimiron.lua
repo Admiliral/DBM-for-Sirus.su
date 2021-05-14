@@ -31,7 +31,7 @@ local warnFrostBomb				= mod:NewSpellAnnounce(64623, 3)
 
 local warnShockBlast			= mod:NewSpecialWarningSpell(63631, "Melee|Healer", nil, nil, 4, 2)
 local warnRocketStrike			= mod:NewSpecialWarningDodge(64402, nil, nil, nil, 2, 2)
-local warnDarkGlare				= mod:NewSpecialWarning(63293, nil, nil, nil, 4, 2)
+local warnDarkGlare				= mod:NewSpecialWarningSpell(63293, nil, nil, nil, 4, 2)
 local warnPlasmaBlast			= mod:NewSpecialWarningDefensive(64529, nil, nil, nil, 1, 2)
 
 local enrage 					= mod:NewBerserkTimer(900)
