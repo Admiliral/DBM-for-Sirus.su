@@ -43,7 +43,7 @@ function mod:OnCombatStart(delay)
 	enrageTimer:Start()
 	timerHardmode:Start()
 	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(8)
+		DBM.RangeCheck:Show(10)
 	end
 	table.wipe(lastcharge)
 end
@@ -74,11 +74,11 @@ end
 
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(312889, 312536) then 					-- Storm Hammer
+	if args:IsSpellID(312889, 312536, 62042) then 					-- Storm Hammer
 		warnStormhammer:Show(args.destName)
-
 	elseif args:IsSpellID(312898, 312545) then				-- Unbalancing Strike
 		warnUnbalancingStrike:Show(args.destName)
+		specWarnUnbalancingStrike:Show()
 		if self.Options.YellOnUnbalancingStrike and args:IsPlayer() then
 			SendChatMessage(L.YellUnbalancingStrike, "SAY")
 		end
@@ -92,14 +92,14 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(312889, 312536) then 		-- Storm Hammer
+	if args:IsSpellID(312889, 312536, 62042) then 		-- Storm Hammer
 		timerStormhammer:Schedule(2)
 	elseif args:IsSpellID(312897, 312896) then   	-- Lightning Charge
 		warnLightningCharge:Show()
 		timerLightningCharge:Start()
 	elseif args:IsSpellID(312898, 312545) then	-- Unbalancing Strike
 		timerUnbalancingStrike:Start()
-	elseif args:IsSpellID(312895) then
+	elseif args:IsSpellID(312895, 312542) then
 		timerChainlightning:Start()
 
 	end

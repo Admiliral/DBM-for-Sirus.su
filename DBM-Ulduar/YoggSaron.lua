@@ -30,6 +30,7 @@ local warnSanity 					= mod:NewAnnounce("WarningSanity", 3, 63050)
 local warnBrainLink 				= mod:NewTargetAnnounce(312995, 3)
 local warnBrainPortalSoon			= mod:NewAnnounce("WarnBrainPortalSoon", 2, 57687)
 local warnEmpowerSoon				= mod:NewSoonAnnounce(313014, 4)
+--local yelltemn					= mod:NewYell(313028)
 
 local specWarnBrainLink 			= mod:NewSpecialWarningYou(312995, nil, nil, nil, 1, 2)
 local specWarnSanity 				= mod:NewSpecialWarning("SpecWarnSanity")
@@ -50,8 +51,8 @@ local brainportal					= mod:NewTimer(20, "NextPortal", 57687, nil, nil, 5)
 local brainportal2					= mod:NewCDTimer(60, 64775, nil, nil, nil, 3)
 local timerLunaricGaze				= mod:NewCastTimer(4, 313002, nil, nil, nil, 2)
 local timerNextLunaricGaze			= mod:NewCDTimer(9, 313002, nil, nil, nil, 2)
-local timerEmpower					= mod:NewCDTimer(46, 313014, nil, nil, nil, 3)
-local timerEmpowerDuration			= mod:NewBuffActiveTimer(10, 313014, nil, nil, nil, 3)
+local timerEmpower					= mod:NewCDTimer(46, 64465, nil, nil, nil, 3)
+local timerEmpowerDuration			= mod:NewBuffActiveTimer(10, 64465, nil, nil, nil, 3)
 --local timerMadness 					= mod:NewCastTimer(60, 313003, nil, nil, nil, 5)
 local timerMadnessCD				= mod:NewCDTimer(15, 313003, nil, nil, nil, 3)
 local timerCastDeafeningRoar		= mod:NewCastTimer(2.3, 313000, nil, nil, nil, 2)
@@ -62,7 +63,7 @@ mod:AddSetIconOption("SetIconOnFearTarget", 313029, true, false, {6})
 mod:AddBoolOption("ShowSaraHealth")
 mod:AddSetIconOption("SetIconOnFervorTarget", 312989, false, false, {7})
 mod:AddSetIconOption("SetIconOnBrainLinkTarget", 312995, true, false, {7, 8})
-mod:AddSetIconOption("SetIconOnBeacon", 313014, false, false, {1, 2, 3, 4, 5, 6, 7, 8})
+mod:AddSetIconOption("SetIconOnBeacon", 64465, false, false, {1, 2, 3, 4, 5, 6, 7, 8})
 --mod:AddInfoFrameOption(212647) --???
 
 mod.vb.phase = 1
@@ -144,7 +145,7 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(64144) and self:GetUnitCreatureId(args.sourceGUID) == 33966 then
 		warnCrusherTentacleSpawned:Show()
-	elseif args.spellId == 313014 and self:AntiSpam(3, 4) then
+	elseif args.spellId == 64465 and self:AntiSpam(3, 4) then
 		timerEmpower:Start()
 		timerEmpowerDuration:Start()
 		warnEmpowerSoon:Schedule(40)
@@ -165,7 +166,7 @@ function mod:SPELL_SUMMON(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(312995) then		-- Brain Link
+	if args:IsSpellID(312995, 312994, 312996) then		-- Brain Link
 		self:Unschedule(warnBrainLinkWarning)
 		brainLinkTargets[#brainLinkTargets + 1] = args.destName
 		if self.Options.SetIconOnBrainLinkTarget then
@@ -225,6 +226,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(313001, 313002, 313027, 313028) then	-- Взгляд безумца (reduces sanity)
 		timerLunaricGaze:Start()
 		if self.vb.phase == 3 then
+		--yelltemn:Yell()
 		specWarnLunaricGaze:Show()
 		brainportal:Cancel()
 		brainportal2:Cancel()
@@ -232,7 +234,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			DBM.BossHealth:RemoveBoss(33890)--33890
 		end
 		end
-	elseif args.spellId == 313014 then
+	elseif args.spellId == 64465 then
 		if self.Options.SetIconOnBeacon then
 			self:ScanForMobs(args.destGUID, 2, self.vb.beaconIcon, 1, 0.2, 10, "SetIconOnBeacon")
 		end
@@ -254,7 +256,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerNextLunaricGaze:Start()
 	elseif args:IsSpellID(313029, 312993) and self.Options.SetIconOnFearTarget then   -- Malady of the Mind (Death Coil)
 		self:SetIcon(args.destName, 0)
-	elseif args.spellId == 313014 then
+	elseif args.spellId == 64465 then
 		if self.Options.SetIconOnBeacon then
 			self:ScanForMobs(args.destGUID, 2, 0, 1, 0.2, 12, "SetIconOnBeacon")
 		end

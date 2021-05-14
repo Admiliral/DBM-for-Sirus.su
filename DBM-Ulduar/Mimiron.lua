@@ -29,9 +29,9 @@ local lootannounce				= mod:NewAnnounce("MagneticCore", 1)
 local warnBombSpawn				= mod:NewAnnounce("WarnBombSpawn", 3)
 local warnFrostBomb				= mod:NewSpellAnnounce(64623, 3)
 
-local warnShockBlast			= mod:NewSpecialWarningRun(63631, "Melee", nil, nil, 4, 2)
---local warnRocketStrike			= mod:NewSpecialWarningDodge(64402, nil, nil, nil, 2, 2)
-local warnDarkGlare				= mod:NewSpecialWarningRun(63293, nil, nil, nil, 3, 2)
+local warnShockBlast			= mod:NewSpecialWarningSpell(63631, "Melee|Healer", nil, nil, 4, 2)
+local warnRocketStrike			= mod:NewSpecialWarningDodge(64402, nil, nil, nil, 2, 2)
+local warnDarkGlare				= mod:NewSpecialWarning(63293, nil, nil, nil, 4, 2)
 local warnPlasmaBlast			= mod:NewSpecialWarningDefensive(64529, nil, nil, nil, 1, 2)
 
 local enrage 					= mod:NewBerserkTimer(900)
@@ -44,6 +44,7 @@ local timerShockBlast			= mod:NewCastTimer(4, 312792, nil, nil, nil, 2)
 local timerShockBlastCD			= mod:NewCDTimer(40, 312792, nil, nil, nil, 2)
 local timerNextRockets		    = mod:NewNextTimer(20, 63041, nil, nil, nil, 3)
 local timerSpinUp				= mod:NewCastTimer(4, 312794, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
+local timerRocketStrikeCD		= mod:NewCDTimer(20, 63631, nil, nil, nil, 3)
 local timerDarkGlareCast		= mod:NewCastTimer(10, 63274, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
 local timerNextDarkGlare		= mod:NewNextTimer(39, 63274, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Лазерный обстрел P3Wx2
 local timerNextShockblast		= mod:NewNextTimer(35, 312792, nil, nil, nil, 2)
@@ -55,7 +56,6 @@ local timerNextFlames			= mod:NewNextTimer(27.5, 312803, nil, nil, nil, 3)
 local timerNextFrostBomb        = mod:NewNextTimer(30, 64623, nil, nil, nil, 3, nil, DBM_CORE_HEROIC_ICON) --Ледяная бомба
 local timerBombExplosion		= mod:NewCastTimer(15, 312804, nil, nil, nil, 3)
 --local timerVolleyCD		        = mod:NewCDTimer(20, 63041)
-
 
 
 
@@ -71,6 +71,7 @@ mod:AddBoolOption("YellOnshellWarn", true)
 mod.vb.hardmode = false
 mod.vb.phase = 0
 mod.vb.napalmShellIcon = 7
+
 local lootmethod, masterlooterRaidID
 local spinningUp = DBM:GetSpellInfo(312794)
 local lastSpinUp = 0
@@ -134,8 +135,7 @@ function mod:SPELL_SUMMON(args)
 end
 
 
-function mod:UNIT_SPELLCAST_CHANNEL_STOP(unit, _, spellId)
-	local spell = DBM:GetSpellInfo(spellId)--DO BETTER with log
+function mod:UNIT_SPELLCAST_CHANNEL_STOP(unit, spell)
 	if spell == spinningUp and GetTime() - lastSpinUp < 3.9 then
 		self.vb.is_spinningUp = false
 		self:SendSync("SpinUpFail")
@@ -337,7 +337,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-
+function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
+	if spellId == 34098 then--ClearAllDebuffs
+	elseif spellId == 64402 or spellId == 65034 then--P2, P4 Rocket Strike
+		warnRocketStrike:Show()
+		warnRocketStrike:Play("watchstep")
+		timerRocketStrikeCD:Start()
+	end
+end
 function mod:OnSync(event, args)
 	if event == "SpinUpFail" then
 		self.vb.is_spinningUp = false
