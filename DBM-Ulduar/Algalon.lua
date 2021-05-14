@@ -25,28 +25,28 @@ mod:RegisterEvents(
 	"UNIT_HEALTH"
 )
 
-local announceBigBang			= mod:NewSpellAnnounce(64584, 4)
+local announceBigBang			= mod:NewSpellAnnounce(313034, 4)
 local warnPhase2				= mod:NewPhaseAnnounce(2)
 local warnPhase2Soon			= mod:NewAnnounce("WarnPhase2Soon", 2)
-local announcePreBigBang		= mod:NewPreWarnAnnounce(64584, 10, 3)
-local announceBlackHole			= mod:NewSpellAnnounce(65108, 2)
-local announceCosmicSmash		= mod:NewAnnounce("WarningCosmicSmash", 3, 62311)
-local announcePhasePunch		= mod:NewAnnounce("WarningPhasePunch", 4, 65108, "Tank|Healer")
+local announcePreBigBang		= mod:NewPreWarnAnnounce(313034, 10, 3)
+local announceBlackHole			= mod:NewSpellAnnounce(313039, 2)
+local announceCosmicSmash		= mod:NewAnnounce("WarningCosmicSmash", 3, 313036)
+local announcePhasePunch		= mod:NewAnnounce("WarningPhasePunch", 4, 313039, "Tank|Healer")
 
 local specwarnStarLow			= mod:NewSpecialWarning("warnStarLow", "Tank|Healer", nil, nil, 1, 2)
-local specWarnPhasePunch		= mod:NewSpecialWarningStack(64412, nil, 4, nil, nil, 1, 6)
-local specWarnBigBang			= mod:NewSpecialWarningDefensive(64584, "Tank", nil, nil, 3, 2)
-local specWarnCosmicSmash		= mod:NewSpecialWarningSpell(64598, nil, nil, nil, 2, 2)
+local specWarnPhasePunch		= mod:NewSpecialWarningStack(313033, nil, 4, nil, nil, 1, 6)
+local specWarnBigBang			= mod:NewSpecialWarningDefensive(313034, "Tank", nil, nil, 3, 2)
+local specWarnCosmicSmash		= mod:NewSpecialWarningSpell(313036, nil, nil, nil, 2, 2)
 
 local timerCombatStart		    = mod:NewTimer(7, "TimerCombatStart", 2457)
 local enrageTimer				= mod:NewBerserkTimer(360)
-local timerNextBigBang			= mod:NewNextTimer(90.5, 64584, nil, nil, nil, 2)
-local timerBigBangCast			= mod:NewCastTimer(8, 64584)
+local timerNextBigBang			= mod:NewNextTimer(90.5, 313034, nil, nil, nil, 2)
+local timerBigBangCast			= mod:NewCastTimer(8, 313034)
 local timerNextCollapsingStar	= mod:NewTimer(15, "NextCollapsingStar")
 local timerCDCosmicSmash		= mod:NewTimer(25, "PossibleNextCosmicSmash")
-local timerCastCosmicSmash		= mod:NewCastTimer(4.5, 62311)
-local timerPhasePunch			= mod:NewBuffActiveTimer(45, 64412, nil, nil, nil, 6)
-local timerNextPhasePunch		= mod:NewNextTimer(16, 64412, nil, nil, nil, 6)
+local timerCastCosmicSmash		= mod:NewCastTimer(4.5, 313036)
+local timerPhasePunch			= mod:NewBuffActiveTimer(45, 313033, nil, nil, nil, 6)
+local timerNextPhasePunch		= mod:NewNextTimer(16, 313033, nil, nil, nil, 6)
 
 
 local warned_preP2 = false
@@ -85,7 +85,7 @@ function mod:startTimers()
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(64584, 64443) then 	-- Суровый удар
+	if args:IsSpellID(313034, 64443) then 	-- Суровый удар
 		timerBigBangCast:Start()
 		timerNextBigBang:Start()
 		announceBigBang:Show()
@@ -97,10 +97,10 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(65108, 64122) then 	-- Взрыв чёрной дыры
+	if args:IsSpellID(313039, 64122) then 	-- Взрыв чёрной дыры
 		announceBlackHole:Show()
 		warned_star = false
-	elseif args:IsSpellID(64598, 62301) then	-- Кара небесная
+	elseif args:IsSpellID(64598, 62301, 313037, 313036) then	-- Кара небесная
 		timerCastCosmicSmash:Start()
 		timerCDCosmicSmash:Start()
 		announceCosmicSmash:Show()
@@ -109,7 +109,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(64412) then
+	if args:IsSpellID(313033) then
 		timerNextPhasePunch:Start()
 		local amount = args.amount or 1
 		if args:IsPlayer() and amount >= 4 then

@@ -34,9 +34,10 @@ local timerLifeLeech			= mod:NewTargetTimer(10, 312974)
 local timerLeech				= mod:NewNextTimer(36, 312974)
 local timerCrashArrow           = mod:NewNextTimer(15,312978)
 local timerHardmode				= mod:NewTimer(189, "hardmodeSpawn")
+local yellLifeLeech				= mod:NewYell(312974)
+local yellShadowCrash			= mod:NewYell(312978)
 
-
-mod:AddBoolOption("YellOnLifeLeech", true, "announce")
+--mod:AddBoolOption("YellOnLifeLeech", true, "announce")
 mod:AddBoolOption("YellOnShadowCrash", true, "announce")
 mod:AddBoolOption("SetIconOnShadowCrash", true)
 mod:AddBoolOption("SetIconOnLifeLeach", true)
@@ -45,7 +46,7 @@ mod:AddBoolOption("BypassLatencyCheck", false)--Use old scan method without sync
 
 
 
-function mod:OnCombatStart(delay)   -- Передаю привет крысам :)
+function mod:OnCombatStart(delay)
 	timerEnrage:Start(-delay)
 	timerHardmode:Start(-delay)
 	timerNextSurgeofDarkness:Start(-delay)
@@ -97,9 +98,7 @@ function mod:OldShadowCrashTarget()
 	warnShadowCrash:Show(targetname)
 	if targetname == UnitName("player") then
 		specWarnShadowCrash:Show(targetname)
-		if self.Options.YellOnShadowCrash then
-			SendChatMessage(L.YellCrash, "SAY")
-		end
+		yellShadowCrash:Yell()
 	elseif targetname then
 		local uId = DBM:GetRaidUnitId(targetname)
 		if uId then
@@ -136,9 +135,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerLeech:Start()
 		if args:IsPlayer() then
 			specWarnLifeLeechYou:Show()
-			if self.Options.YellOnLifeLeech then
-				SendChatMessage(L.YellLeech, "SAY")
-			end
+			yellLifeLeech:Yell()
 		else
 			local uId = DBM:GetRaidUnitId(args.destName)
 			if uId then
