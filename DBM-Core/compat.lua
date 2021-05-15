@@ -16,7 +16,7 @@ local TickerMetatable = {
 
 local waitTable = {}
 local waitFrame = TimerFrame or CreateFrame("Frame", "TimerFrame", UIParent)
---[[waitFrame:SetScript("OnUpdate", function(self, elapsed)
+waitFrame:SetScript("OnUpdate", function(self, elapsed)
 	local total = #waitTable
 	local i = 1
 
@@ -49,7 +49,7 @@ local waitFrame = TimerFrame or CreateFrame("Frame", "TimerFrame", UIParent)
 	if #waitTable == 0 then
 		self:Hide()
 	end
-end)]]
+end)
 
 local function AddDelayedCall(ticker, oldTicker)
 	if oldTicker and type(oldTicker) == "table" then
