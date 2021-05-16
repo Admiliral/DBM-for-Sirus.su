@@ -31,7 +31,7 @@ local warnFrostBomb				= mod:NewSpellAnnounce(64623, 3)
 
 local warnShockBlast			= mod:NewSpecialWarningRun(63631, "Melee|Healer", nil, nil, 4, 2)
 local warnRocketStrike			= mod:NewSpecialWarningDodge(64402, nil, nil, nil, 2, 2)
-local warnDarkGlare				= mod:NewSpecialWarningDodge(63293, nil, nil, nil, 4, 2)
+local warnDarkGlare				= mod:NewSpecialWarningSpell(63293, nil, nil, nil, 4, 2)
 local warnPlasmaBlast			= mod:NewSpecialWarningDefensive(64529, nil, nil, nil, 1, 2)
 
 local enrage 					= mod:NewBerserkTimer(900)
@@ -50,9 +50,9 @@ local timerNextDarkGlare		= mod:NewNextTimer(39, 63274, nil, nil, nil, 3, nil, D
 local timerNextShockblast		= mod:NewNextTimer(35, 312792, nil, nil, nil, 2)
 local timerPlasmaBlastCD		= mod:NewCDTimer(30, 312790, nil, "Tank", 2, 5)
 local timerShell				= mod:NewTargetTimer(6, 312788, nil, "Healer", 2, 5, nil, DBM_CORE_HEALER_ICON)
-local timerFlameSuppressant		= mod:NewCastTimer(60, 312793, nil, nil, nil, 3)
+local timerFlameSuppressant		= mod:NewCastTimer(80, 312793, nil, nil, nil, 3)
 local timerNextFlameSuppressant	= mod:NewNextTimer(10, 312793, nil, nil, nil, 3)
-local timerNextFlames			= mod:NewNextTimer(27.5, 312803, nil, nil, nil, 3)
+local timerNextFlames			= mod:NewNextTimer(28, 312803, nil, nil, nil, 3)
 local timerNextFrostBomb        = mod:NewNextTimer(30, 64623, nil, nil, nil, 3, nil, DBM_CORE_HEROIC_ICON) --Ледяная бомба
 local timerBombExplosion		= mod:NewCastTimer(15, 312804, nil, nil, nil, 3)
 --local timerVolleyCD		        = mod:NewCDTimer(20, 63041)
@@ -74,7 +74,7 @@ mod.vb.napalmShellIcon = 7
 local lootmethod, masterlooterRaidID
 local spinningUp = DBM:GetSpellInfo(312794)
 local lastSpinUp = 0
-mod.vb.is_spinningUp = false
+local is_spinningUp = false
 local napalmShellTargets = {}
 
 local function warnNapalmShellTargets(self)
@@ -88,7 +88,7 @@ function mod:OnCombatStart(delay)
 	self.vb.hardmode = false
 	enrage:Start(-delay)
 	self.vb.phase = 0
-	self.vb.is_spinningUp = false
+	is_spinningUp = false
 	self.vb.napalmShellIcon = 7
 	table.wipe(napalmShellTargets)
 	self:NextPhase()
@@ -98,7 +98,7 @@ function mod:OnCombatStart(delay)
 		lootmethod, masterlooterRaidID = GetLootMethod()
 	end
 	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(10)
+		DBM.RangeCheck:Show(6)
 	end
 end
 
@@ -123,7 +123,7 @@ function mod:Flames()
 		self:ScheduleMethod(18, "Flames")
 	else
 		timerNextFlames:Start()
-		self:ScheduleMethod(27.5, "Flames")
+		self:ScheduleMethod(28, "Flames")
 	end
 end
 
@@ -136,7 +136,7 @@ end
 
 function mod:UNIT_SPELLCAST_CHANNEL_STOP(unit, spell)
 	if spell == spinningUp and GetTime() - lastSpinUp < 3.9 then
-		self.vb.is_spinningUp = false
+		is_spinningUp = false
 		self:SendSync("SpinUpFail")
 	end
 end
@@ -190,7 +190,7 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 local function show_warning_for_spinup(self)
-	if self.vb.is_spinningUp then
+	if is_spinningUp then
 		warnDarkGlare:Show()
 	end
 end
@@ -199,7 +199,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(63027, 63667, 312436, 312789) then				-- mines
 		timerProximityMines:Start()
 	elseif args:IsSpellID(63414, 312794, 312441) then			-- Spinning UP (before Dark Glare)
-		self.vb.is_spinningUp = true
+		is_spinningUp = true
 		timerSpinUp:Start()
 		timerDarkGlareCast:Schedule(4)
 		timerNextDarkGlare:Schedule(19)			-- 4 (cast spinup) + 15 sec (cast dark glare)
@@ -323,8 +323,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerFlameSuppressant:Start()
 		enrage:Stop()
 		self.vb.hardmode = true
-		timerNextFlames:Start(6.5)
-		self:ScheduleMethod(6.5, "Flames")
+		timerNextFlames:Start(2)
+		self:ScheduleMethod(2, "Flames")
 	end
 end
 
