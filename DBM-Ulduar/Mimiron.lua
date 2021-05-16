@@ -29,9 +29,9 @@ local lootannounce				= mod:NewAnnounce("MagneticCore", 1)
 local warnBombSpawn				= mod:NewAnnounce("WarnBombSpawn", 3)
 local warnFrostBomb				= mod:NewSpellAnnounce(64623, 3)
 
-local warnShockBlast			= mod:NewSpecialWarningSpell(63631, "Melee|Healer", nil, nil, 4, 2)
+local warnShockBlast			= mod:NewSpecialWarningRun(63631, "Melee|Healer", nil, nil, 4, 2)
 local warnRocketStrike			= mod:NewSpecialWarningDodge(64402, nil, nil, nil, 2, 2)
-local warnDarkGlare				= mod:NewSpecialWarningSpell(63293, nil, nil, nil, 4, 2)
+local warnDarkGlare				= mod:NewSpecialWarningDodge(63293, nil, nil, nil, 4, 2)
 local warnPlasmaBlast			= mod:NewSpecialWarningDefensive(64529, nil, nil, nil, 1, 2)
 
 local enrage 					= mod:NewBerserkTimer(900)
@@ -65,8 +65,7 @@ mod:AddRangeFrameOption("6")
 mod:AddBoolOption("HealthFramePhase4", true)
 mod:AddBoolOption("AutoChangeLootToFFA", true)
 mod:AddBoolOption("RangeFrame")
-mod:AddBoolOption("YellOnblastWarn", true)
-mod:AddBoolOption("YellOnshellWarn", true)
+
 
 mod.vb.hardmode = false
 mod.vb.phase = 0
@@ -152,10 +151,8 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(63631, 312439, 312792) then
-		if self.vb.phase == 1 and self.Options.ShockBlastWarningInP1 or self.vb.phase == 4 and self.Options.ShockBlastWarningInP4 then
 			warnShockBlast:Show()
 			warnShockBlast:Play("runout")
-		end
 		timerShockBlast:Start()
 		timerNextShockblast:Start()
 	elseif args:IsSpellID(64529, 62997, 312437, 312790) then -- plasma blast
@@ -165,9 +162,6 @@ function mod:SPELL_CAST_START(args)
 			warnPlasmaBlast:Show()
 			warnPlasmaBlast:Play("defensive")
 		end
-	elseif self.Options.YellOnblastWarn and args:IsPlayer() then
-		SendChatMessage(L.YellblastWarn, "SAY")
-
 	elseif args:IsSpellID(64570, 312434, 312787) then
 		timerFlameSuppressant:Start()
 	elseif args:IsSpellID(64623) then
@@ -187,9 +181,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		self.vb.napalmShellIcon = self.vb.napalmShellIcon - 1
 		self:Unschedule(warnNapalmShellTargets)
 		self:Schedule(0.3, warnNapalmShellTargets, self)
-        if self.Options.YellOnshellWarn and args:IsPlayer() then
-			SendChatMessage(L.YellshellWarn, "SAY")
-		end
 	elseif args:IsSpellID(64529, 62997, 312437, 312790) then -- Plasma Blast
 		blastWarn:Show(args.destName)
 		if self.Options.SetIconOnPlasmaBlast then
