@@ -38,7 +38,7 @@ local timerTurret1					= mod:NewTimer(53, "timerTurret1", 48642, nil, nil, 5)
 local timerTurret2					= mod:NewTimer(73, "timerTurret2", 48642, nil, nil, 5)
 local timerTurret3					= mod:NewTimer(93, "timerTurret3", 48642, nil, nil, 5)
 local timerTurret4					= mod:NewTimer(113, "timerTurret4", 48642, nil, nil, 5)
-local timerGrounded                 = mod:NewTimer(45, "timerGrounded", nil, nil, nil, 6)
+local timerGrounded                 = mod:NewTimer(35, "timerGrounded", nil, nil, nil, 6)
 local timerFuseArmorCD				= mod:NewCDTimer(12.1, 64771, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
 
 local combattime = 0

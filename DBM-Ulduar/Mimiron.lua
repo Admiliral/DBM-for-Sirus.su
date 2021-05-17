@@ -31,7 +31,7 @@ local warnFrostBomb				= mod:NewSpellAnnounce(64623, 3)
 
 local warnShockBlast			= mod:NewSpecialWarningRun(63631, "Melee|Healer", nil, nil, 4, 2)
 local warnRocketStrike			= mod:NewSpecialWarningDodge(64402, nil, nil, nil, 2, 2)
-local warnDarkGlare				= mod:NewSpecialWarningSpell(63293, nil, nil, nil, 4, 2)
+local warnDarkGlare				= mod:NewSpecialWarningDodge(63293, nil, nil, nil, 4, 2)
 local warnPlasmaBlast			= mod:NewSpecialWarningDefensive(64529, nil, nil, nil, 1, 2)
 
 local enrage 					= mod:NewBerserkTimer(900)
@@ -216,7 +216,6 @@ end
 function mod:NextPhase()
 	self.vb.phase = self.vb.phase + 1
 	if self.vb.phase == 1 then
-		timerFlameSuppressant:Start()
 		timerShockBlast:Start(30)
 		if self.Options.HealthFrame then
 			DBM.BossHealth:Clear()
