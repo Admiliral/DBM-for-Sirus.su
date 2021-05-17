@@ -53,14 +53,14 @@ mod:AddSetIconOption("SetIconOnStaticDisruption", 63494, false, false, {1, 2, 3,
 -- Runemaster Molgeim
 -- Lightning Blast ... don't know, maybe 63491
 local timerShieldofRunes		= mod:NewBuffActiveTimer(15, 312775)
-local warnRuneofPower			= mod:NewTargetAnnounce(312776, 2) -- Руна мощи
+local warnRuneofPower			= mod:NewTargetAnnounce(61973, 2) -- Руна мощи
 local warnRuneofDeath			= mod:NewSpellAnnounce(312777, 2) -- Руна смерти
 local warnShieldofRunes			= mod:NewSpellAnnounce(312774, 2) -- Руна щита
 local warnRuneofSummoning		= mod:NewSpellAnnounce(312779, 3) --Руна призыва
 local specwarnRuneofDeath		= mod:NewSpecialWarningMove(312777, nil, nil, nil, 1, 2)
 local specWarnRuneofShields		= mod:NewSpecialWarningDispel(63967, "MagicDispeller", nil, nil, 1, 2)
 local timerRuneofDeathDura		= mod:NewNextTimer(30, 312777, nil, nil, nil, 3)
-local timerRuneofPower			= mod:NewCDTimer(30, 312776, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerRuneofPower			= mod:NewCDTimer(30, 61973, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerRuneofSummoning		= mod:NewCDTimer(24.1, 62273, nil, nil, nil, 1)
 
 
@@ -120,7 +120,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(312777, 312424) then		-- Руна смерти
 		warnRuneofDeath:Show()
 		timerRuneofDeathDura:Start()
-	elseif args:IsSpellID(312423, 312776) then	-- Руна мощи
+	elseif args:IsSpellID(312423, 312776, 61973) then	-- Руна мощи
 		self:ScheduleMethod(0.1, "RuneTarget", 0.1, 16, true, true)
 		timerRuneofPower:Start()
 	elseif args:IsSpellID(312782, 312781,312428,312429) then	-- Перегрузка
@@ -172,7 +172,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self.Options.PlaySoundLightningTendrils then
 			PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
 		end
-	elseif args:IsSpellID(312770, 312417) then	-- Static Disruption (Hard Mode)
+	elseif args:IsSpellID(312770, 312417, 63495) then	-- Static Disruption (Hard Mode)
 		disruptTargets[#disruptTargets + 1] = args.destName
 		if self.Options.SetIconOnStaticDisruption and self.vb.disruptIcon > 0 then
 			self:SetIcon(args.destName, self.vb.disruptIcon, 20)
