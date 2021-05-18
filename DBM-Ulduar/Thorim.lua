@@ -22,15 +22,17 @@ local warnUnbalancingStrike		= mod:NewTargetAnnounce(312898, 4)	-- nice blizzard
 local warningBomb				= mod:NewTargetAnnounce(312911, 4)
 local warnChainlightning        = mod:NewTargetAnnounce(312895, 4)
 local specWarnOrb				= mod:NewSpecialWarningMove(312892)
-local specWarnUnbalancingStrike	= mod:NewSpecialWarningDefensive(312898, mod:IsTank())
+local specWarnUnbalancingStrikeSelf	= mod:NewSpecialWarningDefensive(312898, nil, nil, nil, 1, 2)
+local specWarnUnbalancingStrike	= mod:NewSpecialWarningTaunt(312898, nil, nil, nil, 1, 2)
+
 
 mod:AddBoolOption("AnnounceFails", false, "announce")
 
 local enrageTimer				= mod:NewBerserkTimer(369)
-local timerStormhammer			= mod:NewCastTimer(16, 312889)
-local timerChainlightning       = mod:NewCDTimer(16, 312895)
-local timerLightningCharge	 	= mod:NewCDTimer(16, 312897)
-local timerUnbalancingStrike	= mod:NewCastTimer(26, 312898)
+local timerStormhammer			= mod:NewCastTimer(16, 312889, nil, nil, nil, 3)
+local timerChainlightning       = mod:NewCDTimer(16, 312895, nil, nil, nil, 3)
+local timerLightningCharge	 	= mod:NewCDTimer(16, 312897, nil, nil, nil, 3)
+local timerUnbalancingStrike	= mod:NewCastTimer(25.6, 312898, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerHardmode				= mod:NewTimer(181, "TimerHardmode", 312898)
 
 mod:AddBoolOption("RangeFrame")
@@ -77,16 +79,19 @@ function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(312889, 312536, 62042) then 					-- Storm Hammer
 		warnStormhammer:Show(args.destName)
 	elseif args:IsSpellID(312898, 312545) then				-- Unbalancing Strike
-		warnUnbalancingStrike:Show(args.destName)
-		specWarnUnbalancingStrike:Show()
-		if self.Options.YellOnUnbalancingStrike and args:IsPlayer() then
-			SendChatMessage(L.YellUnbalancingStrike, "SAY")
+		warnUnbalancingStrike:Show()
+		if args:IsPlayer() then
+			specWarnUnbalancingStrikeSelf:Show()
+			specWarnUnbalancingStrikeSelf:Play("defensive")
+		else
+			specWarnUnbalancingStrike:Show(args.destName)
+			specWarnUnbalancingStrike:Play("tauntboss")
 		end
 	elseif args:IsSpellID(312911, 312910, 312558, 312557) then	-- Runic Detonation
 		self:SetIcon(args.destName, 8, 5)
 		warningBomb:Show(args.destName)
-	elseif args:IsSpellID(312895) then
-		self:SetIcon(args.destName,8)
+	elseif args:IsSpellID(312895, 312542) then
+		self:SetIcon(args.destName, 8)
 		warnChainlightning:Show(args.destName)
 	end
 end
