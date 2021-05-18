@@ -44,12 +44,12 @@ local yellSqueeze					= mod:NewYell(313031)
 
 local enrageTimer					= mod:NewBerserkTimer(900)
 local timerMaladyCD					= mod:NewCDTimer(18.1, 313029, nil, nil, nil, 3)
-local timerBrainLinkCD				= mod:NewCDTimer(32, 312995, nil, nil, nil, 3)
+local timerBrainLinkCD				= mod:NewCDTimer(25.5, 312995, nil, nil, nil, 3)
 local timerFervor					= mod:NewTargetTimer(15, 312989, nil, false, 2)
 local brainportal					= mod:NewTimer(20, "NextPortal", 57687, nil, nil, 5)
 local brainportal2					= mod:NewCDTimer(60, 64775, nil, nil, nil, 3)
 local timerLunaricGaze				= mod:NewCastTimer(4, 313002, nil, nil, nil, 2)
-local timerNextLunaricGaze			= mod:NewCDTimer(9, 313002, nil, nil, nil, 2)
+local timerNextLunaricGaze			= mod:NewCDTimer(16, 313002, nil, nil, nil, 2)
 local timerEmpower					= mod:NewCDTimer(46, 64465, nil, nil, nil, 3)
 local timerEmpowerDuration			= mod:NewBuffActiveTimer(10, 64465, nil, nil, nil, 3)
 --local timerMadness 					= mod:NewCastTimer(60, 313003, nil, nil, nil, 5)
@@ -127,7 +127,7 @@ function mod:SPELL_CAST_START(args)
 		warnMadness:Show()
 		--brainportal:Start(60)
 		--brainportal2:Start(90)
-		warnBrainPortalSoon:Schedule(78)
+		--warnBrainPortalSoon:Schedule(78)
 		--specWarnBrainPortalSoon:Schedule(78)
 		specWarnMadnessOutNow:Schedule(55)
 	elseif args:IsSpellID(313000) then		--Deafening Roar
@@ -136,8 +136,8 @@ function mod:SPELL_CAST_START(args)
 		timerCastDeafeningRoar:Start()
 		specWarnDeafeningRoar:Show()
 		specWarnDeafeningRoar:Play("silencesoon")
-	elseif args:IsSpellID(312989) and not self:IsTrivial() then		--Sara's Fervor
-		self:BossTargetScanner(args.sourceGUID, "FervorTarget", 0.1, 12, true, nil, nil, nil, true)
+	elseif args:IsSpellID(312989) then		--Sara's Fervor
+		self:ScheduleMethod(0.1, "FervorTarget")
 	end
 end
 
@@ -281,7 +281,7 @@ function mod:OnSync(msg)
 		warnBrainPortalSoon:Cancel()
 		timerMaladyCD:Cancel()
 		timerBrainLinkCD:Cancel()
-		timerMadnessCD:Stops()
+		timerMadnessCD:Cancel()
 		timerEmpower:Cancel()
 		--[[if self.vb.numberOfPlayers == 1 then
 			timerMadness:Cancel()
