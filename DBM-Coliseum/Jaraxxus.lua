@@ -121,10 +121,6 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(67051, 67050, 67049, 66237) then			-- Incinerate Flesh
-		self.vb.fleshCount = self.vb.fleshCount - 1
-		if self.Options.InfoFrame and self.vb.fleshCount == 0 then
-			DBM.InfoFrame:Hide()
-		end
 		timerFlesh:Stop(args.destName)
 		if self.Options.IncinerateFleshIcon then
 			self:RemoveIcon(args.destName)
