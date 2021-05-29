@@ -21,7 +21,7 @@ mod:RegisterEvents(
 
 local warnTurretsReadySoon			= mod:NewAnnounce("warnTurretsReadySoon", 1, 48642)
 local warnTurretsReady				= mod:NewAnnounce("warnTurretsReady", 3, 48642)
-local warnFlame						= mod:NewTargetAnnounce(62660, 2, nil, false)
+local warnFlame						= mod:NewTargetAnnounce(64733, 2, nil, false)
 local warnFuseArmor					= mod:NewStackAnnounce(64771, 2, nil, "Tank")
 
 local specWarnDevouringFlame		= mod:NewSpecialWarningMove(64733, nil, nil, nil, 1, 2)
@@ -42,7 +42,7 @@ local timerGrounded                 = mod:NewTimer(35, "timerGrounded", nil, nil
 local timerFuseArmorCD				= mod:NewCDTimer(12.1, 64771, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
 
 local combattime = 0
-
+local castFlames
 function mod:FlameTarget(targetname, uId)
 	if not targetname then return end
 	if targetname == UnitName("player") then
@@ -89,8 +89,11 @@ function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(63317, 64021) then	-- deep breath
 		timerDeepBreathCast:Start()
 		timerDeepBreathCooldown:Start()
-	elseif args.spellId == 63236 then
-		self:BossTargetScanner(args.sourceGUID, "FlameTarget", 0.1, 12)
+	elseif args:IsSpellID(63236) then
+		local target = self:GetBossTarget(self.creatureId)
+		if target then
+			self:CastFlame(target)
+		end
 	end
 end
 
@@ -122,7 +125,7 @@ end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
-	if (spellId == 64733 or spellId == 64704) and destGUID == UnitGUID("player") and self:AntiSpam() then
+	if (spellId == 64733 or spellId == 64704) and destGUID == UnitGUID("player") and self:AntiSpam() and not self:IsTrivial() then
 		specWarnDevouringFlame:Show()
 		specWarnDevouringFlame:Play("runaway")
 	end

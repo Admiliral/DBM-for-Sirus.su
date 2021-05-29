@@ -28,7 +28,7 @@ local enrageTimer			= mod:NewBerserkTimer(475)
 local timerFlashFreeze		= mod:NewCastTimer(9, 312818, nil, nil, nil, 2)
 local timerFrozenBlows		= mod:NewBuffActiveTimer(20, 312816, 63512, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON..DBM_CORE_HEALER_ICON)
 local timerFlashFrCD		= mod:NewCDTimer(50, 312818, nil, nil, nil, 2)
-local timerAchieve			= mod:NewAchievementTimer(179, 3182, "TimerSpeedKill")
+local timerAchieve			= mod:NewAchievementTimer(179, 3182, "Быстрое убийство")
 
 mod:AddSetIconOption("SetIconOnStormCloud", 65123, true, false, {8, 7})
 
@@ -42,7 +42,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd(wipe)
-	DBM:FireCustomEvent("DBM_EncounterEnd", 33113, "FlameLeviathan", wipe)
+	DBM:FireCustomEvent("DBM_EncounterEnd", 32845, "Hodir", wipe)
 end
 
 function mod:SPELL_CAST_START(args)
@@ -86,10 +86,12 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
-
-function mod:SPELL_DAMAGE(args)
-	if args:IsSpellID(312819, 312466) and args:IsPlayer() and self:AntiSpam(4) then		-- Трескучий мороз
-		specWarnBitingCold:Show()
-		specWarnBitingCold:Play("keepmove")
+do
+	local lastbitingcold = 0
+	function mod:SPELL_DAMAGE(args)
+		if args:IsSpellID(62038, 62039) and args:IsPlayer() and time() - lastbitingcold > 2 then		-- Biting Cold
+			specWarnBitingCold:Show()
+			lastbitingcold = time()
+		end
 	end
 end

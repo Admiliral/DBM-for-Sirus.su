@@ -56,11 +56,11 @@ local timerShieldofRunes		= mod:NewBuffActiveTimer(15, 312775)
 local warnRuneofPower			= mod:NewTargetAnnounce(61973, 2) -- Руна мощи
 local warnRuneofDeath			= mod:NewSpellAnnounce(312777, 2) -- Руна смерти
 local warnShieldofRunes			= mod:NewSpellAnnounce(312774, 2) -- Руна щита
-local warnRuneofSummoning		= mod:NewSpellAnnounce(312779, 3) --Руна призыва
+local warnRuneofSummoning		= mod:NewSpellAnnounce(312778, 3) --Руна призыва
 local specwarnRuneofDeath		= mod:NewSpecialWarningMove(312777, nil, nil, nil, 1, 2)
 local specWarnRuneofShields		= mod:NewSpecialWarningDispel(63967, "MagicDispeller", nil, nil, 1, 2)
 local timerRuneofDeathDura		= mod:NewNextTimer(30, 312777, nil, nil, nil, 3)
-local timerRuneofPower			= mod:NewCDTimer(30, 61973, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerRuneofPower			= mod:NewCDTimer(30, 61973, nil, nil, nil, 5)
 local timerRuneofSummoning		= mod:NewCDTimer(24.1, 62273, nil, nil, nil, 1)
 
 
@@ -113,6 +113,7 @@ function mod:SPELL_CAST_START(args)
 		warnShieldofRunes:Show()
 	elseif args:IsSpellID(312779, 312778, 312425, 312426) then			--	Руна призыва
 		warnRuneofSummoning:Show()
+		timerRuneofSummoning:Start()
 	end
 end
 

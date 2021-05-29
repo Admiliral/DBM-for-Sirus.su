@@ -338,6 +338,7 @@ L:SetMiscLocalization{
 	WaterSpirit        = "Древний дух воды",
 	Snaplasher         = "Хватоплет",
 	StormLasher        = "Грозовой плеточник",
+	DarNoar				= "Дар Ноару",
 	YellKill           = "Он больше не властен надо мной. Мой взор снова ясен. Благодарю вас, герои.",
 	YellPull		   = "Деревья, дайте мне силы!",
 	TrashRespawnTimer  = "Возрождение монстров"

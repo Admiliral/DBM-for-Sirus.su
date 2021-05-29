@@ -37,7 +37,6 @@ local timerHardmode				= mod:NewTimer(189, "hardmodeSpawn")
 local yellLifeLeech				= mod:NewYell(312974)
 local yellShadowCrash			= mod:NewYell(312978)
 
---mod:AddBoolOption("YellOnLifeLeech", true, "announce")
 mod:AddBoolOption("YellOnShadowCrash", true, "announce")
 mod:AddBoolOption("SetIconOnShadowCrash", true)
 mod:AddBoolOption("SetIconOnLifeLeach", true)
@@ -55,8 +54,8 @@ function mod:OnCombatStart(delay)
 	timerLeech:Start(-delay)
 end
 
-function mod:OnCombatEnd()
-	DBM:FireCustomEvent("DBM_EncounterStart", 33271, "GeneralVezax", wipe)
+function mod:OnCombatEnd(wipe)
+	DBM:FireCustomEvent("DBM_EncounterEnd", 33271, "GeneralVezax", wipe)
 end
 
 function mod:SPELL_CAST_START(args)
