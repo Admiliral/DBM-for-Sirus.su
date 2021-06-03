@@ -48,7 +48,7 @@ local warnStaticDisruption		= mod:NewTargetAnnounce(312770, 3)
 local timerStaticDisruption		= mod:NewTargetAnnounce(30, 312770)
 local specwarnFusionPunch       = mod:NewSpecialWarningDefensive(312769, mod:IsTank())
 mod:AddSetIconOption("SetIconOnOverwhelmingPower", 61888, false, false, {8})
-mod:AddSetIconOption("SetIconOnStaticDisruption", 63494, false, false, {1, 2, 3, 4, 5, 6, 7})
+mod:AddSetIconOption("SetIconOnStaticDisruption", 312770, false, false, {1, 2, 3, 4, 5, 6, 7})
 
 -- Runemaster Molgeim
 -- Lightning Blast ... don't know, maybe 63491
@@ -60,13 +60,12 @@ local warnRuneofSummoning		= mod:NewSpellAnnounce(312778, 3) --Руна приз
 local specwarnRuneofDeath		= mod:NewSpecialWarningMove(312777, nil, nil, nil, 1, 2)
 local specWarnRuneofShields		= mod:NewSpecialWarningDispel(63967, "MagicDispeller", nil, nil, 1, 2)
 local timerRuneofDeathDura		= mod:NewNextTimer(30, 312777, nil, nil, nil, 3)
-local timerRuneofPower			= mod:NewCDTimer(30, 61973, nil, nil, nil, 5)
-local timerRuneofSummoning		= mod:NewCDTimer(24.1, 62273, nil, nil, nil, 1)
+local timerRuneofPower			= mod:NewCDTimer(35, 61973, nil, nil, nil, 5)
 
 
 --[[local timerRuneofDeath			= mod:NewCDTimer(30, 312777)
-local yellOverwhelmingPowerFades	= mod:NewFadesYell(312772)
-local yellStaticDisruptionFades		= mod:NewFadesYell(312770)]]
+local yellOverwhelmingPowerFades	= mod:NewFadesYell(312772)]]
+--local yellStaticDisruptionFades		= mod:NewFadesYell(312770)
 
 mod:AddBoolOption("PlaySoundDeathRune", true, "announce")
 
@@ -74,13 +73,14 @@ mod:AddBoolOption("PlaySoundDeathRune", true, "announce")
 local enrageTimer				= mod:NewBerserkTimer(900)
 
 local disruptTargets = {}
-mod.vb.disruptIcon = 7
+local disruptIcon = 7
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 32927, "IronCouncil")
-	enrageTimer:Start(-delay)
+	enrageTimer:Start()
+	timerRuneofPower:Start(21)
 	table.wipe(disruptTargets)
-	mod.vb.disruptIcon = 7
+	disruptIcon = 7
 end
 
 function mod:OnCombatEnd(wipe)
@@ -88,7 +88,8 @@ function mod:OnCombatEnd(wipe)
 	DBM.RangeCheck:Hide()
 end
 
-function mod:RuneTarget(targetname, uId)
+function mod:RuneTarget()
+	local targetname = self:GetBossTarget(32927)
 	if not targetname then return end
 		warnRuneofPower:Show(targetname)
 end
@@ -96,35 +97,34 @@ end
 local function warnStaticDisruptionTargets()
 	warnStaticDisruption:Show(table.concat(disruptTargets, "<, >"))
 	table.wipe(disruptTargets)
-	mod.vb.disruptIcon = 7
+	disruptIcon = 7
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(312766, 312413) then -- Supercharge - Unleashes one last burst of energy as the caster dies, increasing all allies damage by 25% and granting them an additional ability.
+	if args:IsSpellID(312766, 312413, 61920) then -- Supercharge - Unleashes one last burst of energy as the caster dies, increasing all allies damage by 25% and granting them an additional ability.
 		warnSupercharge:Show()
-	elseif args:IsSpellID(312780, 312427) then	-- Цепная молния
+	elseif args:IsSpellID(312780, 312427, 63479, 61879) then	-- Цепная молния
 		warnChainlight:Show()
-	elseif args:IsSpellID(312784, 312783, 312430, 312431) then	-- Вихрь молний
+	elseif args:IsSpellID(312784, 312783, 312430, 312431, 63483, 61915) then	-- Вихрь молний
 		timerLightningWhirl:Start()
-	elseif args:IsSpellID(312769, 312416) then	-- Энергетический удар
+	elseif args:IsSpellID(312769, 312416, 61903, 63493) then	-- Энергетический удар
 		warnFusionPunch:Show()
 		timerFusionPunchCast:Start()
-	elseif args:IsSpellID(312775, 312774, 312421, 312422) then		-- Рунический щит
+	elseif args:IsSpellID(312775, 312774, 312421, 312422, 62274, 63489) then		-- Рунический щит
 		warnShieldofRunes:Show()
-	elseif args:IsSpellID(312779, 312778, 312425, 312426) then			--	Руна призыва
+	elseif args:IsSpellID(312779, 312778, 312425, 312426, 62273) then			--	Руна призыва
 		warnRuneofSummoning:Show()
-		timerRuneofSummoning:Start()
+	elseif args:IsSpellID(61973, 64321, 61974) then
+			self:ScheduleMethod(0.1, "RuneTarget")
+			timerRuneofPower:Start()
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(312777, 312424) then		-- Руна смерти
+	if args:IsSpellID(312777, 312424, 63490, 62269) then		-- Руна смерти
 		warnRuneofDeath:Show()
 		timerRuneofDeathDura:Start()
-	elseif args:IsSpellID(312423, 312776, 61973) then	-- Руна мощи
-		self:ScheduleMethod(0.1, "RuneTarget", 0.1, 16, true, true)
-		timerRuneofPower:Start()
-	elseif args:IsSpellID(312782, 312781,312428,312429) then	-- Перегрузка
+	elseif args:IsSpellID(312782, 312781, 312428, 312429, 61869, 63481) then	-- Перегрузка
 		timerOverload:Start()
 		if self.Options.AlwaysWarnOnOverload or UnitName("target") == L.StormcallerBrundir then
 			specwarnOverload:Show()
@@ -137,9 +137,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(312769, 312416) then		-- Энергетический удар
+	if args:IsSpellID(312769, 312416, 61903, 63493) then		-- Энергетический удар
 		timerFusionPunchActive:Start(args.destName)
-	elseif args:IsSpellID(312424, 312777) then	-- Руна смерти - move away from it
+	elseif args:IsSpellID(312424, 312777, 62269, 63490) then	-- Руна смерти - move away from it
 		if args:IsPlayer() then
 			specwarnRuneofDeath:Show()
 			specwarnRuneofDeath:Play("runaway")
@@ -147,11 +147,11 @@ function mod:SPELL_AURA_APPLIED(args)
 				PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
 			end
 		end
-	elseif args:IsSpellID(312774, 312775, 312421, 312422) and not args:IsDestTypePlayer() then		-- Рунический щит
+	elseif args:IsSpellID(312774, 312775, 312421, 312422, 62277, 63967) and not args:IsDestTypePlayer() then		-- Рунический щит
 		timerShieldofRunes:Start()
 		specWarnRuneofShields:Show(args.destName)
 		specWarnRuneofShields:Play("dispelboss")
-	elseif args:IsSpellID(312771, 312772, 312418, 312419) then	-- Переполняющая энергия
+	elseif args:IsSpellID(312771, 312772, 312418, 312419, 64637, 61888) then	-- Переполняющая энергия
 		warnOverwhelmingPower:Show(args.destName)
 		if mod:IsDifficulty("heroic10") then
 			timerOverwhelmingPower:Start(60, args.destName)
@@ -166,18 +166,18 @@ function mod:SPELL_AURA_APPLIED(args)
 				self:SetIcon(args.destName, 8, 35) -- skull for 35 seconds (until meltdown)
 			end
 		end
-	elseif args:IsSpellID(312786, 312785, 312432, 312433) then	-- Светящиеся придатки
+	elseif args:IsSpellID(312786, 312785, 312432, 312433, 63486, 61887) then	-- Светящиеся придатки
 		timerLightningTendrils:Start()
 		specwarnLightningTendrils:Show()
 		specwarnLightningTendrils:Play("justrun")
 		if self.Options.PlaySoundLightningTendrils then
 			PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
 		end
-	elseif args:IsSpellID(312770, 312417, 63495) then	-- Static Disruption (Hard Mode)
+	elseif args:IsSpellID(312770, 312417, 63495, 61912, 63494) then	-- Static Disruption (Hard Mode)
 		disruptTargets[#disruptTargets + 1] = args.destName
 		if self.Options.SetIconOnStaticDisruption and self.vb.disruptIcon > 0 then
-			self:SetIcon(args.destName, self.vb.disruptIcon, 20)
-			self.vb.disruptIcon = self.vb.disruptIcon - 1
+			self:SetIcon(args.destName, disruptIcon, 20)
+			disruptIcon = disruptIcon - 1
 		end
 		self:Unschedule(warnStaticDisruptionTargets)
 		self:Schedule(0.3, warnStaticDisruptionTargets)

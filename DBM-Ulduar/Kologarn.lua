@@ -35,7 +35,7 @@ local yellBeam					= mod:NewYell(63346)
 
 local timerCrunch10             = mod:NewTargetTimer(6, 312395)
 local timerNextSmash			= mod:NewCDTimer(20.4, 64003, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
-local timerNextShockwave		= mod:NewCDTimer(18, 312752)
+local timerNextShockwave		= mod:NewCDTimer(23, 312752)
 local timerNextEyebeam			= mod:NewCDTimer(18.2, 63346, nil, nil, nil, 3)
 local timerNextGrip				= mod:NewCDTimer(20, 64292, nil, nil, nil, 3)
 local timerRespawnLeftArm		= mod:NewTimer(48, "timerLeftArm", nil, nil, nil, 1)
@@ -57,6 +57,7 @@ end
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 32930, "Kologarn")
+	timerNextShockwave:Start(15.7)
 	timerNextSmash:Start(10-delay)
 	timerNextEyebeam:Start(11-delay)
 	timerNextShockwave:Start(15.7-delay)
@@ -92,9 +93,9 @@ function mod:UNIT_DIED(args)
 end
 
 function mod:SPELL_DAMAGE(args)
-	if args:IsSpellID(312399, 312752) and args:IsPlayer() then	-- Ударная волна
+	if args:IsSpellID(312399, 312752, 63783, 63982) and args:IsPlayer() then	-- Ударная волна
 		timerNextShockwave:Start()
-	elseif args:IsSpellID(312412, 312765) and args:IsPlayer() then --Сосредоточенный взгляд
+	elseif args:IsSpellID(312412, 312765, 63346, 63976) and args:IsPlayer() then --Сосредоточенный взгляд
 		specWarnEyebeam:Show()
 	end
 end
@@ -129,7 +130,7 @@ end
 end]]
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(312758,312757,312760,312407,312405,312404) then 	--Каменная хватка
+	if args:IsSpellID(312758,312757,312760,312407,312405,312404, 64290, 64292) then 	--Каменная хватка
 		if self.Options.SetIconOnGripTarget then
 			self:SetIcon(args.destName, 8, 10)
 		end
@@ -144,12 +145,12 @@ function mod:SPELL_AURA_APPLIED(args)
 		--[[if self.Options.YellOnGrip  and args:IsPlayer() then
 			SendChatMessage(L.YellGrip , "SAY")
 		end]]
-	elseif args:IsSpellID(312748, 312395) then	-- Хруст доспеха
+	elseif args:IsSpellID(312748, 312395, 64002, 63355) then	-- Хруст доспеха
         warnCrunchArmor:Show(args.destName)
 		if mod:IsDifficulty("heroic10") then
             timerCrunch10:Start(args.destName)  -- We track duration timer only in 10-man since it's only 6sec and tanks don't switch.
 		end
-	elseif args:IsSpellID(312748) then		        -- Хруст доспеха (25-man only)
+	elseif args:IsSpellID(312748, 64002) then		        -- Хруст доспеха (25-man only)
 		local amount = args.amount or 1
 		if args.amount >= 2 then
 			if args:IsPlayer() then
@@ -165,7 +166,7 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(312758,312757,312760,312407,312405,312404) then  -- Вопрос дохуя хваток
+	if args:IsSpellID(312758, 312757, 312760, 312407, 312405, 312404, 64290, 64292) then  -- Вопрос дохуя хваток
 		self:SetIcon(args.destName, 0)
     end
 end

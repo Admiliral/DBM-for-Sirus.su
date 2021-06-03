@@ -13,6 +13,7 @@ mod:RegisterEvents(
 	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED",
 	"SPELL_AURA_REMOVED",
+	"SPELL_SUMMON",
 	"UNIT_DIED",
 	"CHAT_MSG_MONSTER_YELL"
 )
@@ -27,14 +28,14 @@ mod:RegisterEvents(
 
 local warnPhase2			= mod:NewPhaseAnnounce(2, 3)
 local warnSimulKill			= mod:NewAnnounce("WarnSimulKill", 1)
-local warnFury				= mod:NewTargetAnnounce(312881, 2)
+local warnFury				= mod:NewTargetAnnounce(312880, 2)
 local warnRoots				= mod:NewTargetAnnounce(312860, 2)
 
-local specWarnLifebinder	= mod:NewSpecialWarningSwitch(62568, "Dps", nil, nil, 1, 2)
-local specWarnFury			= mod:NewSpecialWarningMoveAway(312881, nil, nil, nil, 1, 2)
-local yellFury				= mod:NewYell(312881)
+local specWarnLifebinder	= mod:NewSpecialWarningSwitch(62568, "Dps|Healer", nil, nil, 1, 2)
+local specWarnFury			= mod:NewSpecialWarningMoveAway(312880, nil, nil, nil, 1, 2)
+local yellFury				= mod:NewYell(312880)
 local yellRoots				= mod:NewYell(312860)
-local specWarnTremor		= mod:NewSpecialWarningCast(312856, "SpellCaster", nil, 2, 1, 2)	-- Hard mode
+local specWarnTremor		= mod:NewSpecialWarningCast(312842, "SpellCaster", nil, 2, 1, 2)	-- Hard mode
 local specWarnBeam			= mod:NewSpecialWarningMove(312888, nil, nil, nil, 1, 2)	-- Hard mode
 
 
@@ -43,10 +44,8 @@ local timerAlliesOfNature	= mod:NewNextTimer(60, 62678, nil, nil, nil, 1, nil, D
 local timerSimulKill		= mod:NewTimer(12, "TimerSimulKill", nil, nil, nil, 5, DBM_CORE_DAMAGE_ICON)
 local timerFury				= mod:NewTargetTimer(10, 312880, nil, nil, nil, 2)
 local timerTremorCD 		= mod:NewCDTimer(28, 312842, nil, nil, nil, 2)
-local timerMobCD 		    = mod:NewCDTimer(300, 312842, nil, nil, nil, 1)
 local timerBoom 		    = mod:NewCDTimer(31, 312883, nil, nil, nil, 2)
-local timerDarCD 		    = mod:NewCDTimer(26, 64185, nil, nil, nil, 2)
-local timerLifebinderCD 	= mod:NewCDTimer(38.2, 62568, nil, nil, nil, 1)
+local timerLifebinderCD 	= mod:NewNextTimer(38.2, 62568, nil, nil, nil, 1)
 local timerRootsCD 			= mod:NewCDTimer(29.6, 312856, nil, nil, nil, 3)
 
 
@@ -72,7 +71,7 @@ function mod:OnCombatStart(delay)
 	enrage:Start()
 	table.wipe(adds)
 	timerAlliesOfNature:Start(10-delay)
-	timerDarCD:Start()
+	timerLifebinderCD:Start()
 end
 
 function mod:OnCombatEnd(wipe)
@@ -95,21 +94,19 @@ function mod:SPELL_CAST_START(args)
 		specWarnTremor:Show()
 		specWarnTremor:Play("stopcast")
 		timerTremorCD:Start()
-	elseif args:IsSpellID(312879) then
-        timerMobCD:Start()
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(62678) then -- Summon Allies of Nature
+	if args:IsSpellID(62678, 62873) then -- Summon Allies of Nature
 		timerAlliesOfNature:Start()
 	elseif args:IsSpellID(312883) then
 		timerBoom:Start(8)
-	elseif args:IsSpellID(62619, 62568, 312882) and self:GetUnitCreatureId(args.sourceName) == 33228 then -- Pheromones spell, cast by newly spawned Eonar's Gift second they spawn to allow melee to dps them while protector is up.
+	elseif args:IsSpellID(62619, 62566, 62568, 312882, 312529) then -- Pheromones spell, cast by newly spawned Eonar's Gift second they spawn to allow melee to dps them while protector is up.
 		specWarnLifebinder:Show()
 		specWarnLifebinder:Play("targetchange")
 		timerLifebinderCD:Start()
-	elseif args:IsSpellID(63571, 62589, 312527, 312880) then -- Nature's Fury
+	elseif args:IsSpellID(63571, 62589, 312527, 312880, 62566) then -- Nature's Fury
 		if self.Options.SetIconOnFury then
 			self.vb.altIcon = not self.vb.altIcon	--Alternates between Skull and X
 			self:SetIcon(args.destName, self.vb.altIcon and 7 or 8, 10)
@@ -127,6 +124,14 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerFury:Start(args.destName)
 	elseif args.spellId == 63601 then
 			timerRootsCD:Start()
+	end
+end
+
+function mod:SPELL_SUMMON(args)
+	if args:IsSpellID(33228, 63571, 62589, 62566, 62568) then --62568, 312882,
+		specWarnLifebinder:Show()
+		specWarnLifebinder:Play("targetchange")
+		timerLifebinderCD:Start()
 	end
 end
 
@@ -150,7 +155,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(62519, 312486, 312839) then
 		warnPhase2:Show()
 		timerBoom:Start()
-		timerMobCD:Cancel()
 		timerAlliesOfNature:Cancel()
 	elseif args:IsSpellID(62861, 62438, 312490, 312507, 312843, 312860) then
 		self:RemoveIcon(args.destName)
@@ -160,15 +164,16 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.SpawnYell then
-		timerAlliesOfNature:Start()
 		if self.Options.HealthFrame then
 			if not adds[33202] then DBM.BossHealth:AddBoss(33202, L.WaterSpirit) end -- ancient water spirit
 			if not adds[32916] then DBM.BossHealth:AddBoss(32916, L.Snaplasher) end  -- snaplasher
 			if not adds[32919] then DBM.BossHealth:AddBoss(32919, L.StormLasher) end -- storm lasher
+			--if not adds[33228] then DBM.BossHealth:AddBoss(33228, L.DarNoar) end -- storm lasher 33228
 		end
 		adds[33202] = true
 		adds[32916] = true
 		adds[32919] = true
+		--adds[33228] = true
 	end
 end
 
@@ -191,5 +196,9 @@ function mod:UNIT_DIED(args)
 		if counter == 0 then
 			timerSimulKill:Stop()
 		end
+	--[[elseif cid == 33228 then
+		if self.Options.HealthFrame then
+			DBM.BossHealth:RemoveBoss(cid)
+		end]]
 	end
 end

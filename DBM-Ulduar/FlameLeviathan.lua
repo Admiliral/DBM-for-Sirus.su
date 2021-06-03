@@ -51,15 +51,15 @@ function mod:OnTimerRecovery()
 end
 
 function mod:SPELL_SUMMON(args)
-	if args:IsSpellID(312363) then		-- Ward of Life spawned (Creature id: 34275)
+	if args:IsSpellID(62907) then		-- Ward of Life spawned (Creature id: 34275)
 		warnWardofLife:Show()
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(312689, 312690) then		-- Flame Vents
+	if args:IsSpellID(312689, 312690, 312336, 62396) then		-- Flame Vents
 		timerFlameVents:Start()
-	elseif args:IsSpellID(62475) then	-- Systems Shutdown / Overload
+	elseif args:IsSpellID(312339, 312692, 62475) then	-- Systems Shutdown / Overload
 		timerSystemOverload:Start()
 		warnSystemOverload:Show()
 	elseif args:IsSpellID(62374) then	-- Pursued
@@ -73,7 +73,7 @@ function mod:SPELL_AURA_APPLIED(args)
 				pursueSpecWarn:Show()
 			end
 		end
-	elseif args:IsSpellID(312705) then		-- Hodir's Fury (Person is frozen)
+	elseif args:IsSpellID(312352, 312705, 62297) then		-- Hodir's Fury (Person is frozen)
 		local target = guids[args.destGUID]
 		if target then
 			warnHodirsFury:Show(target)
@@ -83,7 +83,7 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(312690, 312689) then
+	if args:IsSpellID(312690, 312689, 62396) then
 		timerFlameVents:Stop()
 	end
 end

@@ -23,7 +23,7 @@ local warnFlameBrittle			= mod:NewSpecialWarningSwitch(62382, "Dps")
 
 local timerFlameJetsCast		= mod:NewCastTimer(2.7, 312727)
 local timerActivateConstruct	= mod:NewCDCountTimer(30, 62488, nil, nil, nil, 1)
-local timerScorchCooldown		= mod:NewNextTimer(20.5, 312730, nil, nil, nil, 5)
+local timerScorchCooldown		= mod:NewNextTimer(31, 312730, nil, nil, nil, 5)
 local timerFlameJetsCooldown	= mod:NewCDTimer(23.5, 312727, nil, nil, nil, 2)
 local timerScorchCast			= mod:NewCastTimer(3, 312730, nil, nil, nil, 5)
 local timerSlagPot				= mod:NewTargetTimer(10, 312731, nil, nil, nil, 3)
@@ -47,7 +47,7 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(312727, 312728) then		-- Flame Jets
+	if args:IsSpellID(312727, 312728, 62680, 63472) then		-- Flame Jets
 		timerFlameJetsCast:Start()
 		warnFlameJetsCast:Show()
 		warnFlameJetsCast:Play("stopcast")
@@ -56,7 +56,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(312729, 312730) then	-- Scorch
+	if args:IsSpellID(312729, 312730, 62548, 63474) then	-- Scorch
 		timerScorchCast:Start()
 		timerScorchCooldown:Start()
 	elseif args.spellId == 62488 then
@@ -69,7 +69,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(312732, 312731) then		-- Slag Pot
+	if args:IsSpellID(312732, 312731, 62717, 63477) then		-- Slag Pot
 		announceSlagPot:Show(args.destName)
 		timerSlagPot:Start(args.destName)
 		if self.Options.SlagPotIcon then
@@ -82,7 +82,7 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(312732, 312731) then		-- Slag Pot
+	if args:IsSpellID(312732, 312731, 62717, 63477) then		-- Slag Pot
 		if self.Options.SlagPotIcon then
 			self:SetIcon(args.destName, 0)
 		end

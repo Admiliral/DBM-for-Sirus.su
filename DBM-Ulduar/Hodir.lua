@@ -46,7 +46,7 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(312818,312465) then  --Ледяная вспышка
+	if args:IsSpellID(312818, 312465, 61968) then  --Ледяная вспышка
 		timerFlashFreeze:Start()
 		warnFlashFreeze:Show()
 		timerFlashFrCD:Start()
@@ -57,9 +57,9 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(312817, 312816,312464,312463) then --Ледяные дуновения
+	if args:IsSpellID(312817, 312816, 312464, 312463, 62478, 63512) then --Ледяные дуновения
 		timerFrozenBlows:Start()
-	elseif args:IsSpellID(312831, 312478) then -- Грозовая туча
+	elseif args:IsSpellID(312831, 312478, 65123, 65133) then -- Грозовая туча
 		if args:IsPlayer() then
 			specWarnStormCloud:Show()
 			specWarnStormCloud:Play("gathershare")
@@ -79,7 +79,7 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(312831, 312478) then
+	if args:IsSpellID(312831, 312478, 65123, 65133) then
 		if self.Options.SetIconOnStormCloud then
 			self:SetIcon(args.destName, 0)
 		end
@@ -89,7 +89,7 @@ end
 do
 	local lastbitingcold = 0
 	function mod:SPELL_DAMAGE(args)
-		if args:IsSpellID(62038, 62039) and args:IsPlayer() and time() - lastbitingcold > 2 then		-- Biting Cold
+		if args:IsSpellID(62038, 62039, 62188) and args:IsPlayer() and time() - lastbitingcold > 2 then		-- Biting Cold
 			specWarnBitingCold:Show()
 			lastbitingcold = time()
 		end

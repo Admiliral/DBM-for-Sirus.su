@@ -11,6 +11,7 @@ mod:RegisterKill("yell", L.YellKill)
 mod:RegisterEvents(
 	"SPELL_AURA_APPLIED",
 	"CHAT_MSG_MONSTER_YELL",
+	"SPELL_CAST_START",
 	"SPELL_CAST_SUCCESS",
 	"SPELL_DAMAGE"
 )
@@ -29,10 +30,10 @@ local specWarnUnbalancingStrike	= mod:NewSpecialWarningTaunt(312898, nil, nil, n
 mod:AddBoolOption("AnnounceFails", false, "announce")
 
 local enrageTimer				= mod:NewBerserkTimer(369)
-local timerStormhammer			= mod:NewCastTimer(16, 312907, nil, nil, nil, 3)
-local timerChainlightning       = mod:NewCDTimer(16, 312895, nil, nil, nil, 3)
+local timerCharge			= mod:NewCastTimer(18, 312907, nil, nil, nil, 3)
+local timerChainlightning       = mod:NewCDTimer(12, 312895, nil, nil, nil, 3)
 local timerLightningCharge	 	= mod:NewCDTimer(16, 312897, nil, nil, nil, 3)
-local timerUnbalancingStrike	= mod:NewCastTimer(25.6, 312898, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerUnbalancingStrike	= mod:NewCastTimer(24, 312898, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerHardmode				= mod:NewTimer(175, "TimerHardmode", 312898)
 
 mod:AddBoolOption("RangeFrame")
@@ -42,11 +43,8 @@ local lastcharge = {}
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 32865, "Thorim")
-	enrageTimer:Start()
-	timerHardmode:Start()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(11)
-	end
+	enrageTimer:Start(delay)
+	timerHardmode:Start(delay)
 	table.wipe(lastcharge)
 end
 
@@ -57,9 +55,7 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 32865, "Thorim", wipe)
-	if self.Options.RangeFrame then
 		DBM.RangeCheck:Hide()
-	end
 	if self.Options.AnnounceFails and DBM:GetRaidRank() >= 1 then
 		local lcharge = ""
 		for k, v in pairs(lastcharge) do
@@ -74,10 +70,16 @@ function mod:OnCombatEnd(wipe)
 	end
 end
 
+function mod:SPELL_CAST_START(args)
+	if args:IsSpellID(312542, 312895) then
+		timerChainlightning:Start()
+	end
+end
+
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(312889, 312536, 62042) then 					-- Storm Hammer
 		warnStormhammer:Show(args.destName)
-	elseif args:IsSpellID(312898, 312545) then				-- Unbalancing Strike
+	elseif args:IsSpellID(312898, 312545, 62130) then				-- Unbalancing Strike
 		warnUnbalancingStrike:Show(args.destName)
 		if args:IsPlayer() then
 			specWarnUnbalancingStrikeSelf:Show()
@@ -86,10 +88,10 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnUnbalancingStrike:Show(args.destName)
 			specWarnUnbalancingStrike:Play("tauntboss")
 		end
-	elseif args:IsSpellID(312911, 312910, 312558, 312557) then	-- Runic Detonation
+	elseif args:IsSpellID(312911, 312910, 312558, 312557, 62526, 62527) then	-- Runic Detonation
 		self:SetIcon(args.destName, 8, 5)
 		warningBomb:Show(args.destName)
-	elseif args:IsSpellID(312895, 312542) then
+	elseif args:IsSpellID(312895, 312542, 300871, 64390, 64213) then
 		self:SetIcon(args.destName, 8)
 		warnChainlightning:Show(args.destName)
 	end
@@ -97,13 +99,13 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(312889, 312536, 62042, 312907) then 		-- Storm Hammer
-		timerStormhammer:Start()
+		timerCharge:Start()
 	elseif args:IsSpellID(312897, 312896) then   	-- Lightning Charge
 		warnLightningCharge:Show()
 		timerLightningCharge:Start()
 	elseif args:IsSpellID(312898, 312545) then	-- Unbalancing Strike
 		timerUnbalancingStrike:Start()
-	elseif args:IsSpellID(312895, 312542, 300871, 64390) then
+	elseif args:IsSpellID(312895, 312542, 300871, 64390, 64213) then
 		timerChainlightning:Start()
 	end
 end
@@ -132,6 +134,7 @@ end
 
 function mod:OnSync(event, arg)
 	if event == "Phase2" then
+		DBM.RangeCheck:Show(11)
 		warnPhase2:Show()
 		enrageTimer:Stop()
 		timerHardmode:Stop()

@@ -29,7 +29,7 @@ local timerEnrage				= mod:NewBerserkTimer(600)
 local timerSearingFlamesCast	= mod:NewCastTimer(2, 312977)
 local timerSurgeofDarkness		= mod:NewBuffActiveTimer(10, 312981, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerNextSurgeofDarkness	= mod:NewCDTimer(62, 312981, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
-local timerSaroniteVapors		= mod:NewNextCountTimer(30, 312985, nil, nil, nil, 5)
+local timerSaroniteVapors		= mod:NewNextCountTimer(30, 312983, nil, nil, nil, 5)
 local timerLifeLeech			= mod:NewTargetTimer(10, 312974)
 local timerLeech				= mod:NewNextTimer(36, 312974)
 local timerCrashArrow           = mod:NewNextTimer(15,312978)
@@ -59,28 +59,28 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(312977) then	-- Searing Flames
+	if args:IsSpellID(312977, 62661) then	-- Searing Flames
 		timerSearingFlamesCast:Start()
-	elseif args:IsSpellID(312981) then
+	elseif args:IsSpellID(312981, 62662) then
 		specWarnSurgeDarkness:Show()
 		timerNextSurgeofDarkness:Start()
 	end
 end
 
 function mod:SPELL_INTERRUPT(args)
-	if args:IsSpellID(312977) then
+	if args:IsSpellID(312977, 62661) then
 		timerSearingFlamesCast:Stop()
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(312981) then	-- Surge of Darkness
+	if args:IsSpellID(312981, 62662) then	-- Surge of Darkness
 		timerSurgeofDarkness:Start()
 	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(312981) then
+	if args:IsSpellID(312981, 62662) then
 		timerSurgeofDarkness:Stop()
 	end
 end
@@ -124,13 +124,13 @@ end
 
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(312978) then		-- Shadow Crash
+	if args:IsSpellID(312978, 62660) then		-- Shadow Crash
 		if self.Options.BypassLatencyCheck then
 			self:ScheduleMethod(0.1, "OldShadowCrashTarget")
 		else
 			self:ScheduleMethod(0.1, "ShadowCrashTarget")
 		end
-	elseif args:IsSpellID(312974) then	-- Mark of the Faceless
+	elseif args:IsSpellID(312974, 63276) then	-- Mark of the Faceless
 		if self.Options.SetIconOnLifeLeach then
 			self:SetIcon(args.destName, 7, 10)
 		end

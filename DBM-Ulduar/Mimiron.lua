@@ -36,9 +36,9 @@ local warnPlasmaBlast			= mod:NewSpecialWarningDefensive(64529, nil, nil, nil, 1
 
 local enrage 					= mod:NewBerserkTimer(900)
 local timerHardmode				= mod:NewTimer(610, "TimerHardmode", 312812)
-local timerP1toP2				= mod:NewTimer(48, "TimeToPhase2", "136116", nil, nil, 6)
-local timerP2toP3				= mod:NewTimer(27, "TimeToPhase3", "136116", nil, nil, 6)
-local timerP3toP4				= mod:NewTimer(49, "TimeToPhase4", "136116", nil, nil, 6)
+local timerP1toP2				= mod:NewTimer(43, "TimeToPhase2", "136116", nil, nil, 6)
+local timerP2toP3				= mod:NewTimer(32, "TimeToPhase3", "136116", nil, nil, 6)
+local timerP3toP4				= mod:NewTimer(25, "TimeToPhase4", "136116", nil, nil, 6)
 local timerProximityMines		= mod:NewNextTimer(35, 312789, nil, nil, nil, 3)
 local timerShockBlast			= mod:NewCastTimer(4, 312792, nil, nil, nil, 2)
 local timerShockBlastCD			= mod:NewCDTimer(40, 312792, nil, nil, nil, 2)
@@ -47,7 +47,7 @@ local timerSpinUp				= mod:NewCastTimer(4, 312794, nil, nil, nil, 3, nil, DBM_CO
 local timerRocketStrikeCD		= mod:NewCDTimer(20, 63631, nil, nil, nil, 3)
 local timerDarkGlareCast		= mod:NewCastTimer(10, 63274, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
 local timerNextDarkGlare		= mod:NewNextTimer(39, 63274, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Лазерный обстрел P3Wx2
-local timerNextShockblast		= mod:NewNextTimer(35, 312792, nil, nil, nil, 2)
+local timerNextShockblast		= mod:NewNextTimer(34, 312792, nil, nil, nil, 2)
 local timerPlasmaBlastCD		= mod:NewCDTimer(30, 312790, nil, "Tank", 2, 5)
 local timerShell				= mod:NewTargetTimer(6, 312788, nil, "Healer", 2, 5, nil, DBM_CORE_HEALER_ICON)
 local timerFlameSuppressant		= mod:NewCastTimer(80, 312793, nil, nil, nil, 3)
@@ -119,20 +119,13 @@ end
 
 function mod:Flames()
 	if self.vb.phase == 4 then
-		timerNextFlames:Start(18)
-		self:ScheduleMethod(18, "Flames")
+		timerNextFlames:Start(28)
+		self:ScheduleMethod(28, "Flames")
 	else
 		timerNextFlames:Start()
 		self:ScheduleMethod(28, "Flames")
 	end
 end
-
-function mod:SPELL_SUMMON(args)
-	if args:IsSpellID(63811, 63801, 312807) then -- Bomb Bot
-		warnBombSpawn:Show()
-	end
-end
-
 
 function mod:UNIT_SPELLCAST_CHANNEL_STOP(unit, spell)
 	if spell == spinningUp and GetTime() - lastSpinUp < 3.9 then
@@ -195,8 +188,16 @@ local function show_warning_for_spinup(self)
 	end
 end
 
+function mod:SPELL_SUMMON(args)
+	if args:IsSpellID(33836, 63811, 63801, 312807, 312808, 312455, 312454) then -- Bomb Bot
+		warnBombSpawn:Show()
+	elseif args:IsSpellID(63027, 63667, 63016, 65347, 63016) then				-- mines
+		timerProximityMines:Start()
+	end
+end
+
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(63027, 63667, 312436, 312789) then				-- mines
+	if args:IsSpellID(63027, 63667, 63016, 312789) then				-- mines
 		timerProximityMines:Start()
 	elseif args:IsSpellID(63414, 312794, 312441) then			-- Spinning UP (before Dark Glare)
 		is_spinningUp = true
@@ -210,7 +211,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif args:IsSpellID(63041) then
 		timerNextRockets:Start()
 	end
-
 end
 
 function mod:NextPhase()
@@ -236,7 +236,7 @@ function mod:NextPhase()
 			DBM.RangeCheck:Hide()
 		end
 		if self.vb.hardmode then
-            timerNextFrostBomb:Start(114)
+            timerNextFrostBomb:Start(106)
         end
 	elseif self.vb.phase == 3 then
 		if self.Options.AutoChangeLootToFFA and DBM:GetRaidRank() == 2 then
