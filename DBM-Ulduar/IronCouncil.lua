@@ -80,7 +80,7 @@ function mod:OnCombatStart(delay)
 	enrageTimer:Start()
 	timerRuneofPower:Start(21)
 	table.wipe(disruptTargets)
-	self.vb.disruptIcon = 7
+	mod.vb.disruptIcon = 7
 end
 
 function mod:OnCombatEnd(wipe)
