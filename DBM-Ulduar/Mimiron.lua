@@ -36,9 +36,9 @@ local warnPlasmaBlast			= mod:NewSpecialWarningDefensive(64529, nil, nil, nil, 1
 
 local enrage 					= mod:NewBerserkTimer(900)
 local timerHardmode				= mod:NewTimer(610, "TimerHardmode", 312812)
-local timerP1toP2				= mod:NewTimer(43, "TimeToPhase2", "136116", nil, nil, 6)
-local timerP2toP3				= mod:NewTimer(32, "TimeToPhase3", "136116", nil, nil, 6)
-local timerP3toP4				= mod:NewTimer(25, "TimeToPhase4", "136116", nil, nil, 6)
+local timerP1toP2				= mod:NewTimer(43, "TimeToPhase2", nil, nil, nil, 6)
+local timerP2toP3				= mod:NewTimer(32, "TimeToPhase3", nil, nil, nil, 6)
+local timerP3toP4				= mod:NewTimer(25, "TimeToPhase4", nil, nil, nil, 6)
 local timerProximityMines		= mod:NewNextTimer(35, 312789, nil, nil, nil, 3)
 local timerShockBlast			= mod:NewCastTimer(4, 312792, nil, nil, nil, 2)
 local timerShockBlastCD			= mod:NewCDTimer(40, 312792, nil, nil, nil, 2)

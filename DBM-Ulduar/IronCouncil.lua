@@ -73,14 +73,14 @@ mod:AddBoolOption("PlaySoundDeathRune", true, "announce")
 local enrageTimer				= mod:NewBerserkTimer(900)
 
 local disruptTargets = {}
-local disruptIcon = 7
+mod.vb.disruptIcon = 7
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 32927, "IronCouncil")
 	enrageTimer:Start()
 	timerRuneofPower:Start(21)
 	table.wipe(disruptTargets)
-	disruptIcon = 7
+	self.vb.disruptIcon = 7
 end
 
 function mod:OnCombatEnd(wipe)
@@ -97,7 +97,7 @@ end
 local function warnStaticDisruptionTargets()
 	warnStaticDisruption:Show(table.concat(disruptTargets, "<, >"))
 	table.wipe(disruptTargets)
-	disruptIcon = 7
+	self.vb.disruptIcon = 7
 end
 
 function mod:SPELL_CAST_START(args)
@@ -176,8 +176,8 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(312770, 312417, 63495, 61912, 63494) then	-- Static Disruption (Hard Mode)
 		disruptTargets[#disruptTargets + 1] = args.destName
 		if self.Options.SetIconOnStaticDisruption and self.vb.disruptIcon > 0 then
-			self:SetIcon(args.destName, disruptIcon, 20)
-			disruptIcon = disruptIcon - 1
+			self:SetIcon(args.destName, self.vb.disruptIcon, 20)
+			self.vb.disruptIcon = self.vb.disruptIcon - 1
 		end
 		self:Unschedule(warnStaticDisruptionTargets)
 		self:Schedule(0.3, warnStaticDisruptionTargets)
