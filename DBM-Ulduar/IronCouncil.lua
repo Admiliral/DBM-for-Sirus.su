@@ -80,7 +80,7 @@ function mod:OnCombatStart(delay)
 	enrageTimer:Start()
 	timerRuneofPower:Start(21)
 	table.wipe(disruptTargets)
-	mod.vb.disruptIcon = 7
+	self.vb.disruptIcon = 7
 end
 
 function mod:OnCombatEnd(wipe)
@@ -94,10 +94,10 @@ function mod:RuneTarget()
 		warnRuneofPower:Show(targetname)
 end
 
-local function warnStaticDisruptionTargets()
+local function warnStaticDisruptionTargets(self)
 	warnStaticDisruption:Show(table.concat(disruptTargets, "<, >"))
 	table.wipe(disruptTargets)
-	mod.vb.disruptIcon = 7
+	self.vb.disruptIcon = 7
 end
 
 function mod:SPELL_CAST_START(args)
