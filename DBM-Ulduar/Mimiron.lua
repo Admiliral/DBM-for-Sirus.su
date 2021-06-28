@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Mimiron", "DBM-Ulduar")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20210501000000")
+mod:SetRevision("20210625164000")
 
 mod:SetCreatureID(33432)
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6, 7, 8)
@@ -39,7 +39,7 @@ local timerHardmode				= mod:NewTimer(610, "TimerHardmode", 312812)
 local timerP1toP2				= mod:NewTimer(43, "TimeToPhase2", 312813, nil, nil, 6)
 local timerP2toP3				= mod:NewTimer(32, "TimeToPhase3", 312813, nil, nil, 6)
 local timerP3toP4				= mod:NewTimer(25, "TimeToPhase4", 312813, nil, nil, 6)
-local timerProximityMines		= mod:NewNextTimer(35, 312789, nil, nil, nil, 3)
+local timerProximityMines		= mod:NewNextTimer(15, 312789, nil, nil, nil, 3)
 local timerShockBlast			= mod:NewCastTimer(4, 312792, nil, nil, nil, 2)
 local timerShockBlastCD			= mod:NewCDTimer(40, 312792, nil, nil, nil, 2)
 local timerNextRockets		    = mod:NewNextTimer(20, 63041, nil, nil, nil, 3)
@@ -50,7 +50,7 @@ local timerNextDarkGlare		= mod:NewNextTimer(39, 63274, nil, nil, nil, 3, nil, D
 local timerNextShockblast		= mod:NewNextTimer(34, 312792, nil, nil, nil, 2)
 local timerPlasmaBlastCD		= mod:NewCDTimer(30, 312790, nil, "Tank", 2, 5)
 local timerShell				= mod:NewTargetTimer(6, 312788, nil, "Healer", 2, 5, nil, DBM_CORE_HEALER_ICON)
-local timerFlameSuppressant		= mod:NewCastTimer(80, 312793, nil, nil, nil, 3)
+local timerFlameSuppressant		= mod:NewCastTimer(74, 312793, nil, nil, nil, 3)
 local timerNextFlameSuppressant	= mod:NewNextTimer(10, 312793, nil, nil, nil, 3)
 local timerNextFlames			= mod:NewNextTimer(28, 312803, nil, nil, nil, 3)
 local timerNextFrostBomb        = mod:NewNextTimer(30, 64623, nil, nil, nil, 3, nil, DBM_CORE_HEROIC_ICON) --Ледяная бомба
@@ -65,6 +65,7 @@ mod:AddRangeFrameOption("6")
 mod:AddBoolOption("HealthFramePhase4", true)
 mod:AddBoolOption("AutoChangeLootToFFA", true)
 mod:AddBoolOption("RangeFrame")
+mod:AddBoolOption("TimerMine", true, "announce")
 
 
 mod.vb.hardmode = false
@@ -94,6 +95,8 @@ function mod:OnCombatStart(delay)
 	self:NextPhase()
 	timerPlasmaBlastCD:Start(-delay)
 	timerShockBlastCD:Start(28-delay)
+	timerProximityMines:Start(15)
+	self:UnscheduleMethod(15,"Mine")
 	if DBM:GetRaidRank() == 2 then
 		lootmethod, masterlooterRaidID = GetLootMethod()
 	end
@@ -124,6 +127,20 @@ function mod:Flames()
 	else
 		timerNextFlames:Start()
 		self:ScheduleMethod(28, "Flames")
+	end
+end
+
+function mod:Mine()
+	if self.Options.TimerMine then
+		if self.vb.phase == 1 then
+		timerProximityMines:Start(35)
+		self:ScheduleMethod(35, "Mine")
+		elseif self.vb.phase == 4 then
+		timerProximityMines:Start(35)
+		self:ScheduleMethod(35, "Mine")
+		else
+		timerProximityMines:Stop()
+		end
 	end
 end
 
@@ -324,6 +341,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self.vb.hardmode = true
 		timerNextFlames:Start(2)
 		self:ScheduleMethod(2, "Flames")
+		
 	end
 end
 

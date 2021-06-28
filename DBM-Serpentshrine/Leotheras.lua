@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Leotheras", "DBM-Serpentshrine")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20201004021400")
+mod:SetRevision("20210625174900")
 
 mod:SetCreatureID(21215)
 mod:RegisterCombat("combat", 21215)
@@ -65,6 +65,7 @@ local timerChardgCast	   	= mod:NewCastTimer(3, 310481, nil, nil, nil, 3) -- Р�
 local timerMetaCast	     	= mod:NewCastTimer(3, 310484, nil, nil, nil, 3) -- Мета
 local timerNatCast	     	= mod:NewCastTimer(3, 310478, nil, nil, nil, 3) -- Натиск
 local timerPepelCast	   	= mod:NewCastTimer(3, 310514, nil, nil, nil, 3) -- Испепел
+local yellKleimo			= mod:NewYell(310496)
 
 
 mod:AddSetIconOption("SetIconOnDemonTargets", 37676, true, true, {5, 6, 7, 8})
@@ -190,6 +191,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			timerKlei:Start(args.destName)
 		elseif args:IsPlayer() then
 			specWarnKlei:Show()
+			yellKleimo:Yell()
 		end
 		if mod.Options.AnnounceKlei then
 			if DBM:GetRaidRank() > 0 then
