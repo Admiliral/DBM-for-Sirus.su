@@ -38,7 +38,6 @@ local warnPhase2Soon   	  = mod:NewPrePhaseAnnounce(2)
 local warnPhase2     	  = mod:NewPhaseAnnounce(2)
 
 local specWarnZemla       = mod:NewSpecialWarningMoveAway(310152, nil, nil, nil, 3, 5) -- Землетрясение
-local specWarnKrik			= mod:NewSpecialWarningCast(310151, nil, "SpellCaster", nil, 1, 2)
 
 local timerVzglad	      = mod:NewTargetTimer(60, 310136, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- Взгляд
 local timerHwatCD         = mod:NewCDTimer(32, 310144, nil, nil, nil, 3) -- хватка
@@ -130,9 +129,8 @@ function mod:SPELL_CAST_START(args)
 		timerZemlaCast:Start()
 		timerZemlaCD:Start()
 		specWarnZemla:Show()
-		DBM.RangeCheck:Show(6)
+		DBM.RangeCheck:Show(8)
 	elseif args:IsSpellID(310151) then -- Землетрясение
-		specWarnKrik:Show()
 		warnKrik:Show()
 		timerKrikCD:Start()
 	end

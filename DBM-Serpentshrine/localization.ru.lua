@@ -152,31 +152,23 @@ L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
-	SpecialWarningStrela	= "Стрела Катаклизма около вас - остерегайтесь",
 	WarnKaraTarget = "Каратес преследует %s",
 	SpecWarnKaraTarget = "Вас преследует Каратес - бегите"
 }
 
 L:SetOptionLocalization{
 	WarnPhase2Soon			= "Предупреждать заранее о переходе в фазу 2 (на ~52%)",
-	SetIconOnSvazTargets 	= "Устанавливать иконки на цели испепеления",
+	SetIconOnSvazTargets = "Устанавливать иконки на цели испепеления",
 	AnnounceSvaz			= "Объявлятьв игроков, на кого установлено $spell:309261, в рейд чат ",
-	WarnKaraTarget 			= "Обьявлять цели преследуемые Каратесом",
-	SpecialWarningStrela	= "Спец-предупреждение о $spell:309253 около вас",
-	SpecWarnKaraTarget 		= "Спец. предупреждение для преследуемого Каратесом",
-	BossHealthFrame			="Показывать здоровья прислужников Каратреса",
-	StrelaCataclizma		= "Показывать стрелку, когда $spell:309253 около вас",
-	TimerKaraTarget         = "Отсчет времени до смены цели Каратеса"
+	WarnKaraTarget = "Обьявлять цели преследуемые Каратесом",
+	SpecWarnKaraTarget = "Спец. предупреждение для преследуемого Каратесом",
+	TimerKaraTarget          = "Отсчет времени до смены цели Каратеса"
 }
 
 L:SetMiscLocalization{
 	YellPull        = "Стража, к бою! У нас гости...",
 	SvazIcon	= "Пламенная свзь {rt%d} установлена на %s",
-	KaraTarget = "смотрит на |3%-3%([%w\128-\255]+%).",
-	Karatress 	= "Каратресс",
-	Volniis		= "Волниис",
-	Sharkkis	= "Шарккис",
-	Karibdis 	= "Карибдис"
+	KaraTarget = "смотрит на |3%-3%([%w\128-\255]+%)."
 }
 
 --Vashj
@@ -225,32 +217,6 @@ L:SetGeneralLocalization{
 	name           = "Горе'лац"
 }
 
-L:SetTimerLocalization{
-
-}
-
-L:SetWarningLocalization{
-        specWarnParalysis               = "Медленный паралич - РАССЕЙТЕ",
-        warnPoisonousBlood		= "Ядовитая кровь >%d<",
-        warnRippingThorn	        = "Разрывающий шип >%d<",
-        specWarnShrillScreech	        = "Пронзительный визг - ПРЕРВИТЕ",
-        specWarnBattleRoar	        = "Боевой рев - ПРЕРВИТЕ"
-}
-
-L:SetOptionLocalization{
-        specWarnParalysis               = "Спец-предупреждение об $spell:310555 (для диспела)",
-        WarnPoisonousBlood		= "Предупреждение о ваших стаках $spell:310546",
-        WarnRippingThorn	        = "Предупреждение о ваших стаках $spell:310547",
-        YellOnPowerfulShot              = "Кричать, когда на вас $spell:310564",
-        YellOnMassiveShell              = "Кричать, когда на вас $spell:310560",
-        specWarnShrillScreech	        = "Спец-предупреждение об $spell:310566 (для прерывания)",
-        specWarnBattleRoar	        = "Спец-предупреждение об $spell:310568 (для прерывания)",
-        SetIconOnMassiveShellTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(310560),
-        SetIconOnPowerfulShotTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(310564)
-}
-
-L:SetMiscLocalization{
-}
 
 --TrashMobs
 L = DBM:GetModLocalization("TrashMobs")
@@ -258,4 +224,5 @@ L = DBM:GetModLocalization("TrashMobs")
 L:SetGeneralLocalization{
 	name           = "Трэш мобы"
 }
+
 

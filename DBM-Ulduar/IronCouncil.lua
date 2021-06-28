@@ -33,6 +33,7 @@ local timerLightningTendrils	= mod:NewBuffActiveTimer(27, 312786, nil, nil, nil,
 local specwarnOverload			= mod:NewSpecialWarningRun(312782, nil, nil, nil, 4, 2)
 local specWarnLightningWhirl	= mod:NewSpecialWarningInterrupt(63483, "HasInterrupt", nil, nil, 1, 2)
 mod:AddBoolOption("AlwaysWarnOnOverload", false, "announce")
+--local specwarnStaticDisruption		= mod:NewSpecialWarningMoveAway(312770)
 mod:AddBoolOption("PlaySoundOnOverload", true)
 mod:AddBoolOption("PlaySoundLightningTendrils", true)
 
@@ -44,6 +45,8 @@ local timerFusionPunchActive	= mod:NewTargetTimer(4,312769, nil, nil, nil, 5, ni
 local warnOverwhelmingPower		= mod:NewTargetAnnounce(312772, 2)
 local timerOverwhelmingPower	= mod:NewTargetTimer(25, 312772, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
 local warnStaticDisruption		= mod:NewTargetAnnounce(312770, 3)
+local timerStaticDisruption		= mod:NewTargetAnnounce(30, 312770)
+local specwarnFusionPunch       = mod:NewSpecialWarningDefensive(312769, mod:IsTank())
 mod:AddSetIconOption("SetIconOnOverwhelmingPower", 61888, false, false, {8})
 mod:AddSetIconOption("SetIconOnStaticDisruption", 312770, false, false, {1, 2, 3, 4, 5, 6, 7})
 
@@ -70,14 +73,14 @@ mod:AddBoolOption("PlaySoundDeathRune", true, "announce")
 local enrageTimer				= mod:NewBerserkTimer(900)
 
 local disruptTargets = {}
-local disruptIcon = 7
+mod.vb.disruptIcon = 7
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 32927, "IronCouncil")
 	enrageTimer:Start()
 	timerRuneofPower:Start(21)
 	table.wipe(disruptTargets)
-	disruptIcon = 7
+	self.vb.disruptIcon = 7
 end
 
 function mod:OnCombatEnd(wipe)
@@ -91,10 +94,10 @@ function mod:RuneTarget()
 		warnRuneofPower:Show(targetname)
 end
 
-local function warnStaticDisruptionTargets()
+local function warnStaticDisruptionTargets(self)
 	warnStaticDisruption:Show(table.concat(disruptTargets, "<, >"))
 	table.wipe(disruptTargets)
-	disruptIcon = 7
+	self.vb.disruptIcon = 7
 end
 
 function mod:SPELL_CAST_START(args)
@@ -172,9 +175,9 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif args:IsSpellID(312770, 312417, 63495, 61912, 63494) then	-- Static Disruption (Hard Mode)
 		disruptTargets[#disruptTargets + 1] = args.destName
-		if self.Options.SetIconOnStaticDisruption then
-			self:SetIcon(args.destName, disruptIcon, 20)
-			disruptIcon = disruptIcon - 1
+		if self.Options.SetIconOnStaticDisruption and self.vb.disruptIcon > 0 then
+			self:SetIcon(args.destName, self.vb.disruptIcon, 20)
+			self.vb.disruptIcon = self.vb.disruptIcon - 1
 		end
 		self:Unschedule(warnStaticDisruptionTargets)
 		self:Schedule(0.3, warnStaticDisruptionTargets)
