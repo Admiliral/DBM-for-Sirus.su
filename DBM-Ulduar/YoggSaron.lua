@@ -63,6 +63,7 @@ mod:AddBoolOption("ShowSaraHealth")
 mod:AddSetIconOption("SetIconOnFervorTarget", 312989, false, false, {7})
 mod:AddSetIconOption("SetIconOnBrainLinkTarget", 312995, true, false, {7, 8})
 mod:AddSetIconOption("SetIconOnBeacon", 64465, false, false, {1, 2, 3, 4, 5, 6, 7, 8})
+mod:AddBoolOption("MaladyArrow")
 --mod:AddInfoFrameOption(212647) --???
 
 mod.vb.phase = 1
