@@ -14,7 +14,8 @@ mod:RegisterEvents(
 	"SPELL_CAST_START",
 	"SPELL_CAST_SUCCESS",
 	"SPELL_DAMAGE",
-	"SPELL_MISSED",
+	"SPELL_HEAL",
+	"SPELL_PERIODIC_HEAL",
 	"CHAT_MSG_MONSTER_YELL"
 )
 
@@ -23,9 +24,9 @@ local warnPortalSoon			= mod:NewSoonAnnounce(67900, 3)
 local warnVolcanoSoon			= mod:NewSoonAnnounce(67901, 3)
 local warnFlame					= mod:NewTargetAnnounce(68123, 4)
 local warnFlesh					= mod:NewTargetAnnounce(66237, 4, nil, "Healer")
+local warnNetherPower			= mod:NewAnnounce("WarnNetherPower", 4, 67009)
 
 local specWarnFlame				= mod:NewSpecialWarningRun(67072, nil, nil, 2, 4, 2)
-local specWarnFlameGTFO			= mod:NewSpecialWarningMove(67072, nil, nil, 2, 4, 2)
 local specWarnFlesh				= mod:NewSpecialWarningYou(66237, nil, nil, nil, 1, 2)
 local specWarnKiss				= mod:NewSpecialWarningCast(67907, "SpellCaster", nil, 2, 1, 2)
 local specWarnNetherPower		= mod:NewSpecialWarningDispel(67009, "MagicDispeller", nil, nil, 1, 2)
@@ -43,15 +44,20 @@ local timerFleshCD				= mod:NewCDTimer(23, 67051, nil, "Healer", 2, 5, nil, DBM_
 local timerPortalCD				= mod:NewCDTimer(120, 67900, nil, nil, nil, 1)
 local timerVolcanoCD			= mod:NewCDTimer(120, 67901, nil, nil, nil, 1)
 
-mod:AddSetIconOption("LegionFlameIcon", 66197)
-mod:AddSetIconOption("IncinerateFleshIcon", 66237)
-mod:AddInfoFrameOption(66237, true)
+mod:AddBoolOption("LegionFlameWhisper", false, "announce")
+mod:AddBoolOption("LegionFlameRunSound", true)
+mod:AddBoolOption("LegionFlameIcon", true)
+mod:AddBoolOption("IncinerateFleshIcon", true)
 
-mod.vb.fleshCount = 0
+mod:RemoveOption("HealthFrame")
+mod:AddBoolOption("IncinerateShieldFrame", true, "misc")
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 34780, "Lord Jaraxxus")
-	self.vb.fleshCount = 0
+	if self.Options.IncinerateShieldFrame then
+		DBM.BossHealth:Show(L.name)
+		DBM.BossHealth:AddBoss(34780, L.name)
+	end
 	timerPortalCD:Start(20-delay)
 	warnPortalSoon:Schedule(15-delay)
 	timerVolcanoCD:Start(80-delay)
@@ -63,26 +69,68 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 34780, "Lord Jaraxxus", wipe)
-	if self.Options.InfoFrame then
-		DBM.InfoFrame:Hide()
+	DBM.BossHealth:Clear()
+end
+
+do
+	local lastflame = 0
+	local lastinferno = 0
+	function mod:SPELL_DAMAGE(args)
+		if args:IsPlayer() and args:IsSpellID(66877, 67070, 67071, 67072) then		-- Legion Flame
+			if GetTime() - 3 > lastflame then
+				specWarnFlame:Show()
+				if self.Options.LegionFlameRunSound then
+					PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
+				end
+				lastflame = GetTime()
+			end
+		elseif args:IsPlayer() and args:IsSpellID(66496, 68716, 68717, 68718) then	-- Fel Inferno
+			if GetTime() - 3 > lastinferno then
+				specWarnFelInferno:Show()
+				lastinferno = GetTime()
+			end
+		end
 	end
 end
 
-function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
-		if (spellId == 66877 or spellId == 67070 or spellId == 67071 or spellId == 67072) and destGUID == UnitGUID("player") and self:AntiSpam(3, 1) then		-- Legion Flame
-			specWarnFlameGTFO:Show()
-			specWarnFlameGTFO:Play("runaway")
-		elseif(spellId == 66496 or spellId == 68716 or spellId == 68717 or spellId == 68718) and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then	-- Fel Inferno
-			specWarnFelInferno:Show()
-		specWarnFelInferno:Play("runaway")
+local setIncinerateTarget, clearIncinerateTarget
+do
+	local incinerateTarget
+	local healed = 0
+	local maxAbsorb = 0
+	local function getShieldHP()
+		return math.max(1, math.floor(healed / maxAbsorb * 100))
+	end
+
+	function mod:SPELL_HEAL(args)
+		if args.destGUID == incinerateTarget then
+			healed = healed + (args.absorbed or 0)
+		end
+	end
+	mod.SPELL_PERIODIC_HEAL = mod.SPELL_HEAL
+
+	function setIncinerateTarget(mod, target, name)
+		incinerateTarget = target
+		healed = 0
+		maxAbsorb = mod:IsDifficulty("heroic25") and 85000 or
+					mod:IsDifficulty("heroic10") and 40000 or
+					mod:IsDifficulty("normal25") and 60000 or
+					mod:IsDifficulty("normal10") and 30000 or 0
+		DBM.BossHealth:RemoveBoss(getShieldHP)
+		DBM.BossHealth:AddBoss(getShieldHP, L.IncinerateTarget:format(name))
+	end
+
+	function clearIncinerateTarget(self, name)
+		DBM.BossHealth:RemoveBoss(getShieldHP)
+		if self.Options.IncinerateFleshIcon then
+			self:RemoveIcon(name)
+		end
 	end
 end
-mod.SPELL_MISSED = mod.SPELL_DAMAGE
-
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(67051, 67050, 67049, 66237) then			-- Incinerate Flesh
-		self.vb.fleshCount = self.vb.fleshCount + 1
+		warnFlesh:Show(args.destName)
 		timerFlesh:Start(args.destName)
 		timerFleshCD:Start()
 		if self.Options.IncinerateFleshIcon then
@@ -90,56 +138,54 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		if args:IsPlayer() then
 			specWarnFlesh:Show()
-			specWarnFlesh:Play("targetyou")
-		else
-			warnFlesh:Show(args.destName)
 		end
-		if self.Options.InfoFrame and not DBM.InfoFrame:IsShown() then
-			DBM.InfoFrame:SetHeader(args.spellName)
-			DBM.InfoFrame:Show(6, "playerabsorb", args.spellName, select(16, DBM:UnitDebuff(args.destName, args.spellName)))
-		end
+		setIncinerateTarget(self, args.destGUID, args.destName)
+		self:Schedule(15, clearIncinerateTarget, self, args.destName)
+
 	elseif args:IsSpellID(66197, 68123, 68124, 68125) then		-- Legion Flame ids 66199, 68126, 68127, 68128 (second debuff) do the actual damage. First 2 seconds are trigger debuff only.
+		local targetname = args.destName
 		timerFlame:Start(args.destName)
 		timerFlameCD:Start()
 		if args:IsPlayer() then
 			specWarnFlame:Show()
-			specWarnFlame:Play("runout")
-			specWarnFlame:SheduleVoice(1.5, "keepmove")
+			if self.Options.LegionFlameRunSound then
+				PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
+			end
 		end
 		if self.Options.LegionFlameIcon then
 			self:SetIcon(args.destName, 7, 8)
 		end
+		if DBM:GetRaidRank() >= 1 and self.Options.LegionFlameWhisper then
+			self:SendWhisper(L.WhisperFlame, targetname)
+		end
 	elseif args:IsSpellID(66334, 67905, 67906, 67907) and args:IsPlayer() then
 		specWarnKiss:Show()
-		specWarnKiss:Play("stopcast")
+
 	elseif args:IsSpellID(66532, 66963, 66964, 66965) then		-- Fel Fireball (announce if tank gets debuff for dispel)
 		warnFelFireball:Show()
 		SpecWarnFelFireballDispel:Show(args.destName)
-		SpecWarnFelFireballDispel:Play("helpdispel")
 	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(67051, 67050, 67049, 66237) then			-- Incinerate Flesh
-		timerFlesh:Stop(args.destName)
-		if self.Options.IncinerateFleshIcon then
-			self:RemoveIcon(args.destName)
-		end
+		timerFlesh:Stop()
+		clearIncinerateTarget(self, args.destName)
 	end
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(66532, 66963, 66964, 66965)and self:CheckInterruptFilter(args.sourceGUID) then	-- Fel Fireball (track cast for interupt, only when targeted)
-		SpecWarnFelFireball:Show(args.sourceName)
-		SpecWarnFelFireball:Play("kickcast")
+	if args:IsSpellID(66532, 66963, 66964, 66965) and UnitName("target") == L.name then	-- Fel Fireball (track cast for interupt, only when targeted)
+		SpecWarnFelFireball:Show()
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(67009) then								-- Nether Power
-		specWarnNetherPower:Show(args.sourceName)
-		specWarnNetherPower:Play("dispelboss")
+		warnNetherPower:Show()
 		timerNetherPowerCD:Start()
+		specWarnNetherPower:Show()
+
 	elseif args:IsSpellID(67901, 67902, 67903, 66258) then		-- Infernal Volcano
 		timerVolcanoCD:Start()
 		warnVolcanoSoon:Schedule(110)
