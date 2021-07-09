@@ -110,9 +110,9 @@ function mod:SPELL_CAST_START(args)
 		warnShieldofRunes:Show()
 	elseif args:IsSpellID(312779, 312778, 312425, 312426, 62273) then			--	Руна призыва
 		warnRuneofSummoning:Show()
-	--[[elseif args:IsSpellID(61973, 64321, 61974) then
+	elseif args:IsSpellID(61973, 64321, 61974) then
 			self:ScheduleMethod(0.1, "RuneTarget")
-			timerRuneofPower:Start()]]
+			timerRuneofPower:Start()
 	end
 end
 
@@ -120,9 +120,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(312777, 312424, 63490, 62269) then		-- Руна смерти
 		warnRuneofDeath:Show()
 		timerRuneofDeathDura:Start()
-	elseif args:IsSpellID(61973, 64321, 61974) then
-		self:BossTargetScanner(32927, "RuneTarget", 0.1, 16, true, true)--Scan only boss unitIDs, scan only hostile targets
-		timerRuneofPower:Start()
 	elseif args:IsSpellID(312782, 312781, 312428, 312429, 61869, 63481) then	-- Перегрузка
 		timerOverload:Start()
 		if self.Options.AlwaysWarnOnOverload or UnitName("target") == L.StormcallerBrundir then
