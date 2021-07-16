@@ -70,7 +70,7 @@ mod.vb.phase = 1
 local brainLinkTargets = {}
 local SanityBuff = DBM:GetSpellInfo(63050)
 mod.vb.brainLinkIcon = 2
-mod.vb.beaconIcon = 8
+local beaconIcon = 8
 mod.vb.Guardians = 0
 --mod.vb.numberOfPlayers = 1
 
@@ -78,7 +78,7 @@ function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 33288, "YoggSaron")
 	--self.vb.numberOfPlayers = DBM:GetNumRealGroupMembers()
 	self.vb.brainLinkIcon = 2
-	self.vb.beaconIcon = 8
+	beaconIcon = 8
 	self.vb.Guardians = 0
 	self.vb.phase = 1
 	enrageTimer:Start()
@@ -131,7 +131,7 @@ function mod:SPELL_CAST_START(args)
 		--warnBrainPortalSoon:Schedule(78)
 		--specWarnBrainPortalSoon:Schedule(78)
 		specWarnMadnessOutNow:Schedule(55)
-	elseif args:IsSpellID(313000) then		--Deafening Roar
+	elseif args:IsSpellID(313000, 64189, 312647) then		--Deafening Roar
 		timerNextDeafeningRoar:Start()
 		warnDeafeningRoarSoon:Schedule(55)
 		timerCastDeafeningRoar:Start()
@@ -235,11 +235,11 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif args.spellId == 64465 then
 		if self.Options.SetIconOnBeacon then
-			self:ScanForMobs(args.destGUID, 2, self.vb.beaconIcon, 1, 0.2, 10, "SetIconOnBeacon")
+			self:ScanForMobs(args.destGUID, 2, beaconIcon, 1, 0.2, 10, "SetIconOnBeacon")
 		end
-		self.vb.beaconIcon = self.vb.beaconIcon - 1
-		if self.vb.beaconIcon == 0 then
-			self.vb.beaconIcon = 8
+		beaconIcon = beaconIcon - 1
+		if beaconIcon == 0 then
+			beaconIcon = 8
 		end
 	end
 end

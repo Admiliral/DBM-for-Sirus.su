@@ -31,7 +31,6 @@ local warnSimulKill			= mod:NewAnnounce("WarnSimulKill", 1)
 local warnFury				= mod:NewTargetAnnounce(312880, 2)
 local warnRoots				= mod:NewTargetAnnounce(312860, 2)
 
-local specWarnLifebinder	= mod:NewSpecialWarningSwitch(62568, "Dps|Healer", nil, nil, 1, 2)
 local specWarnFury			= mod:NewSpecialWarningMoveAway(312880, nil, nil, nil, 1, 2)
 local yellFury				= mod:NewYell(312880)
 local yellRoots				= mod:NewYell(312860)
@@ -45,7 +44,7 @@ local timerSimulKill		= mod:NewTimer(12, "TimerSimulKill", nil, nil, nil, 5, DBM
 local timerFury				= mod:NewTargetTimer(10, 312880, nil, nil, nil, 2)
 local timerTremorCD 		= mod:NewCDTimer(28, 312842, nil, nil, nil, 2)
 local timerBoom 		    = mod:NewCDTimer(31, 312883, nil, nil, nil, 2)
-local timerLifebinderCD 	= mod:NewNextTimer(38.2, 62568, nil, nil, nil, 1)
+local timerLifebinderCD 	= mod:NewNextTimer(26, 62568,"Дар Эонар", nil, nil, 1)
 local timerRootsCD 			= mod:NewCDTimer(29.6, 312856, nil, nil, nil, 3)
 
 
@@ -68,10 +67,11 @@ function mod:OnCombatStart(delay)
 	self.vb.altIcon = true
 	self.vb.iconId = 6
 	self.vb.phase = 1
+	timerLifebinderCD:Start(26)
+	self:ScheduleMethod(26, "Darhui")
 	enrage:Start()
 	table.wipe(adds)
 	timerAlliesOfNature:Start(10-delay)
-	timerLifebinderCD:Start()
 end
 
 function mod:OnCombatEnd(wipe)
@@ -102,10 +102,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerAlliesOfNature:Start()
 	elseif args:IsSpellID(312883) then
 		timerBoom:Start(8)
-	elseif args:IsSpellID(62619, 62566, 62568, 312882, 312529) then -- Pheromones spell, cast by newly spawned Eonar's Gift second they spawn to allow melee to dps them while protector is up.
-		specWarnLifebinder:Show()
-		specWarnLifebinder:Play("targetchange")
-		timerLifebinderCD:Start()
 	elseif args:IsSpellID(63571, 62589, 312527, 312880, 62566) then -- Nature's Fury
 		if self.Options.SetIconOnFury then
 			self.vb.altIcon = not self.vb.altIcon	--Alternates between Skull and X
@@ -124,14 +120,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerFury:Start(args.destName)
 	elseif args.spellId == 63601 then
 			timerRootsCD:Start()
-	end
-end
-
-function mod:SPELL_SUMMON(args)
-	if args:IsSpellID(33228, 63571, 62589, 62566, 62568) then --62568, 312882,
-		specWarnLifebinder:Show()
-		specWarnLifebinder:Play("targetchange")
-		timerLifebinderCD:Start()
 	end
 end
 
@@ -155,10 +143,19 @@ function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(62519, 312486, 312839) then
 		warnPhase2:Show()
 		timerBoom:Start()
-		timerAlliesOfNature:Cancel()
 	elseif args:IsSpellID(62861, 62438, 312490, 312507, 312843, 312860) then
 		self:RemoveIcon(args.destName)
 		mod.vb.iconId = mod.vb.iconId + 1
+	end
+end
+
+function mod:Darhui()
+	if self.vb.phase == 2 then
+		timerLifebinderCD:Start(40)
+		self:ScheduleMethod(40, "Darhui")
+	else
+		timerLifebinderCD:Start(40)
+		self:ScheduleMethod(45, "Darhui")
 	end
 end
 
@@ -168,12 +165,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			if not adds[33202] then DBM.BossHealth:AddBoss(33202, L.WaterSpirit) end -- ancient water spirit
 			if not adds[32916] then DBM.BossHealth:AddBoss(32916, L.Snaplasher) end  -- snaplasher
 			if not adds[32919] then DBM.BossHealth:AddBoss(32919, L.StormLasher) end -- storm lasher
-			--if not adds[33228] then DBM.BossHealth:AddBoss(33228, L.DarNoar) end -- storm lasher 33228
 		end
 		adds[33202] = true
 		adds[32916] = true
 		adds[32919] = true
-		--adds[33228] = true
 	end
 end
 
@@ -196,9 +191,5 @@ function mod:UNIT_DIED(args)
 		if counter == 0 then
 			timerSimulKill:Stop()
 		end
-	--[[elseif cid == 33228 then
-		if self.Options.HealthFrame then
-			DBM.BossHealth:RemoveBoss(cid)
-		end]]
 	end
 end
