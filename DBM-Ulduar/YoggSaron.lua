@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("YoggSaron", "DBM-Ulduar")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20210425232323")
+mod:SetRevision("20210625152323")
 
 mod:SetCreatureID(33288)
 mod:RegisterCombat("yell", L.YellPull)
@@ -13,8 +13,7 @@ mod:RegisterEvents(
 	"SPELL_SUMMON",
 	"SPELL_AURA_APPLIED",
 	"SPELL_AURA_REMOVED",
-	"SPELL_AURA_REMOVED_DOSE",
-	"UNIT_HEALTH"
+	"SPELL_AURA_REMOVED_DOSE"
 )
 
 
@@ -37,9 +36,10 @@ local specWarnMadnessOutNow			= mod:NewSpecialWarning("SpecWarnMadnessOutNow")
 local specWarnLunaricGaze			= mod:NewSpecialWarningLookAway(313002, nil, nil, nil, 1, 2)
 local specWarnDeafeningRoar			= mod:NewSpecialWarningSpell(313000, nil, nil, nil, 1, 2)
 local specWarnFervor				= mod:NewSpecialWarningYou(312989, nil, nil, nil, 1, 2)
-local specWarnMalady				= mod:NewSpecialWarningYou(313029, nil, nil, nil, 1, 2)
 local specWarnMaladyNear			= mod:NewSpecialWarningClose(313029, nil, nil, nil, 1, 2)
 local yellSqueeze					= mod:NewYell(313031)
+local yellBrainLink					= mod:NewPosYell(312994)
+local yellBrainLinkFade				= mod:NewFadesYell(312994)
 
 
 local enrageTimer					= mod:NewBerserkTimer(900)
@@ -52,7 +52,6 @@ local timerLunaricGaze				= mod:NewCastTimer(4, 313002, nil, nil, nil, 2)
 local timerNextLunaricGaze			= mod:NewCDTimer(8.5, 313002, nil, nil, nil, 2)
 local timerEmpower					= mod:NewCDTimer(46, 64465, nil, nil, nil, 3)
 local timerEmpowerDuration			= mod:NewBuffActiveTimer(10, 64465, nil, nil, nil, 3)
---local timerMadness 					= mod:NewCastTimer(60, 313003, nil, nil, nil, 5)
 local timerMadnessCD				= mod:NewCDTimer(60, 313003, nil, nil, nil, 3)
 local timerCastDeafeningRoar		= mod:NewCastTimer(2.3, 313000, nil, nil, nil, 2)
 local timerNextDeafeningRoar		= mod:NewNextTimer(30, 313000, nil, nil, nil, 2)
@@ -62,16 +61,14 @@ mod:AddSetIconOption("SetIconOnFearTarget", 313029, true, false, {6})
 mod:AddBoolOption("ShowSaraHealth")
 mod:AddSetIconOption("SetIconOnFervorTarget", 312989, false, false, {7})
 mod:AddSetIconOption("SetIconOnBrainLinkTarget", 312995, true, false, {7, 8})
-mod:AddSetIconOption("SetIconOnBeacon", 64465, false, false, {1, 2, 3, 4, 5, 6, 7, 8})
-mod:AddBoolOption("MaladyArrow")
---mod:AddInfoFrameOption(212647) --???
+mod:AddSetIconOption("SetIconOnBeacon", 64465, true, true, {1, 2, 3, 4, 5, 6, 7, 8})
 
 mod.vb.phase = 1
 local brainLinkTargets = {}
 local SanityBuff = DBM:GetSpellInfo(63050)
 mod.vb.brainLinkIcon = 2
 local beaconIcon = 8
-mod.vb.Guardians = 0
+local Guardians = 0
 --mod.vb.numberOfPlayers = 1
 
 function mod:OnCombatStart(delay)
@@ -79,7 +76,7 @@ function mod:OnCombatStart(delay)
 	--self.vb.numberOfPlayers = DBM:GetNumRealGroupMembers()
 	self.vb.brainLinkIcon = 2
 	beaconIcon = 8
-	self.vb.Guardians = 0
+	Guardians = 0
 	self.vb.phase = 1
 	enrageTimer:Start()
 	timerAchieve:Start()
@@ -160,13 +157,15 @@ end
 
 function mod:SPELL_SUMMON(args)
 	if args:IsSpellID(62979) then
-		self.vb.Guardians = self.vb.Guardians + 1
-		warnGuardianSpawned:Show(self.vb.Guardians)
+		Guardians = Guardians + 1
+		warnGuardianSpawned:Show(Guardians)
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(312995, 312994, 312996, 63802) then		-- Brain Link
+	local spellId = args.spellId
+	--if args:IsSpellID(312995, 312994, 312996, 63802) then		-- Brain Link
+	if spellId == 312995 or spellId == 312994 or spellId == 312996 or spellId == 63802 then
 		self:Unschedule(warnBrainLinkWarning)
 		brainLinkTargets[#brainLinkTargets + 1] = args.destName
 		if self.Options.SetIconOnBrainLinkTarget then
@@ -176,6 +175,11 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args:IsPlayer() then
 			specWarnBrainLink:Show()
 			specWarnBrainLink:Play("linegather")
+			yellBrainLink:Yell()
+			yellBrainLinkFade:Countdown(spellId)
+			if self.Options.RangeFrame then
+				DBM.RangeCheck:Show(20)
+			end
 		end
 		if #brainLinkTargets == 2 then
 			warnBrainLinkWarning(self)
@@ -184,20 +188,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif args:IsSpellID(63830, 63881, 312993, 313029) then   -- Душевная болезнь (Death Coil)
 		if self.Options.SetIconOnFearTarget then
-			self:SetIcon(args.destName, 6)
-		end
-		if args:IsPlayer() then
-			specWarnMalady:Show()
-			specWarnMalady:Play("targetyou")
-		else
-			local uId = DBM:GetRaidUnitId(args.destName)
-			if uId then
-				local inRange = CheckInteractDistance(uId, 2)
-				if inRange then
-					specWarnMaladyNear:Show(args.destName)
-					specWarnMaladyNear:Play("runaway")
-				end
-			end
+			self:SetIcon(args.destName, 8, 30)
 		end
 	elseif args:IsSpellID(64126, 313031, 63138) then	-- Squeeze
 		warnSqueeze:Show(args.destName)
@@ -226,12 +217,12 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(313001, 313002, 313027, 313028, 64167, 64163) then	-- Взгляд безумца (reduces sanity)
 		timerLunaricGaze:Start()
 		if self.vb.phase == 3 then
-		specWarnLunaricGaze:Show()
-		brainportal:Cancel()
-		brainportal2:Cancel()
-		if self.Options.ShowSaraHealth then
-			DBM.BossHealth:RemoveBoss(33890)--33890
-		end
+			specWarnLunaricGaze:Show()
+			brainportal:Cancel()
+			brainportal2:Cancel()
+			if self.Options.ShowSaraHealth then
+				DBM.BossHealth:RemoveBoss(33890)--33890
+			end
 		end
 	elseif args.spellId == 64465 then
 		if self.Options.SetIconOnBeacon then
@@ -247,6 +238,11 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	if args.spellId == 312995 and self.Options.SetIconOnBrainLinkTarget then		-- Brain Link
 		self:SetIcon(args.destName, 0)
+		if args:IsPlayer() then
+			if self.Options.RangeFrame then
+				DBM.RangeCheck:Hide()
+			end
+		end
 	elseif args.spellId == 312989 and self.Options.SetIconOnFervorTarget then	-- Sara's Fervor
 		self:SetIcon(args.destName, 0)
 	elseif args:IsSpellID(63894, 64775) then		-- Shadowy Barrier removed from Yogg-Saron (start p3)

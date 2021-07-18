@@ -341,7 +341,11 @@ L:SetMiscLocalization{
 	DarNoar				= "Дар Ноару",
 	YellKill           = "Он больше не властен надо мной. Мой взор снова ясен. Благодарю вас, герои.",
 	YellPull		   = "Деревья, дайте мне силы!",
-	TrashRespawnTimer  = "Возрождение монстров"
+	TrashRespawnTimer  = "Возрождение монстров",
+}
+
+L:SetMiscLocalization{
+	Dar	= "Дар Хранительницы жизни начинает расти!"
 }
 
 L:SetWarningLocalization{
@@ -356,6 +360,7 @@ L:SetOptionLocalization{
 	YellOnRoots     = "Кричать, когда на вас $spell:312860",
 	WarnSimulKill	= "Объявлять, когда первый монстр погибает",
 	PlaySoundOnFury = "Звуковой сигнал, когда на вас $spell:312881",
+	TimerHui			= "Таймер Дара Ноару(не точная)",
 	TimerSimulKill	= "Отсчет времени до воскрешения монстров"
 }
 
@@ -411,6 +416,7 @@ L:SetOptionLocalization{
 	TimeToPhase4			= "Отсчет времени для фазы 4",
 	MagneticCore			= "Объявлять подобравших Магнитное ядро",
 	HealthFramePhase4		= "Отображать индикатор здоровья в фазе 4",
+	TimerMine				="Отображение таймера появления мин",
 	AutoChangeLootToFFA		= "Смена режима добычи на Каждый за себя в фазе 3",
 	WarnBombSpawn			= "Предупреждение о Бомботах",
 	TimerHardmode			= "Отсчет времени для сложного режима",
@@ -418,14 +424,12 @@ L:SetOptionLocalization{
 	PlaySoundOnDarkGlare	= "Звуковой сигнал при $spell:312794",
 	ShockBlastWarningInP1	= "Спец-предупреждение для $spell:312792 в фазе 1",
 	ShockBlastWarningInP4	= "Спец-предупреждение для $spell:312792 в фазе 4",
-	RangeFrame				= "Показывать окно проверки дистанции в фазе 1 (6 м)",
-	SetIconOnNapalm			= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312435),
-	SetIconOnPlasmaBlast	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312790)
+	RangeFrame				= "Показывать окно проверки дистанции в фазе 1 (6 м)"
 }
 
 L:SetMiscLocalization{
 	MobPhase1		= "Левиафан II",
-	MobPhase2		= "VX-001 <Противопехотная пушка>",
+	MobPhase2		= "VX-001",
 	MobPhase3		= "Воздушное судно",
 	YellPull		= "У нас мало времени, друзья! Вы поможете испытать новейшее и величайшее из моих изобретений. И учтите: после того, что вы натворили с XT-002, отказываться просто некрасиво.",
 	YellHardPull	= "Так, зачем вы это сделали? Разве вы не видели надпись \"НЕ НАЖИМАЙТЕ ЭТУ КНОПКУ!\"? Ну как мы сумеем завершить испытания при включенном механизме самоликвидации, а?",
@@ -455,8 +459,8 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
-	SetIconOnShadowCrash			= "Устанавливать метки на цели заклинания $spell:312978 (череп)",
-	SetIconOnLifeLeach				= "Устанавливать метки на цели заклинания $spell:312974 (крест)",
+	SetIconOnShadowCrash			= "Устанавливать метки на цели заклинания $spell:312978",
+	SetIconOnLifeLeach				= "Устанавливать метки на цели заклинания $spell:312974",
 	SpecialWarningShadowCrash		= "Спец-предупреждение для $spell:312978\n(должен быть в цели или фокусе хотя бы у одного члена рейда)",
 	SpecialWarningShadowCrashNear	= "Спец-предупреждение о $spell:312978 около вас",
 	SpecialWarningLLNear			= "Спец-предупреждение о $spell:312974 около вас",
@@ -488,6 +492,7 @@ L:SetMiscLocalization{
 	YellPhase2	 		= "Я – это сон наяву.",
 	Sara 				= "Сара",
 	Mozg				= "Мозг Йог-Сарона",
+	Shup				= "Тяжелое щупольце",
 	WarningYellSqueeze	= "Выдавливание на мне! Помогите!"
 }
 
@@ -519,6 +524,7 @@ L:SetOptionLocalization{
 	SpecWarnMadnessOutNow			= "Спец-предупреждение незадолго до окончания $spell:313003",
 	SpecWarnFervorCast				= "Спец-предупреждение, когда на вас накладывается $spell:312989\n(должна быть в цели или фокусе хотя бы у одного члена рейда)",
 	specWarnBrainPortalSoon			= "Спец-предупреждение о следующем Провале Безумия",
+	ShowSaraHealth					= "Показывает Здоровье Сары на 1 + Мозга на 2 (Сара на 1 фазе должна быть в фокусе хоть у 1 члена группы)",
 	NextPortal						= "Отсчет времени до следующего Провала Безумия",
 	MaladyArrow						= "Показывать стрелку, когда $spell:313029 около вас",
 }

@@ -1,10 +1,10 @@
 local mod	= DBM:NewMod("GeneralVezax", "DBM-Ulduar")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("202104251754")
+mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(33271)
 mod:SetUsedIcons(7, 8)
-
+mod:SetHotfixNoticeRev(20210716000000)
 mod:RegisterCombat("combat", 33271)
 
 mod:RegisterEvents(
@@ -35,14 +35,15 @@ local timerLeech				= mod:NewNextTimer(36, 312974)
 local timerCrashArrow           = mod:NewNextTimer(15,312978)
 local timerHardmode				= mod:NewTimer(189, "hardmodeSpawn")
 local yellLifeLeech				= mod:NewYell(312974)
+local yellLifeLeechFades		=mod:NewShortFadesYell(312974)
 local yellShadowCrash			= mod:NewYell(312978)
 
 mod:AddBoolOption("YellOnShadowCrash", true, "announce")
-mod:AddBoolOption("SetIconOnShadowCrash", true)
-mod:AddBoolOption("SetIconOnLifeLeach", true)
+mod:AddBoolOption("SetIconOnShadowCrash", true, false, {8})
+mod:AddBoolOption("SetIconOnLifeLeach", true, false, {7})
 mod:AddBoolOption("CrashArrow")
 mod:AddBoolOption("BypassLatencyCheck", false)--Use old scan method without syncing or latency check (less reliable but not dependant on other DBM users in raid)
-
+mod.vb.DebuffIcon = 1
 
 
 function mod:OnCombatStart(delay)
@@ -52,6 +53,7 @@ function mod:OnCombatStart(delay)
 	timerNextSurgeofDarkness:Start(-delay)
 	timerCrashArrow:Start(5)
 	timerLeech:Start(-delay)
+	self.vb.DebuffIcon = 1
 end
 
 function mod:OnCombatEnd(wipe)
@@ -74,14 +76,46 @@ function mod:SPELL_INTERRUPT(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
+	local spellId = args.spellId
 	if args:IsSpellID(312981, 62662) then	-- Surge of Darkness
 		timerSurgeofDarkness:Start()
+	elseif spellId == 312974 or spellId == 63276 then
+		if self.Options.SetIconOnLifeLeach then
+			self:SetIcon(args.destName, 7, 10)
+		end
+		warnLeechLife:Show(args.destName)
+		timerLifeLeech:Start(args.destName)
+		timerLeech:Start()
+		if args:IsPlayer() then
+			specWarnLifeLeechYou:Show()
+			yellLifeLeech:Yell()
+			yellLifeLeechFades:Countdown(spellId)
+		else
+			local uId = DBM:GetRaidUnitId(args.destName)
+			if uId then
+				local inRange = CheckInteractDistance(uId, 2)
+				if inRange then
+					specWarnLifeLeechNear:Show(args.destName)
+				end
+			end
+		end
 	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
+	local spellId = args.spellId
 	if args:IsSpellID(312981, 62662) then
 		timerSurgeofDarkness:Stop()
+	elseif spellId == 312974 or spellId == 63276 then
+		if self.Options.SetIconOnLifeLeach then
+			self:SetIcon(args.destName, 0)
+		end
+		if args:IsPlayer() then
+			yellLifeLeechFades:Cancel()
+			if self.Options.RangeFrame then
+				DBM.RangeCheck:Hide()
+			end
+		end
 	end
 end
 
@@ -130,7 +164,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		else
 			self:ScheduleMethod(0.1, "ShadowCrashTarget")
 		end
-	elseif args:IsSpellID(312974, 63276) then	-- Mark of the Faceless
+	--[[elseif args:IsSpellID(312974, 63276) then	-- Mark of the Faceless
+		local icon = self.vb.DebuffIcon
 		if self.Options.SetIconOnLifeLeach then
 			self:SetIcon(args.destName, 7, 10)
 		end
@@ -139,7 +174,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerLeech:Start()
 		if args:IsPlayer() then
 			specWarnLifeLeechYou:Show()
-			yellLifeLeech:Yell()
+			yellLifeLeech:Yell(icon, icon)
+			yellLifeLeechFades:Countdown(spellId)
 		else
 			local uId = DBM:GetRaidUnitId(args.destName)
 			if uId then
@@ -148,7 +184,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 					specWarnLifeLeechNear:Show(args.destName)
 				end
 			end
-		end
+		end]]
 	end
 end
 

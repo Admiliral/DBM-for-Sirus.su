@@ -15,7 +15,8 @@ mod:RegisterEvents(
 	"SPELL_AURA_REMOVED",
 	"SPELL_SUMMON",
 	"UNIT_DIED",
-	"CHAT_MSG_MONSTER_YELL"
+	"CHAT_MSG_MONSTER_YELL",
+	"CHAT_MSG_RAID_BOSS_EMOTE"
 )
 
 -- Trash: 33430 Guardian Lasher (flower)
@@ -36,7 +37,7 @@ local yellFury				= mod:NewYell(312880)
 local yellRoots				= mod:NewYell(312860)
 local specWarnTremor		= mod:NewSpecialWarningCast(312842, "SpellCaster", nil, 2, 1, 2)	-- Hard mode
 local specWarnBeam			= mod:NewSpecialWarningMove(312888, nil, nil, nil, 1, 2)	-- Hard mode
-
+local specWarnLifebinder	= mod:NewSpecialWarningSwitch(62568, nil, nil, nil, 1, 1)
 
 local enrage 				= mod:NewBerserkTimer(600)
 local timerAlliesOfNature	= mod:NewNextTimer(60, 62678, nil, nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)
@@ -44,7 +45,7 @@ local timerSimulKill		= mod:NewTimer(12, "TimerSimulKill", nil, nil, nil, 5, DBM
 local timerFury				= mod:NewTargetTimer(10, 312880, nil, nil, nil, 2)
 local timerTremorCD 		= mod:NewCDTimer(28, 312842, nil, nil, nil, 2)
 local timerBoom 		    = mod:NewCDTimer(31, 312883, nil, nil, nil, 2)
-local timerLifebinderCD 	= mod:NewNextTimer(26, 62568,"Дар Эонар", nil, nil, 1)
+local timerLifebinderCD 	= mod:NewNextTimer(40, 62568,"Дар Эонар", nil, nil, 1)
 local timerRootsCD 			= mod:NewCDTimer(29.6, 312856, nil, nil, nil, 3)
 
 
@@ -67,11 +68,8 @@ function mod:OnCombatStart(delay)
 	self.vb.altIcon = true
 	self.vb.iconId = 6
 	self.vb.phase = 1
-	timerLifebinderCD:Start(26)
-	self:ScheduleMethod(26, "Darhui")
 	enrage:Start()
 	table.wipe(adds)
-	timerAlliesOfNature:Start(10-delay)
 end
 
 function mod:OnCombatEnd(wipe)
@@ -149,13 +147,10 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
-function mod:Darhui()
-	if self.vb.phase == 2 then
-		timerLifebinderCD:Start(40)
-		self:ScheduleMethod(40, "Darhui")
-	else
-		timerLifebinderCD:Start(40)
-		self:ScheduleMethod(45, "Darhui")
+function CHAT_MSG_RAID_BOSS_EMOTE(mgs)
+	if mgs == L.Dar then
+		specWarnLifebinder:Show()
+		timerLifebinderCD:Start()
 	end
 end
 

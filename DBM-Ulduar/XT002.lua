@@ -23,6 +23,8 @@ local specWarnGravityBomb			= mod:NewSpecialWarningYou(312943, nil, nil, nil, 1,
 local specWarnConsumption			= mod:NewSpecialWarningMove(312948, nil, nil, nil, 1, 2)									--Hard mode void zone dropped by Gravity Bomb
 local yellGravityBomb				= mod:NewYell(312943)
 local yellLightBomb					= mod:NewYell(312941)
+local yellGravityBombFades			= mod:NewShortFadesYell(312943)
+local yellLightBombFades			= mod:NewShortFadesYell(312941)
 local BerserkTimer					= mod:NewBerserkTimer(600)
 local timerTympanicTantrum			= mod:NewBuffActiveTimer(8, 312939, nil, nil, nil, 5, nil, DBM_CORE_HEALER_ICON)
 local timerTympanicTantrumCD		= mod:NewCDTimer(32, 312939, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON)
@@ -58,13 +60,16 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
+	local spellId = args.spellId
 	if args:IsSpellID(62775, 312587, 312940) then							-- Tympanic Tantrum
 		timerTympanicTantrum:Start()
-	elseif args:IsSpellID(63018, 65121, 312588, 312941) then 											-- Ополяющий свет
+
+	elseif spellId == 63018 or spellId == 65121 or spellId == 312588 or spellId == 312941 then											-- Ополяющий свет
 		if args:IsPlayer() then
 			specWarnLightBomb:Show()
 			specWarnLightBomb:Play("runout")
 			yellLightBomb:Yell()
+			yellLightBombFades:Countdown(spellId)
 				DBM.RangeCheck:Show(10)
 		end
 		if self.Options.SetIconOnLightBombTarget then
@@ -72,11 +77,12 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		warnLightBomb:Show(args.destName)
 		timerLightBomb:Start(args.destName)
-	elseif args:IsSpellID(63024, 64234, 312590, 312943) then											-- Gravity Bomb
+	elseif spellId == 63024 or spellId == 64234 or spellId == 312590 or spellId == 312943 then											-- Gravity Bomb
 		if args:IsPlayer() then
 			specWarnGravityBomb:Show()
 			specWarnGravityBomb:Play("runout")
 			yellGravityBomb:Yell()
+			yellGravityBombFades:Countdown(spellId)
 			DBM.RangeCheck:Show(30)
 		end
 		if self.Options.SetIconOnGravityBombTarget then
