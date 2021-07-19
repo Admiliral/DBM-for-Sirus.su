@@ -338,7 +338,6 @@ L:SetMiscLocalization{
 	WaterSpirit        = "Древний дух воды",
 	Snaplasher         = "Хватоплет",
 	StormLasher        = "Грозовой плеточник",
-	DarNoar				= "Дар Ноару",
 	YellKill           = "Он больше не властен надо мной. Мой взор снова ясен. Благодарю вас, герои.",
 	YellPull		   = "Деревья, дайте мне силы!",
 	TrashRespawnTimer  = "Возрождение монстров",
@@ -360,7 +359,6 @@ L:SetOptionLocalization{
 	YellOnRoots     = "Кричать, когда на вас $spell:312860",
 	WarnSimulKill	= "Объявлять, когда первый монстр погибает",
 	PlaySoundOnFury = "Звуковой сигнал, когда на вас $spell:312881",
-	TimerHui			= "Таймер Дара Ноару(не точная)",
 	TimerSimulKill	= "Отсчет времени до воскрешения монстров"
 }
 
@@ -464,7 +462,6 @@ L:SetOptionLocalization{
 	SpecialWarningShadowCrash		= "Спец-предупреждение для $spell:312978\n(должен быть в цели или фокусе хотя бы у одного члена рейда)",
 	SpecialWarningShadowCrashNear	= "Спец-предупреждение о $spell:312978 около вас",
 	SpecialWarningLLNear			= "Спец-предупреждение о $spell:312974 около вас",
-	YellOnLifeLeech					= "Кричать, когда на вас $spell:312974",
 	YellOnShadowCrash				= "Кричать, когда на вас $spell:312978",
 	hardmodeSpawn					= "Отсчет времени до появления Саронитового врага (сложный режим)",
 	CrashArrow						= "Показывать стрелку, когда $spell:312978 около вас",
@@ -492,13 +489,13 @@ L:SetMiscLocalization{
 	YellPhase2	 		= "Я – это сон наяву.",
 	Sara 				= "Сара",
 	Mozg				= "Мозг Йог-Сарона",
-	Shup				= "Тяжелое щупольце",
+	Shup				= "Тяжёлое щупальце",
 	WarningYellSqueeze	= "Выдавливание на мне! Помогите!"
 }
 
 L:SetWarningLocalization{
 	WarningGuardianSpawned 			= "Страж %d",
-	WarningCrusherTentacleSpawned	= "Тяжелое щупальце",
+	WarningCrusherTentacleSpawned	= "Тяжёлое щупальце",
 	WarningSanity 					= "Осталось %d Здравомыслия",
 	SpecWarnSanity 					= "Осталось %d Здравомыслия",
 	SpecWarnGuardianLow				= "Прекратите атаковать этого Стража",
@@ -525,7 +522,7 @@ L:SetOptionLocalization{
 	SpecWarnFervorCast				= "Спец-предупреждение, когда на вас накладывается $spell:312989\n(должна быть в цели или фокусе хотя бы у одного члена рейда)",
 	specWarnBrainPortalSoon			= "Спец-предупреждение о следующем Провале Безумия",
 	ShowSaraHealth					= "Показывает Здоровье Сары на 1 + Мозга на 2 (Сара на 1 фазе должна быть в фокусе хоть у 1 члена группы)",
-	NextPortal						= "Отсчет времени до следующего Провала Безумия",
+	NextPortal						= "Отсчёт времени до следующего Провала Безумия",
 	MaladyArrow						= "Показывать стрелку, когда $spell:313029 около вас",
 }
 

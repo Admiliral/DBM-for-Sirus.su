@@ -87,10 +87,6 @@ function mod:OnCombatStart(delay)
 		DBM.BossHealth:AddBoss(33134, L.Sara)
 	end
 	table.wipe(brainLinkTargets)
-	--[[if self.Options.InfoFrame then
-		DBM.InfoFrame:SetHeader(SanityBuff)
-		DBM.InfoFrame:Show(30, "playerdebuffstacks", 63050, 2)--Sorted lowest first (highest first is default of arg not given)
-	end]]
 end
 
 function mod:OnCombatEnd(wipe)
@@ -99,10 +95,6 @@ function mod:OnCombatEnd(wipe)
 		DBM.InfoFrame:Hide()
 	end
 end
-
---[[function mod:OnTimerRecovery()
-	self.vb.numberOfPlayers = DBM:GetNumRealGroupMembers()
-end]]
 
 function mod:FervorTarget(targetname, uId)
 	if not targetname then return end
@@ -121,12 +113,7 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(312650, 313003, 64059) then	-- Induce Madness
-		--timerMadness:Start()
 		warnMadness:Show()
-		--brainportal:Start(60)
-		--brainportal2:Start(90)
-		--warnBrainPortalSoon:Schedule(78)
-		--specWarnBrainPortalSoon:Schedule(78)
 		specWarnMadnessOutNow:Schedule(55)
 	elseif args:IsSpellID(313000, 64189, 312647) then		--Deafening Roar
 		timerNextDeafeningRoar:Start()

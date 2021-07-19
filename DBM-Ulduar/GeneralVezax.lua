@@ -43,7 +43,6 @@ mod:AddBoolOption("SetIconOnShadowCrash", true, false, {8})
 mod:AddBoolOption("SetIconOnLifeLeach", true, false, {7})
 mod:AddBoolOption("CrashArrow")
 mod:AddBoolOption("BypassLatencyCheck", false)--Use old scan method without syncing or latency check (less reliable but not dependant on other DBM users in raid)
-mod.vb.DebuffIcon = 1
 
 
 function mod:OnCombatStart(delay)
@@ -53,7 +52,6 @@ function mod:OnCombatStart(delay)
 	timerNextSurgeofDarkness:Start(-delay)
 	timerCrashArrow:Start(5)
 	timerLeech:Start(-delay)
-	self.vb.DebuffIcon = 1
 end
 
 function mod:OnCombatEnd(wipe)
@@ -111,7 +109,6 @@ function mod:SPELL_AURA_REMOVED(args)
 			self:SetIcon(args.destName, 0)
 		end
 		if args:IsPlayer() then
-			yellLifeLeechFades:Cancel()
 			if self.Options.RangeFrame then
 				DBM.RangeCheck:Hide()
 			end
@@ -158,14 +155,14 @@ end
 
 
 function mod:SPELL_CAST_SUCCESS(args)
+	local spellId = args.spellId
 	if args:IsSpellID(312978, 62660) then		-- Shadow Crash
 		if self.Options.BypassLatencyCheck then
 			self:ScheduleMethod(0.1, "OldShadowCrashTarget")
 		else
 			self:ScheduleMethod(0.1, "ShadowCrashTarget")
 		end
-	--[[elseif args:IsSpellID(312974, 63276) then	-- Mark of the Faceless
-		local icon = self.vb.DebuffIcon
+	elseif spellId == 312974 or spellId == 63276 then -- Mark of the Faceless
 		if self.Options.SetIconOnLifeLeach then
 			self:SetIcon(args.destName, 7, 10)
 		end
@@ -174,7 +171,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerLeech:Start()
 		if args:IsPlayer() then
 			specWarnLifeLeechYou:Show()
-			yellLifeLeech:Yell(icon, icon)
+			yellLifeLeech:Yell()
 			yellLifeLeechFades:Countdown(spellId)
 		else
 			local uId = DBM:GetRaidUnitId(args.destName)
@@ -184,7 +181,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 					specWarnLifeLeechNear:Show(args.destName)
 				end
 			end
-		end]]
+		end
 	end
 end
 
