@@ -32,8 +32,8 @@ local warnSign                  = mod:NewTargetAnnounce(308471, 4) -- Знак
 
 local specWarnSign       = mod:NewSpecialWarningRun(308471, nil, nil, nil, 3, 4) -- Знак
 local specWarnMagnet       = mod:NewSpecialWarningRun(308467, nil, nil, nil, 1, 4) -- Магнетизм
-
-
+local yellSign			= mod:NewYell(308471)
+local yellSignFades		= mod:NewShortFadesYell(308471)
 
 
 local timerOrbCD				= mod:NewCDTimer(30, 308466, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Таймер чародейской сферы
@@ -116,6 +116,7 @@ end
 -------------------------хм------------------------------------
 
 function mod:SPELL_AURA_APPLIED(args)
+	local spellId = args.spellId
 	if args:IsSpellID(308465) then --- 1 фаза
 		timerLoadCD:Start()
 		timerOrbCD:Start()
@@ -124,10 +125,12 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(308473) then  --- 2 фаза
 		timerReloadCD:Start()
 		warnPhase2:Schedule(0)
-	elseif args:IsSpellID(308471) then
+	elseif spellId == 308471 then
 		SignTargets[#SignTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnSign:Show()
+			yellSign:yell()
+			yellSignFades:Countdown(spellId)
 		end
 		self:UnscheduleMethod("SetSignIcons")
 		self:ScheduleMethod(0.1, "SetSignIcons")

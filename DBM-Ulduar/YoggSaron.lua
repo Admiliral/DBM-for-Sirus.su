@@ -38,8 +38,8 @@ local specWarnDeafeningRoar			= mod:NewSpecialWarningSpell(313000, nil, nil, nil
 local specWarnFervor				= mod:NewSpecialWarningYou(312989, nil, nil, nil, 1, 2)
 local specWarnMaladyNear			= mod:NewSpecialWarningClose(313029, nil, nil, nil, 1, 2)
 local yellSqueeze					= mod:NewYell(313031)
-local yellBrainLink					= mod:NewPosYell(312994)
-local yellBrainLinkFade				= mod:NewFadesYell(312994)
+local yellBrainLink					= mod:NewYell(312994)
+local yellBrainLinkFade				= mod:NewShortFadesYell(312994)
 
 
 local enrageTimer					= mod:NewBerserkTimer(900)
