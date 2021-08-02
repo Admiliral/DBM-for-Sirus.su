@@ -334,6 +334,8 @@ L:SetGeneralLocalization{
 }
 
 L:SetMiscLocalization{
+	Darna4	= "Дар Хранительницы жизни начинает расти!",
+	Dar	= "Дар Эонару!",
 	SpawnYell          = "Помогите мне, дети мои!",
 	WaterSpirit        = "Древний дух воды",
 	Snaplasher         = "Хватоплет",

@@ -54,10 +54,9 @@ local warned_star = false
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 32871, "Algalon")
-
 	warned_preP2 = false
 	warned_star = false
-	local text = select(3, GetWorldStateUIInfo(1))
+local text = select(3, GetWorldStateUIInfo(1))
 	local _, _, time = string.find(text, L.PullCheck)
 	if not time then
 		time = 60
@@ -85,7 +84,7 @@ function mod:startTimers()
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(313034, 64443) then 	-- Суровый удар
+	if args:IsSpellID(313034, 64443, 64584) then 	-- Суровый удар
 		timerBigBangCast:Start()
 		timerNextBigBang:Start()
 		announceBigBang:Show()
@@ -97,7 +96,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(313039, 64122) then 	-- Взрыв чёрной дыры
+	if args:IsSpellID(313039, 64122, 65108) then 	-- Взрыв чёрной дыры
 		announceBlackHole:Show()
 		warned_star = false
 	elseif args:IsSpellID(64598, 62301, 313037, 313036) then	-- Кара небесная
@@ -109,7 +108,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(313033) then
+	if args:IsSpellID(313033, 64412) then
 		timerNextPhasePunch:Start()
 		local amount = args.amount or 1
 		if args:IsPlayer() and amount >= 4 then
@@ -129,6 +128,19 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.Phase2 or msg:find(L.Phase2) then
 		timerNextCollapsingStar:Cancel()
+		warnPhase2:Show()
+	end
+end
+function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
+	if spellId == 65311 then--Supermassive Fail (fires when he becomes actually active)
+		timerNextCollapsingStar:Start(16)
+		timerCDCosmicSmash:Start(26)
+		announcePreBigBang:Schedule(80)
+		timerNextBigBang:Start(90)
+		enrageTimer:Start(360)
+	elseif spellId == 65256 then--Self Stun (phase 2)
+		warned_preP2 = true
+		timerNextCollapsingStar:Stop()
 		warnPhase2:Show()
 	end
 end

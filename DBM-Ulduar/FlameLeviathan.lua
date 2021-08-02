@@ -21,6 +21,7 @@ local warnSystemOverload	= mod:NewSpecialWarningSpell(62475)
 local pursueSpecWarn		= mod:NewSpecialWarning("SpecialPursueWarnYou", nil, nil, 2, 4)
 local warnWardofLife		= mod:NewSpecialWarning("warnWardofLife")
 
+local timerWardofLife		= mod:NewNextTimer(30, 62907, nil, nil, nil, 2)
 local timerSystemOverload	= mod:NewBuffActiveTimer(20, 62475, nil, nil, nil, 6)
 local timerFlameVents		= mod:NewCastTimer(10, 312689, nil, nil, nil, 2)
 local timerPursued			= mod:NewTargetTimer(30, 62374, nil, nil, nil, 3)
@@ -40,10 +41,13 @@ end
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 33113, "FlameLeviathan")
 	buildGuidTable(self)
+	timerWardofLife:Start(delay)
 end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 33113, "FlameLeviathan", wipe)
+	timerWardofLife:Cancel()
+	timerPursued:Cancel()
 end
 
 function mod:OnTimerRecovery()
@@ -53,6 +57,7 @@ end
 function mod:SPELL_SUMMON(args)
 	if args:IsSpellID(62907, 312355, 312363, 312708, 312716) and self:AntiSpam(4) then		-- Ward of Life spawned (Creature id: 34275)
 		warnWardofLife:Show()
+		timerWardofLife:Start()
 	end
 end
 
