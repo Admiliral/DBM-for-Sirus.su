@@ -335,7 +335,7 @@ L:SetGeneralLocalization{
 
 L:SetMiscLocalization{
 	Darna4	= "Дар Хранительницы жизни начинает расти!",
-	Dar	= "Дар Эонару!",
+	Dar	= "Дар Эонар!",
 	SpawnYell          = "Помогите мне, дети мои!",
 	WaterSpirit        = "Древний дух воды",
 	Snaplasher         = "Хватоплет",
@@ -350,7 +350,8 @@ L:SetMiscLocalization{
 }
 
 L:SetWarningLocalization{
-	WarnSimulKill	= "Первый помощник погиб - воскрешение через ~12 сек."
+	WarnSimulKill	= "Первый помощник погиб - воскрешение через ~12 сек.",
+	WarnLifebinderSoon = "Скоро появится Дар Эонар!"
 }
 
 L:SetTimerLocalization{

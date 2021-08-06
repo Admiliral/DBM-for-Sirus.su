@@ -32,12 +32,12 @@ local warnSimulKill			= mod:NewAnnounce("WarnSimulKill", 1)
 local warnFury				= mod:NewTargetAnnounce(312880, 2)
 local warnRoots				= mod:NewTargetAnnounce(312860, 2)
 
+local specWarnnLifebinderSoon = mod:NewAnnounce("WarnLifebinderSoon", 2, 62568)
 local specWarnFury			= mod:NewSpecialWarningMoveAway(312880, nil, nil, nil, 1, 2)
 local yellFury				= mod:NewYell(312880)
 local yellRoots				= mod:NewYell(312860)
 local specWarnTremor		= mod:NewSpecialWarningCast(312842, "SpellCaster", nil, 2, 1, 2)	-- Hard mode
 local specWarnBeam			= mod:NewSpecialWarningMove(312888, nil, nil, nil, 1, 2)	-- Hard mode
-local specWarnLifebinder	= mod:NewSpecialWarningSwitch(62568, nil, nil, nil, 1, 1)
 
 local enrage 				= mod:NewBerserkTimer(600)
 local timerAlliesOfNature	= mod:NewNextTimer(60, 62678, nil, nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)
@@ -45,7 +45,7 @@ local timerSimulKill		= mod:NewTimer(12, "TimerSimulKill", nil, nil, nil, 5, DBM
 local timerFury				= mod:NewTargetTimer(10, 312880, nil, nil, nil, 2)
 local timerTremorCD 		= mod:NewCDTimer(28, 312842, nil, nil, nil, 2)
 local timerBoom 		    = mod:NewCDTimer(31, 312883, nil, nil, nil, 2)
-local timerLifebinderCD 	= mod:NewNextTimer(40, 62568,"Дар Эонар", nil, nil, 1)
+local timerLifebinderCD 	= mod:NewNextTimer(39, 62568, nil, nil, nil, 1)
 local timerRootsCD 			= mod:NewCDTimer(29.6, 312856, nil, nil, nil, 3)
 
 
@@ -69,6 +69,8 @@ function mod:OnCombatStart(delay)
 	self.vb.iconId = 6
 	self.vb.phase = 1
 	enrage:Start()
+	timerNextFlames:Start(10)
+	self:ScheduleMethod(10, "Allies")
 	table.wipe(adds)
 end
 
@@ -96,9 +98,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(62678, 62873) then -- Summon Allies of Nature
-		timerAlliesOfNature:Start()
-	elseif args:IsSpellID(312883) then
+	if args:IsSpellID(312883) then
 		timerBoom:Start(8)
 	elseif args:IsSpellID(63571, 62589, 312527, 312880, 62566) then -- Nature's Fury
 		if self.Options.SetIconOnFury then
@@ -147,10 +147,13 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
-function CHAT_MSG_RAID_BOSS_EMOTE(mgs)
-	if mgs == L.Dar then
-		specWarnLifebinder:Show()
-		timerLifebinderCD:Start()
+function mod:Allies()
+	if self.vb.phase == 1 then
+		timerAlliesOfNature:Start()
+		self:ScheduleMethod(60, "Allies")
+	else
+		timerAlliesOfNature:Start()
+		self:ScheduleMethod(60, "Allies")
 	end
 end
 
@@ -169,7 +172,14 @@ end
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 33202 or cid == 32916 or cid == 32919 then
+	if cid == 33228 then
+		if self.Options.HealthFrame then
+			DBM.BossHealth:RemoveBoss(cid)
+		end
+		adds[cid] = nil
+		timerLifebinderCD:Start()
+		specWarnnLifebinderSoon:Schedule(35)
+	elseif cid == 33202 or cid == 32916 or cid == 32919 then
 		if self.Options.HealthFrame then
 			DBM.BossHealth:RemoveBoss(cid)
 		end

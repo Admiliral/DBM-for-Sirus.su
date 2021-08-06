@@ -41,7 +41,7 @@ end
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 33113, "FlameLeviathan")
 	buildGuidTable(self)
-	timerWardofLife:Start(delay)
+	timerWardofLife:Start()
 end
 
 function mod:OnCombatEnd(wipe)
