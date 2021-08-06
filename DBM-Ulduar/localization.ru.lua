@@ -362,7 +362,6 @@ L:SetOptionLocalization{
 	YellOnRoots     = "Кричать, когда на вас $spell:312860",
 	WarnSimulKill	= "Объявлять, когда первый монстр погибает",
 	PlaySoundOnFury = "Звуковой сигнал, когда на вас $spell:312881",
-	WarnLifebinderSoon = "Таймер появление Дара Эонар",
 	TimerSimulKill	= "Отсчет времени до воскрешения монстров"
 }
 
