@@ -69,7 +69,7 @@ function mod:OnCombatStart(delay)
 	self.vb.iconId = 6
 	self.vb.phase = 1
 	enrage:Start()
-	timerNextFlames:Start(10)
+	timerAlliesOfNature:Start(10)
 	self:ScheduleMethod(10, "Allies")
 	table.wipe(adds)
 end
