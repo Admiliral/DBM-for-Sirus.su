@@ -334,8 +334,6 @@ L:SetGeneralLocalization{
 }
 
 L:SetMiscLocalization{
-	Darna4	= "Дар Хранительницы жизни начинает расти!",
-	Dar	= "Дар Эонар!",
 	SpawnYell          = "Помогите мне, дети мои!",
 	WaterSpirit        = "Древний дух воды",
 	Snaplasher         = "Хватоплет",
@@ -346,7 +344,6 @@ L:SetMiscLocalization{
 }
 
 L:SetMiscLocalization{
-	Dar	= "Дар Хранительницы жизни начинает расти!"
 }
 
 L:SetWarningLocalization{
@@ -362,7 +359,7 @@ L:SetOptionLocalization{
 	YellOnRoots     = "Кричать, когда на вас $spell:312860",
 	WarnSimulKill	= "Объявлять, когда первый монстр погибает",
 	PlaySoundOnFury = "Звуковой сигнал, когда на вас $spell:312881",
-	WarnLifebinderSoon = "Таймер появление Дара Эонар",
+	WarnLifebinderSoon = "Таймер появление Дара Эонара",
 	TimerSimulKill	= "Отсчет времени до воскрешения монстров"
 }
 

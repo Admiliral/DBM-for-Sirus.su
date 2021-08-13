@@ -45,7 +45,7 @@ local timerSimulKill		= mod:NewTimer(12, "TimerSimulKill", nil, nil, nil, 5, DBM
 local timerFury				= mod:NewTargetTimer(10, 312880, nil, nil, nil, 2)
 local timerTremorCD 		= mod:NewCDTimer(28, 312842, nil, nil, nil, 2)
 local timerBoom 		    = mod:NewCDTimer(31, 312883, nil, nil, nil, 2)
-local timerLifebinderCD 	= mod:NewNextTimer(39, 62568, nil, nil, nil, 1)
+local timerLifebinderCD 	= mod:NewNextTimer(37, "Дар Эонара", nil, nil, nil, 1)
 local timerRootsCD 			= mod:NewCDTimer(29.6, 312856, nil, nil, nil, 3)
 
 
@@ -173,10 +173,6 @@ end
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 33228 then
-		if self.Options.HealthFrame then
-			DBM.BossHealth:RemoveBoss(cid)
-		end
-		adds[cid] = nil
 		timerLifebinderCD:Start()
 		specWarnnLifebinderSoon:Schedule(35)
 	elseif cid == 33202 or cid == 32916 or cid == 32919 then
