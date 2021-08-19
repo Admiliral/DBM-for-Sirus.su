@@ -69,9 +69,9 @@ local function showRealDate(curseDate)
 end
 
 DBM = {
-	Revision = parseCurseDate("20210807002300"),
+	Revision = parseCurseDate("20210819235300"),
 	DisplayVersion = "5.50", -- the string that is shown as version
-	ReleaseRevision = releaseDate(2021, 08, 07) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
+	ReleaseRevision = releaseDate(2021, 08, 19) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
 
@@ -4500,7 +4500,7 @@ do
 						for i = 1, #mod.findFastestComputer do
 							local option = mod.findFastestComputer[i]
 							if mod.Options[option] then
-								sendSync("IS", UnitGUID("player").."\t"..tostring(DBM.Revision).."\t"..option)
+								sendSync("IS", UnitGUID("player").."\t"..tostring(self.Revision).."\t"..option)
 							end
 						end
 					elseif GetNumPartyMembers() == 0 then
@@ -5851,7 +5851,7 @@ function bossModPrototype:IsMelee()
 	return select(2, UnitClass("player")) == "ROGUE"
 		or select(2, UnitClass("player")) == "WARRIOR"
 		or select(2, UnitClass("player")) == "DEATHKNIGHT"
-		or (select(2, UnitClass("player")) == "PALADIN" and select(3, GetTalentTabInfo(1)) < 51)
+		or select(2, UnitClass("player")) == "PALADIN"
 		or (select(2, UnitClass("player")) == "SHAMAN" and select(3, GetTalentTabInfo(2)) >= 50)
 		or (select(2, UnitClass("player")) == "DRUID" and select(3, GetTalentTabInfo(2)) >= 51)
 end
@@ -6730,7 +6730,11 @@ do
 		end
 		local displayText
 		if not yellText then
+			if type(spellId) == "string" and spellId:match("ej%d+") then
+				displayText = DBM_CORE_AUTO_YELL_ANNOUNCE_TEXT[yellType]:format(DBM:EJ_GetSectionInfo(string.sub(spellId, 3)) or DBM_CORE_UNKNOWN)
+			else
 			displayText = DBM_CORE_AUTO_YELL_ANNOUNCE_TEXT[yellType]:format(DBM:GetSpellInfo(spellId) or DBM_CORE_UNKNOWN)
+			end
 		end
 		--Passed spellid as yellText.
 		--Auto localize spelltext using yellText instead
@@ -6801,6 +6805,22 @@ do
 		end
 	end
 
+	function yellPrototype:CountdownSay(time, numAnnounces, ...)
+		if time > 60 then--It's a spellID not a time
+			local _, _, _, _, _, expireTime = DBM:UnitDebuff("player", time)
+			if expireTime then
+				local remaining = expireTime-GetTime()
+				scheduleCountdown(remaining, numAnnounces, self.Yell, self.mod, self, ...)
+			end
+		else
+			scheduleCountdown(time, numAnnounces, self.Say, self.mod, self, ...)
+		end
+	end
+
+	function yellPrototype:Repeat(...)
+		scheduleRepeat(time, self.Yell, self.spellId, self.mod, self, ...)
+	end
+
 	function yellPrototype:Cancel(...)
 		return unschedule(self.Yell, self.mod, self, ...)
 	end
@@ -6825,8 +6845,20 @@ do
 		return newYell(self, "shortfade", ...)
 	end
 
+	function bossModPrototype:NewPlayerRepeatYell(...)
+		return newYell(self, "repeatplayer", ...)
+	end
+
+	function bossModPrototype:NewIconRepeatYell(...)
+		return newYell(self, "repeaticon", ...)
+	end
+
 	function bossModPrototype:NewIconFadesYell(...)
 		return newYell(self, "iconfade", ...)
+	end
+
+	function bossModPrototype:NewShortPosYell(...)
+		return newYell(self, "shortposition", ...)
 	end
 
 	function bossModPrototype:NewPosYell(...)
