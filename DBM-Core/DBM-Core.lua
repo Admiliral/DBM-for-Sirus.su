@@ -6817,10 +6817,6 @@ do
 		end
 	end
 
-	function yellPrototype:Repeat(...)
-		scheduleRepeat(time, self.Yell, self.spellId, self.mod, self, ...)
-	end
-
 	function yellPrototype:Cancel(...)
 		return unschedule(self.Yell, self.mod, self, ...)
 	end

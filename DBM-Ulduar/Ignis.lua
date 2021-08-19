@@ -18,8 +18,8 @@ mod:RegisterEvents(
 local announceSlagPot			= mod:NewTargetAnnounce(312731, 3)
 local announceConstruct			= mod:NewCountAnnounce(62488, 2)
 
-local warnFlameJetsCast			= mod:NewSpecialWarningCast(312727, "SpellCaster", nil, nil, 2, 2)
-local warnFlameBrittle			= mod:NewSpecialWarningSwitch(62382, "Dps", nil, nil, 2, 2)
+local warnFlameJetsCast			= mod:NewSpecialWarningCast(312727, "SpellCaster")
+local warnFlameBrittle			= mod:NewSpecialWarningSwitch(62382, "Dps")
 
 local timerFlameJetsCast		= mod:NewCastTimer(2.7, 312727)
 local timerActivateConstruct	= mod:NewCDCountTimer(30, 62488, nil, nil, nil, 1)

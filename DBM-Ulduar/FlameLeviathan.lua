@@ -40,8 +40,8 @@ end
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 33113, "FlameLeviathan")
-	timerWardofLife:Start(delay)
 	buildGuidTable(self)
+	timerWardofLife:Start()
 end
 
 function mod:OnCombatEnd(wipe)
@@ -55,7 +55,7 @@ function mod:OnTimerRecovery()
 end
 
 function mod:SPELL_SUMMON(args)
-	if args:IsSpellID(62907, 312355, 312363, 312708, 312716) and self:AntiSpam() then		-- Ward of Life spawned (Creature id: 34275)
+	if args:IsSpellID(62907, 312355, 312363, 312708, 312716) and self:AntiSpam(4) then		-- Ward of Life spawned (Creature id: 34275)
 		warnWardofLife:Show()
 		timerWardofLife:Start()
 	end

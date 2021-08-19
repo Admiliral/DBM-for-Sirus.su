@@ -31,9 +31,9 @@ local warnPhase2Soon			= mod:NewAnnounce("WarnPhase2Soon", 2)
 local announcePreBigBang		= mod:NewPreWarnAnnounce(313034, 10, 3)
 local announceBlackHole			= mod:NewSpellAnnounce(313039, 2)
 local announceCosmicSmash		= mod:NewAnnounce("WarningCosmicSmash", 3, 313036)
-local announcePhasePunch		= mod:NewAnnounce("WarningPhasePunch", 4, 313039, "Tank")
+local announcePhasePunch		= mod:NewAnnounce("WarningPhasePunch", 4, 313039, "Tank|Healer")
 
-local specwarnStarLow			= mod:NewSpecialWarning("warnStarLow", "Tank", nil, nil, 1, 2)
+local specwarnStarLow			= mod:NewSpecialWarning("warnStarLow", "Tank|Healer", nil, nil, 1, 2)
 local specWarnPhasePunch		= mod:NewSpecialWarningStack(313033, nil, 4, nil, nil, 1, 6)
 local specWarnBigBang			= mod:NewSpecialWarningDefensive(313034, "Tank", nil, nil, 3, 2)
 local specWarnCosmicSmash		= mod:NewSpecialWarningSpell(313036, nil, nil, nil, 2, 2)
@@ -59,10 +59,10 @@ function mod:OnCombatStart(delay)
 local text = select(3, GetWorldStateUIInfo(1))
 	local _, _, time = string.find(text, L.PullCheck)
 	if not time then
-		time = 120
+		time = 60
 	end
 	time = tonumber(time)
-	if time == 120 then
+	if time == 60 then
 		timerCombatStart:Start(26.5-delay)
 		self:ScheduleMethod(26.5-delay, "startTimers")	-- 26 seconds roleplaying
 	else
