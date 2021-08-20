@@ -59,10 +59,10 @@ function mod:OnCombatStart(delay)
 local text = select(3, GetWorldStateUIInfo(1))
 	local _, _, time = string.find(text, L.PullCheck)
 	if not time then
-		time = 120
+		time = 61
 	end
 	time = tonumber(time)
-	if time == 120 then
+	if time == 61 then --Ахуенные фиксы на алгалоне)
 		timerCombatStart:Start(26.5-delay)
 		self:ScheduleMethod(26.5-delay, "startTimers")	-- 26 seconds roleplaying
 	else

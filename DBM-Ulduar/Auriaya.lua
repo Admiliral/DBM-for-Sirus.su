@@ -65,7 +65,7 @@ function mod:SPELL_CAST_START(args)
 	elseif args:IsSpellID(64688, 64422, 312601, 312954) then --Sonic Screech
 		timerSonic:Start()
 		timerNextSonic:Start()
-		specWarnSonic:Show(TANK)
+		specWarnSonic:Show()
 		specWarnSonic:Play("gathershare")
 	end
 end
@@ -77,16 +77,8 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(64455, 312619, 312972) then -- Feral Essence
 		specWarnCat:Show(args.destName)
 		DBM.BossHealth:AddBoss(34035, L.Defender:format(9))
-	--[[elseif args:IsSpellID(312955) and args:IsPlayer() then
-		isFeared = true]]
 	end
 end
-
---[[function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(312955) and args:IsPlayer() then
-		isFeared = false
-	end
-end]]
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)

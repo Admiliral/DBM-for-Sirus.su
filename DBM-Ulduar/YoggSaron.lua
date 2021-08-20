@@ -13,6 +13,7 @@ mod:RegisterEvents(
 	"SPELL_SUMMON",
 	"SPELL_AURA_APPLIED",
 	"SPELL_AURA_REMOVED",
+	"UNIT_DIED",
 	"SPELL_AURA_REMOVED_DOSE"
 )
 
@@ -58,7 +59,8 @@ local timerNextDeafeningRoar		= mod:NewNextTimer(30, 313000, nil, nil, nil, 2)
 local timerAchieve					= mod:NewAchievementTimer(420, 3013)
 
 mod:AddSetIconOption("SetIconOnFearTarget", 313029, true, false, {6})
-mod:AddBoolOption("ShowSaraHealth")
+mod:AddBoolOption("ShowSaraHealth", true)
+mod:AddBoolOption("HealthFrame", true)
 mod:AddSetIconOption("SetIconOnFervorTarget", 312989, false, false, {7})
 mod:AddSetIconOption("SetIconOnBrainLinkTarget", 312995, true, false, {7, 8})
 mod:AddSetIconOption("SetIconOnBeacon", 64465, true, true, {1, 2, 3, 4, 5, 6, 7, 8})
@@ -147,6 +149,7 @@ function mod:SPELL_SUMMON(args)
 		Guardians = Guardians + 1
 		warnGuardianSpawned:Show(Guardians)
 	end
+
 end
 
 function mod:SPELL_AURA_APPLIED(args)
@@ -200,6 +203,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self.Options.ShowSaraHealth then
 			DBM.BossHealth:RemoveBoss(33134)--33890
 			DBM.BossHealth:AddBoss(33890,L.Mozg)
+			DBM.BossHealth:AddBoss(33966, L.HevTentacle)
 		end
 	elseif args:IsSpellID(313001, 313002, 313027, 313028, 64167, 64163) then	-- Взгляд безумца (reduces sanity)
 		timerLunaricGaze:Start()
@@ -209,6 +213,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			brainportal2:Cancel()
 			if self.Options.ShowSaraHealth then
 				DBM.BossHealth:RemoveBoss(33890)--33890
+				DBM.BossHealth:RemoveBoss(33966)
 			end
 		end
 	elseif args.spellId == 64465 then
@@ -254,8 +259,6 @@ function mod:SPELL_AURA_REMOVED_DOSE(args)
 		end
 	end
 end
-
-
 
 function mod:OnSync(msg)
 	if msg == "Phase3" then

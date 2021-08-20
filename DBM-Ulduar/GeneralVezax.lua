@@ -21,7 +21,7 @@ local warnLeechLife				= mod:NewTargetAnnounce(312974, 3)
 
 local specWarnShadowCrash		= mod:NewSpecialWarning("SpecialWarningShadowCrash")
 local specWarnShadowCrashNear	= mod:NewSpecialWarning("SpecialWarningShadowCrashNear")
-local specWarnSurgeDarkness		= mod:NewSpecialWarningSpell(312981, nil, nil, 2, 1, 2)
+local specWarnSurgeDarkness		= mod:NewSpecialWarningCast(312981, "Tank", nil, 2, 1, 2)
 local specWarnLifeLeechYou		= mod:NewSpecialWarningYou(312974)
 local specWarnLifeLeechNear 	= mod:NewSpecialWarning("SpecialWarningLLNear", false)
 
@@ -36,7 +36,7 @@ local timerCrashArrow           = mod:NewNextTimer(15,312978)
 local timerHardmode				= mod:NewTimer(189, "hardmodeSpawn")
 local yellLifeLeech				= mod:NewYell(312974)
 local yellLifeLeechFades		=mod:NewShortFadesYell(312974)
-local yellShadowCrash			= mod:NewYell(312978)
+local yellShadowCrash			= mod:NewShortYell(312978)
 
 mod:AddBoolOption("YellOnShadowCrash", true, "announce")
 mod:AddBoolOption("SetIconOnShadowCrash", true, false, {8})
