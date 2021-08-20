@@ -3,8 +3,8 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("20210501003000")
 
-mod:SetCreatureID(32927)
-mod:RegisterCombat("combat", 32867, 32927, 32857)
+mod:SetCreatureID(32857, 32867, 32927)
+mod:RegisterCombat("combat")
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6, 7, 8)
 
 mod:RegisterEvents(
@@ -24,7 +24,6 @@ mod:SetBossHealthInfo(
 local warnSupercharge			= mod:NewSpellAnnounce(312766, 3)
 
 -- Stormcaller Brundir
--- High Voltage ... 63498
 local warnChainlight			= mod:NewSpellAnnounce(312780, 2, nil, false, 2)
 local timerOverload				= mod:NewCastTimer(6, 312782, nil, nil, nil, 2)
 local timerLightningWhirl		= mod:NewCastTimer(5, 312784, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
@@ -37,7 +36,6 @@ mod:AddBoolOption("PlaySoundOnOverload", true)
 mod:AddBoolOption("PlaySoundLightningTendrils", true)
 
 -- Steelbreaker
--- High Voltage ... don't know what to show here - 63498
 local warnFusionPunch			= mod:NewSpellAnnounce(312769, 4)
 local timerFusionPunchCast		= mod:NewCastTimer(3, 312769, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON..DBM_CORE_MAGIC_ICON)
 local timerFusionPunchActive	= mod:NewTargetTimer(4,312769, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON..DBM_CORE_MAGIC_ICON)
@@ -48,7 +46,6 @@ mod:AddSetIconOption("SetIconOnOverwhelmingPower", 61888, false, false, {8})
 mod:AddSetIconOption("SetIconOnStaticDisruption", 312770, false, false, {1, 2, 3, 4, 5, 6, 7})
 
 -- Runemaster Molgeim
--- Lightning Blast ... don't know, maybe 63491
 local timerShieldofRunes		= mod:NewBuffActiveTimer(15, 312775)
 local warnRuneofPower			= mod:NewTargetAnnounce(61973, 2) -- Руна мощи
 local warnRuneofDeath			= mod:NewSpellAnnounce(312777, 2) -- Руна смерти
@@ -58,11 +55,6 @@ local specwarnRuneofDeath		= mod:NewSpecialWarningMove(312777, nil, nil, nil, 1,
 local specWarnRuneofShields		= mod:NewSpecialWarningDispel(63967, "MagicDispeller", nil, nil, 1, 2)
 local timerRuneofDeathDura		= mod:NewNextTimer(30, 312777, nil, nil, nil, 3)
 local timerRuneofPower			= mod:NewCDTimer(35, 61973, nil, nil, nil, 5)
-
-
---[[local timerRuneofDeath			= mod:NewCDTimer(30, 312777)
-local yellOverwhelmingPowerFades	= mod:NewFadesYell(312772)]]
---local yellStaticDisruptionFades		= mod:NewFadesYell(312770)
 
 mod:AddBoolOption("PlaySoundDeathRune", true, "announce")
 

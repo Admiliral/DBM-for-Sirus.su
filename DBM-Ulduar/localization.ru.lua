@@ -490,7 +490,7 @@ L:SetMiscLocalization{
 	YellPhase2	 		= "Я – это сон наяву.",
 	Sara 				= "Сара",
 	Mozg				= "Мозг Йог-Сарона",
-	Shup				= "Тяжёлое щупальце",
+	HevTentacle				= "Тяжёлое щупальце",
 	WarningYellSqueeze	= "Выдавливание на мне! Помогите!"
 }
 

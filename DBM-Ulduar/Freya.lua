@@ -13,19 +13,10 @@ mod:RegisterEvents(
 	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED",
 	"SPELL_AURA_REMOVED",
-	"SPELL_SUMMON",
 	"UNIT_DIED",
 	"CHAT_MSG_MONSTER_YELL",
 	"CHAT_MSG_RAID_BOSS_EMOTE"
 )
-
--- Trash: 33430 Guardian Lasher (flower)
--- 33355 (nymph)
--- 33354 (tree)
-
---
--- Elder Stonebark (ground tremor / fist of stone)
--- Elder Brightleaf (unstable sunbeam)
 
 local warnPhase2			= mod:NewPhaseAnnounce(2, 3)
 local warnSimulKill			= mod:NewAnnounce("WarnSimulKill", 1)
@@ -45,7 +36,7 @@ local timerSimulKill		= mod:NewTimer(12, "TimerSimulKill", nil, nil, nil, 5, DBM
 local timerFury				= mod:NewTargetTimer(10, 312880, nil, nil, nil, 2)
 local timerTremorCD 		= mod:NewCDTimer(28, 312842, nil, nil, nil, 2)
 local timerBoom 		    = mod:NewCDTimer(31, 312883, nil, nil, nil, 2)
-local timerLifebinderCD 	= mod:NewNextTimer(37, "Дар Эонара", nil, nil, nil, 1)
+local timerLifebinderCD 	= mod:NewTimer(37, "Дар Эонара", nil, nil, nil, 1)
 local timerRootsCD 			= mod:NewCDTimer(29.6, 312856, nil, nil, nil, 3)
 
 
@@ -53,11 +44,7 @@ mod:AddSetIconOption("SetIconOnFury", 312881, false, false, {7, 8})
 mod:AddSetIconOption("SetIconOnRoots", 312860, false, false, {6, 5, 4})
 mod:AddBoolOption("HealthFrame", true)
 
---[[mod:AddBoolOption("PlaySoundOnFury")
-mod:AddBoolOption("YellOnRoots", true, "announce")]]
-
 local adds		= {}
---local rootedPlayers 	= {}
 local killTime		= 0
 mod.vb.iconId = 6
 mod.vb.phase = 1
@@ -84,13 +71,8 @@ function mod:OnCombatEnd(wipe)
 	end
 end
 
---[[local function showRootWarning()
-	warnRoots:Show(table.concat(rootedPlayers, "< >"))
-	table.wipe(rootedPlayers)
-end]]
-
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(62437, 62859, 312489, 312842) then
+	if args:IsSpellID(62437, 62859, 312489, 312842) and self:AntiSpam() then
 		specWarnTremor:Show()
 		specWarnTremor:Play("stopcast")
 		timerTremorCD:Start()
