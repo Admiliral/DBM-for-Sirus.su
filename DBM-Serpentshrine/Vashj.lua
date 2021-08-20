@@ -48,13 +48,13 @@ local warnPhase3     	 		 = mod:NewPhaseAnnounce(3)
 
 local specWarnStaticAnger  	 	 = mod:NewSpecialWarningMove(310636, nil, nil, nil, 4, 5) -- Статический заряд на игроке
 local specWarnStaticAngerNear	 = mod:NewSpecialWarning("SpecWarnStaticAngerNear", 310636, nil, nil, 1, 2) -- Статический заряд около игрока
-
+local yellStaticAnger			= mod:NewYell(310636)
+local yellStaticAngerFade		= mod:NewShortFadesYell(310636)
+local yellStaticAngerPhase2		= mod:NewYell(310659)
+local yellStaticAngerPhase2Fade	= mod:NewShortFadesYell(310659)
 local timerStaticAngerCD 	     = mod:NewCDTimer(15, 310636, nil, nil, nil, 3) -- Статический заряд
 local timerStaticAnger     		 = mod:NewTargetTimer(8, 310636, nil, nil, nil,3) -- Статический заряд на игроке
 local timerElemCD     			 = mod:NewCDTimer(60, 310635, nil, nil, nil, 1) -- Элементали
-
-
-
 
 
 mod:AddBoolOption("Elem")
@@ -186,6 +186,8 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 310636 then -- хм заряд
 		if args:IsPlayer() then
 			specWarnStaticAnger:Show()
+			yellStaticAnger:Yell()
+			yellStaticAngerFade:Countdown(spellId)
 		else
 			local uId = DBM:GetRaidUnitId(args.destName)
 			if uId and self.vb.phase == 1 then
@@ -207,6 +209,8 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 310659 then -- хм заряд
 		if args:IsPlayer() then
 			specWarnStaticAnger:Show()
+			yellStaticAngerPhase2:Yell()
+			yellStaticAngerPhase2Fade:Countdown(spellId)
 		else
 			local uId = DBM:GetRaidUnitId(args.destName)
 			if uId and self.vb.phase == 1 then
@@ -240,7 +244,8 @@ function mod:SPELL_SUMMON(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(38280) then
+	local spellId = args.spellId
+	if spellId == 38280 then
 		warnCharge:Show(args.destName)
 		timerCharge:Start(args.destName)
 		if args:IsPlayer() then
@@ -311,8 +316,10 @@ function mod:UNIT_TARGET()
 	end
 end
 
-function mod:OnCombatEnd()
+function mod:OnCombatEnd(wipe)
+	DBM:FireCustomEvent("DBM_EncounterEnd", 21212, "Lady Vashj", wipe)
 	self:UnscheduleMethod("NextStrider")
 	self:UnscheduleMethod("NextNaga")
 	self:UnscheduleMethod("ElementalSoon")
+	DBM.RangeCheck:Hide()
 end

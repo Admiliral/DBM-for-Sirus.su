@@ -45,6 +45,7 @@ local specWarnChis      = mod:NewSpecialWarning("Chis", 309055, nil, nil, 1, 6) 
 local specWarnSklep     = mod:NewSpecialWarningRun(309046, nil, nil, nil, 1, 4) -- лужа
 local specWarnKor       = mod:NewSpecialWarningRun(309065, nil, nil, nil, 1, 4) -- коррозия
 local yellSklep		= mod:NewYell(309046)
+local yellSklepFades= mod:NewShortFadesYell(309046)
 local yellKor		= mod:NewYell(309065)
 
 local timerSklepCD		= mod:NewCDTimer(32, 309046, nil, nil, nil, 3) -- лужа
@@ -115,7 +116,6 @@ do
 	end
 end
 
-
 function mod:OnCombatStart()
 	berserkTimer:Start()
 	self.vb.phase = 1
@@ -136,15 +136,16 @@ end
 
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(309052) then --залп вод
+	local spellId = args.spellId
+	if spellId == 309052 then --залп вод
 	timerArrowCD:Start()
 	timerArrowCast:Start()
 	specWarnArrow:Show()
-	elseif args:IsSpellID(309069) then --залп яда
+	elseif spellId == 309069 then --залп яда
 	timerAyaCD:Start()
 	timerAyaCast:Start()
 	specWarnAya:Show()
-	elseif args:IsSpellID(309072) then  --грязная фаза
+	elseif spellId == 309072 then  --грязная фаза
 	timerYadCast:Start(25)
 	timerKorCD:Start(52)
 	timerAyaCD:Start()
@@ -155,15 +156,17 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args) -- все хм --
-	if args:IsSpellID(309046) then
+	local spellId = args.spellId
+	if spellId == 309046 then
 		SklepTargets[#SklepTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnSklep:Show()
 			yellSklep:Yell()
+			yellSklepFades:Countdown(spellId)
 		end
 		self:ScheduleMethod(0.1, "SetSklepIcons")
 		timerSklepCD:Start()
-	elseif args:IsSpellID(309065) then
+	elseif spellId == 309065 then
 		KorTargets[#KorTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnKor:Show()
@@ -178,48 +181,49 @@ end
 
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(38215) then
+	local spellId = args.spellId
+	if spellId == 38215 then
 		warnMarkOfHydross:Show("10")
 		timerMarkOfHydross:Start("25")
-	elseif args:IsSpellID(38216) then
+	elseif spellId == 38216 then
 		warnMarkOfHydross:Show("25")
 		timerMarkOfHydross:Start("50")
-	elseif args:IsSpellID(38217) then
+	elseif spellId == 38217 then
 		warnMarkOfHydross:Show("50")
 		timerMarkOfHydross:Start("100")
-	elseif args:IsSpellID(38218) then
+	elseif spellId == 38218 then
 		warnMarkOfHydross:Show("100")
 		timerMarkOfHydross:Start("250")
-	elseif args:IsSpellID(38231) then
+	elseif spellId == 38231 then
 		warnMarkOfHydross:Show("250")
 		timerMarkOfHydross:Start("500")
-	elseif args:IsSpellID(40584) then
+	elseif spellId == 40584 then
 		warnMarkOfHydross:Show("500")
 		timerMarkOfHydross:Start("500")
-	elseif args:IsSpellID(38219) then
+	elseif spellId == 38219 then
 		warnMarkOfCorruption:Show("10")
 		timerMarkOfCorruption:Start("25")
-	elseif args:IsSpellID(38220) then
+	elseif spellId == 38220 then
 		warnMarkOfCorruption:Show("25")
 		timerMarkOfCorruption:Start("50")
-	elseif args:IsSpellID(38221) then
+	elseif spellId == 38221 then
 		warnMarkOfCorruption:Show("50")
 		timerMarkOfCorruption:Start("100")
-	elseif args:IsSpellID(38222) then
+	elseif spellId == 38222 then
 		warnMarkOfCorruption:Show("100")
 		timerMarkOfCorruption:Start("250")
-	elseif args:IsSpellID(38230) then
+	elseif spellId == 38230 then
 		warnMarkOfCorruption:Show("250")
 		timerMarkOfCorruption:Start("500")
-	elseif args:IsSpellID(40583) then
+	elseif spellId == 40583 then
 		warnMarkOfCorruption:Show("500")
 		timerMarkOfCorruption:Start("500")
-	elseif args:IsSpellID(38235) then
+	elseif spellId == 38235 then
 		warnWaterTomb:Show(args.destName)
-	elseif args:IsSpellID(38246) then
+	elseif spellId == 38246 then
 		warnVileSludge:Show(args.destName)
 	-------------- хм-------------------
-    elseif  args:IsSpellID(309055) then -- чистая фаза
+    elseif  spellId == 309055 then -- чистая фаза
 	    specWarnChis:Show()
         timerChisCast:Start()
 	    timerKorCD:Cancel()

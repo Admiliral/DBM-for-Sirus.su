@@ -38,14 +38,15 @@ local warnPhase2Soon   	  = mod:NewPrePhaseAnnounce(2)
 local warnPhase2     	  = mod:NewPhaseAnnounce(2)
 
 local specWarnZemla       = mod:NewSpecialWarningMoveAway(310152, nil, nil, nil, 3, 5) -- Землетрясение
+local specWarnKrik		  = mod:NewSpecialWarningCast(310151, "SpellCaster", nil, nil, 1, 2)
 
-local timerVzglad	      = mod:NewTargetTimer(60, 310136, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- Взгляд
+local timerVzglad	      = mod:NewTargetTimer(60, 310136, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON) -- Взгляд
 local timerHwatCD         = mod:NewCDTimer(32, 310144, nil, nil, nil, 3) -- хватка
 local timerHwat           = mod:NewTargetTimer(3, 310144, nil, nil, nil, 3)
-local timerZemlaCast      = mod:NewCastTimer(5, 310152, nil, nil, nil, 1) -- Землетрясение
-local timerZemlaCD        = mod:NewCDTimer(13, 310152, nil, nil, nil, 1) -- Землетрясение
+local timerZemlaCast      = mod:NewCastTimer(8, 310152, nil, nil, nil, 1) -- Землетрясение
+local timerZemlaCD        = mod:NewCDTimer(45, 310152, nil, nil, nil, 1) -- Землетрясение
 local timerTopCast        = mod:NewCastTimer(3, 310140, nil, nil, nil, 2) -- Топот
-local timerTopCD          = mod:NewCDTimer(12, 310140, nil, nil, nil, 2)
+local timerTopCD          = mod:NewCDTimer(20, 310140, nil, nil, nil, 2)
 local timerMonCD          = mod:NewCDTimer(12, 310137, nil, nil, nil, 4)
 local timerKrikCD          = mod:NewCDTimer(28, 310151, nil, nil, nil, 2)
 local timerSuhCD          = mod:NewCDTimer(20, 310155, nil, nil, nil, 1)
@@ -61,8 +62,6 @@ local warned_preP1 = false
 local warned_preP2 = false
 local SuhTargets = {}
 local SuhIcons = 8
-
-
 
 do
 	local function sort_by_group(v1, v2)
@@ -124,20 +123,23 @@ function mod:UNIT_HEALTH(uId)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(310152) then -- Землетрясение
+	local spellId = args.spellId
+	if  spellId == 310152 then -- Землетрясение
 		warnZemla:Show(10)
 		timerZemlaCast:Start()
 		timerZemlaCD:Start()
 		specWarnZemla:Show()
-		DBM.RangeCheck:Show(8)
-	elseif args:IsSpellID(310151) then -- Землетрясение
+		DBM.RangeCheck:Show(6)
+	elseif spellId == 310151 then -- Землетрясение
+		specWarnKrik:Show()
 		warnKrik:Show()
 		timerKrikCD:Start()
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(310140) then -- Топот
+	local spellId = args.spellId
+	if spellId == 310140 then -- Топот
 		warnTop:Show()
 		timerTopCast:Start()
 		timerTopCD:Start()
@@ -145,21 +147,22 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args) -- все хм --
-	if args:IsSpellID(310136) then --Взгляд
+	local spellId = args.spellId
+	if spellId == 310136 then --Взгляд
 		warnVzglad:Show(args.destName, args.amount or 1)
 		timerVzglad:Start(args.destName)
-	elseif args:IsSpellID(310144) then -- хватка
+	elseif spellId == 310144 then -- хватка
 		timerHwat:Start(args.destName)
 		timerHwatCD:Start()
 		warnHwat:Show(args.destName)
-	elseif args:IsSpellID(310155) then
+	elseif spellId == 310155 then
 		SuhTargets[#SuhTargets + 1] = args.destName
 		self:ScheduleMethod(0.1, "SetSuhIcons")
 		timerSuhCD:Start()
-	elseif args:IsSpellID(310138) then
+	elseif spellId == 310138 then
 		timerMonCD:Start()
 		warnMon:Show()
-	elseif args:IsSpellID(37850, 38023, 38024, 38025, 38049) then -- ОБЫЧКА
+	elseif spellId == 37850 or spellId == 38023 or spellId == 38024 or spellId == 38025 or spellId == 38049 then -- ОБЫЧКА
 		graveTargets[#graveTargets + 1] = args.destName
 	end
 end

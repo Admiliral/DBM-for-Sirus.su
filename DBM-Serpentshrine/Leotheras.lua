@@ -33,8 +33,8 @@ local berserkTimer          = mod:NewBerserkTimer(600)
 
 ---------------------------------хм---------------------------------
 
-local warnRass	           	= mod:NewStackAnnounce(310480, 5, nil, "Tank|Healer") -- Рассеченая душа
-local warnKogti		        = mod:NewStackAnnounce(310502, 5, nil, "Tank|Healer") -- Когти
+local warnRass	           	= mod:NewStackAnnounce(310480, 5, nil, "Tank") -- Рассеченая душа
+local warnKogti		        = mod:NewStackAnnounce(310502, 5, nil, "Tank") -- Когти
 local warnNat    	        = mod:NewTargetAnnounce(310478, 3) -- Натиск
 local warnChardg	     	= mod:NewTargetAnnounce(310481, 3) -- Рывок
 local warnPepels  	     	= mod:NewTargetAnnounce(310514, 3) -- Испепеление
@@ -44,6 +44,8 @@ local warnPepel		        = mod:NewSpellAnnounce(310514, 3) --пепел
 local warnVsp		        = mod:NewStackAnnounce(310521, 5) --Вспышка
 local warnPhase2Soon   		= mod:NewPrePhaseAnnounce(2)
 local warnPhase2     		= mod:NewPhaseAnnounce(2)
+local yellKlei				= mod:NewYell(310496)
+local yellKleiFade			= mod:NewShortFadesYell(310496)
 
 
 local specWarnChardg        = mod:NewSpecialWarningYou(310481, nil, nil, nil, 1, 2)
@@ -53,10 +55,11 @@ local specWarnAnig          = mod:NewSpecialWarningDodge(310508, nil, nil, nil, 
 local specWarnVzg           = mod:NewSpecialWarningDodge(310516, nil, nil, nil, 3, 2)
 local specWarnVost          = mod:NewSpecialWarningSoak(310503, nil, nil, nil, 1, 2)
 local specWarnPechat        = mod:NewSpecialWarningSoak(310487, nil, nil, nil, 1, 2)
-local specWarnPepel         = mod:NewSpecialWarningYou(310514, nil, nil, nil, 1, 4)
+local specWarnPepel         = mod:NewSpecialWarningCast(310514, "Healer", nil, nil, 1, 4)
+local specWarnPepely		= mod:NewSpecialWarningYou(310514, nil, nil, nil, 1, 4)
 
-local timerRass	        	= mod:NewTargetTimer(40, 310480, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- Рассеченая душа
-local timerKogti	    	= mod:NewTargetTimer(40, 310502, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- Когти
+local timerRass	        	= mod:NewTargetTimer(40, 310480, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON) -- Рассеченая душа
+local timerKogti	    	= mod:NewTargetTimer(40, 310502, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON) -- Когти
 local timerVsp	    	    = mod:NewTargetTimer(60, 310521, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON) -- Когти
 local timerKlei	    	    = mod:NewTargetTimer(30, 310496, nil, nil, nil, 3) -- Клеймо
 local timerAnigCast	    	= mod:NewCastTimer(10, 310508, nil, nil, nil, 2) -- Аниг
@@ -142,19 +145,20 @@ end
 
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(310481) then
+	local spellId = args.spellId
+	if spellId == 310481 then
 	timerChardgCast:Start()
 	warnChardg:Show(args.destName)
 		if args:IsPlayer() then
 			specWarnChardg:Show()
 		end
-	elseif args:IsSpellID(310484) then
+	elseif spellId == 310484 then
 	warnMeta:Show()
 	timerMetaCast:Start()
-	elseif args:IsSpellID(310478) then
+	elseif spellId == 310478 then
 	warnNat:Show(args.destName)
 	timerNatCast:Start()
-	elseif args:IsSpellID(310516) then
+	elseif spellId == 310516 then
 		specWarnVzg:Show()
 		timerVzgCast:Start()
 	end
@@ -162,34 +166,37 @@ end
 
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(37640) then
+	local spellId = args.spellId
+	if spellId == 37640 then
 		timerWhirlwind:Start()
 		timerWhirlwindCD:Schedule(12)
-	elseif args:IsSpellID(37676) then
+	elseif spellId == 37676 then
 		demonTargets[#demonTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnDemon:Show()
 		end
 		self:UnscheduleMethod("WarnDemons")
 		self:ScheduleMethod(0.1, "WarnDemons")
-	elseif args:IsSpellID(310480) then --хм Рассеченая душа
+	elseif spellId == 310480 then --хм Рассеченая душа
         warnRass:Show(args.destName, args.amount or 1)
 		timerRass:Start(args.destName)
-	elseif args:IsSpellID(310502) then --хм Когти скверны
+	elseif spellId == 310502 then --хм Когти скверны
         warnKogti:Show(args.destName, args.amount or 1)
 		timerKogti:Start(args.destName)
-	elseif args:IsSpellID(310521) then --хм Вспышка
+	elseif spellId == 310521 then --хм Вспышка
 		if (args.amount or 1) > 3 then
         warnVsp:Show(args.destName, args.amount or 1)
 		timerVsp:Start(args.destName)
 		end
-	elseif args:IsSpellID(310496) then --хм Клеймо
+	elseif spellId == 310496 then --хм Клеймо
 		warnKlei:Show(args.destName)
 		if self.Options.KleiIcon then
 			self:SetIcon(args.destName, 8, 30)
 			timerKlei:Start(args.destName)
 		elseif args:IsPlayer() then
 			specWarnKlei:Show()
+			yellKlei:Yell()
+			yellKleiFade:Countdown(spellId)
 		end
 		if mod.Options.AnnounceKlei then
 			if DBM:GetRaidRank() > 0 then
@@ -198,36 +205,39 @@ function mod:SPELL_AURA_APPLIED(args)
 				SendChatMessage(L.Klei:format(KleiIcons, args.destName), "RAID")
 			end
 		end
-	elseif args:IsSpellID(310514) then
+	elseif spellId == 310514 then
 		PepelTargets[#PepelTargets + 1] = args.destName
 		if args:IsPlayer() then
-			specWarnPepel:Show()
+			specWarnPepely:Show()
 		end
 		self:ScheduleMethod(0.1, "SetPepelIcons")
 	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(37676) then
+	local spellId = args.spellId
+	if spellId == 37676 then
 		self:SetIcon(args.destName, 0)
 	end
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(37676) then
+	local spellId = args.spellId
+	if spellId == 37676 then
 		timerInnerDemons:Start()
-	elseif args:IsSpellID(310510) then
+	elseif spellId == 310510 then
 		specWarnObstrel:Show()
-	elseif args:IsSpellID(310508) then
+	elseif spellId == 310508 then
 		specWarnAnig:Show()
 		timerAnigCast:Start()
-	elseif args:IsSpellID(310503) then
+	elseif spellId == 310503 then
 		specWarnVost:Show()
-	elseif args:IsSpellID(310487) then
+	elseif spellId == 310487 then
 		specWarnPechat:Show()
-	elseif args:IsSpellID(310521) then
+	elseif spellId == 310521 then
 		warnVsp:Show()
-	elseif args:IsSpellID(310514) then
+	elseif spellId == 310514 then
+		specWarnPepel:Show()
 		timerPepelCast:Start(2)
 		warnPepel:Show()
 	end

@@ -95,7 +95,7 @@ L:SetOptionLocalization{
 	TimerDemon = "Отсчет времени до превращения в демона",
 	TimerNormal = "Отсчет времени до конца формы демона",
 	TimerInnerDemons = DBM_CORE_AUTO_TIMER_OPTIONS.active:format(37676, GetSpellInfo(37676) or "unknown"),
-	KleiIcon		= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(310496),
+	KleiIcon			= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(310496),
 	SetIconOnDemonTargets = "Устанавливать иконки на цели демонов",
 	SetIconOnPepelTargets = "Устанавливать иконки на цели испепеления",
 	WarnPhase2Soon			= "Предупреждать заранее о переходе в фазу 2 (на ~37%)",
