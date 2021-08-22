@@ -4500,7 +4500,7 @@ do
 						for i = 1, #mod.findFastestComputer do
 							local option = mod.findFastestComputer[i]
 							if mod.Options[option] then
-								sendSync("IS", UnitGUID("player").."\t"..tostring(self.Revision).."\t"..option)
+								sendSync("IS", UnitGUID("player").."\t"..tostring(DBM.Revision).."\t"..option)
 							end
 						end
 					elseif GetNumPartyMembers() == 0 then
