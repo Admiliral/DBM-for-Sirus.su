@@ -113,20 +113,21 @@ end
 
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(34229) then
+	local spellId = args.spellId
+	if spellId == 34229 then
 		timerFeather:Start()
 		timerNextFeather:Start()
 		timerNextPlat:Cancel()
 		timerNextPlat:Schedule(10)
 		self:UnscheduleMethod("Platform")
 		self:ScheduleMethod(46, "Platform")
-	elseif args:IsSpellID(35181) then
+	elseif spellId == 35181 then
 		warnBomb:Show(args.destName)
 		timerNextBomb:Start()
 		if args:IsPlayer() then
 			specWarnBomb:Show()
 		end
-	elseif args:IsSpellID(308640) then  -- Phase 2
+	elseif spellId == 308640 then  -- Phase 2
 		timerPhase2Cast:Start()
 		specWarnPhase2:Show()
 		berserkTimerH:Cancel()
@@ -136,7 +137,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(34342) then
+	local spellId = args.spellId
+	if spellId == 34342 then
 		timerFeather:Cancel()
 		timerNextFeather:Cancel()
 		timerNextPlat:Cancel()
@@ -146,32 +148,32 @@ function mod:SPELL_CAST_START(args)
 		timerNextCharge:Start()
 		timerNextBomb:Start()
 		warnBombSoon:Schedule(43)
-	elseif args:IsSpellID(46599) then -- Знак огня
+	elseif spellId == 46599 then -- Знак огня
 		timerNextPlat:Start(33)
-	elseif args:IsSpellID(308638) then -- Знак огня
+	elseif spellId == 308638 then -- Знак огня
 		specWarnFireSign:Show()
 		timerFireSignCD:Start()
 		timerFireSignCast:Start()
-	elseif args:IsSpellID(308987) then -- Падение пламени
+	elseif spellId == 308987 then -- Падение пламени
 		specWarnFlamefall:Show()
 		timerFlamefallCD:Start()
 	    timerFlamefallCast:Start()
-	elseif args:IsSpellID(308633) then -- Ожившее плямя
+	elseif spellId == 308633 then -- Ожившее плямя
 		specWarnAnimated:Show()
 		timerAnimatedCD:Start()
 		timerAnimatedCast:Start()
 	------- 2 фаза ---------
-	elseif args:IsSpellID(308671) then -- Крик феникса
+	elseif spellId == 308671 then -- Крик феникса
 	    timerPhoenixScreamCast:Start()
 		timerPhoenixScreamCD:Start()
 		specWarnPhoenixScream:Show()
-	elseif args:IsSpellID(308663) then -- Знак феникса: Рассеяность
+	elseif spellId == 308663 then -- Знак феникса: Рассеяность
 		timerScatteringCast:Start()
-	elseif args:IsSpellID(308664) then -- Знак феникса: Слабость
+	elseif spellId == 308664 then -- Знак феникса: Слабость
 		timerWeaknessCast:Start()
-	elseif args:IsSpellID(308665) then -- Знак феникса: Ярость
+	elseif spellId == 308665 then -- Знак феникса: Ярость
 		timerFuryCast:Start()
-	elseif args:IsSpellID(308667) then -- Знак феникса: Усталость
+	elseif spellId == 308667 then -- Знак феникса: Усталость
 		timerFatigueCast:Start()
 	end
 end

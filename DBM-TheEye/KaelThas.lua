@@ -54,13 +54,15 @@ local timerGravityCD        = mod:NewCDTimer(90, 35941, nil, nil, nil, 4, nil, D
 
 local warnFurious		= mod:NewStackAnnounce(308732, 2, nil, "Tank|Healer") -- яростный удар
 local warnJustice		= mod:NewStackAnnounce(308741, 2, nil, "Tank|Healer") -- правосудие тьмы
-local warnIsc		= mod:NewStackAnnounce(308756, 2, nil, "Tank|Healer") -- Искрящий
+local warnIsc			= mod:NewStackAnnounce(308756, 2, nil, "Tank|Healer") -- Искрящий
 local warnShadow        = mod:NewSoonAnnounce(308742, 2) -- освященеи тенью (лужа)
 local warnBombhm        = mod:NewTargetAnnounce(308750, 2) -- бомба
 local warnVzriv         = mod:NewTargetAnnounce(308797, 2) -- лужа
 
 local specWarnCata      = mod:NewSpecialWarningRun(308790, nil, nil, nil, 4, 2)
 local specWarnVzriv     = mod:NewSpecialWarningRun(308797, nil, nil, nil, 3, 3)
+local yellVzriv			= mod:NewYell(308797, nil, nil, nil, "YELL")
+local yellVzrivFades	= mod:NewShortFadesYell(308797, nil, nil, nil, "YELL")
 
 local timerFuriousCD     = mod:NewCDTimer(7, 308732, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerFurious		= mod:NewTargetTimer(30, 308732, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
@@ -121,6 +123,7 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 19622, "Kael'thas Sunstrider", wipe)
+	DBM.RangeCheck:Hide()
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
@@ -258,12 +261,13 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(40636) then
+	local spellId = args.spellId
+	if spellId == 40636 then
 		timerRoarCD:Start()
-	elseif args:IsSpellID(37036) then
+	elseif spellId == 37036 then
 		warnBombSoon:Schedule(20)
 		timerBombCD:Start()
-	elseif args:IsSpellID(35941) then
+	elseif spellId == 35941 then
 	    if mod:IsDifficulty("heroic25") then
 			timerGravityH:Start()
 			timerGravityHCD:Start()
@@ -272,10 +276,10 @@ function mod:SPELL_CAST_START(args)
 			timerGravityCD:Start()
 		    warnGravitySoon:Schedule(85)
 		end
-    elseif args:IsSpellID(308742) then --освящение тенью
+    elseif spellId == 308742 then --освящение тенью
 	    timerShadowCD:Start()
 		warnShadow:Schedule(0)
-    elseif args:IsSpellID(308790) then --катаклизм
+    elseif spellId == 308790 then --катаклизм
 	    timerCataCD:Start()
 		timerCataCast:Start()
 	    specWarnCata:Show()
@@ -289,22 +293,25 @@ function mod:Timer()
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(37018) then
+	local spellId = args.spellId
+	if spellId == 37018 then
 		warnConflagrate:Show(args.destName)
 		warnConflagrateSoon:Cancel()
 		warnConflagrateSoon:Schedule(16)
 		timerConflagrateCD:Start()
-	elseif args:IsSpellID(36723) then
+	elseif spellId == 36723 then
 		timerPhoenixCD:Start()
 		warnPhoenixSoon:Schedule(55)
-	elseif args:IsSpellID(36815) then
+	elseif spellId == 36815 then
 		timerBarrierCD:Start()
 		warnBarrierSoon:Schedule(65)
-	elseif args:IsSpellID(36731) then
+	elseif spellId == 36731 then
 		timerFlameStrike:Start()
-	elseif args:IsSpellID(308797) then --ВЗРЫВ ТЬМЫ
+	elseif spellId == 308797 then --ВЗРЫВ ТЬМЫ
 		if args:IsPlayer() then
 			specWarnVzriv:Show()
+			yellVzriv:Yell()
+			yellVzrivFades:Countdown(spellId)
 		end
 		timerVzrivCast:Start()
 		timerVzrivCD:Start()
@@ -323,7 +330,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(36797) then
+	local spellId = args.spellId
+	if spellId == 36797 then
 		timerMCCD:Start()
 		warnMCSoon:Schedule(65)
 		mincControl[#mincControl + 1] = args.destName
@@ -339,18 +347,18 @@ function mod:SPELL_AURA_APPLIED(args)
 			end
 			table.wipe(mincControl)
 		end
-	elseif args:IsSpellID(308732) then --хм яростный удар
+	elseif spellId == 308732 then --хм яростный удар
 		warnFurious:Show(args.destName, args.amount or 1)
 		timerFurious:Start(args.destName)
 		timerFuriousCD:Start()
-	elseif args:IsSpellID(308741) then --хм Правосудие тенью
+	elseif spellId == 308741 then --хм Правосудие тенью
 		timerJusticeCD:Start()
         warnJustice:Show(args.destName, args.amount or 1)
 		timerJustice:Start(args.destName)
-	elseif args:IsSpellID(308749) then --бомба
+	elseif spellId == 308749 then --бомба
 		timerBombhmCD:Start()
 		warnBombhm:Show(table.concat(BombhmTargets, "<, >"))
-	elseif args:IsSpellID(308756) then --хм искрящий удар
+	elseif spellId == 308756 then --хм искрящий удар
 		warnIsc:Show(args.destName, args.amount or 1)
 		timerIsc:Start(args.destName)
 	end
@@ -360,8 +368,14 @@ end
 
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(36797) then
+	local spellId = args.spellId
+	if spellId == 36797 then
 		self:SetIcon(args.destName, 0)
+	elseif spellId == 308797 then
+		self:SetIcon(args.destName, 0)
+	elseif spellId == 34480 or spellId == 308969 or spellId == 308970 then --падение
+		timerGravity:Stop()
+		timerGravityH:Stop()
 	end
 end
 

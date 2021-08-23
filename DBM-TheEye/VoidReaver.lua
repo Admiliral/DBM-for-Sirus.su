@@ -32,8 +32,8 @@ local warnSign                  = mod:NewTargetAnnounce(308471, 4) -- Знак
 
 local specWarnSign       = mod:NewSpecialWarningRun(308471, nil, nil, nil, 3, 4) -- Знак
 local specWarnMagnet       = mod:NewSpecialWarningRun(308467, nil, nil, nil, 1, 4) -- Магнетизм
-local yellSign			= mod:NewYell(308471)
-local yellSignFades		= mod:NewShortFadesYell(308471)
+local yellSign			= mod:NewYell(308471, nil, nil, nil, "YELL")
+local yellSignFades		= mod:NewShortFadesYell(308471, nil, nil, nil, "YELL")
 
 
 local timerOrbCD				= mod:NewCDTimer(30, 308466, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Таймер чародейской сферы
@@ -106,9 +106,10 @@ end
 ----------------------об--------------------------------------
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(25778) then
+	local spellId = args.spellId
+	if spellId == 25778 then
 		timerNextKnockback:Start()
-	elseif args:IsSpellID(34162) then
+	elseif spellId == 34162 then
 		timerNextPounding:Start()
 	end
 end
@@ -117,7 +118,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if args:IsSpellID(308465) then --- 1 фаза
+	if spellId == 308465 then --- 1 фаза
 		timerLoadCD:Start()
 		timerOrbCD:Start()
 		warnPhase1:Schedule(0)
@@ -126,16 +127,16 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerReloadCD:Start()
 		warnPhase2:Schedule(0)
 	elseif spellId == 308471 then
-		SignTargets[#SignTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnSign:Show()
-			yellSign:yell()
+			yellSign:Yell()
 			yellSignFades:Countdown(spellId)
 		end
+		SignTargets[#SignTargets + 1] = args.destName
 		self:UnscheduleMethod("SetSignIcons")
 		self:ScheduleMethod(0.1, "SetSignIcons")
 		timerSignCD:Start()
-	elseif args:IsSpellID(308467) then
+	elseif spellId == 308467 then
 		MagnetTargets[#MagnetTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnMagnet:Show()
@@ -147,17 +148,18 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 
+function mod:SPELL_AURA_REMOVED(args)
+	local spellId = args.spellId
+	if spellId == 308471 then
+		if self.Options.SetIconOnSignTargets then
+			self:SetIcon(args.destName, 0)
+		end
+	end
+end
+
 function mod:Magnet()
 	warnMagnet:Show(table.concat(MagnetTargets, "<, >"))
 	table.wipe(MagnetTargets)
 end
-
---[[function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(308469) and args:IsPlayer() then
-		if args:IsPlayer() then
-
-		end
-	end
-end]]
 
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
