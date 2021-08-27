@@ -59,10 +59,10 @@ function mod:OnCombatStart(delay)
 local text = select(3, GetWorldStateUIInfo(1))
 	local _, _, time = string.find(text, L.PullCheck)
 	if not time then
-		time = 61
+		time = 120
 	end
 	time = tonumber(time)
-	if time == 61 then --Ахуенные фиксы на алгалоне)
+	if time == 120 then
 		timerCombatStart:Start(26.5-delay)
 		self:ScheduleMethod(26.5-delay, "startTimers")	-- 26 seconds roleplaying
 	else
@@ -131,6 +131,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		warnPhase2:Show()
 	end
 end
+
+--[[
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 65311 then--Supermassive Fail (fires when he becomes actually active)
 		timerNextCollapsingStar:Start(16)
@@ -143,7 +145,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 		timerNextCollapsingStar:Stop()
 		warnPhase2:Show()
 	end
-end
+end]]
 
 function mod:UNIT_HEALTH(uId)
 	if not warned_preP2 and self:GetUnitCreatureId(uId) == 32871 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.23 then
