@@ -30,29 +30,44 @@ local berserkTimer          = mod:NewBerserkTimer(600)
 
 local warnPhase2Soon		= mod:NewPrePhaseAnnounce(2)
 local warnPhase2    		= mod:NewPhaseAnnounce(2)
+local warnZeml          	= mod:NewSpellAnnounce(309289, 4)
+local warnPhaseCast	        = mod:NewSpellAnnounce(309292, 4)
+local warnOko	            = mod:NewSpellAnnounce(309258, 2, nil, "Melee")
 local warnStrela            = mod:NewTargetAnnounce(309253, 3) -- Стрела катаклизма
+local specWarnStrela	    = mod:NewSpecialWarningYou(309253, nil, nil, nil, 3, 2)
+local specWarnHeal			= mod:NewSpecialWarningInterrupt(309256, "HasInterrupt", nil, 2, 1, 2)
+local specWarnZeml			= mod:NewSpecialWarningMoveAway(309289, nil, nil, nil, 3, 5)
 
-local timerPhaseCast        = mod:NewCastTimer(65, 309292, nil, nil, nil, 6) -- Скользящий натиск
+local timerPhaseCast        = mod:NewCastTimer(60, 309292, nil, nil, nil, 6) -- Скользящий натиск
 local timerStrelaCast		= mod:NewCastTimer(6, 309253, nil, nil, nil, 3) -- Стрела катаклизма
 local timerStrelaCD			= mod:NewCDTimer(43, 309253, nil, nil, nil, 3) -- Стрела катаклизма
+local timerSvazCd			= mod:NewCDTimer(25, 309262, nil, nil, nil, 3)
+local timerOkoCD	        = mod:NewCDTimer(16, 309258, nil, "Melee", nil, 2, nil, DBM_CORE_DEADLY_ICON)
+local timerPhaseCastCD	    = mod:NewCDTimer(90, 309292, nil, nil, nil, 6)
+local timerZemlyaCast		= mod:NewCastTimer(5, 309289, nil, nil, nil, 2)
+local timerCastHeal	    	= mod:NewCDTimer(29, 309256, nil, "HasInterrupt", nil, 4)
+local bers					= mod:NewBerserkTimer(360)
+local yellStrela			= mod:NewYell(309253)
 -----------Шарккис-----------
 local warnSvaz              = mod:NewTargetAnnounce(309262, 3) -- Пламенная связь
 local warnPust		        = mod:NewStackAnnounce(309277, 5, nil, "Tank") -- Опустошающее пламя
 
 local specWarnSvaz          = mod:NewSpecialWarningMoveAway(309262, nil, nil, nil, 1, 3) -- Пламенная свзяь
 
+mod:AddBoolOption("HealthFrameBoss", true)
+mod:SetBossHealthInfo(
+	21214, L.Karat,
+	21966, L.Shark,
+	21965, L.Volni,
+	21964, L.Karib)
 
 mod:AddSetIconOption("SetIconOnSvazTargets", 309261, true, true, {5, 6, 7})
+mod:AddSetIconOption("SetIconOnStrela", 309253, true, false, {8})
 mod:AddBoolOption("AnnounceSvaz", false)
 
 mod.vb.phase = 0
 local SvazTargets = {}
-local CastKop = 1
 local SvazIcons = 7
-local warned_preP1 = false
-local warned_preP2 = false
-local warned_P1 = false
-local warned_P2 = false
 
 do
 	local function sort_by_group(v1, v2)
@@ -81,17 +96,24 @@ do
 	end
 end
 
-
-
 function mod:OnCombatStart()
 	DBM:FireCustomEvent("DBM_EncounterStart", 21214, "Fathom-Lord Karathress")
 	if mod:IsDifficulty("heroic25") then
 		self.vb.phase = 1
 		berserkTimer:Start()
-		local warned_preP1 = false
-		local warned_preP2 = false
-		local warned_P1 = false
-		local warned_P2 = false
+		timerOkoCD:Start()
+		timerSvazCd:Start()
+		timerCastHeal:Start()
+		timerStrelaCD:Start()
+		if self.Options.HealthFrameBoss and not self.Options.HealthFrame then
+			DBM.BossHealth:Show(L.name)
+		end
+		if self.Options.HealthFrameBoss then
+			DBM.BossHealth:AddBoss(21966, L.Sharkkis)
+			DBM.BossHealth:AddBoss(21965, L.Volniis)
+			DBM.BossHealth:AddBoss(21964, L.Karibdis)
+			DBM.BossHealth:AddBoss(21214, L.Karatress)
+		end
 	else -- Обычка
 		berserkTimer:Start()
 		timerNovaCD:Start()
@@ -102,56 +124,57 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 21214, "Fathom-Lord Karathress", wipe)
-end
-
-
-
-function mod:UNIT_HEALTH(uId)
-	if mod:IsDifficulty("heroic25") then
-		if self.vb.phase == 1 and not warned_preP1 and self:GetUnitCreatureId(uId) == 21214 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.43 then
-			warned_preP1 = true
-			warnPhase2Soon:Show()
-		end
-		if self.vb.phase == 1 and not warned_P1 and self:GetUnitCreatureId(uId) == 21214 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.40 then
-			warned_P1 = true
-			warnPhase2:Show()
-			timerPhaseCast:Start()
-			self.vb.phase = 2
-		end
-		if self.vb.phase == 2 and not warned_preP2 and self:GetUnitCreatureId(uId) == 21214 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.18 then
-			warned_preP2 = true
-			warnPhase2Soon:Show()
-		end
-		if self.vb.phase == 2 and not warned_P2 and self:GetUnitCreatureId(uId) == 21214 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.15 then
-			warned_P2 = true
-			warnPhase2:Show()
-			timerPhaseCast:Start()
-		end
-	end
+	DBM.BossHealth:Clear()
+	DBM.RangeCheck:Hide()
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(38445) then -- Обычка
+	local spellId = args.spellId
+	if spellId == 38445 then -- Обычка
 		warnNovaSoon:Show(23)
 		specWarnNova:Show()
 		timerNovaCD:Start()
-	elseif args:IsSpellID(309253) then -- Стрела катаклизма
-		warnStrela:Show(args.sourceName)
+	elseif spellId == 309253 then -- Стрела катаклизма
+		local targetname = self:GetBossTarget(21214)
+		if not targetname then return end
+		if self.Options.SetIconOnStrela then
+			self:SetIcon(targetname, 8, 6)
+		end
+		warnStrela:Show(targetname)
+		if targetname == UnitName("player") then
+			specWarnStrela:Show()
+			yellStrela:Yell()
+		end
 		timerStrelaCD:Start()
 		timerStrelaCast:Start()
+	elseif spellId == 309256 then -- Хил
+		specWarnHeal:Show()
+		specWarnHeal:Play("kickcast")
+		timerCastHeal:Start()
+	elseif spellId == 309289 then -- Землетрясение
+		warnZeml:Show()
+		timerZemlyaCast:Start()
+		specWarnZeml:Show()
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(38236) then -- Обычка
+	local spellId = args.spellId
+	if spellId == 38236 then -- Обычка
 		timerSpitfireCD:Start()
+	elseif spellId == 309258 then -- Око
+		warnOko:Show()
+		timerOkoCD:Start()
+	elseif spellId == 309262 then -- Связь
+		timerSvazCd:Start()
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(309000) then
-
-	elseif args:IsSpellID(309262) then -- Пламенная связь
+	local spellId = args.spellId
+	if spellId == 309292 then
+	timerPhaseCast:Start()
+	elseif spellId == 309262 then -- Пламенная связь
 		SvazTargets[#SvazTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnSvaz:Show()
@@ -160,7 +183,32 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 
+function mod:SPELL_AURA_REMOVED(args)
+	local spellId = args.spellId
+	if spellId == 309252 then --барьер
+	    self.vb.phase = 2
+	    warnPhase2:Show()
+		timerPhaseCastCD:Start(95)
+		timerCastHeal:Cancel()
+		timerOkoCD:Cancel()
+		bers:Cancel()
+		bers:Start()
+	elseif spellId == 309292 then
+		timerPhaseCastCD:Start()
+	elseif spellId == 309262 and args:IsPlayer() then --Связь
+		if self.Options.SetIconOnSvazTargets then
+			self:SetIcon(args.destName, 0)
+		end
+	end
+end
 
-
+function mod:UNIT_DIED(args)
+	local cid = self:GetCIDFromGUID(args.destGUID)
+	if cid == 21966 or cid == 21965 or cid == 21964 then
+		if self.Options.HealthFrame then
+			DBM.BossHealth:RemoveBoss(cid)
+		end
+	end
+end
 
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

@@ -35,6 +35,7 @@ local warnRing			= mod:NewSoonAnnounce(308563, 3) -- ослепляющее ко
 local warnPhase2Soon   	= mod:NewPrePhaseAnnounce(2)
 local warnPhase2     	= mod:NewPhaseAnnounce(2)
 local warnKol    		= mod:NewTargetAnnounce(308563, 2) -- Кольцо
+local warnFlashVoid		= mod:NewSoonAnnounce(308585, 3)
 
 local specWarnHelp		= mod:NewSpecialWarningAdds(308559, nil, nil, nil, 1, 2)  -- Послушники
 local specWarnDebaf  	= mod:NewSpecialWarningRun(308544, nil, nil, nil, 3, 4) -- Дебаф 1я фаза
@@ -124,7 +125,8 @@ function mod:SPELL_CAST_START(args)
 		timerFlashVoid:Schedule(5)
 	elseif spellId == 308576 then
 		self.vb.phase = 2
-		timerNextHelp:Cancel()
+		timerNextHelp:Stop()
+		warnFlashVoid:Schedule(70)
 		timerFlashVoid:Start()
 		warnPhase2:Show()
 	end

@@ -34,6 +34,7 @@ local warnEmpowerSoon				= mod:NewSoonAnnounce(313014, 4)
 local specWarnBrainLink 			= mod:NewSpecialWarningMoveTo(312995, nil, nil, nil, 1, 2)
 local specWarnSanity 				= mod:NewSpecialWarning("SpecWarnSanity")
 local specWarnMadnessOutNow			= mod:NewSpecialWarning("SpecWarnMadnessOutNow")
+local specDarkVolley				= mod:NewSpecialWarningCast(314683, "HasInterrupt", nil, 2, 1, 2)
 local specWarnLunaricGaze			= mod:NewSpecialWarningLookAway(313002, nil, nil, nil, 1, 2)
 local specWarnDeafeningRoar			= mod:NewSpecialWarningSpell(313000, nil, nil, nil, 1, 2)
 local specWarnFervor				= mod:NewSpecialWarningYou(312989, nil, nil, nil, 1, 2)
@@ -125,6 +126,8 @@ function mod:SPELL_CAST_START(args)
 		specWarnDeafeningRoar:Play("silencesoon")
 	elseif args:IsSpellID(312989) then		--Sara's Fervor
 		self:ScheduleMethod(0.1, "FervorTarget")
+	elseif args:IsSpellID(63038, 312644, 312997, 314683) then
+		specDarkVolley:Show()
 	end
 end
 

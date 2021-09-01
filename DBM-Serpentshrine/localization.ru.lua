@@ -157,8 +157,10 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
+	HealthFrameBoss	= "Показывать здоровье боссов в фазе 1",
 	WarnPhase2Soon			= "Предупреждать заранее о переходе в фазу 2 (на ~52%)",
 	SetIconOnSvazTargets = "Устанавливать иконки на цели испепеления",
+	SetIconOnStrela	= "Устанавливать иконки на цель стрелы",
 	AnnounceSvaz			= "Объявлятьв игроков, на кого установлено $spell:309261, в рейд чат ",
 	WarnKaraTarget = "Обьявлять цели преследуемые Каратесом",
 	SpecWarnKaraTarget = "Спец. предупреждение для преследуемого Каратесом",
@@ -168,7 +170,11 @@ L:SetOptionLocalization{
 L:SetMiscLocalization{
 	YellPull        = "Стража, к бою! У нас гости...",
 	SvazIcon	= "Пламенная свзь {rt%d} установлена на %s",
-	KaraTarget = "смотрит на |3%-3%([%w\128-\255]+%)."
+	KaraTarget = "смотрит на |3%-3%([%w\128-\255]+%).",
+	Karat	= "Каратресс",
+	Volni	= "Волниис",
+	Shark	= "Шарккис",
+	Karib	= "Карибдис",
 }
 
 --Vashj

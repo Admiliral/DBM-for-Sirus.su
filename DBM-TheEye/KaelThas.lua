@@ -32,7 +32,6 @@ local warnMC                = mod:NewTargetAnnounce(36797, 3)
 local warnGravitySoon       = mod:NewSoonAnnounce(35941, 2)
 
 local specWarnTalaTarget    = mod:NewSpecialWarning("SpecWarnTalaTarget", nil, nil, nil, 1, 2)
-local specWarnFlameStrike   = mod:NewSpecialWarningMove(36731, nil, nil, nil, 1, 2)
 
 local timerNextAdd          = mod:NewTimer(30, "TimerNextAdd", "Interface\\Icons\\Spell_Nature_WispSplode", nil, nil, 2)
 local timerPhase3           = mod:NewTimer(123, "TimerPhase3", "Interface\\Icons\\Spell_Shadow_AnimateDead", nil, nil, 2)
@@ -62,9 +61,8 @@ local warnVzriv         = mod:NewTargetAnnounce(308797, 2) -- лужа
 local specWarnCata      = mod:NewSpecialWarningRun(308790, nil, nil, nil, 4, 2)
 local specWarnVzriv     = mod:NewSpecialWarningRun(308797, nil, nil, nil, 3, 3)
 local yellVzriv			= mod:NewYell(308797, nil, nil, nil, "YELL")
-local yellVzrivFades	= mod:NewShortFadesYell(308797, nil, nil, nil, "YELL")
 
-local timerFuriousCD     = mod:NewCDTimer(7, 308732, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerFuriousCD    = mod:NewCDTimer(7, 308732, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerFurious		= mod:NewTargetTimer(30, 308732, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerJusticeCD    = mod:NewCDTimer(9, 308741, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerJustice		= mod:NewTargetTimer(30, 308741, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
@@ -75,8 +73,8 @@ local timerCataCD		= mod:NewCDTimer(126, 308790, nil, nil, nil, 2)
 local timerCataCast		= mod:NewCastTimer(8, 308790, nil, nil, nil, 2)
 local timerVzrivCD		= mod:NewCDTimer(115, 308797, nil, nil, nil, 2)
 local timerVzrivCast    = mod:NewCastTimer(5, 308797, nil, nil, nil, 2)
-local timerGravityH          = mod:NewTimer(63, "TimerGravity", "Interface\\Icons\\Spell_Magic_FeatherFall", nil, nil, 6, nil, DBM_CORE_DEADLY_ICON)
-local timerGravityHCD        = mod:NewCDTimer(150, 35941, nil, nil, nil, 6, nil, DBM_CORE_DEADLY_ICON)
+local timerGravityH     = mod:NewTimer(63, "TimerGravity", "Interface\\Icons\\Spell_Magic_FeatherFall", nil, nil, 6, nil, DBM_CORE_DEADLY_ICON)
+local timerGravityHCD	= mod:NewCDTimer(150, 35941, nil, nil, nil, 6, nil, DBM_CORE_DEADLY_ICON)
 --local timerBurningCD    = mod:NewCDTimer(8, 308741, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
 --local timerBurning		= mod:NewTargetTimer(30, 308741, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
 
@@ -311,7 +309,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 		if args:IsPlayer() then
 			specWarnVzriv:Show()
 			yellVzriv:Yell()
-			yellVzrivFades:Countdown(spellId)
 		end
 		timerVzrivCast:Start()
 		timerVzrivCD:Start()
