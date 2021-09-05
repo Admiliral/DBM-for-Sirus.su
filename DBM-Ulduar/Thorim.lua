@@ -18,7 +18,7 @@ mod:RegisterEvents(
 
 local warnPhase2				= mod:NewPhaseAnnounce(2, 1)
 local warnStormhammer			= mod:NewTargetAnnounce(312907, 2)
-local warnLightningCharge		= mod:NewSpellAnnounce(312897, 2)
+local warnLightningCharge		= mod:NewAnnounce(312897, nil, nil, nil, 1, 2)
 local warnUnbalancingStrike		= mod:NewTargetAnnounce(312898, 4)	-- nice blizzard, very new stuff, hmm or not? ^^ aq40 4tw :)
 local warningBomb				= mod:NewTargetAnnounce(312911, 4)
 local warnChainlightning        = mod:NewTargetAnnounce(312895, 4)
@@ -26,23 +26,23 @@ local specWarnOrb				= mod:NewSpecialWarningMove(312892)
 local specWarnUnbalancingStrikeSelf	= mod:NewSpecialWarningDefensive(312898, nil, nil, nil, 1, 2)
 local specWarnUnbalancingStrike	= mod:NewSpecialWarningTaunt(312898, nil, nil, nil, 1, 2)
 
-
-mod:AddBoolOption("AnnounceFails", false, "announce")
-
 local enrageTimer				= mod:NewBerserkTimer(369)
-local timerCharge			= mod:NewCastTimer(18, 312907, nil, nil, nil, 3)
-local timerChainlightning       = mod:NewCDTimer(12, 312895, nil, nil, nil, 3)
-local timerLightningCharge	 	= mod:NewCDTimer(16, 312897, nil, nil, nil, 3)
+local timerCharge				= mod:NewCastTimer(18, 312907, nil, nil, nil, 3)
+local timerChainlightning       = mod:NewCDTimer(12, 312895, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Цепная молния
+local timerLightningCharge	 	= mod:NewCDCountTimer(16, 312897, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Разряд молнии
 local timerUnbalancingStrike	= mod:NewCastTimer(24, 312898, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerHardmode				= mod:NewTimer(175, "TimerHardmode", 312898)
 
+mod:AddBoolOption("AnnounceFails", false, "announce")
 mod:AddBoolOption("RangeFrame")
 mod:AddBoolOption("YellOnUnbalancingStrike", true)
 
+mod.vb.ChargeCount = 0
 local lastcharge = {}
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 32865, "Thorim")
+	self.vb.ChargeCount = 0
 	enrageTimer:Start(delay)
 	timerHardmode:Start(delay)
 	table.wipe(lastcharge)
@@ -55,7 +55,9 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 32865, "Thorim", wipe)
+	if self.Options.RangeFrame then
 		DBM.RangeCheck:Hide()
+	end
 	if self.Options.AnnounceFails and DBM:GetRaidRank() >= 1 then
 		local lcharge = ""
 		for k, v in pairs(lastcharge) do
@@ -71,7 +73,8 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(312542, 312895) then
+	local spellId = args.spellId
+	if spellId == 312542 or spellId == 312895 or spellId == 62131 then
 		timerChainlightning:Start()
 	end
 end
@@ -101,12 +104,11 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(312889, 312536, 62042, 312907) then 		-- Storm Hammer
 		timerCharge:Start()
 	elseif args:IsSpellID(312897, 312896) then   	-- Lightning Charge
-		warnLightningCharge:Show()
-		timerLightningCharge:Start()
+		self.vb.ChargeCount = self.vb.ChargeCount + 1
+		warnLightningCharge:Show(self.vb.ChargeCount)
+		timerLightningCharge:Start(nil, self.vb.ChargeCount+1)
 	elseif args:IsSpellID(312898, 312545) then	-- Unbalancing Strike
 		timerUnbalancingStrike:Start()
-	elseif args:IsSpellID(312895, 312542, 300871, 64390, 64213) then
-		timerChainlightning:Start()
 	end
 end
 
@@ -134,7 +136,9 @@ end
 
 function mod:OnSync(event, arg)
 	if event == "Phase2" then
-		DBM.RangeCheck:Show(11)
+		if self.Options.RangeFrame then
+			DBM.RangeCheck:Show(11)
+		end
 		warnPhase2:Show()
 		enrageTimer:Stop()
 		timerHardmode:Stop()

@@ -33,7 +33,7 @@ local timerSaroniteVapors		= mod:NewNextCountTimer(30, 312983, nil, nil, nil, 5)
 local timerLifeLeech			= mod:NewTargetTimer(10, 312974)
 local timerLeech				= mod:NewNextTimer(36, 312974)
 local timerCrashArrow           = mod:NewNextTimer(15,312978)
-local timerHardmode				= mod:NewTimer(189, "hardmodeSpawn")
+local timerHardmode				= mod:NewTimer(195, "hardmodeSpawn", nil, nil, nil, 1)
 local yellLifeLeech				= mod:NewYell(312974)
 local yellLifeLeechFades		=mod:NewShortFadesYell(312974)
 local yellShadowCrash			= mod:NewShortYell(312978)
@@ -52,6 +52,7 @@ function mod:OnCombatStart(delay)
 	timerNextSurgeofDarkness:Start(-delay)
 	timerCrashArrow:Start(5)
 	timerLeech:Start(-delay)
+	timerSaroniteVapors:Start(30-delay, 1)
 end
 
 function mod:OnCombatEnd(wipe)
@@ -59,23 +60,25 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(312977, 62661) then	-- Searing Flames
+	local spellId = args.spellId
+	if spellId == 312977 or spellId == 62661 then	-- Searing Flames
 		timerSearingFlamesCast:Start()
-	elseif args:IsSpellID(312981, 62662) then
+	elseif spellId == 312981 or spellId == 62662 then
 		specWarnSurgeDarkness:Show()
 		timerNextSurgeofDarkness:Start()
 	end
 end
 
 function mod:SPELL_INTERRUPT(args)
-	if args:IsSpellID(312977, 62661) then
+	local spellId = args.spellId
+	if spellId == 312977 or spellId == 62661 then
 		timerSearingFlamesCast:Stop()
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if args:IsSpellID(312981, 62662) then	-- Surge of Darkness
+	if spellId == 312981 or spellId == 62662 then	-- Surge of Darkness
 		timerSurgeofDarkness:Start()
 	elseif spellId == 312974 or spellId == 63276 then
 		if self.Options.SetIconOnLifeLeach then
@@ -102,7 +105,7 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
-	if args:IsSpellID(312981, 62662) then
+	if spellId == 312981 or spellId == 62662 then
 		timerSurgeofDarkness:Stop()
 	elseif spellId == 312974 or spellId == 63276 then
 		if self.Options.SetIconOnLifeLeach then
@@ -156,7 +159,7 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if args:IsSpellID(312978, 62660) then		-- Shadow Crash
+	if spellId == 312978 or spellId == 62660 then		-- Shadow Crash
 		if self.Options.BypassLatencyCheck then
 			self:ScheduleMethod(0.1, "OldShadowCrashTarget")
 		else
@@ -185,9 +188,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(emote)
+function mod:RAID_BOSS_EMOTE(emote)
 	if emote == L.EmoteSaroniteVapors or emote:find(L.EmoteSaroniteVapors) then
-		timerSaroniteVapors:Start()
+		self.vb.vaporsCount = self.vb.vaporsCount + 1
+		if self.vb.vaporsCount < 6 then
+			timerSaroniteVapors:Start(nil, self.vb.vaporsCount+1)
+		end
 	end
 end
 

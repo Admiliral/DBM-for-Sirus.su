@@ -21,8 +21,8 @@ local warnStormCloud		= mod:NewTargetAnnounce(312831) --Грозовая туч�
 local warnFlashFreeze		= mod:NewSpecialWarningSpell(312818, nil, nil, nil, 3, 2)
 local specWarnStormCloud	= mod:NewSpecialWarningYou(65123, nil, nil, nil, 1, 2)
 local yellStormCloud		= mod:NewYell(65133)
-local specWarnBitingCold	= mod:NewSpecialWarningMove(312819, nil, nil, nil, 1, 2)
-
+local yellStormCloudFades	=mod:NewShortFadesYell(65133)
+local specWarnBitingCold	= mod:NewSpecialWarningStack(312819, nil, nil, nil, 1, 2)
 
 local enrageTimer			= mod:NewBerserkTimer(475)
 local timerFlashFreeze		= mod:NewCastTimer(9, 312818, nil, nil, nil, 2)
@@ -57,13 +57,15 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
+	local spellId = args.spellId
 	if args:IsSpellID(312817, 312816, 312464, 312463, 62478, 63512) then --Ледяные дуновения
 		timerFrozenBlows:Start()
-	elseif args:IsSpellID(312831, 312478, 65123, 65133) then -- Грозовая туча
+	elseif spellId == 312831 or spellId == 312478 or spellId == 65123 or spellId == 65133 then -- Грозовая туча
 		if args:IsPlayer() then
 			specWarnStormCloud:Show()
 			specWarnStormCloud:Play("gathershare")
 			yellStormCloud:Yell()
+			yellStormCloudFades:Countdown(spellId)
 		else
 			warnStormCloud:Show(args.destName)
 		end

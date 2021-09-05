@@ -93,12 +93,12 @@ function mod:SPELL_CAST_START(args)
 		warnSupercharge:Show()
 	elseif args:IsSpellID(312780, 312427, 63479, 61879) then	-- Цепная молния
 		warnChainlight:Show()
-	elseif args:IsSpellID(312784, 312783, 312430, 312431, 63483, 61915) then	-- Вихрь молний
+	elseif args:IsSpellID(312783, 312430, 63483, 61915) then	-- Вихрь молний
 		timerLightningWhirl:Start()
 	elseif args:IsSpellID(312769, 312416, 61903, 63493) then	-- Энергетический удар
 		warnFusionPunch:Show()
 		timerFusionPunchCast:Start()
-	elseif args:IsSpellID(312775, 312774, 312421, 312422, 62274, 63489) then		-- Рунический щит
+	elseif args:IsSpellID(312775, 312774, 312421, 62274, 63489) then		-- Рунический щит
 		warnShieldofRunes:Show()
 	elseif args:IsSpellID(312779, 312778, 312425, 312426, 62273) then			--	Руна призыва
 		warnRuneofSummoning:Show()
@@ -112,7 +112,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(312777, 312424, 63490, 62269) then		-- Руна смерти
 		warnRuneofDeath:Show()
 		timerRuneofDeathDura:Start()
-	elseif args:IsSpellID(312782, 312781, 312428, 312429, 61869, 63481) then	-- Перегрузка
+	elseif args:IsSpellID(312781, 312428, 61869, 63481) then	-- Перегрузка
 		timerOverload:Start()
 		if self.Options.AlwaysWarnOnOverload or UnitName("target") == L.StormcallerBrundir then
 			specwarnOverload:Show()
@@ -135,7 +135,7 @@ function mod:SPELL_AURA_APPLIED(args)
 				PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
 			end
 		end
-	elseif args:IsSpellID(312774, 312775, 312421, 312422, 62277, 63967) and not args:IsDestTypePlayer() then		-- Рунический щит
+	elseif args:IsSpellID(312775, 312774, 312421, 62274, 63489) and not args:IsDestTypePlayer() then		-- Рунический щит
 		timerShieldofRunes:Start()
 		specWarnRuneofShields:Show(args.destName)
 		specWarnRuneofShields:Play("dispelboss")

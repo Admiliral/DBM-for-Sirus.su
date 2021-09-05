@@ -34,10 +34,10 @@ local enrage 				= mod:NewBerserkTimer(600)
 local timerAlliesOfNature	= mod:NewNextTimer(60, 62678, nil, nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)
 local timerSimulKill		= mod:NewTimer(12, "TimerSimulKill", nil, nil, nil, 5, DBM_CORE_DAMAGE_ICON)
 local timerFury				= mod:NewTargetTimer(10, 312880, nil, nil, nil, 2)
-local timerTremorCD 		= mod:NewCDTimer(28, 312842, nil, nil, nil, 2)
-local timerBoom 		    = mod:NewCDTimer(31, 312883, nil, nil, nil, 2)
+local timerTremorCD 		= mod:NewCDCountTimer(28, 312842, nil, nil, nil, 2)
+local timerBoom 		    = mod:NewCDCountTimer(31, 312883, nil, nil, nil, 2)
 local timerLifebinderCD 	= mod:NewTimer(37, "Дар Эонара", nil, nil, nil, 1)
-local timerRootsCD 			= mod:NewCDTimer(29.6, 312856, nil, nil, nil, 3)
+local timerRootsCD 			= mod:NewCDCountTimer(29.6, 312856, nil, nil, nil, 3)
 
 
 mod:AddSetIconOption("SetIconOnFury", 312881, false, false, {7, 8})
@@ -156,7 +156,7 @@ function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 33228 then
 		timerLifebinderCD:Start()
-		specWarnnLifebinderSoon:Schedule(35)
+		specWarnnLifebinderSoon:Schedule(33)
 	elseif cid == 33202 or cid == 32916 or cid == 32919 then
 		if self.Options.HealthFrame then
 			DBM.BossHealth:RemoveBoss(cid)

@@ -37,10 +37,10 @@ mod:AddBoolOption("HealthFrame", true)
 
 --local isFeared			= false
 mod.vb.catLives = 9
-
+mod.vb.DefenderCount = 0
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 33515, "Auriaya")
-
+	self.vb.DefenderCount = 0
 	self.vb.catLives = 9
 	enrageTimer:Start(-delay)
 	timerNextFear:Start(40-delay)
@@ -90,7 +90,7 @@ function mod:UNIT_DIED(args)
 				timerDefender:Start()
 			else
 				warnCatDied:Show(self.vb.catLives)
-				timerDefender:Start()
+				timerDefender:Start(nil, self.vb.DefenderCount+1)
 			end
 			if self.Options.HealthFrame then
 				DBM.BossHealth:RemoveBoss(34035)

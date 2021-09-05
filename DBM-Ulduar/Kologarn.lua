@@ -3,7 +3,7 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("20210501000000")
 
-mod:SetCreatureID(32930)
+mod:SetCreatureID(32930, 32933, 32934)
 mod:RegisterCombat("yell",L.YellPull)
 mod:SetUsedIcons(5, 6, 7, 8)
 
@@ -27,17 +27,17 @@ mod:SetBossHealthInfo(
 
 local warnFocusedEyebeam		= mod:NewTargetAnnounce(312765, 3)
 local warnGrip					= mod:NewTargetAnnounce(312757, 2)
-local warnCrunchArmor			= mod:NewTargetAnnounce(312748, 2, nil, "Tank|Healer")
+local warnCrunchArmor			= mod:NewTargetAnnounce(312748, 2, nil, "Tank")
 
 local specWarnCrunchArmor2		= mod:NewSpecialWarningStack(312748, nil, 2, nil, 2, 1, 6)
 local specWarnEyebeam			= mod:NewSpecialWarningYou(312765, nil, nil, nil, 4, 2)
 local yellBeam					= mod:NewYell(63346)
 
 local timerCrunch10             = mod:NewTargetTimer(6, 312395)
-local timerNextSmash			= mod:NewCDTimer(20.4, 64003, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
-local timerNextShockwave		= mod:NewCDTimer(23, 312752)
-local timerNextEyebeam			= mod:NewCDTimer(18.2, 63346, nil, nil, nil, 3)
-local timerNextGrip				= mod:NewCDTimer(20, 64292, nil, nil, nil, 3)
+local timerNextSmash			= mod:NewCDCountTimer(20.4, 64003, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerNextShockwave		= mod:NewCDCountTimer(23, 312752)
+local timerNextEyebeam			= mod:NewCDCountTimer(18.2, 63346, nil, nil, nil, 3)
+local timerNextGrip				= mod:NewCDCountTimer(20, 64292, nil, nil, nil, 3)
 local timerRespawnLeftArm		= mod:NewTimer(48, "timerLeftArm", nil, nil, nil, 1)
 local timerRespawnRightArm		= mod:NewTimer(48, "timerRightArm", nil, nil, nil, 1)
 local timerTimeForDisarmed		= mod:NewTimer(10, "achievementDisarmed")	-- 10 HC / 12 nonHC
@@ -124,27 +124,12 @@ function mod:OnSync(msg, target)
 	end
 end
 
---[[function mod:GripAnnounce(self)
-	warnGrip:Show(table.concat(gripTargets, "<, >"))
-	table.wipe(gripTargets)
-end]]
-
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(312758,312757,312760,312407,312405,312404, 64290, 64292) then 	--Каменная хватка
 		if self.Options.SetIconOnGripTarget then
 			self:SetIcon(args.destName, 8, 10)
 		end
-		--[[table.insert(gripTargets, args.destName)
-		self:Unschedule(GripAnnounce)
-		if #gripTargets >= 3 then
-			GripAnnounce(self)
-		else
-			self:Schedule(0.3, GripAnnounce, self)
-		end--]]
 		warnGrip:Show(args.destName)
-		--[[if self.Options.YellOnGrip  and args:IsPlayer() then
-			SendChatMessage(L.YellGrip , "SAY")
-		end]]
 	elseif args:IsSpellID(312748, 312395, 64002, 63355) then	-- Хруст доспеха
         warnCrunchArmor:Show(args.destName)
 		if mod:IsDifficulty("heroic10") then

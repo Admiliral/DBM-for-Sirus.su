@@ -17,7 +17,6 @@ mod:RegisterEvents(
 	"UNIT_HEALTH"
 )
 
-
 local warnNovaSoon       = mod:NewSoonAnnounce(38445, 3)   -- Огненная звезда
 local specWarnNova       = mod:NewSpecialWarningSpell(38445)  -- Огненная звезда
 

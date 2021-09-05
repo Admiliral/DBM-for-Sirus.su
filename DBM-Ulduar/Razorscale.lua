@@ -60,10 +60,11 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(63317, 64021) then	-- deep breath
+	local spellId = args.spellId
+	if spellId == 63317 or spellId == 64021 then	-- deep breath
 		timerDeepBreathCast:Start()
 		timerDeepBreathCooldown:Start()
-	elseif args:IsSpellID(63236) then
+	elseif spellId == 63236 then
 		local target = self:GetBossTarget(self.creatureId)
 		if target then
 			self:CastFlame(target)
@@ -74,9 +75,12 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_DAMAGE(args)
-	if args:IsSpellID(64733, 64704) and args:IsPlayer() then
-		specWarnDevouringFlame:Show()
-		specWarnDevouringFlame:Play("runaway")
+	local spellId = args.spellId
+	if spellId == 64733 or spellId == 64704 then
+		if args:IsPlayer() then
+			specWarnDevouringFlame:Show()
+			specWarnDevouringFlame:Play("runaway")
+		end
 	end
 end
 mod.SPELL_MISSED = mod.SPELL_DAMAGE
