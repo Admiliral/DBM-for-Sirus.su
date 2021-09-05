@@ -28,10 +28,8 @@ local berserkTimer          = mod:NewBerserkTimer(600)
 
 ------------------------ХМ-------------------------
 
-local warnPhase2Soon		= mod:NewPrePhaseAnnounce(2)
 local warnPhase2    		= mod:NewPhaseAnnounce(2)
 local warnZeml          	= mod:NewSpellAnnounce(309289, 4)
-local warnPhaseCast	        = mod:NewSpellAnnounce(309292, 4)
 local warnOko	            = mod:NewSpellAnnounce(309258, 2, nil, "Melee")
 local warnStrela            = mod:NewTargetAnnounce(309253, 3) -- Стрела катаклизма
 local specWarnStrela	    = mod:NewSpecialWarningYou(309253, nil, nil, nil, 3, 2)
@@ -109,10 +107,10 @@ function mod:OnCombatStart()
 			DBM.BossHealth:Show(L.name)
 		end
 		if self.Options.HealthFrameBoss then
-			DBM.BossHealth:AddBoss(21966, L.Sharkkis)
-			DBM.BossHealth:AddBoss(21965, L.Volniis)
-			DBM.BossHealth:AddBoss(21964, L.Karibdis)
-			DBM.BossHealth:AddBoss(21214, L.Karatress)
+			DBM.BossHealth:AddBoss(21966, L.Shark)
+			DBM.BossHealth:AddBoss(21965, L.Volni)
+			DBM.BossHealth:AddBoss(21964, L.Karib)
+			DBM.BossHealth:AddBoss(21214, L.Karat)
 		end
 	else -- Обычка
 		berserkTimer:Start()
