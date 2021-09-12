@@ -197,22 +197,22 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-	WarnSiegeEngine		= "Siege Engine ready!",
-	WarnSiegeEngineSoon	= "Siege Engine in ~10 sec"
+	WarnSiegeEngine		= "Осадная машина готова!",
+	WarnSiegeEngineSoon	= "Осадная машина через ~10 сек"
 })
 
 L:SetTimerLocalization({
 	TimerStart			= "Битва начнется через",
 	TimerPOI			= "%s",
-	TimerSiegeEngine	= "Siege Engine ready"
+	TimerSiegeEngine	= "Готовность осадной машины"
 })
 
 L:SetOptionLocalization({
 	TimerStart			= "Отсчет времени до начала битвы",
 	TimerPOI			= "Отсчет времени до захвата",
-	TimerSiegeEngine	= "Show timer for Siege Engine construction",
-	WarnSiegeEngine		= "Show warning when Siege Engine is ready",
-	WarnSiegeEngineSoon	= "Show warning when Siege Engine is almost ready"
+	TimerSiegeEngine	= "Показать таймер для строительства осадной машины",
+	WarnSiegeEngine		= "Показывать предупреждение, когда Осадная машина будет готова",
+	WarnSiegeEngineSoon	= "Показывать предупреждение, когда Осадная машина почти готова"
 })
 
 L:SetMiscLocalization({

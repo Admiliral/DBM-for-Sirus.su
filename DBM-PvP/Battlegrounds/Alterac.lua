@@ -31,7 +31,7 @@ local hordeColor = {
 	b = 0,
 }
 
-local startTimer = Alterac:NewTimer(62, "TimerStart")
+local startTimer = Alterac:NewTimer(60, "TimerStart")
 local towerTimer = Alterac:NewTimer(243, "TimerTower")
 local gyTimer = Alterac:NewTimer(243, "TimerGY", "Interface\\Icons\\Spell_Shadow_AnimateDead")
 
@@ -108,7 +108,7 @@ function Alterac:CHAT_MSG_BG_SYSTEM_NEUTRAL(arg1)
 	if arg1 == L.BgStart60 then
 		startTimer:Start()
 	elseif arg1 == L.BgStart30  then
-		startTimer:Update(31, 62)
+		startTimer:Update(30, 60)
 	end
 	schedule_check(self)
 end

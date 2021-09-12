@@ -33,7 +33,7 @@ mod:AddBoolOption("ShowPointFrame", true, nil, function()
 	end
 end)
 
-local startTimer = mod:NewTimer(62, "TimerStart")
+local startTimer = mod:NewTimer(60, "TimerStart")
 local winTimer = mod:NewTimer(30, "TimerWin")
 local flagTimer = mod:NewTimer(9, "TimerFlag", "Interface\\Icons\\INV_Banner_02")
 
@@ -200,7 +200,7 @@ do
 			startTimer:Start()
 
 		elseif arg1 == L.BgStart30  then
-			startTimer:Update(31, 62)
+			startTimer:Update(30, 60)
 
 		elseif string.match(arg1, L.FlagReset) then
 			mod.AllyFlag = nil

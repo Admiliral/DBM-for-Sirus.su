@@ -199,7 +199,7 @@ do
 			callupdate = true
 		end
 
-		if callupdate or winner_is == 0 then
+		if callupdate then
 			self:UpdateWinTimer()
 		end
 	end
