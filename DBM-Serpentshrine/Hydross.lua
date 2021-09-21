@@ -177,7 +177,18 @@ function mod:SPELL_AURA_APPLIED(args) -- все хм --
 	end
 end
 
-
+function mod:SPELL_AURA_REMOVED(args)
+	local spellId = args.spellId
+	if spellId == 309046 then
+		if self.Options.SetIconOnSklepTargets then
+			self:SetIcon(args.destName, 0)
+		end
+	elseif spellId == 309065 then
+		if self.Options.SetIconOnKorTargets then
+			self:SetIcon(args.destName, 0)
+		end
+	end
+end
 
 
 function mod:SPELL_CAST_SUCCESS(args)

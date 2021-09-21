@@ -17,6 +17,7 @@ mod:RegisterEvents(
 	"UNIT_HEALTH"
 )
 
+
 local warnNovaSoon       = mod:NewSoonAnnounce(38445, 3)   -- Огненная звезда
 local specWarnNova       = mod:NewSpecialWarningSpell(38445)  -- Огненная звезда
 
@@ -27,8 +28,10 @@ local berserkTimer          = mod:NewBerserkTimer(600)
 
 ------------------------ХМ-------------------------
 
+local warnPhase2Soon		= mod:NewPrePhaseAnnounce(2)
 local warnPhase2    		= mod:NewPhaseAnnounce(2)
 local warnZeml          	= mod:NewSpellAnnounce(309289, 4)
+local warnPhaseCast	        = mod:NewSpellAnnounce(309292, 4)
 local warnOko	            = mod:NewSpellAnnounce(309258, 2, nil, "Melee")
 local warnStrela            = mod:NewTargetAnnounce(309253, 3) -- Стрела катаклизма
 local specWarnStrela	    = mod:NewSpecialWarningYou(309253, nil, nil, nil, 3, 2)
@@ -202,7 +205,7 @@ end
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 21966 or cid == 21965 or cid == 21964 then
-		if self.Options.HealthFrame then
+		if self.Options.HealthFrameBoss then
 			DBM.BossHealth:RemoveBoss(cid)
 		end
 	end

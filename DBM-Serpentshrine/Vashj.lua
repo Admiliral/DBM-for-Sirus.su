@@ -243,6 +243,15 @@ function mod:SPELL_SUMMON(args)
 	end
 end
 
+function mod:SPELL_AURA_REMOVED(args)
+	local spellId = args.spellId
+	if spellId == 310636 or spellId == 310659 then
+		if self.Options.SetIconOnStaticTargets then
+			self:SetIcon(args.destName, 0)
+		end
+	end
+end
+
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 38280 then
