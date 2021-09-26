@@ -7,7 +7,7 @@ mod:SetCreatureID(21213)
 mod:RegisterCombat("yell", L.YellPull)
 mod:SetUsedIcons(4, 5, 6, 7, 8)
 
-mod:RegisterEvents(
+mod:RegisterEventsInCombat(
 	"SPELL_CAST_START",
     "SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED",
@@ -27,7 +27,7 @@ local berserkTimer      = mod:NewBerserkTimer(720)
 
 -----------ХМ-------------
 
-local warnVzglad          = mod:NewStackAnnounce(310136, 5, nil, "Tank|Healer") -- Взгляд
+local warnVzglad          = mod:NewStackAnnounce(310136, 5, nil, "Tank") -- Взгляд
 local warnZemla           = mod:NewSoonAnnounce(310152, 2) -- Землетрясение
 local warnHwat            = mod:NewTargetAnnounce(310144, 3) -- Хватка
 local warnSuh             = mod:NewTargetAnnounce(310155, 3) -- Обезвоживание
@@ -47,6 +47,7 @@ local timerZemlaCast      = mod:NewCastTimer(8, 310152, nil, nil, nil, 1) -- З�
 local timerZemlaCD        = mod:NewCDTimer(45, 310152, nil, nil, nil, 1) -- Землетрясение
 local timerTopCast        = mod:NewCastTimer(3, 310140, nil, nil, nil, 2) -- Топот
 local timerTopCD          = mod:NewCDTimer(20, 310140, nil, nil, nil, 2)
+local timerKrikCast			= mod:NewCastTimer(3, 310151, nil, nil, nil, 2)
 local timerMonCD          = mod:NewCDTimer(12, 310137, nil, nil, nil, 4)
 local timerKrikCD          = mod:NewCDTimer(28, 310151, nil, nil, nil, 2)
 local timerSuhCD          = mod:NewCDTimer(20, 310155, nil, nil, nil, 1)
@@ -134,6 +135,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnKrik:Show()
 		warnKrik:Show()
 		timerKrikCD:Start()
+		timerKrikCast:Start()
 	end
 end
 

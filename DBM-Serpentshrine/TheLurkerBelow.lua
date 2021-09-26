@@ -6,7 +6,7 @@ mod:SetRevision(("$Revision: 163 $"):sub(12, -3))
 mod:SetCreatureID(21217)
 mod:RegisterCombat("combat", 21217)
 
-mod:RegisterEvents(
+mod:RegisterEventsInCombat(
 	"CHAT_MSG_RAID_BOSS_EMOTE"
 )
 

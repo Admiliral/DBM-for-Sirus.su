@@ -9,7 +9,7 @@ mod:RegisterCombat("yell", L.YellPull)
 mod:SetUsedIcons(3, 4, 5, 6, 7, 8)
 
 
-mod:RegisterEvents(
+mod:RegisterEventsInCombat(
 	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED",
 	"SPELL_AURA_APPLIED_DOSE",
@@ -44,7 +44,7 @@ local specWarnChis      = mod:NewSpecialWarning("Chis", 309055, nil, nil, 1, 6) 
 
 local specWarnSklep     = mod:NewSpecialWarningRun(309046, nil, nil, nil, 1, 4) -- лужа
 local specWarnKor       = mod:NewSpecialWarningRun(309065, nil, nil, nil, 1, 4) -- коррозия
-local yellSklep		= mod:NewYell(309046)
+local yellSklep		= mod:NewYell(309046, nil, nil, nil, "YELL")
 local yellSklepFades= mod:NewShortFadesYell(309046)
 local yellKor		= mod:NewYell(309065)
 
@@ -56,6 +56,7 @@ local timerArrowCast	= mod:NewCastTimer(1.5, 309052, nil, nil, nil, 3) -- зал
 local timerAyaCast  	= mod:NewCastTimer(1.5, 309069, nil, nil, nil, 3) -- залп  яда каст
 local timerYadCast		= mod:NewCastTimer(25, 309072, nil, nil, nil, 6) -- яд
 local timerChisCast		= mod:NewCastTimer(20, 309055, nil, nil, nil, 6) -- чистота
+local timerStaktimer    = mod:NewTargetTimer(30, 309051, nil, "Healer|Tank", nil, 1)
 
 mod:AddSetIconOption("SetIconOnSklepTargets", 309046, true, true, {6, 7, 8})
 mod:AddSetIconOption("SetIconOnKorTargets", 309065, true, true, {6, 7, 8})
@@ -174,6 +175,8 @@ function mod:SPELL_AURA_APPLIED(args) -- все хм --
 		end
 		self:ScheduleMethod(0.1, "SetKorIcons")
 		timerKorCD:Start()
+		elseif spellId == 309051 then
+			timerStaktimer:Start(args.destName)
 	end
 end
 

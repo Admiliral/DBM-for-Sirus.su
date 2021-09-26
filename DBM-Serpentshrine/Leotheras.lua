@@ -44,8 +44,8 @@ local warnPepel		        = mod:NewSpellAnnounce(310514, 3) --пепел
 local warnVsp		        = mod:NewStackAnnounce(310521, 5) --Вспышка
 local warnPhase2Soon   		= mod:NewPrePhaseAnnounce(2)
 local warnPhase2     		= mod:NewPhaseAnnounce(2)
-local yellKlei				= mod:NewYell(310496)
-local yellKleiFade			= mod:NewShortFadesYell(310496)
+local yellKlei				= mod:NewYell(310496, nil, nil, nil, "YELL")
+local yellKleiFade			= mod:NewShortFadesYell(310496, nil, nil, nil, "YELL")
 
 
 local specWarnChardg        = mod:NewSpecialWarningYou(310481, nil, nil, nil, 1, 2)
@@ -55,7 +55,7 @@ local specWarnAnig          = mod:NewSpecialWarningDodge(310508, nil, nil, nil, 
 local specWarnVzg           = mod:NewSpecialWarningDodge(310516, nil, nil, nil, 3, 2)
 local specWarnVost          = mod:NewSpecialWarningSoak(310503, nil, nil, nil, 1, 2)
 local specWarnPechat        = mod:NewSpecialWarningSoak(310487, nil, nil, nil, 1, 2)
-local specWarnPepel         = mod:NewSpecialWarningCast(310514, "Healer", nil, nil, 1, 4)
+local specWarnPepel         = mod:NewSpecialWarningSwitch(310514, "Healer", nil, nil, 1, 4)
 local specWarnPepely		= mod:NewSpecialWarningYou(310514, nil, nil, nil, 1, 4)
 
 local timerRass	        	= mod:NewTargetTimer(40, 310480, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON) -- Рассеченая душа
@@ -208,7 +208,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 310514 then
 		PepelTargets[#PepelTargets + 1] = args.destName
 		if args:IsPlayer() then
-			specWarnPepely:Show()
+			specWarnPepely:Show(args.destName)
 		end
 		self:ScheduleMethod(0.1, "SetPepelIcons")
 	end

@@ -7,7 +7,7 @@ mod:SetCreatureID(21212)
 mod:RegisterCombat("combat", 21212)
 mod:SetUsedIcons(7, 8)
 
-mod:RegisterEvents(
+mod:RegisterEventsInCombat(
 	"CHAT_MSG_MONSTER_YELL",
 	"SPELL_CAST_START",
 	"SPELL_CAST_SUCCESS",
@@ -50,8 +50,8 @@ local specWarnStaticAnger  	 	 = mod:NewSpecialWarningMove(310636, nil, nil, nil
 local specWarnStaticAngerNear	 = mod:NewSpecialWarning("SpecWarnStaticAngerNear", 310636, nil, nil, 1, 2) -- Статический заряд около игрока
 local yellStaticAnger			= mod:NewYell(310636)
 local yellStaticAngerFade		= mod:NewShortFadesYell(310636)
-local yellStaticAngerPhase2		= mod:NewYell(310659)
-local yellStaticAngerPhase2Fade	= mod:NewShortFadesYell(310659)
+local yellStaticAngerPhase2		= mod:NewYell(310659, nil, nil, nil, "YELL")
+local yellStaticAngerPhase2Fade	= mod:NewShortFadesYell(310659, nil, nil, nil, "YELL")
 local timerStaticAngerCD 	     = mod:NewCDTimer(15, 310636, nil, nil, nil, 3) -- Статический заряд
 local timerStaticAnger     		 = mod:NewTargetTimer(8, 310636, nil, nil, nil,3) -- Статический заряд на игроке
 local timerElemCD     			 = mod:NewCDTimer(60, 310635, nil, nil, nil, 1) -- Элементали

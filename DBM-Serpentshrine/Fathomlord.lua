@@ -7,7 +7,7 @@ mod:SetCreatureID(21214)
 mod:RegisterCombat("yell", L.YellPull)
 mod:SetUsedIcons(4, 5, 6, 7, 8)
 
-mod:RegisterEvents(
+mod:RegisterEventsInCombat(
 	"CHAT_MSG_MONSTER_EMOTE",
 	"SPELL_CAST_START",
 	"SPELL_CAST_SUCCESS",
