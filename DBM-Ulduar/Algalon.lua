@@ -8,7 +8,7 @@ mod:RegisterCombat("combat", "yell", L.YellPull)
 mod:RegisterKill("yell", L.YellKill)
 mod:SetWipeTime(20)
 
-mod:RegisterEvents(
+mod:RegisterEventsInCombat(
 	"SPELL_CAST_START",
 	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED",
@@ -39,8 +39,8 @@ local timerBigBangCast			= mod:NewCastTimer(8, 313034)
 local timerNextCollapsingStar	= mod:NewTimer(15, "NextCollapsingStar")
 local timerCDCosmicSmash		= mod:NewCDCountTimer(25, 313036, nil, nil, nil, 2)
 local timerCastCosmicSmash		= mod:NewCastTimer(4.5, 313036)
-local timerPhasePunch			= mod:NewBuffActiveTimer(45, 313033, nil, nil, nil, 6)
-local timerNextPhasePunch		= mod:NewNextTimer(16, 313033, nil, nil, nil, 6)
+local timerPhasePunch			= mod:NewBuffActiveTimer(45, 313033, nil, "Tank", nil, 6)
+local timerNextPhasePunch		= mod:NewNextTimer(16, 313033, nil, "Tank", nil, 6)
 
 mod.vb.SmashCount = 0
 local warned_preP2 = false

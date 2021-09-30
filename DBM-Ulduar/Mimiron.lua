@@ -1,25 +1,26 @@
 local mod	= DBM:NewMod("Mimiron", "DBM-Ulduar")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20210501000000")
+mod:SetRevision("20210625164000")
 
-mod:SetCreatureID(33432)
+mod:SetCreatureID(33670, 33651, 33432)
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6, 7, 8)
 
 mod:RegisterCombat("yell", L.YellPull)
 mod:RegisterCombat("yell", L.YellHardPull)
+mod:RegisterKill("yell", L.YellKilled)
 
 mod:RegisterEvents(
+	"CHAT_MSG_MONSTER_YELL"
+)
+mod:RegisterEventsInCombat(
 	"SPELL_CAST_START",
 	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED",
 	"SPELL_AURA_REMOVED",
-	"CHAT_MSG_MONSTER_YELL",
-	"SPELL_AURA_REMOVED",
 	"UNIT_SPELLCAST_CHANNEL_STOP",
 	"UNIT_SPELLCAST_SUCCEEDED",
-	"CHAT_MSG_LOOT",
-	"SPELL_SUMMON"
+	"CHAT_MSG_LOOT"
 )
 
 
@@ -27,34 +28,36 @@ local blastWarn					= mod:NewTargetAnnounce(312790, 4)
 local shellWarn					= mod:NewTargetAnnounce(312788, 2)
 local lootannounce				= mod:NewAnnounce("MagneticCore", 1)
 local warnBombSpawn				= mod:NewAnnounce("WarnBombSpawn", 3)
-local warnFrostBomb				= mod:NewSpellAnnounce(64623, 3)
+--local warnFrostBomb				= mod:NewSpellAnnounce(64623, 3)
 
-local warnShockBlast			= mod:NewSpecialWarningRun(63631, "Melee|Healer", nil, nil, 4, 2)
+local warnShockBlast			= mod:NewSpecialWarningRun(63631, "Melee", nil, nil, 4, 2)
 local warnRocketStrike			= mod:NewSpecialWarningDodge(64402, nil, nil, nil, 2, 2)
 local warnDarkGlare				= mod:NewSpecialWarningDodge(63293, nil, nil, nil, 4, 2)
 local warnPlasmaBlast			= mod:NewSpecialWarningDefensive(64529, nil, nil, nil, 1, 2)
+local warnFrostBomb				= mod:NewSpecialWarningDodge(64623, nil, nil, nil, 2, 2)
 
 local enrage 					= mod:NewBerserkTimer(900)
 local timerHardmode				= mod:NewTimer(610, "TimerHardmode", 312812)
 local timerP1toP2				= mod:NewTimer(43, "TimeToPhase2", 312813, nil, nil, 6)
 local timerP2toP3				= mod:NewTimer(32, "TimeToPhase3", 312813, nil, nil, 6)
-local timerP3toP4				= mod:NewTimer(25, "TimeToPhase4", 312813, nil, nil, 6)
-local timerProximityMines		= mod:NewNextTimer(35, 312789, nil, nil, nil, 3)
-local timerShockBlast			= mod:NewCastTimer(4, 312792, nil, nil, nil, 2)
-local timerShockBlastCD			= mod:NewCDTimer(40, 312792, nil, nil, nil, 2)
-local timerNextRockets		    = mod:NewNextTimer(20, 63041, nil, nil, nil, 3)
+local timerP3toP4				= mod:NewTimer(23, "TimeToPhase4", 312813, nil, nil, 6)
+local timerProximityMines		= mod:NewNextTimer(15, 312789, nil, "Melee", nil, 3)
+local timerShockBlast			= mod:NewCastTimer(4, 312792, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
+local timerShockBlastCD			= mod:NewCDTimer(40, 312792, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
+local timerNextRockets		    = mod:NewNextTimer(20, 63041, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
 local timerSpinUp				= mod:NewCastTimer(4, 312794, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
 local timerRocketStrikeCD		= mod:NewCDTimer(20, 63631, nil, nil, nil, 3)
 local timerDarkGlareCast		= mod:NewCastTimer(10, 63274, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
 local timerNextDarkGlare		= mod:NewNextTimer(39, 63274, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Лазерный обстрел P3Wx2
-local timerNextShockblast		= mod:NewNextTimer(34, 312792, nil, nil, nil, 2)
-local timerPlasmaBlastCD		= mod:NewCDTimer(30, 312790, nil, "Tank", 2, 5)
+local timerNextShockblast		= mod:NewNextTimer(34, 312792, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
+local timerPlasmaBlastCD		= mod:NewCDTimer(30, 312790, nil, nil, 2, 5, nil, DBM_CORE_TANK_ICON)
 local timerShell				= mod:NewTargetTimer(6, 312788, nil, "Healer", 2, 5, nil, DBM_CORE_HEALER_ICON)
-local timerFlameSuppressant		= mod:NewCastTimer(80, 312793, nil, nil, nil, 3)
-local timerNextFlameSuppressant	= mod:NewNextTimer(10, 312793, nil, nil, nil, 3)
+local timerFlameSuppressant		= mod:NewCastTimer(71, 312793, nil, nil, nil, 3)
+local timerNextFlameSuppressant	= mod:NewNextTimer(10, 312793, nil, "Melee", nil, 3)
 local timerNextFlames			= mod:NewNextTimer(28, 312803, nil, nil, nil, 3)
 local timerNextFrostBomb        = mod:NewNextTimer(30, 64623, nil, nil, nil, 3, nil, DBM_CORE_HEROIC_ICON) --Ледяная бомба
 local timerBombExplosion		= mod:NewCastTimer(15, 312804, nil, nil, nil, 3)
+local timerBombBotSpawn			= mod:NewCDTimer(15, 63811, nil, nil, nil, 2)
 --local timerVolleyCD		        = mod:NewCDTimer(20, 63041)
 
 
@@ -66,11 +69,9 @@ mod:AddBoolOption("HealthFramePhase4", true)
 mod:AddBoolOption("AutoChangeLootToFFA", true)
 mod:AddBoolOption("RangeFrame")
 
-
 mod.vb.hardmode = false
 mod.vb.phase = 0
-mod.vb.napalmShellIcon = 7
-
+local napalmShellIcon = 7
 local lootmethod, masterlooterRaidID
 local spinningUp = DBM:GetSpellInfo(312794)
 local lastSpinUp = 0
@@ -80,20 +81,23 @@ local napalmShellTargets = {}
 local function warnNapalmShellTargets(self)
 	shellWarn:Show(table.concat(napalmShellTargets, "<, >"))
 	table.wipe(napalmShellTargets)
-	self.vb.napalmShellIcon = 7
+	napalmShellIcon = 7
 end
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 33432, "Mimiron")
+	self.vb.phase = 0
 	self.vb.hardmode = false
 	enrage:Start(-delay)
-	self.vb.phase = 0
-	is_spinningUp = false
-	self.vb.napalmShellIcon = 7
-	table.wipe(napalmShellTargets)
 	self:NextPhase()
+	is_spinningUp = false
+	napalmShellIcon = 7
+	table.wipe(napalmShellTargets)
 	timerPlasmaBlastCD:Start(-delay)
 	timerShockBlastCD:Start(28-delay)
+	timerProximityMines:Start(13)
+	self:ScheduleMethod(13,"Mine")
+
 	if DBM:GetRaidRank() == 2 then
 		lootmethod, masterlooterRaidID = GetLootMethod()
 	end
@@ -102,9 +106,12 @@ function mod:OnCombatStart(delay)
 	end
 end
 
-function mod:OnCombatEnd()
+function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 33432, "Mimiron", wipe)
 	DBM.BossHealth:Hide()
+	timerBombBotSpawn:Cancel()
+	self:UnscheduleMethod("BombBot")
+	self:UnscheduleMethod("Flames")
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Hide()
 	end
@@ -118,12 +125,21 @@ function mod:OnCombatEnd()
 end
 
 function mod:Flames()
-	if self.vb.phase == 4 then
-		timerNextFlames:Start(28)
-		self:ScheduleMethod(28, "Flames")
-	else
 		timerNextFlames:Start()
 		self:ScheduleMethod(28, "Flames")
+end
+
+function mod:BombBot()	-- Bomb Bot
+	if self.vb.phase == 3 then
+		timerBombBotSpawn:Start()
+		self:ScheduleMethod(12, "BombBot")
+	end
+end
+
+function mod:Mine()
+	if self.vb.phase == 4 or self.vb.phase == 1 then
+		timerProximityMines:Start(35)
+		self:ScheduleMethod(35, "Mine")
 	end
 end
 
@@ -135,7 +151,6 @@ function mod:UNIT_SPELLCAST_CHANNEL_STOP(unit, spell)
 end
 
 function mod:CHAT_MSG_LOOT(msg)
-	-- DBM:AddMsg(msg) --> Meridium receives loot: [Magnetic Core]
 	local player, itemID = msg:match(L.LootMsg)
 	if player and itemID and tonumber(itemID) == 46029 and self:IsInCombat() then
 		lootannounce:Show(player)
@@ -169,11 +184,13 @@ function mod:SPELL_AURA_APPLIED(args)
 		napalmShellTargets[#napalmShellTargets + 1] = args.destName
 		timerShell:Start()
 		if self.Options.SetIconOnNapalm then
-			self:SetIcon(args.destName, self.vb.napalmShellIcon, 6)
+			self:SetIcon(args.destName, napalmShellIcon, 6)
 		end
-		self.vb.napalmShellIcon = self.vb.napalmShellIcon - 1
+		napalmShellIcon = napalmShellIcon - 1
 		self:Unschedule(warnNapalmShellTargets)
-		self:Schedule(0.3, warnNapalmShellTargets, self)
+		self:Schedule(0.3, warnNapalmShellTargets)
+	elseif args:IsSpellID(63041, 64402, 64064, 63681, 63036, 65034) then
+		timerNextRockets:Start()
 	elseif args:IsSpellID(64529, 62997, 312437, 312790) then -- Plasma Blast
 		blastWarn:Show(args.destName)
 		if self.Options.SetIconOnPlasmaBlast then
@@ -185,14 +202,6 @@ end
 local function show_warning_for_spinup(self)
 	if is_spinningUp then
 		warnDarkGlare:Show()
-	end
-end
-
-function mod:SPELL_SUMMON(args)
-	if args:IsSpellID(33836, 63811, 63801, 312807, 312808, 312455, 312454) then -- Bomb Bot
-		warnBombSpawn:Show()
-	elseif args:IsSpellID(63027, 63667, 63016, 65347, 63016) then				-- mines
-		timerProximityMines:Start()
 	end
 end
 
@@ -208,25 +217,24 @@ function mod:SPELL_CAST_SUCCESS(args)
 		lastSpinUp = GetTime()
 	elseif args:IsSpellID(65192, 312440, 312793) then
 		timerNextFlameSuppressant:Start()
-	elseif args:IsSpellID(63041) then
+	elseif args:IsSpellID(63041, 64402, 64064, 63681, 63036, 65034) then
 		timerNextRockets:Start()
 	end
 end
 
 function mod:NextPhase()
-	self.vb.phase = self.vb.phase + 1
+	self:SetStage(0)
 	if self.vb.phase == 1 then
-		timerShockBlast:Start(30)
 		if self.Options.HealthFrame then
 			DBM.BossHealth:Clear()
 			DBM.BossHealth:AddBoss(33432, L.MobPhase1)
 		end
-
 	elseif self.vb.phase == 2 then
 		timerNextShockblast:Stop()
-		timerProximityMines:Stop()
 		timerFlameSuppressant:Stop()
 		timerP1toP2:Start()
+		timerProximityMines:Stop()
+		self:UnscheduleMethod("Mine")
 		timerNextDarkGlare:Start(85)
 		if self.Options.HealthFrame then
 			DBM.BossHealth:Clear()
@@ -246,6 +254,8 @@ function mod:NextPhase()
 		timerNextDarkGlare:Cancel()
 		timerNextFrostBomb:Cancel()
 		timerP2toP3:Start()
+		timerBombBotSpawn:Start(34)
+		self:ScheduleMethod(34, "BombBot")
 		if self.Options.HealthFrame then
 			DBM.BossHealth:Clear()
 			DBM.BossHealth:AddBoss(33670, L.MobPhase3)
@@ -259,6 +269,8 @@ function mod:NextPhase()
 				SetLootMethod(lootmethod)
 			end
 		end
+		timerBombBotSpawn:Cancel()
+		self:UnscheduleMethod("BombBot")
 		timerP3toP4:Start()
 		if self.vb.hardmode then
 			self:UnscheduleMethod("Flames")
@@ -271,52 +283,26 @@ function mod:NextPhase()
 			DBM.BossHealth:AddBoss(33651, L.MobPhase2)
 			DBM.BossHealth:AddBoss(33432, L.MobPhase1)
 		end
-		if self.vb.hardmode then
-			self:UnscheduleMethod("Flames")
-			self:Flames()
-            timerNextFrostBomb:Start(73)
-        end
 	end
 end
 
-do
-	local count = 0
-	local last = 0
-	local lastPhaseChange = 0
-	function mod:SPELL_AURA_REMOVED(args)
-		local cid = self:GetCIDFromGUID(args.destGUID)
-		if GetTime() - lastPhaseChange > 30 and (cid == 33432 or cid == 33651 or cid == 33670) then
-			if args.timestamp == last then	-- all events in the same tick to detect the phases earlier (than the yell) and localization-independent
-				count = count + 1
-				if (mod:IsDifficulty("heroic10") and count > 4) or (mod:IsDifficulty("heroic25") and count > 9) then
-					lastPhaseChange = GetTime()
-					self:NextPhase()
-				end
-			else
-				count = 1
-			end
-			last = args.timestamp
-		elseif args:IsSpellID(63666, 65026, 312347, 312435, 312700, 312788) then -- Napalm Shell
-			if self.Options.SetIconOnNapalm then
+
+function mod:SPELL_AURA_REMOVED(args)
+	if args:IsSpellID(63666, 65026, 312347, 312435, 312700, 312788) then -- Napalm Shell
+		if self.Options.SetIconOnNapalm then
 				self:SetIcon(args.destName, 0)
-			end
 		end
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.YellPhase2 or msg:find(L.YellPhase2) then
-		--DBM:AddMsg("ALPHA: yell detect phase2, syncing to clients")
 		self:SendSync("Phase2")	-- untested alpha! (this will result in a wrong timer)
-
 	elseif msg == L.YellPhase3 or msg:find(L.YellPhase3) then
-		--DBM:AddMsg("ALPHA: yell detect phase3, syncing to clients")
 		self:SendSync("Phase3")	-- untested alpha! (this will result in a wrong timer)
 
 	elseif msg == L.YellPhase4 or msg:find(L.YellPhase4) then
-		--DBM:AddMsg("ALPHA: yell detect phase3, syncing to clients")
 		self:SendSync("Phase4") -- SPELL_AURA_REMOVED detection might fail in phase 3...there are simply not enough debuffs on him
-
 	elseif msg == L.YellHardPull or msg:find(L.YellHardPull) then
 		timerHardmode:Start()
 		timerFlameSuppressant:Start()
@@ -324,20 +310,58 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self.vb.hardmode = true
 		timerNextFlames:Start(2)
 		self:ScheduleMethod(2, "Flames")
+	elseif (msg == L.YellKilled or msg:find(L.YellKilled)) then -- register kill
+		enrage:Stop()
+		timerHardmode:Stop()
+		timerNextFlames:Stop()
+		self:UnscheduleMethod("Flames")
+		timerNextFrostBomb:Stop()
+		timerNextDarkGlare:Stop()
 	end
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 34098 then--ClearAllDebuffs
-	elseif spellId == 64402 or spellId == 65034 then--P2, P4 Rocket Strike
-		warnRocketStrike:Show()
-		warnRocketStrike:Play("watchstep")
-		timerRocketStrikeCD:Start()
+		if spellId == 34098 then--ClearAllDebuffs
+			self.vb.phase = self.vb.phase + 1
+			if self.vb.phase == 2 then
+				timerNextShockblast:Stop()
+				timerProximityMines:Stop()
+				timerFlameSuppressant:Stop()
+				--timerNextFlameSuppressant:Stop()
+				timerPlasmaBlastCD:Stop()
+				timerP1toP2:Start()
+				if self.Options.RangeFrame then
+					DBM.RangeCheck:Hide()
+				end
+				timerRocketStrikeCD:Start(63)
+				timerNextDarkGlare:Start(78)
+				if self.vb.hardmode then
+					timerNextFrostBomb:Start(94)
+				end
+			elseif self.vb.phase == 3 then
+				timerDarkGlareCast:Stop()
+				timerNextDarkGlare:Stop()
+				timerNextFrostBomb:Stop()
+				timerRocketStrikeCD:Stop()
+				timerP2toP3:Start()
+			elseif self.vb.phase == 4 then
+				timerP3toP4:Start()
+				if self.vb.hardmode then
+					timerNextFrostBomb:Start(32)
+				end
+				timerRocketStrikeCD:Start(50)
+				timerNextDarkGlare:Start(59.8)
+				timerNextShockblast:Start(81)
+			end
+		elseif spellId == 64402 or spellId == 65034 then--P2, P4 Rocket Strike
+			warnRocketStrike:Show()
+			warnRocketStrike:Play("watchstep")
+			timerRocketStrikeCD:Start()
 	end
 end
 function mod:OnSync(event, args)
 	if event == "SpinUpFail" then
-		self.vb.is_spinningUp = false
+		is_spinningUp = false
 		timerSpinUp:Cancel()
 		timerDarkGlareCast:Cancel()
 		timerNextDarkGlare:Cancel()

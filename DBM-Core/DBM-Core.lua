@@ -68,10 +68,11 @@ local function showRealDate(curseDate)
 	end
 end
 
+-- Передаю привет тилю, жду спизженные куски кода добавленного мной у тебя в ДБ-Ме :)
 DBM = {
-	Revision = parseCurseDate("20210926215500"),
-	DisplayVersion = "5.51", -- the string that is shown as version
-	ReleaseRevision = releaseDate(2021, 09, 26) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
+	Revision = parseCurseDate("20211001000400"),
+	DisplayVersion = "5.52", -- the string that is shown as version
+	ReleaseRevision = releaseDate(2021, 10, 01) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
 
@@ -198,6 +199,8 @@ DBM.DefaultOptions = {
 	InfoFrameY = -75,
 	InfoFrameShowSelf = false,
 	InfoFrameLines = 0,
+	InfoFrameCols = 0,
+	InfoFrameLocked = false,
 	WarningDuration2 = 1.5,
 	WarningPoint = "CENTER",
 	WarningX = 0,
@@ -454,6 +457,8 @@ local delayedFunction
 local dataBroker
 local voiceSessionDisabled = false
 local handleSync
+local targetMonitor = {}
+
 
 local enableIcons = true -- set to false when a raid leader or a promoted player has a newer version of DBM
 
@@ -477,7 +482,7 @@ if LibStub("LibDurability", true) then
 	LD = LibStub("LibDurability")
 end
 
-
+local AceTimer = LibStub("AceTimer-3.0")
 --------------------------------------------------------
 --  Cache frequently used global variables in locals  --
 --------------------------------------------------------
@@ -613,6 +618,15 @@ end
 --------------
 --  Events  --
 --------------
+
+local function has_value(tab, val)
+    for index, value in ipairs(tab) do
+        if value == val then
+            return true
+        end
+    end
+    return false
+end
 do
 	local registeredEvents = {}
 	local registeredSpellIds = {}
@@ -670,11 +684,152 @@ do
 		return DBM:GetCIDFromGUID(self.destGUID)
 	end
 
+	local function IsUnitEvent(event, ...)
+		local isUnitEvent = (event and event:sub(0, 5) == "UNIT_" and event:sub(event:len() - 10) ~= "_UNFILTERED")
+		if isUnitEvent and ... and tContains({...}, event) then
+			isUnitEvent = false
+		end
+		return isUnitEvent
+	end
+
 	local function handleEvent(self, event, ...)
 		if not registeredEvents[event] or DBM.Options and not DBM.Options.Enabled then return end
-		for i, v in ipairs(registeredEvents[event]) do
+		local isUnitEvent = IsUnitEvent(event, "UNIT_DIED", "UNIT_DESTROYED")
+
+		for _, v in ipairs(registeredEvents[event]) do
+			if isUnitEvent and v.id == DBM.currentModId then
+				-- Workaround for retail-like mod:RegisterEvents("UNIT_SPELLCAST_START boss1"). Check if we have valid units registered and filter out everything else.
+				-- v is mod here... so we check registered mods for registered events with registered uIds (v.registeredUnitEvents[event]).
+				-- then we check if we have our unit (args) in the table ... self.registeredUnitEvents[event] = args which is defined below
+				if v.registeredUnitEvents and v.registeredUnitEvents[event] and not has_value(v.registeredUnitEvents[event], ...) then return end
+			end
+
 			if type(v[event]) == "function" and (not v.zones or checkEntry(v.zones, GetRealZoneText()) or checkEntry(v.zones, GetCurrentMapAreaID())) and (not v.Options or v.Options.Enabled) then
 				v[event](v, ...)
+			end
+		end
+	end
+
+	local registerSpellId, unregisterSpellId, registerCLEUEvent, unregisterCLEUEvent, unregisterUnitEvent
+	do
+		local frames = {} -- frames that are being used for unit events, one frame per unit id (this could be optimized, as it currently creates a new frame even for a different event, but that's not worth the effort as 90% of all calls are just boss1 anyways)
+
+		function unregisterUnitEvent(mod, event, ...)
+			for i = 1, select("#", ...) do
+				local uId = select(i, ...)
+				if not uId then break end
+				local frame = frames[uId]
+				local refs = (registeredUnitEventIds[event .. uId] or 1) - 1
+				registeredUnitEventIds[event .. uId] = refs
+				if refs <= 0 then
+					registeredUnitEventIds[event .. uId] = nil
+					if frame then
+						frame:UnregisterEvent(event)
+					end
+				end
+				if mod.registeredUnitEvents and mod.registeredUnitEvents[event .. uId] then
+					mod.registeredUnitEvents[event .. uId] = nil
+				end
+			end
+			for i = #registeredEvents[event], 1, -1 do
+				if registeredEvents[event][i] == mod then
+					tremove(registeredEvents[event], i)
+				end
+			end
+			if #registeredEvents[event] == 0 then
+				registeredEvents[event] = nil
+			end
+		end
+
+		function registerSpellId(event, spellId)
+			if type(spellId) == "string" then--Something is screwed up, like SPELL_AURA_APPLIED DOSE
+				DBM:AddMsg("DBM RegisterEvents Ошибка: "..spellId.." не имеет числа!")
+				return
+			end
+			if spellId and not DBM:GetSpellInfo(spellId) then
+				DBM:AddMsg("DBM RegisterEvents Ошибка: "..spellId.." spell id не существует!")
+				return
+			end
+			if not registeredSpellIds[event] then
+				registeredSpellIds[event] = {}
+			end
+			registeredSpellIds[event][spellId] = (registeredSpellIds[event][spellId] or 0) + 1
+		end
+
+		function unregisterSpellId(event, spellId)
+			if not registeredSpellIds[event] then return end
+			if spellId and not DBM:GetSpellInfo(spellId) then
+				DBM:AddMsg("DBM unregisterSpellId Ошибка: "..spellId.." spell id не существует!")
+				return
+			end
+			local refs = (registeredSpellIds[event][spellId] or 1) - 1
+			registeredSpellIds[event][spellId] = refs
+			if refs <= 0 then
+				registeredSpellIds[event][spellId] = nil
+			end
+		end
+
+		--There are 2 tables. unfilteredCLEUEvents and registeredSpellIds table.
+		--unfilteredCLEUEvents saves UNFILTERED cleu event count. this is count table to prevent bad unregister.
+		--registeredSpellIds tables filtered table. this saves event and spell ids. works smiliar with unfilteredCLEUEvents table.
+		function registerCLEUEvent(mod, event)
+			local argTable = {strsplit(" ", event)}
+			-- filtered cleu event. save information in registeredSpellIds table.
+			if #argTable > 1 then
+				event = argTable[1]
+				for i = 2, #argTable do
+					registerSpellId(event, tonumber(argTable[i]))
+				end
+			-- no args. works as unfiltered. save information in unfilteredCLEUEvents table.
+			else
+				unfilteredCLEUEvents[event] = (unfilteredCLEUEvents[event] or 0) + 1
+			end
+			registeredEvents[event] = registeredEvents[event] or {}
+			tinsert(registeredEvents[event], mod)
+		end
+
+		function unregisterCLEUEvent(mod, event)
+			local argTable = {strsplit(" ", event)}
+			local eventCleared = false
+			-- filtered cleu event. save information in registeredSpellIds table.
+			if #argTable > 1 then
+				event = argTable[1]
+				for i = 2, #argTable do
+					unregisterSpellId(event, tonumber(argTable[i]))
+				end
+				local remainingSpellIdCount = 0
+				if registeredSpellIds[event] then
+					for _, _ in pairs(registeredSpellIds[event]) do
+						remainingSpellIdCount = remainingSpellIdCount + 1
+					end
+				end
+				if remainingSpellIdCount == 0 then
+					registeredSpellIds[event] = nil
+					-- if unfilteredCLEUEvents and registeredSpellIds do not exists, clear registeredEvents.
+					if not unfilteredCLEUEvents[event] then
+						eventCleared = true
+					end
+				end
+			-- no args. works as unfiltered. save information in unfilteredCLEUEvents table.
+			else
+				local refs = (unfilteredCLEUEvents[event] or 1) - 1
+				unfilteredCLEUEvents[event] = refs
+				if refs <= 0 then
+					unfilteredCLEUEvents[event] = nil
+					-- if unfilteredCLEUEvents and registeredSpellIds do not exists, clear registeredEvents.
+					if not registeredSpellIds[event] then
+						eventCleared = true
+					end
+				end
+			end
+			for i = #registeredEvents[event], 1, -1 do
+				if registeredEvents[event][i] == mod then
+					registeredEvents[event][i] = {}
+					break
+				end
+			end
+			if eventCleared then
+				registeredEvents[event] = nil
 			end
 		end
 	end
@@ -682,9 +837,148 @@ do
 	function DBM:RegisterEvents(...)
 		for i = 1, select("#", ...) do
 			local event = select(i, ...)
+			-- spell events with special care.
+			if event:sub(0, 6) == "SPELL_" and event ~= "SPELL_NAME_UPDATE" or event:sub(0, 6) == "RANGE_" or event:sub(0, 6) == "SWING_" or event == "UNIT_DIED" or event == "UNIT_DESTROYED" or event == "PARTY_KILL" then
+				registerCLEUEvent(self, event)
+			else
+				if event:sub(0, 5) == "UNIT_" and event:sub(event:len() - 10) ~= "_UNFILTERED" and event ~= "UNIT_DIED" and event ~= "UNIT_DESTROYED" then
+					local args = {strsplit(" ", event)}
+					event = tremove(args, 1)
+					-- Register valid units for retail-like mod:RegisterEvents("UNIT_SPELLCAST_START boss1")
+					-- separate units with spaces up to 9 units. Otherwise skip unit filter for that event
+					if next(args) then
+						self.registeredUnitEvents = self.registeredUnitEvents or {}
+						self.registeredUnitEvents[event] = args
+					end
+				end
 			registeredEvents[event] = registeredEvents[event] or {}
 			tinsert(registeredEvents[event], self)
 			mainFrame:RegisterEvent(event)
+			end
+		end
+	end
+
+	local function unregisterUEvent(mod, event)
+		if event:sub(0, 5) == "UNIT_" and event ~= "UNIT_DIED" and event ~= "UNIT_DESTROYED" then
+			local eventName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8 = strsplit(" ", event)
+			if eventName:sub(eventName:len() - 10) == "_UNFILTERED" then
+				mainFrame:UnregisterEvent(eventName:sub(0, -12))
+			else
+				unregisterUnitEvent(mod, eventName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+			end
+		end
+	end
+
+	local function findRealEvent(t, val)
+		for _, v in ipairs(t) do
+			local event = strsplit(" ", v)
+			if event == val then
+				return v
+			end
+		end
+	end
+
+	function DBM:UnregisterInCombatEvents(srmOnly, srmIncluded)
+		for event, mods in pairs(registeredEvents) do
+			if srmOnly then
+				local i = 1
+				while mods[i] do
+					if mods[i] == self and event == "SPELL_AURA_REMOVED" then
+						local findEvent = findRealEvent(self.inCombatOnlyEvents, "SPELL_AURA_REMOVED")
+						if findEvent then
+							unregisterCLEUEvent(self, findEvent)
+							break
+						end
+					end
+					i = i +1
+				end
+			elseif (event:sub(0, 6) == "SPELL_"and event ~= "SPELL_NAME_UPDATE" or event:sub(0, 6) == "RANGE_") then
+				local i = 1
+				while mods[i] do
+					if mods[i] == self and (srmIncluded or event ~= "SPELL_AURA_REMOVED") then
+						local findEvent = findRealEvent(self.inCombatOnlyEvents, event)
+						if findEvent then
+							unregisterCLEUEvent(self, findEvent)
+							break
+						end
+					end
+					i = i +1
+				end
+			else
+				local match = false
+				for i = #mods, 1, -1 do
+					if mods[i] == self and checkEntry(self.inCombatOnlyEvents, event)  then
+						tremove(mods, i)
+						match = true
+					end
+				end
+				if #mods == 0 or (match and event:sub(0, 5) == "UNIT_" and event:sub(0, -10) ~= "_UNFILTERED" and event ~= "UNIT_DIED" and event ~= "UNIT_DESTROYED") then -- unit events have their own reference count
+					unregisterUEvent(self, event)
+				end
+				if #mods == 0 then
+					registeredEvents[event] = nil
+				end
+			end
+		end
+	end
+
+	function DBM:RegisterShortTermEvents(...)
+		local _shortTermRegisterEvents = {...}
+		for k, v in pairs(_shortTermRegisterEvents) do
+			if v:sub(0, 5) == "UNIT_" and v:sub(v:len() - 10) ~= "_UNFILTERED" and not v:find(" ") and v ~= "UNIT_DIED" and v ~= "UNIT_DESTROYED" then
+				-- legacy event, oh noes
+				_shortTermRegisterEvents[k] = v .. " boss1 boss2 boss3 boss4 boss5 target focus"
+			end
+		end
+		self.shortTermEventsRegistered = 1
+		self:RegisterEvents(unpack(_shortTermRegisterEvents))
+		-- Fix so we can register multiple short term events. Use at your own risk, as unsucribing will cause
+		-- all short term events to unregister.
+		if not self.shortTermRegisterEvents then
+			self.shortTermRegisterEvents = {}
+		end
+		for k, v in pairs(_shortTermRegisterEvents) do
+			self.shortTermRegisterEvents[k] = v
+		end
+		-- End fix
+	end
+
+	function DBM:UnregisterShortTermEvents()
+		if self.shortTermRegisterEvents then
+			for event, mods in pairs(registeredEvents) do
+				if event:sub(0, 6) == "SPELL_" or event:sub(0, 6) == "RANGE_" then
+					local i = 1
+					while mods[i] do
+						if mods[i] == self then
+							local findEvent = findRealEvent(self.shortTermRegisterEvents, event)
+							if findEvent then
+								unregisterCLEUEvent(self, findEvent)
+								break
+							end
+						end
+						i = i +1
+					end
+				else
+					local match = false
+					for i = #mods, 1, -1 do
+						if mods[i] == self then
+							local findEvent = findRealEvent(self.shortTermRegisterEvents, event)
+							if findEvent then
+								tremove(mods, i)
+								match = true
+							end
+						end
+					end
+					if #mods == 0 or (match and event:sub(0, 5) == "UNIT_" and event:sub(0, -10) ~= "_UNFILTERED" and event ~= "UNIT_DIED" and event ~= "UNIT_DESTROYED") then
+						unregisterUEvent(self, event)
+					end
+					if #mods == 0 then
+						registeredEvents[event] = nil
+					end
+				end
+			end
+			self.shortTermEventsRegistered = nil
+			self.shortTermRegisterEvents = nil
 		end
 	end
 
@@ -696,6 +990,11 @@ do
 
 	function DBM:COMBAT_LOG_EVENT_UNFILTERED(timestamp, event, sourceGUID, sourceName, sourceFlags, destGUID, destName, destFlags, ...)
 		if not registeredEvents[event] then return end
+		local eventSub6 = event:sub(0, 6)
+		if (eventSub6 == "SPELL_" or eventSub6 == "RANGE_") --[[and not unfilteredCLEUEvents[event]--]] and registeredSpellIds[event] then -- why is unfilteredCLEUEvents event count even needed here? Just broke the function altogether
+		args.spellId = ...
+			if not registeredSpellIds[event][args.spellId] then return end
+		end
 		twipe(args)
 		args.timestamp = timestamp
 		args.event = event
@@ -1347,7 +1646,11 @@ do
 		time = time or 5
 		numAnnounces = numAnnounces or 3
 		for i = 1, numAnnounces do
-			schedule(time - i, func, mod, self, i, ...)
+			--In event time is < number of announces (ie 2 second time, with 3 announces)
+			local validTime = time - i
+			if validTime >= 1 then
+				schedule(validTime, func, mod, self, i, ...)
+			end
 		end
 	end
 
@@ -1641,7 +1944,7 @@ do
 			end
 			LL:RequestLatency()
 			DBM:AddMsg(DBM_CORE_LAG_CHECKING)
-			C_Timer:After(5, function() DBM:ShowLag() end)
+			AceTimer:ScheduleTimer(function() DBM:ShowLag() end, 5)
 		elseif cmd:sub(1, 10) == "durability" then
 			if not LD then
 				DBM:AddMsg(DBM_CORE_UPDATE_REQUIRES_RELAUNCH)
@@ -1649,7 +1952,7 @@ do
 			end
 			LD:RequestDurability()
 			DBM:AddMsg(DBM_CORE_DUR_CHECKING)
-			C_Timer:After(5, function() DBM:ShowDurability() end)
+			AceTimer:ScheduleTimer(function() DBM:ShowDurability() end, 5)
 		elseif cmd:sub(1, 5) == "arrow" then
 			if not DBM:IsInRaid() then
 				DBM:AddMsg(DBM_ARROW_NO_RAIDGROUP)
@@ -1712,6 +2015,19 @@ do
 		elseif cmd:sub(1, 6) == "silent" then
 			DBM.Options.SilentMode = DBM.Options.SilentMode == false and true or false
 			DBM:AddMsg("SilentMode is " .. (DBM.Options.SilentMode and "ON" or "OFF"))
+		elseif cmd:sub(1, 9) == "infoframe" then
+			if DBM.InfoFrame:IsShown() then
+				DBM.InfoFrame:Hide()
+			else
+				DBM.InfoFrame:Show(5, "test")
+			end
+		elseif cmd:sub(1, 10) == "aggroframe" then
+			if DBM.InfoFrame:IsShown() then
+				DBM.InfoFrame:Hide()
+			else
+				DBM.InfoFrame:SetHeader(DBM_CORE_INFOFRAME_AGGRO)
+				DBM.InfoFrame:Show(7, "playeraggro", 1)
+			end
 		else
 			DBM:LoadGUI()
 		end
@@ -2984,13 +3300,13 @@ do
 		if instanceType == "none" then
 			LastInstanceType = "none"
 			if not targetEventsRegistered then
---				self:RegisterShortTermEvents("UPDATE_MOUSEOVER_UNIT")
+				self:RegisterShortTermEvents("UPDATE_MOUSEOVER_UNIT")
 				targetEventsRegistered = true
 			end
 		else
 			LastInstanceType = instanceType
 			if targetEventsRegistered then
---				self:UnregisterShortTermEvents()
+				self:UnregisterShortTermEvents()
 				targetEventsRegistered = false
 			end
 			if savedDifficulty == "worldboss" then
@@ -3093,7 +3409,65 @@ function DBM:LoadMod(mod, force)
 	end
 end
 
+do
+	local function loadModByUnit(uId)
+		if not uId then
+			uId = "mouseover"
+		else
+			uId = uId.."target"
+		end
+		if IsInInstance() or not UnitIsFriend("player", uId) and UnitIsDead("player") or UnitIsDead(uId) then return end--If you're in an instance no reason to waste cpu. If THE BOSS dead, no reason to load a mod for it. To prevent rare lua error, needed to filter on player dead.
+		local guid = UnitGUID(uId)
+		if guid and DBM:IsCreatureGUID(guid) then
+			local cId = DBM:GetCIDFromGUID(guid)
+			for bosscId, addon in pairs(loadcIds) do
+				local _, _, _, enabled = GetAddOnInfo(addon)
+				if cId and bosscId and cId == bosscId and not IsAddOnLoaded(addon) and enabled ~= 0 then
+					for _, v in ipairs(DBM.AddOns) do
+						if v.modId == addon then
+							DBM:LoadMod(v, true)
+							break
+						end
+					end
+				end
+			end
+		end
+	end
 
+	--Loading routeens hacks for world bosses based on target or mouseover.
+	function DBM:UPDATE_MOUSEOVER_UNIT()
+		loadModByUnit()
+	end
+
+	function DBM:UNIT_TARGET(uId)
+		if targetEventsRegistered then--Allow outdoor mod loading
+			loadModByUnit(uId)
+		end
+		--Debug options for seeing where BossUnitTargetScanner can be used.
+		local transcriptor = _G["Transcriptor"]
+		if (self.Options.DebugLevel > 2 or (transcriptor and transcriptor:IsLogging())) and uId:find("boss") then
+			local targetName = UnitName(uId.."target") or "nil"
+			self:Debug(uId.." changed targets to "..targetName)
+		end
+		--Active BossUnitTargetScanner
+		if targetMonitor[uId] and UnitExists(uId.."target") and UnitPlayerOrPetInRaid(uId.."target") then
+			self:Debug("targetMonitor for this unit exists, target exists", 2)
+			local modId, returnFunc = targetMonitor[uId].modid, targetMonitor[uId].returnFunc
+			self:Debug("targetMonitor: "..modId..", "..uId..", "..returnFunc, 2)
+			if not targetMonitor[uId].allowTank then
+				local tanking, status = UnitDetailedThreatSituation(uId, uId.."target")--Tanking may return 0 if npc is temporarily looking at an NPC (IE fracture) but status will still be 3 on true tank
+				if tanking or (status == 3) then
+					self:Debug("targetMonitor ending for unit without 'allowTank', ignoring target", 2)
+					return
+				end
+			end
+			local mod = self:GetModByName(modId)
+			self:Debug("targetMonitor success for this unit, a valid target for returnFunc", 2)
+			mod[returnFunc](mod, self:GetUnitFullName(uId.."target"), uId.."target", uId)--Return results to warning function with all variables.
+			targetMonitor[uId] = nil
+		end
+	end
+end
 
 -----------------------------
 --  Handle Incoming Syncs  --
@@ -3356,7 +3730,7 @@ do
 				if timer/60 > 1 then dummyMod2.text:Schedule(timer - 1*60, DBM_CORE_BREAK_MIN:format(1)) end
 				dummyMod2.text:Schedule(timer, DBM_CORE_ANNOUNCE_BREAK_OVER:format(hour..":"..minute))
 			end
-			C_Timer:After(timer, function() self.Options.tempBreak2 = nil end)
+			AceTimer:ScheduleTimer(function() self.Options.tempBreak2 = nil end, timer)
 		end
 	end
 
@@ -3468,15 +3842,28 @@ do
 		end
 	end
 
+	local localized_TIMER_PULL = { -- Workaround for mismatched clients locales: L.TIMER_PULL would be different and therefore would not play sounds since the receiver locale would be different than sender locale.
+		"开怪倒计时",	 --CN
+		"Pull in",		--DE, EN
+		"Iniciando en",	--ES
+		"Pull dans",	--FR
+		"풀링",			--KR
+		"Атака",		--RU
+		"戰鬥準備"		 --TW
+	}
 	syncHandlers["U"] = function(sender, time, text)
 		if select(2, IsInInstance()) == "pvp" then return end -- no pizza timers in battlegrounds
 		if DBM.Options.DontShowUserTimers then return end
 		if DBM:GetRaidRank(sender) == 0 then return end
 		if sender == playerName then return end
 		time = tonumber(time or 0)
-		text = tostring(text)
+		text = tContains(localized_TIMER_PULL, tostring(text)) and DBM_CORE_TIMER_PULL or tostring(text) -- Fixes localization of pull bar text
 		if time and text then
 			DBM:CreatePizzaTimer(time, text, nil, sender)
+			if tContains(localized_TIMER_PULL, text) and time >= 5 and DBM.Options.AudioPull then
+				DBM:Schedule(time - 5, PlaySoundFile, "Interface\\AddOns\\DBM-Core\\sounds\\5to1.mp3", "Master")
+				DBM:Schedule(time, PlaySoundFile, "Interface\\AddOns\\DBM-Core\\sounds\\Alarm.ogg", "Master")
+			end
 		end
 	end
 
@@ -3692,7 +4079,7 @@ do
 					DBM:Schedule(0.99, DBM.AddMsg, DBM, DBM_INSTANCE_INFO_ALL_RESPONSES)
 					allResponded = true
 				end
-				C_Timer:After(1, showResults) --Delay results so we allow time for same sender to send more than 1 lockout, otherwise, if we get expectedResponses before all data is sent from 1 user, we clip some of their data.
+				AceTimer:ScheduleTimer(showResults, 1) --Delay results so we allow time for same sender to send more than 1 lockout, otherwise, if we get expectedResponses before all data is sent from 1 user, we clip some of their data.
 			end
 		end
 
@@ -4588,6 +4975,20 @@ do
 
 	function DBM:EndCombat(mod, wipe, srmIncluded)
 		if removeEntry(inCombat, mod) then
+			self.currentModId = nil
+			if mod.inCombatOnlyEvents and mod.inCombatOnlyEventsRegistered then
+				if srmIncluded then-- unregister all events including SPELL_AURA_REMOVED events
+					mod:UnregisterInCombatEvents(false, true)
+				else-- unregister all events except for SPELL_AURA_REMOVED events (might still be needed to remove icons etc...)
+					mod:UnregisterInCombatEvents()
+					self:Schedule(2, mod.UnregisterInCombatEvents, mod, true) -- 2 seconds should be enough for all auras to fade
+				end
+				self:Schedule(3, mod.Stop, mod) -- Remove accident started timers.
+				mod.inCombatOnlyEventsRegistered = nil
+				if mod.OnCombatEnd then
+					self:Schedule(3, mod.OnCombatEnd, mod, wipe, true) -- Remove accidentally shown frames
+				end
+			end
 			if mod.updateInterval then
 				mod:UnregisterOnUpdateHandler()
 			end
@@ -4868,8 +5269,28 @@ function DBM:GetCurrentInstanceDifficulty()
 	end
 end
 
+function DBM:GetCurrentArea()
+	return LastInstanceMapID
+end
+
 function DBM:GetGroupSize()
 	return LastGroupSize
+end
+
+function DBM:GetStage(modId)
+	if modId then
+		local mod = self:GetModByName(modId)
+		if mod and mod.inCombat then
+			return mod.vb.phase or 0
+		end
+	else
+		if #inCombat > 0 then--At least one boss is engaged
+			local mod = inCombat[1]--Get first mod in table
+			if mod then
+				return mod.vb.phase or 0
+			end
+		end
+	end
 end
 
 function DBM:HasMapRestrictions()
@@ -4987,6 +5408,38 @@ function DBM:UnitBuff(uId, spellInput, spellInput2, spellInput3, spellInput4)
 	end
 end
 
+function DBM:GetSpellInfoNew(spellId)
+	local name, rank, icon, cost, isFunnel, powerType, castingTime, minRange, maxRange = GetSpellInfo(spellId)
+	if not name then--Bad request all together
+		DBM:Debug("|cffff0000Invalid call to GetSpellInfo for spellID: |r"..spellId)
+		return nil
+	else--Good request, return now
+		return name, rank, icon, castingTime, minRange, maxRange, spellId
+	end
+end
+
+function DBM:UnitDebuffNew(uId, spellInput, spellInput2, spellInput3, spellInput4)
+	if not uId then return end
+	for i = 1, 60 do
+		local spellName, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitDebuff(uId, i)
+		if not spellName then return end
+		if spellInput == spellName or spellInput == spellId or spellInput2 == spellName or spellInput2 == spellId or spellInput3 == spellName or spellInput3 == spellId or spellInput4 == spellName or spellInput4 == spellId then
+			return spellName, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId
+		end
+	end
+end
+
+function DBM:UnitBuffNew(uId, spellInput, spellInput2, spellInput3, spellInput4)
+	if not uId then return end
+	for i = 1, 60 do
+		local spellName, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitBuff(uId, i)
+		if not spellName then return end
+		if spellInput == spellName or spellInput == spellId or spellInput2 == spellName or spellInput2 == spellId or spellInput3 == spellName or spellInput3 == spellId or spellInput4 == spellName or spellInput4 == spellId then
+			return spellName, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId
+		end
+	end
+end
+
 function DBM:UNIT_DIED(args)
 	local GUID = args.destGUID
 	if self:IsCreatureGUID(GUID) then
@@ -5071,6 +5524,9 @@ do
 				mod.vb[name] = false
 			else
 				mod.vb[name] = value
+				if name == "phase" then
+					mod:SetStage(value)--Fire stage callback for 3rd party mods when stage is recovered
+				end
 			end
 		end
 	end
@@ -5583,6 +6039,9 @@ end
 --  General Methods  --
 -----------------------
 bossModPrototype.RegisterEvents = DBM.RegisterEvents
+bossModPrototype.UnregisterInCombatEvents = DBM.UnregisterInCombatEvents
+bossModPrototype.RegisterShortTermEvents = DBM.RegisterShortTermEvents
+bossModPrototype.UnregisterShortTermEvents = DBM.UnregisterShortTermEvents
 bossModPrototype.AddMsg = DBM.AddMsg
 
 function bossModPrototype:SetZone(...)
@@ -5660,6 +6119,19 @@ function bossModPrototype:UnregisterOnUpdateHandler()
 	twipe(updateFunctions)
 end
 
+function bossModPrototype:SetStage(stage)
+	if stage == 0 then--Increment request instead of hard value
+		self.vb.phase = self.vb.phase + 1
+	else
+		self.vb.phase = stage
+	end
+	if self.inCombat then--Safety, in event mod manages to run any phase change calls out of combat/during a wipe we'll just safely ignore it
+		fireEvent("DBM_SetStage", self, self.id, self.vb.phase, self.encounterId)--Mod, modId, Stage, Encounter Id (if available).
+		--Note, in Wrath dungeons some encounters return multiple Ids years ago, but blizzard consolidated them recently such as 217, 265 consolidated to just 1972
+		--TODO, see if Wrath Classic uses consolidated Ids or original dual Id system. if wrath classic uses dual Ids, DBM_SetStage using self.encounterId will need to be fixed
+	end
+end
+
 --------------
 --  Events  --
 --------------
@@ -5674,6 +6146,15 @@ function bossModPrototype:RegisterEventsInCombat(...)
 			self.inCombatOnlyEvents[k] = v .. " boss1 boss2 boss3 boss4 target focus"
 		end
 	end
+end
+
+function bossModPrototype:IsTrivial(level) -- needs to be reworked
+	if level then
+		if playerLevel >= level then
+			return true
+		end
+	end
+	return false
 end
 
 function bossModPrototype:SendWhisper(msg, target)
@@ -6128,7 +6609,7 @@ do
 			font1u:Hide()
 			font1:Hide()
 			if frame.font1ticker then
-				frame.font1ticker:Cancel()
+				AceTimer:CancelTimer(frame.font1ticker)
 				frame.font1ticker = nil
 			end
 		elseif font1elapsed > duration then
@@ -6147,7 +6628,7 @@ do
 			font2u:Hide()
 			font2:Hide()
 			if frame.font2ticker then
-				frame.font2ticker:Cancel()
+				AceTimer:CancelTimer(frame.font2ticker)
 				frame.font2ticker = nil
 			end
 		elseif font2elapsed > duration then
@@ -6166,7 +6647,7 @@ do
 			font3u:Hide()
 			font3:Hide()
 			if frame.font3ticker then
-				frame.font3ticker:Cancel()
+				AceTimer:CancelTimer(frame.font3ticker)
 				frame.font3ticker = nil
 			end
 		elseif font3elapsed > duration then
@@ -6244,7 +6725,7 @@ do
 			font1:Show()
 			font1u:Show()
 			added = true
-			frame.font1ticker = frame.font1ticker or C_Timer:NewTicker(0.05, fontHide1)
+			frame.font1ticker = frame.font1ticker or AceTimer:ScheduleRepeatingTimer(fontHide1, 0.05)
 		elseif not frame.font2ticker then
 			font2elapsed = 0
 			font2.lastUpdate = GetTime()
@@ -6252,7 +6733,7 @@ do
 			font2:Show()
 			font2u:Show()
 			added = true
-			frame.font2ticker = frame.font2ticker or C_Timer:NewTicker(0.05, fontHide2)
+			frame.font2ticker = frame.font2ticker or AceTimer:ScheduleRepeatingTimer(fontHide2, 0.05)
 		elseif not frame.font3ticker or force then
 			font3elapsed = 0
 			font3.lastUpdate = GetTime()
@@ -6261,7 +6742,7 @@ do
 			font3u:Show()
 			fontHide3()
 			added = true
-			frame.font3ticker = frame.font3ticker or C_Timer:NewTicker(0.05, fontHide3)
+			frame.font3ticker = frame.font3ticker or AceTimer:ScheduleRepeatingTimer(fontHide3, 0.05)
 		end
 		if not added then
 			local prevText1 = font2:GetText()
@@ -6279,7 +6760,7 @@ do
 		local function moveEnd(self)
 			anchorFrame:Hide()
 			if anchorFrame.ticker then
-				anchorFrame.ticker:Cancel()
+				AceTimer:CancelTimer(anchorFrame.ticker)
 				anchorFrame.ticker = nil
 			end
 			font1elapsed = self.Options.WarningDuration2
@@ -6324,7 +6805,7 @@ do
 				moveEnd(self)
 			else
 				anchorFrame:Show()
-				anchorFrame.ticker = anchorFrame.ticker or C_Timer:NewTicker(5, function() self:AddWarning(DBM_CORE_MOVE_WARNING_MESSAGE) end)
+				anchorFrame.ticker = anchorFrame.ticker or AceTimer:ScheduleRepeatingTimer(function() self:AddWarning(DBM_CORE_MOVE_WARNING_MESSAGE) end, 5)
 				self:AddWarning(DBM_CORE_MOVE_WARNING_MESSAGE)
 				self:Schedule(15, moveEnd, self)
 				self.Bars:CreateBar(15, DBM_CORE_MOVE_WARNING_BAR)
@@ -6893,7 +7374,7 @@ do
 		if font1elapsed > duration * 1.3 then
 			font1:Hide()
 			if frame.font1ticker then
-				frame.font1ticker:Cancel()
+				AceTimer:CancelTimer(frame.font1ticker)
 				frame.font1ticker = nil
 			end
 		elseif font1elapsed > duration then
@@ -6911,7 +7392,7 @@ do
 		if font2elapsed > duration * 1.3 then
 			font2:Hide()
 			if frame.font2ticker then
-				frame.font2ticker:Cancel()
+				AceTimer:CancelTimer(frame.font2ticker)
 				frame.font2ticker = nil
 			end
 		elseif font2elapsed > duration then
@@ -6948,14 +7429,14 @@ do
 			font1:SetText(text)
 			font1:Show()
 			added = true
-			frame.font1ticker = frame.font1ticker or C_Timer:NewTicker(0.05, fontHide1)
+			frame.font1ticker = frame.font1ticker or AceTimer:ScheduleRepeatingTimer(fontHide1, 0.05)
 		elseif not frame.font2ticker or force then
 			font2elapsed = 0
 			font2.lastUpdate = GetTime()
 			font2:SetText(text)
 			font2:Show()
 			added = true
-			frame.font2ticker = frame.font2ticker or C_Timer:NewTicker(0.05, fontHide2)
+			frame.font2ticker = frame.font2ticker or AceTimer:ScheduleRepeatingTimer(fontHide2, 0.05)
 		end
 		if not added then
 			local prevText1 = font2:GetText()
@@ -8173,15 +8654,15 @@ do
 			spellName = select(2, GetAchievementInfo(spellId))
 			icon = type(texture) == "number" and select(10, GetAchievementInfo(texture)) or texture or spellId and select(10, GetAchievementInfo(spellId))
 		elseif timerType == "cdspecial" or timerType == "nextspecial" or timerType == "stage" then
-			icon = type(texture) == "number" and select(3, GetSpellInfo(texture)) or texture or (type(spellId) == "number" and select(3, GetSpellInfo(texture))) or "Interface\\Icons\\Spell_Nature_WispSplode"
+			icon = type(texture) == "number" and select(3, GetSpellInfo(spellId)) or texture or (type(spellId) == "number" and select(3, GetSpellInfo(texture))) or "Interface\\Icons\\Spell_Nature_WispSplode"
 			if timerType == "stage" then
 				colorType = 6
 			end
 		elseif timerType == "roleplay" then
-			icon = type(texture) == "number" and select(3, GetSpellInfo(texture)) or texture or (type(spellId) == "number" and select(3, GetSpellInfo(texture))) or "Interface\\Icons\\SPELL_HOLY_BORROWEDTIME"
+			icon = type(texture) == "number" and select(3, GetSpellInfo(spellId)) or texture or (type(spellId) == "number" and select(3, GetSpellInfo(texture))) or "Interface\\Icons\\SPELL_HOLY_BORROWEDTIME"
 			colorType = 6
 		elseif timerType == "adds" or timerType == "addscustom" then
-			icon = type(texture) == "number" and select(3, GetSpellInfo(texture)) or texture or (type(spellId) == "number" and select(3, GetSpellInfo(texture))) or "Interface\\Icons\\Spell_Nature_WispSplode"
+			icon = type(texture) == "number" and select(3, GetSpellInfo(spellId)) or texture or (type(spellId) == "number" and select(3, GetSpellInfo(texture))) or "Interface\\Icons\\Spell_Nature_WispSplode"
 			colorType = 1
 		else
 			spellName = DBM:GetSpellInfo(spellId or 0)

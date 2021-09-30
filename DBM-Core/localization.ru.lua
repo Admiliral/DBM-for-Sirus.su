@@ -195,6 +195,18 @@ DBM_CORE_ANNOUNCE_PULL_NOW_TARGET	= "Атакуем %s!"
 DBM_CORE_GEAR_WARNING_WEAPON		= "Внимание: Проверьте надето ли у вас корректное оружие."
 DBM_CORE_GEAR_FISHING_POLE			= "Удочки"
 
+DBM_CORE_LOCK_FRAME						= "Закрепить окно"
+DBM_CORE_INFOFRAME_SHOW_SELF				= "Всегда показывать вашу энергию"		-- Always show your own power value even if you are below the threshold
+DBM_CORE_INFOFRAME_SETLINES				= "Максимальное число строк"
+DBM_CORE_INFOFRAME_SETCOLS					= "Максимальное число столбцов"
+DBM_CORE_INFOFRAME_LINESDEFAULT			= "По умолчанию"
+DBM_CORE_INFOFRAME_LINES_TO				= "%d строк"
+DBM_CORE_INFOFRAME_COLS_TO					= "%d столбцов"
+DBM_CORE_INFOFRAME_POWER					= "Power"
+DBM_CORE_INFOFRAME_AGGRO					= "Угроза"
+DBM_CORE_INFOFRAME_MAIN					= "Main:"--Main power
+DBM_CORE_INFOFRAME_ALT						= "Alt:"--Alternate Power
+
 DBM_CORE_ACHIEVEMENT_TIMER_SPEED_KILL = "Быстрое убийство"
 
 -- Auto-generated Warning Localizations

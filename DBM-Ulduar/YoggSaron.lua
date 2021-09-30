@@ -7,7 +7,7 @@ mod:SetCreatureID(33288)
 mod:RegisterCombat("yell", L.YellPull)
 mod:SetUsedIcons(8, 7, 6, 2, 1)
 
-mod:RegisterEvents(
+mod:RegisterEventsInCombat(
 	"SPELL_CAST_START",
 	"SPELL_CAST_SUCCESS",
 	"SPELL_SUMMON",
@@ -198,8 +198,9 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnFervor:Show()
 			specWarnFervor:Play("targetyou")
 		end
-	elseif (spellId == 63894 or spellId == 64775) and self.vb.phase < 2 then	-- Shadowy Barrier of Yogg-Saron (this is happens when p2 starts)
-		self.vb.phase = 2
+	elseif (spellId == 63894 or spellId == 64775) then	--and self.vb.phase < 2-- Shadowy Barrier of Yogg-Saron (this is happens when p2 starts)
+		--self.vb.phase = 2
+		self:SetStage(2)
 		warnP2:Show()
 		brainportal2:Start(60)
 		warnBrainPortalSoon:Schedule(57)
@@ -232,6 +233,9 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
+	if spellId == 64465 and self.Options.SetIconOnBeacon then
+		self:SetIcon(args.destName, 0)
+	end
 	if spellId == 312995 and self.Options.SetIconOnBrainLinkTarget then		-- Brain Link
 		self:SetIcon(args.destName, 0)
 		if args:IsPlayer() then
