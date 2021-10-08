@@ -348,7 +348,8 @@ L:SetMiscLocalization{
 
 L:SetWarningLocalization{
 	WarnSimulKill	= "Первый помощник погиб - воскрешение через ~12 сек.",
-	WarnLifebinderSoon = "Скоро появится Дар Эонар!"
+	WarnLifebinderSoon = "Скоро появится Дар Эонар!",
+	EonarsGift = "Смена цели - переключитесь на Дар Эонара"
 }
 
 L:SetTimerLocalization{

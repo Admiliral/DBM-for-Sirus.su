@@ -38,7 +38,7 @@ local warnFrostBomb				= mod:NewSpecialWarningDodge(64623, nil, nil, nil, 2, 2)
 
 local enrage 					= mod:NewBerserkTimer(900)
 local timerHardmode				= mod:NewTimer(610, "TimerHardmode", 312812)
-local timerP1toP2				= mod:NewTimer(43, "TimeToPhase2", 312813, nil, nil, 6)
+local timerP1toP2				= mod:NewTimer(41, "TimeToPhase2", 312813, nil, nil, 6)
 local timerP2toP3				= mod:NewTimer(32, "TimeToPhase3", 312813, nil, nil, 6)
 local timerP3toP4				= mod:NewTimer(23, "TimeToPhase4", 312813, nil, nil, 6)
 local timerProximityMines		= mod:NewNextTimer(15, 312789, nil, "Melee", nil, 3)

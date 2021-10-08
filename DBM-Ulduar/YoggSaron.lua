@@ -65,7 +65,6 @@ mod:AddSetIconOption("SetIconOnFervorTarget", 312989, false, false, {7})
 mod:AddSetIconOption("SetIconOnBrainLinkTarget", 312995, true, false, {7, 8})
 mod:AddSetIconOption("SetIconOnBeacon", 64465, true, true, {1, 2, 3, 4, 5, 6, 7, 8})
 
-mod.vb.phase = 1
 mod.vb.brainLinkIcon = 2
 mod.vb.RoarCount = 0
 local brainLinkTargets = {}
@@ -79,7 +78,7 @@ function mod:OnCombatStart(delay)
 	self.vb.RoarCount = 0
 	beaconIcon = 8
 	Guardians = 0
-	self.vb.phase = 1
+	self:SetStage(1)
 	enrageTimer:Start()
 	timerAchieve:Start()
 	if self.Options.ShowSaraHealth and not self.Options.HealthFrame then
@@ -199,7 +198,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnFervor:Play("targetyou")
 		end
 	elseif (spellId == 63894 or spellId == 64775) then	--and self.vb.phase < 2-- Shadowy Barrier of Yogg-Saron (this is happens when p2 starts)
-		--self.vb.phase = 2
 		self:SetStage(2)
 		warnP2:Show()
 		brainportal2:Start(60)
@@ -271,7 +269,7 @@ end
 
 function mod:OnSync(msg)
 	if msg == "Phase3" then
-		self.vb.phase = 3
+		self:SetStage(3)
 		brainportal:Cancel()
 		brainportal2:Cancel()
 		warnBrainPortalSoon:Cancel()
@@ -279,10 +277,6 @@ function mod:OnSync(msg)
 		timerBrainLinkCD:Cancel()
 		timerMadnessCD:Cancel()
 		timerEmpower:Cancel()
-		--[[if self.vb.numberOfPlayers == 1 then
-			timerMadness:Cancel()
-			specWarnMadnessOutNow:Cancel()
-		end]]
 		warnP3:Show()
 		warnEmpowerSoon:Schedule(40)
 		timerNextDeafeningRoar:Start()

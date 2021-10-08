@@ -70,9 +70,9 @@ end
 
 -- Передаю привет тилю, жду спизженные куски кода добавленного мной у тебя в ДБ-Ме :)
 DBM = {
-	Revision = parseCurseDate("20211001000400"),
+	Revision = parseCurseDate("20211008104800"),
 	DisplayVersion = "5.52", -- the string that is shown as version
-	ReleaseRevision = releaseDate(2021, 10, 01) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
+	ReleaseRevision = releaseDate(2021, 10, 08) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
 
@@ -907,7 +907,8 @@ do
 			else
 				local match = false
 				for i = #mods, 1, -1 do
-					if mods[i] == self and checkEntry(self.inCombatOnlyEvents, event)  then
+					local findEvent = findRealEvent(self.inCombatOnlyEvents, event)
+					if mods[i] == self and findEvent then
 						tremove(mods, i)
 						match = true
 					end
