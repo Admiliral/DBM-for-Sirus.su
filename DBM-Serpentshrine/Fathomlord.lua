@@ -14,7 +14,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED",
 	"SPELL_AURA_REMOVED",
 	"CHAT_MSG_MONSTER_YELL",
-	"UNIT_HEALTH"
+	"UNIT_DIED"
 )
 
 
@@ -43,7 +43,7 @@ local timerStrelaCast		= mod:NewCastTimer(6, 309253, nil, nil, nil, 3) -- Стр
 local timerStrelaCD			= mod:NewCDTimer(43, 309253, nil, nil, nil, 3) -- Стрела катаклизма
 local timerSvazCd			= mod:NewCDTimer(25, 309262, nil, nil, nil, 3)
 local timerOkoCD	        = mod:NewCDTimer(16, 309258, nil, "Melee", nil, 2, nil, DBM_CORE_DEADLY_ICON)
-local timerPhaseCastCD	    = mod:NewCDTimer(90, 309292, nil, nil, nil, 6)
+local timerPhaseCastCD	    = mod:NewCDTimer(90, 309289, nil, nil, nil, 6)
 local timerZemlyaCast		= mod:NewCastTimer(5, 309289, nil, nil, nil, 2)
 local timerCastHeal	    	= mod:NewCDTimer(29, 309256, nil, "HasInterrupt", nil, 4)
 local bers					= mod:NewBerserkTimer(360)
@@ -55,17 +55,10 @@ local warnPust		        = mod:NewStackAnnounce(309277, 5, nil, "Tank") -- Опу
 local specWarnSvaz          = mod:NewSpecialWarningMoveAway(309262, nil, nil, nil, 1, 3) -- Пламенная свзяь
 
 mod:AddBoolOption("HealthFrameBoss", true)
-mod:SetBossHealthInfo(
-	21214, L.Karat,
-	21966, L.Shark,
-	21965, L.Volni,
-	21964, L.Karib)
-
 mod:AddSetIconOption("SetIconOnSvazTargets", 309261, true, true, {5, 6, 7})
 mod:AddSetIconOption("SetIconOnStrela", 309253, true, false, {8})
 mod:AddBoolOption("AnnounceSvaz", false)
 
-mod.vb.phase = 0
 local SvazTargets = {}
 local SvazIcons = 7
 
@@ -99,7 +92,7 @@ end
 function mod:OnCombatStart()
 	DBM:FireCustomEvent("DBM_EncounterStart", 21214, "Fathom-Lord Karathress")
 	if mod:IsDifficulty("heroic25") then
-		self.vb.phase = 1
+		self:SetStage(1)
 		berserkTimer:Start()
 		timerOkoCD:Start()
 		timerSvazCd:Start()
@@ -186,7 +179,7 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 309252 then --барьер
-	    self.vb.phase = 2
+	    self:SetStage(2)
 	    warnPhase2:Show()
 		timerPhaseCastCD:Start(95)
 		timerCastHeal:Cancel()

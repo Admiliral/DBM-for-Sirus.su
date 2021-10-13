@@ -56,7 +56,7 @@ local timerArrowCast	= mod:NewCastTimer(1.5, 309052, nil, nil, nil, 3) -- зал
 local timerAyaCast  	= mod:NewCastTimer(1.5, 309069, nil, nil, nil, 3) -- залп  яда каст
 local timerYadCast		= mod:NewCastTimer(25, 309072, nil, nil, nil, 6) -- яд
 local timerChisCast		= mod:NewCastTimer(20, 309055, nil, nil, nil, 6) -- чистота
-local timerStaktimer    = mod:NewTargetTimer(30, 309051, nil, "Healer|Tank", nil, 1)
+local timerStaktimer    = mod:NewTargetTimer(30, 309068, nil, "Healer|Tank", nil, 1)
 
 mod:AddSetIconOption("SetIconOnSklepTargets", 309046, true, true, {6, 7, 8})
 mod:AddSetIconOption("SetIconOnKorTargets", 309065, true, true, {6, 7, 8})
@@ -175,7 +175,7 @@ function mod:SPELL_AURA_APPLIED(args) -- все хм --
 		end
 		self:ScheduleMethod(0.1, "SetKorIcons")
 		timerKorCD:Start()
-		elseif spellId == 309051 then
+		elseif spellId == 309068 then
 			timerStaktimer:Start(args.destName)
 	end
 end

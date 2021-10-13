@@ -61,7 +61,6 @@ mod:AddBoolOption("Elem")
 mod:AddSetIconOption("SetIconOnStaticTargets", 310636, true, true, {7, 8})
 mod:AddBoolOption("AnnounceStatic", false)
 
-mod.vb.phase = 0
 local ti = true
 local warned_elem = false
 local warned_preP1 = false
@@ -155,7 +154,7 @@ end
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 21212, "Lady Vashj")
 	ti = true
-	self.vb.phase = 1
+	self:SetStage(1)
 	if mod:IsDifficulty("heroic25") then
 		DBM.RangeCheck:Show(20)
 		timerElemCD:Start(10)
@@ -296,7 +295,7 @@ function mod:UNIT_HEALTH(uId)
 	end
 	if self.vb.phase == 1 and not warned_preP2 and self:GetUnitCreatureId(uId) == 21212 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.70 then
 		warned_preP2 = true
-		self.vb.phase = 2
+		self:SetStage(2)
 		warnPhase2:Show()
 	end
 	if mod:IsDifficulty("heroic25") then
@@ -306,14 +305,14 @@ function mod:UNIT_HEALTH(uId)
 		end
 		if self.vb.phase == 2 and not warned_preP4 and self:GetUnitCreatureId(uId) == 21212 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.40 then
 			warned_preP4 = true
-			self.vb.phase = 3
+			self:SetStage(3)
 			warnPhase3:Show()
 			timerElemCD:Cancel()
 		end
 	else
 		if self.vb.phase == 2 and not warned_preP4 and self:GetUnitCreatureId(uId) == 21212 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.50 then
 			warned_preP4 = true
-			self.vb.phase = 3
+			self:SetStage(3)
 			warnPhase3:Show()
 		end
 	end
