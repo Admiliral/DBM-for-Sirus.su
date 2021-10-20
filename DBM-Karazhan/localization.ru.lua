@@ -249,7 +249,8 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-	WarnNextPhaseSoon = "Предупреждать о переходе на следующую фазу"
+	WarnNextPhaseSoon = "Предупреждать о переходе на следующую фазу",
+	AnnouncePorch	  = "Объявлять игроков, на кого установлен $spell:305429, в рейд чат"
 }
 
 L:SetMiscLocalization{
@@ -261,6 +262,7 @@ L:SetMiscLocalization{
 	FlameWorld              = "Огненные просторы",
 	IceWorld                = "Ледяная пустошь",
 	BlackForest             = "Черный лес",
+	Porch					= "Мстительная порча {rt%d} установлена на: %s",
 	LastPhase               = "Финал"
 }
 
