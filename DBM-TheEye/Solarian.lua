@@ -58,16 +58,18 @@ local warned_preP1 = false
 local warned_preP2 = false
 
 mod:AddBoolOption("Zrec")
+mod:AddBoolOption("RangeFrame", true)
 
-mod.vb.phase = 0
+mod.vb.Fear = 0
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 18805, "High Astromancer Solarian")
 	if mod:IsDifficulty("heroic25") then
-		timerNextHelp:Start()
-	    timerNextWrathH:Start()
-		self.vb.phase = 1
+		timerNextHelp:Start(-delay)
+	    timerNextWrathH:Start(-delay)
+		self:SetStage(1)
 	else
+		self.vb.Fear = 0
 	    timerAdds:Start()
 		warnAddsSoon:Schedule(52)
 	end
@@ -121,10 +123,11 @@ function mod:SPELL_CAST_START(args)
 		priestsH = true
 		provid	 = true
 	elseif spellId == 308585 then -- УЖАС
-		specWarnFlashVoid:Show(args.sourceName)
+
+		specWarnFlashVoid:Show(self.vb.Fear)
 		timerFlashVoid:Schedule(5)
 	elseif spellId == 308576 then
-		self.vb.phase = 2
+		self:SetStage(2)
 		timerNextHelp:Stop()
 		warnFlashVoid:Schedule(70)
 		timerFlashVoid:Start()
@@ -218,6 +221,7 @@ function mod:UNIT_HEALTH(uId)
 	elseif not warned_preP2 and self:GetUnitCreatureId(uId) == 18805 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.35 then
 		warned_preP2 = true
 		warnPhase2:Show()
+		timerAdds:Stop()
 	end
 end
 

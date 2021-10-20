@@ -46,6 +46,7 @@ local berserkTimer				= mod:NewBerserkTimer(600)
 
 mod:AddSetIconOption("SetIconOnSignTargets", 308471, true, true, {3, 4, 5, 6, 7, 8})
 mod:AddBoolOption("AnnounceSign", false)
+mod:AddBoolOption("RangeFrame", true)
 
 local beaconIconTargets	= {}
 local MagnetTargets = {}
@@ -88,7 +89,9 @@ function mod:OnCombatStart(delay)
 	    timerLoadCD:Start()
 	    timerOrbCD:Start()
 		--timerKnockbackCD:Start()
+		if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(15)
+		end
 	else
 		berserkTimer:Start()
 		timerNextPounding:Start()
