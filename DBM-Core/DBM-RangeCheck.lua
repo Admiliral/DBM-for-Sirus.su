@@ -174,6 +174,7 @@ DBM.MapSizes = {
 	gilneasbattleground2 = {{1302.083, 868.7504}},
 	templeofkotmogu = {{839.583, 560.416}},
 	vip_location_map = {{595, 599}},
+	BronzeSanctuary = {{2399.850, 1599.901}}, -- жду благодарность в лс Waini#3379 :)
 }
 
 ---------------
