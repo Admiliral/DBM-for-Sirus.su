@@ -68,13 +68,12 @@ local function showRealDate(curseDate)
 	end
 end
 
--- Еще раз передаю привет тилю, ахунно спиженная фрея, которая залита как пол месяца :D ну и другие боссы ульды (ну что пора ныть что я ее у тебя спиздил :) )
+-- Молодец тиль нашел ошибку в слепце )
 
--- п.с у тебя не работает 1 функция которую ты скопировал, на 1 боссе (какой сам найдешь), которую ты видимо не удосужился тестил )
 DBM = {
-	Revision = parseCurseDate("20211021021500"),
+	Revision = parseCurseDate("20211103042900"),
 	DisplayVersion = "5.52", -- the string that is shown as version
-	ReleaseRevision = releaseDate(2021, 10, 21) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
+	ReleaseRevision = releaseDate(2021, 11, 03) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
 

@@ -1,0 +1,21 @@
+## Interface: 30300
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Бронзовое святилище|r
+## LoadOnDemand: 1
+## RequiredDeps: DBM-Core
+## SavedVariables: DBMBronzeSanctuary_AllSavedVars
+## SavedVariablesPerCharacter: DBMBronzeSanctuary_SavedStats
+## X-DBM-Mod: 1
+## X-DBM-Mod-Type: RAID
+## X-DBM-Mod-Category: WotLK
+## X-DBM-Mod-Has-Heroic-Mode: 1
+## X-DBM-Mod-Name: BronzeSanctuary
+## X-DBM-Mod-Name-ruRU: Бронзовое святилище
+## X-DBM-Mod-Sort: 300
+## X-DBM-Mod-LoadZone: BronzeSanctuary
+## X-DBM-Mod-LoadZone-ruRU: Бронзовое святилище
+
+localization.ru.lua
+MapSizes.lua
+Imporus.lua
+Elonus.lua
+Murozond.lua
