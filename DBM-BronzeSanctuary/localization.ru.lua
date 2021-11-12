@@ -35,14 +35,17 @@ L:SetOptionLocalization{
 L = DBM:GetModLocalization("Elonus")
 
 L:SetGeneralLocalization{
-	name = "Элонус Исказитель времени"
+	name = "Элонус"
 }
 
 L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
-	WarningReplicaSpawned = "Появляется копия Элонуса Исказитель времени!!!"
+	WarningReplicaSpawned = "Появляется копия Элонуса Исказитель времени!!!",
+	WarningReplicaSpawnedSoon = "Скоро появляется копия Элонуса",
+	WarnirnReturnSoon			="Скоро нужно будет сбить каст!!!!!"
+
 }
 
 L:SetOptionLocalization{
@@ -58,6 +61,8 @@ L:SetOptionLocalization{
 L:SetMiscLocalization{
 	RevCasc				= "Обратный каскад {rt%d} установлена на %s",
 	Erapc				= "Слово силы: Стереть {rt%d} установлена на %s",
+	CollapsingStar			= "Копия Элониса",
+	IncinerateTarget		= "Щит",
 	TempCasc			= "Темпоральный каскад {rt%d} установлен на %s"
 }
 
@@ -74,6 +79,7 @@ L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
+	PrePhase = "Скоро каст $spell:313122"
 }
 
 L:SetOptionLocalization{
