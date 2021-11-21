@@ -5,7 +5,7 @@ mod:SetRevision("20210501002000")
 
 
 mod:SetCreatureID(33118)
-mod:RegisterCombat("yell", L.YellPull)
+mod:RegisterCombat("combat", 33118)
 mod:SetUsedIcons(8)
 
 mod:RegisterEvents(
@@ -30,12 +30,10 @@ local timerSlagPot				= mod:NewTargetTimer(10, 312731, nil, nil, nil, 3)
 local timerAchieve				= mod:NewAchievementTimer(240, 2930)
 
 mod.vb.FlameCount = 0
-mod.vb.ConstructCount = 0
 mod:AddSetIconOption("SlagPotIcon", 312731, false, false, {8})
 
 
 function mod:OnCombatStart(delay)
-	self.vb.ConstructCount = 0
 	self.vb.FlameCount = 0
 	DBM:FireCustomEvent("DBM_EncounterStart", 33118, "Ignis")
 	timerAchieve:Start()
@@ -63,12 +61,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 312729 or spellId == 312730 or spellId == 62548 or spellId == 63474 then	-- Scorch
 		timerScorchCast:Start()
 		timerScorchCooldown:Start()
-	elseif spellId == 62488 then
-		self.vb.ConstructCount = self.vb.ConstructCount + 1
-		announceConstruct:Show(self.vb.ConstructCount)
-		if self.vb.ConstructCount < 20 then
-			timerActivateConstruct:Start(nil, self.vb.ConstructCount)
-		end
 	end
 end
 
@@ -80,9 +72,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self.Options.SlagPotIcon then
 			self:SetIcon(args.destName, 8, 10)
         end
-	elseif spellId == 62382 and self:AntiSpam(5, 1) then
-		warnFlameBrittle:Show()
-		warnFlameBrittle:Play("killmob")
     end
 end
 

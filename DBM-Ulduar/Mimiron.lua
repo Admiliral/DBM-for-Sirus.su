@@ -95,8 +95,8 @@ function mod:OnCombatStart(delay)
 	table.wipe(napalmShellTargets)
 	timerPlasmaBlastCD:Start(-delay)
 	timerShockBlastCD:Start(28-delay)
-	timerProximityMines:Start(13)
-	self:ScheduleMethod(13,"Mine")
+	timerProximityMines:Start(15)
+	self:ScheduleMethod(15,"Mine")
 
 	if DBM:GetRaidRank() == 2 then
 		lootmethod, masterlooterRaidID = GetLootMethod()
@@ -138,7 +138,7 @@ end
 
 function mod:Mine()
 	if self.vb.phase == 4 or self.vb.phase == 1 then
-		timerProximityMines:Start(35)
+		timerProximityMines:Start(38)
 		self:ScheduleMethod(35, "Mine")
 	end
 end
@@ -254,8 +254,8 @@ function mod:NextPhase()
 		timerNextDarkGlare:Cancel()
 		timerNextFrostBomb:Cancel()
 		timerP2toP3:Start()
-		timerBombBotSpawn:Start(34)
-		self:ScheduleMethod(34, "BombBot")
+		timerBombBotSpawn:Start(36)
+		self:ScheduleMethod(36, "BombBot")
 		if self.Options.HealthFrame then
 			DBM.BossHealth:Clear()
 			DBM.BossHealth:AddBoss(33670, L.MobPhase3)
@@ -308,8 +308,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerFlameSuppressant:Start()
 		enrage:Stop()
 		self.vb.hardmode = true
-		timerNextFlames:Start(2)
-		self:ScheduleMethod(2, "Flames")
+		timerNextFlames:Start(1.5)
+		self:ScheduleMethod(1.5, "Flames")
 	elseif (msg == L.YellKilled or msg:find(L.YellKilled)) then -- register kill
 		enrage:Stop()
 		timerHardmode:Stop()

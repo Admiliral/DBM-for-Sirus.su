@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("20210501000000")
 
 mod:SetCreatureID(32906)
-mod:RegisterCombat("yell", L.YellPull)
+mod:RegisterCombat("combat", 32906)
 mod:RegisterKill("yell", L.YellKill)
 mod:SetUsedIcons(4, 5, 6, 7, 8)
 
@@ -57,7 +57,6 @@ function mod:OnCombatStart(delay)
 	self:SetStage(1)
 	enrage:Start()
 	timerAlliesOfNature:Start(10)
-	--self:ScheduleMethod(10, "Allies")
 	table.wipe(adds)
 	timerLifebinderCD:Start(25)
 end
@@ -75,7 +74,6 @@ end
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(62437, 62859, 312489, 312842) and self:AntiSpam() then
 		specWarnTremor:Show()
-		specWarnTremor:Play("stopcast")
 		timerTremorCD:Start()
 	end
 end
@@ -128,13 +126,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif args:IsSpellID(62861, 62438, 312490, 312507, 312843, 312860) then
 		self:RemoveIcon(args.destName)
 		mod.vb.iconId = mod.vb.iconId + 1
-	end
-end
-
-function mod:Allies()
-	if self.vb.phase == 1 then
-		timerAlliesOfNature:Start()
-		self:ScheduleMethod(60, "Allies")
 	end
 end
 
