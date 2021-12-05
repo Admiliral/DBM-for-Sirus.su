@@ -131,7 +131,7 @@ end
 
 function mod:BombBot()	-- Bomb Bot
 	if self.vb.phase == 3 then
-		timerBombBotSpawn:Start()
+		timerBombBotSpawn:Start(12)
 		self:ScheduleMethod(12, "BombBot")
 	end
 end
@@ -254,8 +254,8 @@ function mod:NextPhase()
 		timerNextDarkGlare:Cancel()
 		timerNextFrostBomb:Cancel()
 		timerP2toP3:Start()
-		timerBombBotSpawn:Start(36)
-		self:ScheduleMethod(36, "BombBot")
+		timerBombBotSpawn:Start(33)
+		self:ScheduleMethod(33, "BombBot")
 		if self.Options.HealthFrame then
 			DBM.BossHealth:Clear()
 			DBM.BossHealth:AddBoss(33670, L.MobPhase3)

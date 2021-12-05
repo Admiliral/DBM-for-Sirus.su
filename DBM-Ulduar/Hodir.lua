@@ -5,7 +5,7 @@ mod:SetRevision("20210501000000")
 mod:SetCreatureID(32845)
 mod:SetUsedIcons(7, 8)
 
-mod:RegisterCombat("combat")
+mod:RegisterCombat("combat", 32845)
 mod:RegisterKill("yell", L.YellKill)
 
 mod:RegisterEvents(

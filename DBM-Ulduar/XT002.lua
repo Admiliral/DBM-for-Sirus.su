@@ -5,7 +5,7 @@ mod:SetRevision("20210429162400")
 mod:SetCreatureID(33293)
 mod:SetUsedIcons(7, 8)
 
-mod:RegisterCombat("yell", L.YellPull)
+mod:RegisterCombat("combat", 33293)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START",
@@ -105,12 +105,18 @@ function mod:SPELL_AURA_REMOVED(args)
 		if self.Options.SetIconOnLightBombTarget then
 			self:SetIcon(args.destName, 0)
 		end
+		if args:IsPlayer() then
+			yellLightBombFades:Cancel()
+		end
 	elseif spellId == 63024 or spellId == 64234 or spellId == 312590 or spellId == 312943 then											-- Грави бомба
 		if args:IsPlayer() then
 				DBM.RangeCheck:Hide()
 		end
 		if self.Options.SetIconOnGravityBombTarget then
 			self:SetIcon(args.destName, 0)
+		end
+		if args:IsPlayer() then
+			yellGravityBombFades:Cancel()
 		end
 	elseif spellId == 312945 or spellId == 63849 then
 		timerHeart:Start()

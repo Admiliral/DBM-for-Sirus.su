@@ -13,6 +13,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_SUMMON",
 	"SPELL_AURA_APPLIED",
 	"SPELL_AURA_REMOVED",
+	"UNIT_HEALTH",
 	"UNIT_DIED",
 	"SPELL_AURA_REMOVED_DOSE"
 )
@@ -252,6 +253,10 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif spellId == 64465 then
 		if self.Options.SetIconOnBeacon then
 			self:ScanForMobs(args.destGUID, 2, 0, 1, 0.2, 12, "SetIconOnBeacon")
+		end
+	elseif spellId == 312995 or spellId == 312994 or spellId == 312996 or spellId == 63802 then
+		if args:IsPlayer() then
+			yellBrainLinkFade:Cancel()
 		end
 	end
 end

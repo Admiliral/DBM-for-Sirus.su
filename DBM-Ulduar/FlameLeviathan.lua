@@ -5,7 +5,7 @@ mod:SetRevision("20210501000000")
 
 mod:SetCreatureID(33113)
 
-mod:RegisterCombat("yell", L.YellPull)
+mod:RegisterCombat("combat", 33113)
 
 mod:RegisterEvents(
 	"SPELL_AURA_REMOVED",
@@ -13,9 +13,6 @@ mod:RegisterEvents(
 	"SPELL_SUMMON"
 )
 
-mod:SetBossHealthInfo(
-	33113, L.FlameLeviathan
-)
 
 local warnHodirsFury		= mod:NewTargetAnnounce(312705)
 local pursueTargetWarn		= mod:NewAnnounce("PursueWarn", 2, 62374)
@@ -51,10 +48,7 @@ function mod:OnCombatStart(delay)
 	if mod:IsDifficulty("heroic10") then
 		timerWardofLife:Start(-delay)
 	else
-		timerWardofLife:Start(-delay)
-		if self.Options.HealthFrameBoss then
-			DBM.BossHealth:AddBoss(33113, L.FlameLeviathan)
-		end
+		timerWardofLife:Start(30)
 	end
 end
 
@@ -98,12 +92,8 @@ function mod:SPELL_AURA_APPLIED(args)
 			end
 		end
 	elseif spellId == 312352 or spellId == 312705 or spellId == 62297 then		-- Hodir's Fury (Person is frozen)
-		local target = guids[args.destGUID]
-		if target then
-			warnHodirsFury:Show(target)
-		end
+			warnHodirsFury:Show(args.destName)
 	end
-
 end
 
 function mod:SPELL_AURA_REMOVED(args)

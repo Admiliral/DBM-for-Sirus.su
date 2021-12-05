@@ -36,7 +36,7 @@ local timerLightningCharge	 	= mod:NewCDTimer(16, 312897, nil, nil, nil, 3)
 local timerUnbalancingStrike	= mod:NewCastTimer(24, 312898, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerHardmode				= mod:NewTimer(175, "TimerHardmode", 312898)
 
-mod:AddBoolOption("RangeFrame")
+mod:AddBoolOption("RangeFrame", true)
 mod:AddBoolOption("YellOnUnbalancingStrike", true)
 
 local lastcharge = {}
