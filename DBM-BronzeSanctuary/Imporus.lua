@@ -24,6 +24,8 @@ local BurningTimeCDOb			= mod:NewCDTimer(33, 312197, nil, nil, nil, 3, nil, DBM_
 local warnTemporalArrow			= mod:NewTargetAnnounce(316519, 4)
 --local specWarnnRezonansSoon 	= mod:NewPreWarnAnnounce(316523, 5, 3)
 local warnTemporalBeat			= mod:NewStackAnnounce(316508, 5, nil, "Tank")
+local warnRezonansCast			= mod:NewSpellAnnounce(316523, 3)
+local warnBurningTimeCast		= mod:NewSpellAnnounce(316526, 3)
 
 local specWarnTemporalBeat		= mod:NewSpecialWarningTaunt(316508, "Tank", nil, nil, 1, 2)
 local specWarnnBurningTimeSoon 	= mod:NewSpecialWarningSoon(316526, nil, nil, nil, 4, 2)
@@ -76,10 +78,12 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 if spellId == 316523 then
+	warnRezonansCast:Show()
 	RezonansCast:Start()
 	BurningTimeCD:Start()
 	specWarnnBurningTimeSoon:Schedule(43)
 elseif spellId == 316526 then
+	warnBurningTimeCast:Show()
 	BurningTimeCast:Start()
 	RezonansCD:Start()
 	specWarnnRezonansSoon:Schedule(38)
@@ -88,6 +92,8 @@ elseif spellId == 312197 then
 		specWarnTemporalBeat:Show(args.destName)
 		specWarnTemporalBeat:Play("tauntboss")
 	end
+	warnBurningTimeCast:Show()
+	BurningTimeCast:Start()
 	RezonansCDOb:Start()
 	specWarnnRezonansSoon:Schedule(25)
 elseif spellId == 312194 then
@@ -95,6 +101,8 @@ elseif spellId == 312194 then
 		specWarnTemporalBeat:Show(args.destName)
 		specWarnTemporalBeat:Play("tauntboss")
 	end
+	warnRezonansCast:Show()
+	RezonansCast:Start()
 	BurningTimeCDOb:Start()
 	specWarnnBurningTimeSoon:Schedule(25)
 end

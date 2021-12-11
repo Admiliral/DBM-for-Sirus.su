@@ -43,9 +43,7 @@ L:SetTimerLocalization{
 
 L:SetWarningLocalization{
 	WarningReplicaSpawned = "Появляется копия Элонуса Исказитель времени!!!",
-	WarningReplicaSpawnedSoon = "Скоро появляется копия Элонуса",
-	WarnirnReturnSoon			="Скоро нужно будет сбить каст!!!!!"
-
+	WarningReplicaSpawnedSoon = "Скоро появляется копия Элонуса"
 }
 
 L:SetOptionLocalization{
@@ -79,13 +77,19 @@ L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
-	PrePhase = "Скоро каст $spell:313122"
+	PrePhase = "Скоро Перефаза",
+	Cernsfera = "Лови - Черную Сферу",
+	BelayaSfera = "Лови - Белую Сферу",
+	Perebejkai = "Перебегите"
 }
 
 L:SetOptionLocalization{
-	BossHealthFrame		= "Показывать здоровье босса"
+	BossHealthFrame		= "Показывать здоровье босса",
+	AnnounceFails		= "Объявлять игроков, попавших под $spell:317255, в рейд-чат\n(требуются права лидера или помощника)",
 }
 
 L:SetMiscLocalization{
+	FearOn	= "Фир на: %s",
+	Fear		= "Кто попал под Фир (в этом бою): %s"
 }
 

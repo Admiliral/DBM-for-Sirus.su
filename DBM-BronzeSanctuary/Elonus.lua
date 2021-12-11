@@ -294,7 +294,7 @@ do
 		for i, v in ipairs(ErapTargets) do
 			if mod.Options.AnnounceErap then
 				if DBM:GetRaidRank() > 0 then
-					SendChatMessage(L.Erap:format(ErapIcons, UnitName(v)), "RAID_WARNING")
+					SendChatMessage(L.Erapc:format(ErapIcons, UnitName(v)), "RAID_WARNING")
 				else
 					SendChatMessage(L.Erapc:format(ErapIcons, UnitName(v)), "RAID")
 				end
