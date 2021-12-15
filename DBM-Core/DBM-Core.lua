@@ -6389,7 +6389,7 @@ function bossModPrototype:IsManaUser()
 end
 
 function bossModPrototype:CanRemoveEnrage()
-	return playerClass == "HUNTER" 
+	return playerClass == "HUNTER"
 		or playerClass == "ROGUE"
 end
 
