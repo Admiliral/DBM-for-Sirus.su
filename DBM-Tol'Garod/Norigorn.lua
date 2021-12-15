@@ -3,7 +3,6 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("20210501000000")
 mod:SetCreatureID(70010)
-mod:EnableWBEngageSync()--Enable syncing engage in outdoors
 
 mod:RegisterCombat("combat", 70010)
 
