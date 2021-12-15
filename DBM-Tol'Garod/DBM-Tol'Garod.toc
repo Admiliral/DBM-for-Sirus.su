@@ -1,0 +1,23 @@
+## Interface: 30300
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Тол'Гарод|r
+## LoadOnDemand: 1
+## RequiredDeps: DBM-Core
+## SavedVariables: DBMTol'Garod_AllSavedVars
+## SavedVariablesPerCharacter: DBMTol'Garod_SavedStats
+## X-DBM-Mod: 1
+## X-DBM-Mod-Type: RAID
+## X-DBM-Mod-Category: WORLD_BOSS
+## X-DBM-Mod-World-Boss: 0
+## X-DBM-StatTypes: normal
+## X-DBM-Mod-Name: Tol'Garod
+## X-DBM-Mod-Name-ruRU: Тол'Гарод
+## X-DBM-Mod-Sort: 946
+## X-DBM-Mod-LoadZoneID: 946
+## X-DBM-Mod-LoadCID: 70010
+## X-DBM-Mod-LoadZone: Tol'Garod
+## X-DBM-Mod-LoadZone-ruRU: Тол'Гарод
+localization.ru.lua
+
+
+Norigorn.lua
+Quest.lua

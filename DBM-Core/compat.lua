@@ -89,3 +89,31 @@ end
 function TickerPrototype:Cancel()
 	self._cancelled = true
 end
+
+local oldGetInstanceDifficulty = GetInstanceDifficulty
+function GetInstanceDifficulty()
+	local diff = oldGetInstanceDifficulty()
+	if diff == 1 then
+		local _, _, difficulty, _, maxPlayers = GetInstanceInfo()
+		if difficulty == 1 and maxPlayers == 25 then
+			diff = 2
+		end
+	end
+	return diff
+end
+
+function IsInGroup()
+	return GetNumPartyMembers() > 0 or GetNumRaidMembers() > 0
+end
+
+function IsInRaid()
+	return GetNumRaidMembers() > 0
+end
+
+function GetNumSubgroupMembers()
+	return GetNumPartyMembers()
+end
+
+function GetNumGroupMembers()
+	return IsInRaid() and GetNumRaidMembers() or GetNumPartyMembers()
+end

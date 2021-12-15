@@ -72,7 +72,7 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-	WarnSoul = DBM_CORE_AUTO_ANNOUNCE_OPTIONS.target:format(32346, GetSpellInfo(32346))
+	WarnSoul = "DBM_CORE_AUTO_ANNOUNCE_OPTIONS.target:format(32346, GetSpellInfo(32346))"
 })
 
 L:SetMiscLocalization({
@@ -121,7 +121,7 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-	TimerWound = DBM_CORE_AUTO_TIMER_OPTIONS.target:format(36814, GetSpellInfo(36814))
+	TimerWound = "Таймер $spell:36814"
 })
 
 L:SetMiscLocalization({
@@ -340,7 +340,7 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-	Explosion = DBM_CORE_AUTO_TIMER_OPTIONS.cast:format(37371, GetSpellInfo(37371))
+	Explosion = "Таймер $spell:37371"
 })
 
 L:SetMiscLocalization({
