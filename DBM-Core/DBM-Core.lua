@@ -1813,19 +1813,37 @@ end
 ----------------------
 do
 	local function Pull(timer)
-		if DBM:GetRaidRank(playerName) == 0 or select(2, IsInInstance()) == "pvp" or (timer > 0 and timer < 3) then
+		local isTank = UnitGroupRolesAssigned("player")
+		local LFGTankException = IsPartyLFG() and isTank --Tanks in LFG need to be able to send pull timer even if someone refuses to pass lead. LFG locks roles so no one can abuse this.
+		if (DBM:GetRaidRank(playerName) == 0 and IsInGroup() and not LFGTankException) or select(2, IsInInstance()) == "pvp" then
 			return DBM:AddMsg(DBM_ERROR_NO_PERMISSION)
+		end
+		if timer > 0 and timer < 3 then
+			return DBM:AddMsg(DBM_CORE_TIME_TOO_SHORT)
 		end
 		local targetName = (UnitExists("target") and UnitIsEnemy("player", "target")) and UnitName("target") or nil--Filter non enemies in case player isn't targetting bos but another player/pet
 		if targetName then
-			sendSync("PT", timer.."\t"..targetName)
+			sendSync("PT", timer.."\t"..LastInstanceMapID.."\t"..targetName)
 		else
-			sendSync("PT", timer)
+			sendSync("PT", timer.."\t"..LastInstanceMapID)
+		end
+		if IsInGroup() then
+			local channel = ((GetNumRaidMembers() == 0) and "PARTY") or "RAID_WARNING"
+			DBM:Unschedule(SendChatMessage)
+			SendChatMessage(DBM_CORE_ANNOUNCE_PULL:format(timer, playerName), channel)
+			if timer > 7 then DBM:Schedule(timer - 7, SendChatMessage, DBM_CORE_ANNOUNCE_PULL:format(7, playerName), channel) end
+			if timer > 5 then DBM:Schedule(timer - 5, SendChatMessage, DBM_CORE_ANNOUNCE_PULL:format(5, playerName), channel) end
+			if timer > 3 then DBM:Schedule(timer - 3, SendChatMessage, DBM_CORE_ANNOUNCE_PULL:format(3, playerName), channel) end
+			if timer > 2 then DBM:Schedule(timer - 2, SendChatMessage, DBM_CORE_ANNOUNCE_PULL:format(2, playerName), channel) end
+			if timer > 1 then DBM:Schedule(timer - 1, SendChatMessage, DBM_CORE_ANNOUNCE_PULL:format(1, playerName), channel) end
+			DBM:Schedule(timer, SendChatMessage, DBM_CORE_ANNOUNCE_PULL_NOW, channel)
 		end
 	end
+
+	local stringWorkaround
 	local function Break(timer)
-		if GetNumRaidMembers() == 0 and DBM:GetRaidRank(playerName) == 0 or select(2, IsInInstance()) == "pvp" then--No break timers if not assistant or if it's dungeon/BG
-			DBM:AddMsg(DBM_ERROR_NO_PERMISSION)
+		if IsInGroup() and (DBM:GetRaidRank(playerName) == 0 or IsPartyLFG()) or select(2, IsInInstance()) == "pvp" then--No break timers if not assistant or if it's dungeon/BG
+			DBM:AddMsg(DBM_CORE_ERROR_NO_PERMISSION)
 			return
 		end
 		if timer > 60 then
@@ -1833,7 +1851,29 @@ do
 			return
 		end
 		timer = timer * 60
-		sendSync("BT", timer)
+		sendSync("DBMv4-BT", timer)
+		if IsInGroup() then
+			local channel = ((GetNumRaidMembers() == 0) and "PARTY") or "RAID_WARNING"
+			DBM:Unschedule(SendChatMessage)
+
+			local hour, minute = GetGameTime()
+			minute = minute+(timer/60)
+			if minute >= 60 then
+				hour = hour + 1
+				minute = minute - 60
+			end
+			minute = floor(minute)
+			if minute < 10 then
+				minute = tostring(0 .. minute)
+			end
+			stringWorkaround = stringWorkaround or CreateFrame("Button") -- ugly workaround for SendChatMessage not error with invalid escape sequence | coming from strFromTime; applied below with b:GetText(b:SetFormattedText(strFromTime(timer),3))
+			SendChatMessage(DBM_CORE_BREAK_START:format(stringWorkaround:GetText(stringWorkaround:SetFormattedText(strFromTime(timer),3)).." ("..hour..":"..minute..")", playerName), channel)
+			if timer/60 > 5 then DBM:Schedule(timer - 5*60, SendChatMessage, DBM_CORE_BREAK_MIN:format(5), channel) end
+			if timer/60 > 2 then DBM:Schedule(timer - 2*60, SendChatMessage, DBM_CORE_BREAK_MIN:format(2), channel) end
+			if timer/60 > 1 then DBM:Schedule(timer - 1*60, SendChatMessage, DBM_CORE_BREAK_MIN:format(1), channel) end
+			if timer > 30 then DBM:Schedule(timer - 30, SendChatMessage, DBM_CORE_BREAK_SEC:format(30), channel) end
+			DBM:Schedule(timer, SendChatMessage, DBM_CORE_ANNOUNCE_BREAK_OVER:format(hour..":"..minute), channel)
+		end
 	end
 
 	SLASH_DEADLYBOSSMODS1 = "/dbm"
@@ -3637,8 +3677,8 @@ do
 	local dummyMod -- dummy mod for the pull timer
 	syncHandlers["PT"] = function(sender, timer, target)
 		if DBM.Options.DontShowUserTimers then return end
-		local LFGTankException = IsPartyLFG() and UnitGroupRolesAssigned(sender) == "TANK"
-		if DBM:GetRaidRank(sender) == 0 or select(2, IsInInstance()) == "pvp" then
+		local isTank = UnitGroupRolesAssigned(sender)
+		if (DBM:GetRaidRank(sender) == 0 and IsInGroup() and not LFGTankException) or select(2, IsInInstance()) == "pvp" then
 			return
 		end
 		timer = tonumber(timer or 0)
@@ -3648,7 +3688,7 @@ do
 		if not dummyMod then
 			local threshold = DBM.Options.PTCountThreshold2
 			threshold = floor(threshold)
-			dummyMod = DBM:NewMod("PullTimerCountdownDummy", "DBM-PvP")
+			dummyMod = DBM:NewMod("PullTimerCountdownDummy")
 			DBM:GetModLocalization("PullTimerCountdownDummy"):SetGeneralLocalization{ name = DBM_CORE_MINIMAP_TOOLTIP_HEADER }
 			dummyMod.text = dummyMod:NewAnnounce("%s", 1, "Interface\\Icons\\Ability_Warrior_OffensiveStance")
 			dummyMod.geartext = dummyMod:NewSpecialWarning("  %s  ", nil, nil, nil, 3)
@@ -3665,32 +3705,22 @@ do
 		if timer == 0 then return end--"/dbm pull 0" will strictly be used to cancel the pull timer (which is why we let above part of code run but not below)
 		if not DBM.Options.DontShowPT2 then
 			dummyMod.timer:Start(timer, DBM_CORE_TIMER_PULL)
+			sendSync("U", ("%s\t%s\t%s"):format(timer, DBM_CORE_TIMER_PULL, tostring(true))) -- Backwards compatibility so old DBMs can receive pull timers from this DBM
 		end
 		if not DBM.Options.DontShowPTCountdownText then
-			--Start A TimerTracker timer by tricking it to start a BG timer
-			TimerTracker_OnEvent(TimerTracker, "START_TIMER", 1, timer + .9, timer + .9)
-			--Find the timer object DBM just created and hack our own changes into it.
-			local timerObject
-			for a, b in pairs(TimerTracker.timerList) do
-				if b.type == 1 and not b.isFree then
-					timerObject = b
-					break
-				end
-			end
-			if timerObject then
-				--Set end texture to nothing to eliminate pvp logo/hourglass
-				timerObject.faction:SetTexture("")
-				timerObject.factionGlow:SetTexture("")
-				--We don't want the PVP bar, we only want timer text
-				if timer > 10 then
-					--timerObject.startNumbers:Play()
-				--	timerObject.barShowing = false
-				--	timerObject.anchorCenter = false
-					AnimationsToggle_STARTNUMBERS(timerObject)
-					timerObject.bar:Hide()
-				else
-					AnimationsToggle_STARTNUMBERS(timerObject)
-					timerObject.bar:Hide()
+			if not timerTrackerRunning then--if a TimerTracker event is running not started by DBM, block creating one of our own (object gets buggy if it has 2+ events running)
+				--Start A TimerTracker timer using the new countdown type 3 type (ie what C_PartyInfo.DoCountdown triggers, but without sending it to entire group)
+				TT:OnEvent("START_TIMER", 3, timer, timer)
+				--Find the timer object DBM just created and hack our own changes into it.
+				for _, tttimer in pairs(TT.timerList) do
+					if tttimer.type == 3 and not tttimer.isFree then
+						--We don't want the PVP bar, we only want timer text
+						if timer > 10 then
+							--b.startNumbers:Play()
+							tttimer.StatusBar:Hide()
+						end
+						break
+					end
 				end
 			end
 		end
@@ -3730,7 +3760,7 @@ do
 				dummyMod2 = DBM:NewMod("BreakTimerCountdownDummy", "DBM-PvP")
 				DBM:GetModLocalization("BreakTimerCountdownDummy"):SetGeneralLocalization{ name = DBM_CORE_MINIMAP_TOOLTIP_HEADER }
 				dummyMod2.text = dummyMod2:NewAnnounce("%s", 1, "Interface\\Icons\\SPELL_HOLY_BORROWEDTIME")
-				dummyMod2.timer = dummyMod2:NewTimer(20, "%s", "Interface\\Icons\\SPELL_HOLY_BORROWEDTIME", nil, nil, 0, nil, nil, DBM.Options.DontPlayPTCountdown and 0 or 1, threshold)
+				dummyMod2.timer = dummyMod2:NewTimer(20, DBM_CORE_TIMER_BREAK, "Interface\\Icons\\SPELL_HOLY_BORROWEDTIME", nil, nil, 0, nil, nil, DBM.Options.DontPlayPTCountdown and 0 or 1, threshold)
 			end
 			--Cancel any existing break timers before creating new ones, we don't want double countdowns or mismatching blizz countdown text (cause you can't call another one if one is in progress)
 			if not DBM.Options.DontShowPT2 then--and DBM.Bars:GetBar(DBM_CORE_TIMER_BREAK)
@@ -3741,7 +3771,8 @@ do
 			if timer == 0 then return end--"/dbm break 0" will strictly be used to cancel the break timer (which is why we let above part of code run but not below)
 			self.Options.tempBreak2 = timer.."/"..time()
 			if not self.Options.DontShowPT2 then
-				dummyMod2.timer:Start(timer, DBM_CORE_TIMER_BREAK)
+				dummyMod2.timer:Start(timer)
+				sendSync("U", ("%s\t%s\t%s"):format(timer, DBM_CORE_BREAK_START, tostring(true))) -- Backwards compatibility so old DBMs can receive pull timers from this DBM
 			end
 			if not self.Options.DontShowPTText then
 				local hour, minute = GetGameTime()
@@ -3775,13 +3806,22 @@ do
 		breakTimerStart(DBM, timer, sender)
 	end
 
-	whisperSyncHandlers["BTR3"] = function(sender, timer)
-		if DBM.Options.DontShowUserTimers then return end
+	whisperSyncHandlers["BTR3"] = function(sender, timer, maxtime, id, text, texture)
 		timer = tonumber(timer or 0)
+		maxtime = tonumber(maxtime or 0)
+		texture = tonumber(texture) or texture
 		if timer > 3600 then return end
+		if id   == nil then id = DBM_CORE_BREAK_START end--old ver compat
+		if text == nil then text = DBM_CORE_BREAK_START end--old ver compat
+		if texture and type(texture)=="number" then texture = select(3, GetSpellInfo(texture)) end
+		local combaticon = texture or "Interface\\Icons\\Spell_Nature_WispSplode"
 		DBM:Unschedule(DBM.RequestTimers)--IF we got BTR3 sync, then we know immediately RequestTimers was successful, so abort others
 		if #inCombat >= 1 then return end
-		if DBM.Bars:GetBar(DBM_CORE_TIMER_BREAK) then return end--Already recovered. Prevent duplicate recovery
+		if DBM.Bars:GetBar(id) then return end--Already recovered. Prevent duplicate recovery
+		DBM:Debug("Calling createbar "..maxtime..id.." icon "..combaticon,3)
+		DBM.Bars:CreateBar(maxtime, id, combaticon)
+		DBM.Bars:GetBar(id):SetText(text)
+		DBM.Bars:UpdateBar(id, maxtime-timer, maxtime)
 		breakTimerStart(DBM, timer, sender)
 	end
 
@@ -3882,18 +3922,19 @@ do
 		"Атака",		--RU
 		"戰鬥準備"		 --TW
 	}
-	syncHandlers["U"] = function(sender, time, text)
-		if select(2, IsInInstance()) == "pvp" then return end -- no pizza timers in battlegrounds
-		if DBM.Options.DontShowUserTimers then return end
+	syncHandlers["U"] = function(sender, time, text, new)
+		if select(2, IsInInstance()) == "pvp" then return end
 		if DBM:GetRaidRank(sender) == 0 then return end
-		if sender == playerName then return end
+		if sender == UnitName("player") then return end
 		time = tonumber(time or 0)
-		text = tContains(localized_TIMER_PULL, tostring(text)) and DBM_CORE_TIMER_PULL or tostring(text) -- Fixes localization of pull bar text
+		text = tostring(text)
 		if time and text then
-			DBM:CreatePizzaTimer(time, text, nil, sender)
-			if tContains(localized_TIMER_PULL, text) and time >= 5 and DBM.Options.AudioPull then
-				DBM:Schedule(time - 5, PlaySoundFile, "Interface\\AddOns\\DBM-Core\\sounds\\5to1.mp3", "Master")
-				DBM:Schedule(time, PlaySoundFile, "Interface\\AddOns\\DBM-Core\\sounds\\Alarm.ogg", "Master")
+			local pullTimer = tContains(localized_TIMER_PULL, tostring(text)) and DBM_CORE_TIMER_PULL or nil -- Fixes localization of pull bar text
+			if pullTimer then
+				if new then return end
+				handleSync(nil, sender, "PT", time, text)
+			else
+				DBM:CreatePizzaTimer(time, text, nil, sender)
 			end
 		end
 	end
@@ -5661,7 +5702,13 @@ do
 			--But only if we are not in combat with a boss
 			local breakBar = self.Bars:GetBar("%s\t"..DBM_CORE_TIMER_BREAK) or self.Bars:GetBar(DBM_CORE_TIMER_BREAK)
 			if breakBar then
-				SendAddonMessage("D4", "BTR3\t"..breakBar.timer, "WHISPER", target)
+				self:Debug("Sending Break timer to "..target, 2)
+				SendAddonMessage("BTR3", ("%s\t%s\t%s\t%s\t"):format(breakBar.timer, breakBar.totalTime, breakBar.id, DBM_CORE_TIMER_BREAK, 52800), "WHISPER", target)
+			end
+			breakBar = self.Bars:GetBar("TimerCombatStart")
+			if breakBar then
+				self:Debug("Sending TimerCombatStart to "..target, 2)
+				SendAddonMessage("BTR3", ("%s\t%s\t%s\t%s\t%s"):format(breakBar.timer, breakBar.totalTime, breakBar.id, DBM_CORE_GENERIC_TIMER_COMBAT, 2457), "WHISPER", target)
 			end
 			return
 		end
