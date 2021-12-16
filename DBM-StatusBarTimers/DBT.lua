@@ -1234,7 +1234,7 @@ do
 	local function moveEnd(self)
 		updateClickThrough(self, self:GetOption("ClickThrough"))
 		self.movable = false
-		DBM.InfoFrame:Hide()
+--		DBM.InfoFrame:Hide()
 		DBM.RangeCheck:Hide(true)
 	end
 
@@ -1251,7 +1251,7 @@ do
 		self.movable = true
 		DBM:Unschedule(moveEnd, self)
 		DBM:Schedule(20, moveEnd, self)
-		DBM.InfoFrame:Show(5, "test")
+--		DBM.InfoFrame:Show(5, "test")
 		DBM.RangeCheck:Show(nil, nil, true)
 	end
 end
