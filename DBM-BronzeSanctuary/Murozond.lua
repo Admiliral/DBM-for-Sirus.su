@@ -36,7 +36,7 @@ local BreathofInfinityHm 		= mod:NewCDTimer(15, 317252, nil, "Tank", nil, 5, nil
 local ReflectSpellsCD 			= mod:NewCDTimer(20, 317262, nil, "SpellCaster|-Healer", nil, 3, nil, DBM_CORE_DEADLY_ICON, nil, 1) -- Отражение заклинаний
 local timerBredHM		    	= mod:NewTargetTimer(120, 313115, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
 local TerrifyingFutureHM 		= mod:NewCDTimer(40, 317255, nil, "Melee", nil, 2, nil, DBM_CORE_DEADLY_ICON, nil, 1) -- Мили Фир
-
+local GibVremea				 	= mod:NewCDTimer(5, 317258, nil, "Healer", nil, 4, nil, DBM_CORE_HEALER_ICON) -- призыв аддов
 
 
 ---------------------------------------------ОБ---------------------------------
@@ -66,29 +66,32 @@ local warned_preP2 = false
 
 
 mod.vb.PreHuy = 0
+mod.vb.FearMili = 0
 mod:AddBoolOption("BossHealthFrame", true, "misc")
 mod:AddBoolOption("AnnounceFails", true, "announce")
+mod:AddBoolOption("GibVr", false)
 local FearTargets	= {}
 
 function mod:OnCombatStart(delay)
     DBM:FireCustomEvent("DBM_EncounterStart", 50612, "Murozond")
 	self.vb.PreHuy = 0
+	self.vb.FearMili = 0
 	mod:SetStage(1)
-	TerrifyingFuture:Start()
-	self.vb.mobtemp1 = 0
-		self.vb.raz1 = 0
 	if mod:IsDifficulty("heroic25") then
-		self.vb.mobtemp1 = 0
-		self.vb.raz1 = 0
-		--enrageTimer:Start()
 		NewPrePhaseAnnounce:Start(nil, self.vb.PreHuy+1)
 		SummoningtheTimeless:Start(10)
 		ReflectSpellsCD:Start(24)
+		TerrifyingFutureHM:Start()
 		TimeTrapCD:Start(30)
+		if self.Options.GibVr then
+		GibVremea:Start()
+		self:ScheduleMethod(5, "Vremea")
+		end
 	else
 		DistortionWave:Start(20)
 		SummoningtheTimeless:Start(35)
 		BreathofInfinity:Start()
+		TerrifyingFuture:Start()
 	end
 	if self.Options.BossHealthFrame then
 		DBM.BossHealth:Show(L.name)
@@ -110,6 +113,10 @@ function mod:OnCombatEnd(wipe)
 	BreathofInfinity:Stop()
 	TerrifyingFuture:Stop()
 	warnTerrifyingFuture:Cancel()
+	if self.Options.GibVr then
+		GibVremea:Stop()
+		self:UnscheduleMethod("Vremea")
+	end
 	if self.Options.AnnounceFails and DBM:GetRaidRank() >= 1 then
 		local lFear = ""
 		for k, v in pairs(FearTargets) do
@@ -171,6 +178,12 @@ function mod:Perebejka()
 	if self.vb.phase == 2 then
 		specwarnPerebejka:Schedule(15)
 		self:ScheduleMethod(15, "Perebejka")
+	end
+end
+function mod:Vremea()
+	if self.Options.GibVr then
+		GibVremea:Start()
+		self:ScheduleMethod(5, "Vremea")
 	end
 end
 
