@@ -36,7 +36,7 @@ local BreathofInfinityHm 		= mod:NewCDTimer(15, 317252, nil, "Tank", nil, 5, nil
 local ReflectSpellsCD 			= mod:NewCDTimer(20, 317262, nil, "SpellCaster|-Healer", nil, 3, nil, DBM_CORE_DEADLY_ICON, nil, 1) -- Отражение заклинаний
 local timerBredHM		    	= mod:NewTargetTimer(120, 313115, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
 local TerrifyingFutureHM 		= mod:NewCDTimer(40, 317255, nil, "Melee", nil, 2, nil, DBM_CORE_DEADLY_ICON, nil, 1) -- Мили Фир
-local GibVremea				 	= mod:NewCDTimer(5, 317258, nil, "Healer", nil, 4, nil, DBM_CORE_HEALER_ICON) -- призыв аддов
+local GibVremea				 	= mod:NewCDTimer(5, 317258, nil, nil, nil, 4, nil, DBM_CORE_HEALER_ICON) -- призыв аддов
 
 
 ---------------------------------------------ОБ---------------------------------

@@ -164,7 +164,7 @@ function mod:OnSync(msg, target)
 if msg == "CrashOn" then
 	TemporalArrow:Start()
 	warnTemporalArrow:Show(target)
-		if self.Options.SetIconOnShadowCrash then
+		if self.Options.SetIconOnTemporalBeat then
 			self:SetIcon(target, 8, 5)
 		end
 		if target == UnitName("player") then

@@ -61,7 +61,7 @@ local specWarnPepely		= mod:NewSpecialWarningYou(310514, nil, nil, nil, 1, 4)
 local timerRass	        	= mod:NewTargetTimer(40, 310480, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON) -- Рассеченая душа
 local timerKogti	    	= mod:NewTargetTimer(40, 310502, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON) -- Когти
 local timerVsp	    	    = mod:NewTargetTimer(60, 310521, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON) -- Когти
-local timerKlei	    	    = mod:NewTargetTimer(30, 310496, nil, nil, nil, 3) -- Клеймо
+local timerKlei	    	    = mod:NewTargetTimer(30, 310497, nil, nil, nil, 3) -- Клеймо
 local timerAnigCast	    	= mod:NewCastTimer(10, 310508, nil, nil, nil, 2) -- Аниг
 local timerVzgCast	    	= mod:NewCastTimer(5, 310516, nil, nil, nil, 2) -- Взгляд
 local timerChardgCast	   	= mod:NewCastTimer(3, 310481, nil, nil, nil, 3) -- Рывок
@@ -188,7 +188,7 @@ function mod:SPELL_AURA_APPLIED(args)
         warnVsp:Show(args.destName, args.amount or 1)
 		timerVsp:Start(args.destName)
 		end
-	elseif spellId == 310496 then --хм Клеймо
+	elseif spellId == 310496 or spellId == 310497 then --хм Клеймо
 		warnKlei:Show(args.destName)
 		if self.Options.KleiIcon then
 			self:SetIcon(args.destName, 8, 30)
