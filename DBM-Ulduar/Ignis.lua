@@ -35,14 +35,12 @@ mod:AddSetIconOption("SlagPotIcon", 312731, false, false, {8})
 
 function mod:OnCombatStart(delay)
 	self.vb.FlameCount = 0
-	DBM:FireCustomEvent("DBM_EncounterStart", 33118, "Ignis")
 	timerAchieve:Start()
 	timerScorchCooldown:Start(12-delay)
 	timerActivateConstruct:Start(11-delay)
 end
 
 function mod:OnCombatEnd(wipe)
-	DBM:FireCustomEvent("DBM_EncounterEnd", 33118, "Ignis", wipe)
 end
 
 function mod:SPELL_CAST_START(args)

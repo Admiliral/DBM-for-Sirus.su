@@ -88,6 +88,8 @@ local timerGravityHCD	= mod:NewCDTimer(150, 35941, nil, nil, nil, 6, nil, DBM_CO
 mod:AddSetIconOption("SetIconOnMC", 36797, true, true, {6, 7, 8})
 mod:AddSetIconOption("VzrivIcon", 308742, true, true, {8})
 mod:AddBoolOption("AnnounceVzriv", false)
+mod:AddBoolOption("RangeFrame", true)
+mod:AddBoolOption("RemoveShadowResistanceBuffs", true)
 
 mod.vb.phase = 0
 local BombhmTargets = {}
@@ -204,9 +206,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			DBM.RangeCheck:Show(10)
 		elseif msg == L.YellPhase4  then
 			self.vb.phase = 4
+			if self.Options.RemoveShadowResistanceBuffs then
+				mod:ScheduleMethod(0.1, "RemoveBuffs")
+			end
 			warnPhase:Show(L.WarnPhase4)
 			timerPhase4:Cancel()
-			DBM.RangeCheck:Hide()
 			timerRoarCD:Cancel()
 			warnBombSoon:Cancel()
 			timerBombCD:Cancel()
@@ -312,7 +316,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		end
 		timerVzrivCast:Start()
 		timerVzrivCD:Start()
-		warnVzriv:Show(table.concat(VzrivTargets, "<, >"))
+		warnVzriv:Show(args.destName)
 		if self.Options.VzrivIcon then
 			self:SetIcon(args.destName, 8, 10)
 		end
@@ -380,6 +384,13 @@ function mod:UNIT_TARGET()
 	if axe then
 		self:AxeIcon()
 	end
+end
+
+function mod:RemoveBuffs()
+	CancelUnitBuff("player", (GetSpellInfo(48469)))		-- Mark of the Wild
+	CancelUnitBuff("player", (GetSpellInfo(48470)))		-- Gift of the Wild
+	CancelUnitBuff("player", (GetSpellInfo(48169)))		-- Shadow Protection
+	CancelUnitBuff("player", (GetSpellInfo(48170)))		-- Prayer of Shadow Protection
 end
 
 --[[function mod:KelIcon()

@@ -65,7 +65,6 @@ local disruptTargets = {}
 local disruptIcon = 7
 
 function mod:OnCombatStart(delay)
-	DBM:FireCustomEvent("DBM_EncounterStart", 32927, "IronCouncil")
 	enrageTimer:Start()
 	timerRuneofPower:Start(21)
 	table.wipe(disruptTargets)
@@ -73,7 +72,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd(wipe)
-	DBM:FireCustomEvent("DBM_EncounterEnd", 32927, "IronCouncil", wipe)
 	DBM.RangeCheck:Hide()
 end
 

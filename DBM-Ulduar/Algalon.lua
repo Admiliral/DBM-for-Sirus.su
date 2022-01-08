@@ -47,7 +47,6 @@ local warned_preP2 = false
 local warned_star = false
 
 function mod:OnCombatStart(delay)
-	DBM:FireCustomEvent("DBM_EncounterStart", 32871, "Algalon")
 	self.vb.SmashCount = 0
 	warned_preP2 = false
 	warned_star = false
@@ -67,7 +66,6 @@ local text = select(3, GetWorldStateUIInfo(1))
 end
 
 function mod:OnCombatEnd(wipe)
-	DBM:FireCustomEvent("DBM_EncounterEnd", 32871, "Algalon", wipe)
 end
 
 function mod:startTimers()

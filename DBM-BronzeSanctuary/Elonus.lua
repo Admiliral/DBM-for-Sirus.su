@@ -69,6 +69,7 @@ mod:AddBoolOption("AnnounceReverCasc", false)
 mod:AddBoolOption("AnnounceErap", false)
 mod:AddBoolOption("AnnounceTempCasc", false)
 mod:AddBoolOption("BossHealthFrame", true, "misc")
+mod:AddBoolOption("RangeFrame", true)
 
 
 local RevCascTargets = {}
@@ -190,6 +191,9 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnReverseCascadeMoveAway:Show()
 			yellReverseCascade:Yell()
 			yellReverseCascadeFade:Countdown(spellId)
+			if self.Options.RangeFrame then
+				DBM.RangeCheck:Show(8)
+			end
 		end
 		self:ScheduleMethod(0.1, "SetRevCascIcons")
 	elseif spellId == 312204 or spellId == 317156 then
@@ -257,6 +261,9 @@ function mod:SPELL_AURA_REMOVED(args)
 		end
 		if args:IsPlayer() then
 			yellReverseCascadeFade:Cancel()
+			if self.Options.RangeFrame then
+				DBM.RangeCheck:Hide()
+			end
 		end
 	elseif spellId == 312213 or spellId == 317163 then
 		specWarnReturnInterrupt:Show()
