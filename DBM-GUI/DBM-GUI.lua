@@ -996,15 +996,6 @@ end
 DBM_GUI_Bosses = CreateNewFauxScrollFrameList()
 DBM_GUI_Options = CreateNewFauxScrollFrameList()
 
-local function FixCameraAnimationFrame(self, elapsed)
-	if self.timer > elapsed then
-		self.timer = self.timer - elapsed
-		DBM_BossPreview:SetCamera(0)
-	else
-		self:SetScript("OnUpdate", nil)
-	end
-end
-
 local UpdateAnimationFrame
 function UpdateAnimationFrame(mod)
 	DBM_BossPreview.currentMod = mod
@@ -1019,7 +1010,7 @@ function UpdateAnimationFrame(mod)
 	local modelFile = DBM_BossPreview:GetModel()
 	if modelFile and type(modelFile) == "string" and string.find(modelFile, "dragon") then
 		DBM_BossPreview.timer = .1
-		DBM_BossPreview:SetScript("OnUpdate", FixCameraAnimationFrame)
+		DBM_BossPreview:SetScript("OnUpdate", nil)
 	else
 		local _, y, z = DBM_BossPreview:GetPosition()
 		DBM_BossPreview:SetPosition(0.2, y, z)
