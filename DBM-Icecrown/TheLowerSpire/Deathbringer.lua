@@ -43,7 +43,7 @@ mod:AddSetIconOption("BoilingBloodIcons", 72385, true, true, {1, 2, 3, 4, 5, 6, 
 mod:RemoveOption("HealthFrame")
 
 mod.vb.Mark = 0
-mod.vb.boilingBloodIcon 	= 8
+local boilingBloodIcon 	= 8
 local warned_preFrenzy = false
 local boilingBloodTargets = {}
 local spamBloodBeast = 0
@@ -51,7 +51,7 @@ local spamBloodBeast = 0
 local function warnBoilingBloodTargets(self)
 	warnBoilingBlood:Show(table.concat(boilingBloodTargets, "<, >"))
 	table.wipe(boilingBloodTargets)
-	self.vb.boilingBloodIcon = 8
+	boilingBloodIcon = 8
 end
 
 function mod:OnCombatStart(delay)
@@ -73,7 +73,7 @@ function mod:OnCombatStart(delay)
 	timerBoilingBlood:Start(19-delay)
 	table.wipe(boilingBloodTargets)
 	warned_preFrenzy = false
-	self.vb.boilingBloodIcon = 8
+	boilingBloodIcon = 8
 	self.vb.Mark = 0
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(12)
@@ -182,8 +182,8 @@ function mod:SPELL_AURA_APPLIED(args)
 		boilingBloodTargets[#boilingBloodTargets + 1] = args.destName
 		timerBoilingBlood:Start()
 		if self.Options.BoilingBloodIcons then
-			self:SetIcon(args.destName, self.vb.boilingBloodIcon, 15)
-			self.vb.boilingBloodIcon = self.vb.boilingBloodIcon - 1
+			self:SetIcon(args.destName, boilingBloodIcon, 15)
+			boilingBloodIcon = boilingBloodIcon - 1
 		end
 		self:Unschedule(warnBoilingBloodTargets)
 		if (mod:IsDifficulty("normal10") or mod:IsDifficulty("heroic10")) or ((mod:IsDifficulty("normal25") or mod:IsDifficulty("heroic25")) and #boilingBloodTargets >= 3) then	-- Boiling Blood
