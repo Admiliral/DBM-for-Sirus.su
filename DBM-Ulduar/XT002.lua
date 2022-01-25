@@ -38,7 +38,6 @@ mod:AddSetIconOption("SetIconOnLightBombTarget", 312941, true, true, {7})
 mod:AddSetIconOption("SetIconOnGravityBombTarget", 312943, true, true, {8})
 
 function mod:OnCombatStart()
-	DBM:FireCustomEvent("DBM_EncounterStart", 33293, "XT002")
 	BerserkTimer:Start()
 	timerAchieve:Start()
 	if mod:IsDifficulty("heroic10") then 																--10
@@ -49,7 +48,6 @@ function mod:OnCombatStart()
 end
 
 function mod:OnCombatEnd(wipe)
-	DBM:FireCustomEvent("DBM_EncounterEnd", 33293, "XT002", wipe)
 		DBM.RangeCheck:Hide()
 end
 

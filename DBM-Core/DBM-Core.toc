@@ -7,7 +7,7 @@
 ## SavedVariables: DBM_AllSavedOptions, DBM_MinimapIcon
 ## SavedVariablesPerCharacter: DBM_UsedProfile, DBM_UseDualProfile, DBM_CharSavedRevision, DBM_SavedOptions
 ## LoadOnDemand: 0
-## Version: 5.54.1
+## Version: 5.54.2
 ## DefaultState: enabled
 
 Libs\LibStub\LibStub.lua

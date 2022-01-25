@@ -51,7 +51,6 @@ mod.vb.iconId = 6
 mod.vb.altIcon = true
 
 function mod:OnCombatStart(delay)
-	DBM:FireCustomEvent("DBM_EncounterStart", 32906, "Freya")
 	self.vb.altIcon = true
 	self.vb.iconId = 6
 	self:SetStage(1)
@@ -62,7 +61,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd(wipe)
-	DBM:FireCustomEvent("DBM_EncounterEnd", 32906, "Freya", wipe)
 	DBM.BossHealth:Hide()
 	if not wipe then
 		if DBM.Bars:GetBar(L.TrashRespawnTimer) then

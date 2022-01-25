@@ -128,16 +128,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnNova:Show()
 		timerNovaCD:Start()
 	elseif spellId == 309253 then -- Стрела катаклизма
-		local targetname = self:GetBossTarget(21214)
-		if not targetname then return end
-		if self.Options.SetIconOnStrela then
-			self:SetIcon(targetname, 8, 6)
-		end
-		warnStrela:Show(targetname)
-		if targetname == UnitName("player") then
-			specWarnStrela:Show()
-			yellStrela:Yell()
-		end
+		self:ScheduleMethod(1.5, "strelafunc")
 		timerStrelaCD:Start()
 		timerStrelaCast:Start()
 	elseif spellId == 309256 then -- Хил
@@ -149,6 +140,19 @@ function mod:SPELL_CAST_START(args)
 		timerZemlyaCast:Start()
 		specWarnZeml:Show()
 	end
+end
+
+function mod:strelafunc()
+	local targetname = self:GetBossTarget(21214)
+		if not targetname then return end
+		if self.Options.SetIconOnStrela then
+			self:SetIcon(targetname, 8, 6)
+		end
+		warnStrela:Show(targetname)
+		if targetname == UnitName("player") then
+			specWarnStrela:Show()
+			yellStrela:Yell()
+		end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)

@@ -39,7 +39,6 @@ mod:AddBoolOption("HealthFrame", true)
 mod.vb.catLives = 9
 mod.vb.DefenderCount = 0
 function mod:OnCombatStart(delay)
-	DBM:FireCustomEvent("DBM_EncounterStart", 33515, "Auriaya")
 	self.vb.DefenderCount = 0
 	self.vb.catLives = 9
 	enrageTimer:Start(-delay)
@@ -49,7 +48,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd(wipe)
-	DBM:FireCustomEvent("DBM_EncounterEnd", 33515, "Auriaya", wipe)
 end
 
 function mod:SPELL_CAST_START(args)

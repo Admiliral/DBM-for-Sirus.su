@@ -42,7 +42,6 @@ mod:AddBoolOption("YellOnUnbalancingStrike", true)
 local lastcharge = {}
 
 function mod:OnCombatStart(delay)
-	DBM:FireCustomEvent("DBM_EncounterStart", 32865, "Thorim")
 	enrageTimer:Start(delay)
 	timerHardmode:Start(delay)
 	table.wipe(lastcharge)
@@ -54,7 +53,6 @@ local function sortFails1C(e1, e2)
 end
 
 function mod:OnCombatEnd(wipe)
-	DBM:FireCustomEvent("DBM_EncounterEnd", 32865, "Thorim", wipe)
 		DBM.RangeCheck:Hide()
 	if self.Options.AnnounceFails and DBM:GetRaidRank() >= 1 then
 		local lcharge = ""

@@ -35,14 +35,12 @@ mod:AddSetIconOption("SetIconOnStormCloud", 65123, true, false, {8, 7})
 mod.vb.stormCloudIcon = 8
 
 function mod:OnCombatStart(delay)
-	DBM:FireCustomEvent("DBM_EncounterStart", 32845, "Hodir")
 	enrageTimer:Start()
 	timerAchieve:Start()
 	timerFlashFrCD:Start(-delay)
 end
 
 function mod:OnCombatEnd(wipe)
-	DBM:FireCustomEvent("DBM_EncounterEnd", 32845, "Hodir", wipe)
 end
 
 function mod:SPELL_CAST_START(args)

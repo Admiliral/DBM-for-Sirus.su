@@ -10,7 +10,8 @@ mod:SetUsedIcons(1, 2, 3, 4, 5, 6, 7, 8)
 mod:RegisterEvents(
 	"SPELL_CAST_START",
 	"SPELL_AURA_APPLIED",
-	"SPELL_CAST_SUCCESS"
+	"SPELL_CAST_SUCCESS",
+	"UNIT_DIED"
 )
 
 mod:AddBoolOption("HealthFrame", true)
@@ -103,6 +104,14 @@ function mod:SPELL_CAST_START(args)
 	elseif args:IsSpellID(61973, 64321, 61974) then
 			self:ScheduleMethod(0.1, "RuneTarget")
 			timerRuneofPower:Start()
+	end
+end
+
+function mod:UNIT_DIED(args)
+	if args.destName == L.StormcallerBrundir then
+        timerRuneofPower:Start(25)
+        timerRuneofDeathDura:Start()
+        timerShieldofRunes:Start(27)
 	end
 end
 
