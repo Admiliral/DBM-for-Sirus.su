@@ -43,6 +43,7 @@ L:SetTimerLocalization{
 	TimerFurnaceActive = "Печь активна",
 	TimerFurnaceInactive = "Печь не активна",
 	TimerBurnedFlesh = "Обожженная плоть (х2 урон)"
+
 }
 
 L:SetWarningLocalization{
@@ -53,7 +54,9 @@ L:SetOptionLocalization{
 	Strike = "Отсчет времени до хлопка",
 	TimerFurnaceActive = "Отсчет времени пока печь активна",
 	TimerFurnaceInactive = "Отсчет времени пока печь не активна",
-	TimerBurnedFlesh = "Отсчет времени пока длится х2 урон по боссу"
+	TimerBurnedFlesh = "Отсчет времени пока длится х2 урон по боссу",
+	Blow = "Отсчет до Ошеломляющего удара",
+	Hate = "Отсчет до Удара ненависти"
 }
 
 L:SetMiscLocalization{

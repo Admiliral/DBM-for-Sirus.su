@@ -19,7 +19,7 @@ local timerWhirl                     = mod:NewTimer(15, "TimerWhirl", 33238)
 local timerIntimidateCD              = mod:NewCDTimer(16, 16508)
 local specWarnMelee                  = mod:NewSpecialWarningMove(33238, "Melee")
 local timerMight                     = mod:NewTargetTimer(60, 305216, "timerActive")
-local timerMightCD                   = mod:NewCDTimer(80, 305216)
+local timerMightCD                   = mod:NewCDTimer(65, 305216)
 local specWarnShield                 = mod:NewSpecialWarningDispel(305247, isDispeller)
 local specWarnKickCleanse            = mod:NewSpecialWarning("KickNow", "-Melee")
 local warnMight                      = mod:NewAnnounce("WarnMight", 2)
@@ -30,7 +30,7 @@ mod:AddBoolOption("AnnounceToChat",false)
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 18831, "High King Maulgar")
 	if mod:IsDifficulty("heroic25") then
-		timerMightCD:Start(20)
+		timerMight:Start(5)
 	end
 end
 
