@@ -44,7 +44,7 @@ local timerMeteorCD					= mod:NewNextTimer(40, 74648, nil, nil, nil, 3)
 local timerMeteorCast				= mod:NewCastTimer(7, 74648)--7-8 seconds from boss yell the meteor impacts.
 local timerTwilightCutterCast		= mod:NewCastTimer(5, 77844)
 local timerTwilightCutter			= mod:NewBuffActiveTimer(10, 77844, nil, nil, nil, 6)
-local timerTwilightCutterCD			= mod:NewNextTimer(15, 77844, nil, nil, nil, 6)
+local timerTwilightCutterCD			= mod:NewNextTimer(20, 77844, nil, nil, nil, 6)
 local timerShadowBreathCD			= mod:NewCDTimer(19, 75954, nil, "Tank|Healer", nil, 5)--Same as debuff timers, same CD, can be merged into 1.
 local timerFieryBreathCD			= mod:NewCDTimer(19, 74526, nil, "Tank|Healer", nil, 5)--But unique icons are nice pertaining to phase you're in ;)
 
@@ -221,7 +221,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerShadowBreathCD:Start(20)
 		timerShadowConsumptionCD:Start(20)--not exact, 15 seconds from tank aggro, but easier to add 5 seconds to it as a estimate timer than trying to detect this
 		if mod:IsDifficulty("heroic10") or mod:IsDifficulty("heroic25") then --These i'm not sure if they start regardless of drake aggro, or if it should be moved too.
-			timerTwilightCutterCD:Start(30)
+			timerTwilightCutterCD:Start(40)
 		else
 			timerTwilightCutterCD:Start(35)
 		end
@@ -246,7 +246,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 			warningTwilightCutter:Show()
 			timerTwilightCutterCast:Start()
 			timerTwilightCutter:Schedule(5)--Delay it since it happens 5 seconds after the emote
-			timerTwilightCutterCD:Schedule(15)
+			timerTwilightCutterCD:Schedule(20)
 		end
 		if mod:LatencyCheck() then
 			self:SendSync("TwilightCutter")
@@ -260,7 +260,7 @@ function mod:OnSync(msg, target)
 			warningTwilightCutter:Show()
 			timerTwilightCutterCast:Start()
 			timerTwilightCutter:Schedule(5)--Delay it since it happens 5 seconds after the emote
-			timerTwilightCutterCD:Schedule(15)
+			timerTwilightCutterCD:Schedule(20)
 		end
 	elseif msg == "Meteor" then
 		if self.Options.AnnounceAlternatePhase then
