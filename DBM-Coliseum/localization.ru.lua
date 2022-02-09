@@ -235,7 +235,6 @@ L:SetMiscLocalization{
 	PcoldIconSet		= "Метка холода {rt%d} установлена на: %s",
 	PcoldIconRemoved	= "Метка холода снята с: %s",
 	Phase3				= "Стая поглотит вас!"
-	
 }
 
 L:SetOptionLocalization{

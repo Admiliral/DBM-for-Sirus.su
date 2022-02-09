@@ -118,7 +118,7 @@ function mod:SPELL_CAST_START(args)
 		timerHandCD:Start()
 		if args:IsPlayer() then
             warnSound:Play("fireinthe")
-			if args:IsSpellID(30115) then 
+			if args:IsSpellID(30115) then
 				timerSacrifice:start()
         end end
 	end

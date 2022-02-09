@@ -49,20 +49,20 @@ mod:AddSetIconOption("ElementalIcons", 29962, true, true, {6, 7, 8})
 
 local beastIcon = {}
 local WreathTargets = {}
-mod.vb.flameWreathIcon = 8
+local flameWreathIcon = 8
 mod.vb.famCounter = 1
 
 local function warnFlameWreathTargets()
 	warningFlameTargets:Show(table.concat(WreathTargets, "<, >"))
 	table.wipe(WreathTargets)
-	self.vb.flameWreathIcon = 8
+	flameWreathIcon = 8
 end
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 16524, "Shade of Aran")
 	if mod:IsDifficulty("normal10") then
 		berserkTimer:Start(-delay)
-		self.vb.flameWreathIcon = 8
+		flameWreathIcon = 8
 		table.wipe(WreathTargets)
 	elseif mod:IsDifficulty("heroic10") then
 		timerSpecialHeroic:Start()
@@ -118,8 +118,8 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnDontMove:Show()
 		end
 		if self.Options.WreathIcons then
-			self:SetIcon(args.destName, self.vb.flameWreathIcon, 20)
-			self.vb.flameWreathIcon = self.vb.flameWreathIcon - 1
+			self:SetIcon(args.destName, flameWreathIcon, 20)
+			flameWreathIcon = flameWreathIcon - 1
 		end
 		self:Unschedule(warnFlameWreathTargets)
 		self:Schedule(0.3, warnFlameWreathTargets)

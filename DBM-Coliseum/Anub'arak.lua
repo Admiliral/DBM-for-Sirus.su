@@ -89,7 +89,6 @@ function mod:EmergeTest()
 	warnSubmergeSoon:Schedule(70)
 	timerSubmerge:Start()
 	self:ShadowStrikefix() -- прямиком в костыль, поскольку ShadowStrike() после выкапывания запускается позже на 10 сек
-	
 end
 
 function mod:Adds()
@@ -202,18 +201,18 @@ function mod:SPELL_AURA_REMOVED(args)
 end
 
 function mod:SPELL_CAST_START(args)    -- 3 фаза
-	if args.spellId == 66118 or args.spellId == 67630 or args.spellId == 68646 or args.spellId == 68647 then			-- Swarm (start p3)    
+	if args.spellId == 66118 or args.spellId == 67630 or args.spellId == 68646 or args.spellId == 68647 then			-- Swarm (start p3)
 		warnPhase3:Show()
 		warnEmergeSoon:Cancel()
 		warnSubmergeSoon:Cancel()
 		timerEmerge:Stop()
 		timerSubmerge:Stop()
-		if self.Options.RemoveBuffs then	
+		if self.Options.RemoveBuffs then
 			mod:ScheduleMethod(0.1, "RemoveBuffs")
 		end
 		if mod:IsDifficulty("normal10") or mod:IsDifficulty("normal25") then
-			timerAdds:Cancel() 
-			warnAdds:Cancel() 
+			timerAdds:Cancel()
+			warnAdds:Cancel()
 			self:UnscheduleMethod("Adds")
 		end
 	elseif args.spellId == 66134 then							-- Shadow Strike
@@ -222,7 +221,7 @@ function mod:SPELL_CAST_START(args)    -- 3 фаза
 		warnShadowStrike:Show()
 	end
 end
-function mod:CHAT_MSG_MONSTER_YELL(msg) -- 
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg and msg == L.YellBurrow then
 		self.vb.Phase = 2
 		self.vb.Burrowed = true
@@ -235,7 +234,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg) --
 		self:UnscheduleMethod("ShadowStrike")
 		timerShadowStrike:Cancel()
 		preWarnShadowStrike:Cancel()
-		self:ScheduleMethod(65, "EmergeTest")	-- костыль 
+		self:ScheduleMethod(65, "EmergeTest")	-- костыль
 	end
 end
 
