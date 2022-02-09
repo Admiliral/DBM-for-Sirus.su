@@ -52,7 +52,7 @@ local WreathTargets = {}
 mod.vb.flameWreathIcon = 8
 mod.vb.famCounter = 1
 
-local function warnFlameWreathTargets(self)
+local function warnFlameWreathTargets()
 	warningFlameTargets:Show(table.concat(WreathTargets, "<, >"))
 	table.wipe(WreathTargets)
 	self.vb.flameWreathIcon = 8

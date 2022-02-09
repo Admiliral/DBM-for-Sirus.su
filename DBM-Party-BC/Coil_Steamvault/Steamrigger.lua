@@ -1,4 +1,4 @@
-local mod	= DBM:NewMod("Steamrigger", "DBM-Party-BC", 6)
+local mod	= DBM:NewMod("Steamrigger", "DBM-Party-BC", 10)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision(("$Revision: 128 $"):sub(12, -3))

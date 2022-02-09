@@ -34,7 +34,7 @@ local specWarnFelInferno		= mod:NewSpecialWarningMove(68718, nil, nil, nil, 1, 2
 local SpecWarnFelFireball		= mod:NewSpecialWarningInterrupt(66965, "HasInterrupt", nil, 2, 1, 2)
 local SpecWarnFelFireballDispel	= mod:NewSpecialWarningDispel(66965, false, nil, 2, 1, 2)
 
-local timerCombatStart			= mod:NewCombatTimer(90)--rollplay for first pull
+local timerCombatStart			= mod:NewCombatTimer(91)--rollplay for first pull
 local enrageTimer				= mod:NewBerserkTimer(600)
 local timerFlame 				= mod:NewTargetTimer(8, 68123, nil, nil, nil, 3)--There are 8 debuff Ids. Since we detect first to warn, use an 8sec timer to cover duration of trigger spell and damage debuff.
 local timerFlameCD				= mod:NewCDTimer(30, 68125, nil, nil, nil, 3)
@@ -58,6 +58,7 @@ function mod:OnCombatStart(delay)
 		DBM.BossHealth:Show(L.name)
 		DBM.BossHealth:AddBoss(34780, L.name)
 	end
+	timerNetherPowerCD:Start()
 	timerPortalCD:Start(20-delay)
 	warnPortalSoon:Schedule(15-delay)
 	timerVolcanoCD:Start(80-delay)
@@ -164,6 +165,10 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(66532, 66963, 66964, 66965) then		-- Fel Fireball (announce if tank gets debuff for dispel)
 		warnFelFireball:Show()
 		SpecWarnFelFireballDispel:Show(args.destName)
+	elseif args:IsSpellID(67009) then								-- Nether Power
+		warnNetherPower:Show()
+		timerNetherPowerCD:Start()
+		specWarnNetherPower:Show()
 	end
 end
 
@@ -181,12 +186,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(67009) then								-- Nether Power
-		warnNetherPower:Show()
-		timerNetherPowerCD:Start()
-		specWarnNetherPower:Show()
-
-	elseif args:IsSpellID(67901, 67902, 67903, 66258) then		-- Infernal Volcano
+	if args:IsSpellID(67901, 67902, 67903, 66258) then		-- Infernal Volcano
 		timerVolcanoCD:Start()
 		warnVolcanoSoon:Schedule(110)
 

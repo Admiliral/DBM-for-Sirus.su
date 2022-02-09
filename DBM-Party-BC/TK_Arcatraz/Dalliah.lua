@@ -1,42 +1,50 @@
-local mod = DBM:NewMod("Dalliah", "DBM-Party-BC", 15)
-local L = mod:GetLocalizedStrings()
+local mod	= DBM:NewMod("Dalliah", "DBM-Party-BC", 10)
+local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 147 $"):sub(12, -3))
-
+mod:SetRevision(("$Revision: 2250 $"):sub(12, -3))
 mod:SetCreatureID(20885)
-mod:RegisterCombat("combat")
+mod:SetZone()
+
+mod:RegisterCombat("combat", 20885)
 
 mod:RegisterEvents(
+	"SPELL_CAST_SUCCESS",
 	"SPELL_CAST_START",
-	"SPELL_AURA_APPLIED",
-	"SPELL_AURA_REMOVED"
+	"SPELL_AURA_APPLIED"
 )
 
-local warnHeal			= mod:NewSpellAnnounce(39013)
-local warnWhirlwind		= mod:NewSpellAnnounce(36175)
-local warnGift			= mod:NewTargetAnnounce(39009)
-local timerGift			= mod:NewTargetTimer(10, 39009)
+local timerGiftCD		= mod:NewCDTimer(20, 39009)
+local timerWhirlCD		= mod:NewCDTimer(20, 36142)
+local timerWaveCD		= mod:NewCDTimer(16, 39016)
+local timerHealCD		= mod:NewCDTimer(20, 39013)
 
-local specwarnWhirlwind	= mod:NewSpecialWarningRun(36175, "Melee")
+local warnGift  		= mod:NewTargetAnnounce(39009, 3)
+
+
+function mod:OnCombatStart(delay)
+	timerGiftCD:Start(3)
+	timerWhirlCD:Start(8)
+	timerWaveCD:Start(15)
+	timerHealCD:Start(17)
+end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(39013, 36144) then
-		warnHeal:Show()
-	elseif args:IsSpellID(36175, 36142) then
-		warnWhirlwind:Show()
-		specwarnWhirlwind:Show()
+	if args:IsSpellID(39016) then
+		timerWaveCD:Start()
+	elseif args:IsSpellID(39013) then
+		timerHealCD:Start()
+	end
+end
+
+function mod:SPELL_CAST_SUCCESS(args)
+	if args:IsSpellID(36142) then
+		timerWhirlCD:Start()
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(39009, 36173) then
+	if args:IsSpellID(39009) then
+		timerGiftCD:Start()
 		warnGift:Show(args.destName)
-		timerGift:Start(args.destName)
-	end
-end
-
-function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(39009, 36173) then
-		timerGift:Cancel(args.destName)
 	end
 end

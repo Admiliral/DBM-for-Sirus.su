@@ -11,7 +11,8 @@ mod:RegisterEvents(
 	"SPELL_AURA_REFRESH",
 	"SPELL_AURA_REMOVED",
 	"SPELL_CAST_START",
-	"RAID_BOSS_EMOTE"
+	"RAID_BOSS_EMOTE",
+    "CHAT_MSG_MONSTER_YELL"
 )
 
 mod:SetUsedIcons(3, 4, 5, 6, 7, 8)
@@ -32,12 +33,14 @@ local specWarnPursue		= mod:NewSpecialWarningRun(67574, nil, nil, 2, 4, 2)
 local specWarnShadowStrike	= mod:NewSpecialWarningSpell(66134, false, nil, 2, 1)--Don't have a good voice for this. Need a "stun mob now"
 local specWarnPCold			= mod:NewSpecialWarningYou(66013, false, nil, nil, 1, 2)
 
+--local timerTest			  = mod:NewTimer(55, "timerTest", 45419, nil, nil, 1)
 local timerAdds				= mod:NewTimer(45, "timerAdds", 45419, nil, nil, 1)
 local timerSubmerge			= mod:NewTimer(75, "TimerSubmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendBurrow.blp", nil, nil, 6)
-local timerEmerge			= mod:NewTimer(65, "TimerEmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendUnBurrow.blp", nil, nil, 6)
+local timerEmerge			= mod:NewTimer(55, "TimerEmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendUnBurrow.blp", nil, nil, 6)
 local timerFreezingSlash	= mod:NewCDTimer(20, 66012, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
-local timerPCold			= mod:NewBuffActiveTimer(15, 66013, nil, nil, nil, 5, nil, DBM_CORE_HEALER_ICON)
+local timerPCold			= mod:NewBuffActiveTimer(20, 66013, nil, nil, nil, 5, nil, DBM_CORE_HEALER_ICON)
 local timerShadowStrike		= mod:NewNextTimer(30.5, 66134, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
+local timerShadowStrikefix	= mod:NewNextTimer(20.5, 66134, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- костыль
 local timerHoP				= mod:NewBuffActiveTimer(10, 10278, nil, false, nil, 5)--So we will track bops to make this easier.
 
 local enrageTimer			= mod:NewBerserkTimer(570)	-- 9:30 ? hmpf (no enrage while submerged... this sucks)
@@ -46,18 +49,21 @@ mod:AddSetIconOption("PursueIcon", 67574, true)
 mod:AddSetIconOption("SetIconsOnPCold", 66013, false)
 mod:AddBoolOption("AnnouncePColdIcons", false)
 mod:AddBoolOption("AnnouncePColdIconsRemoved", false)
+mod:AddBoolOption("RemoveBuffs", true)
 
 local PColdTargets = {}
 mod.vb.Burrowed = false
+mod.vb.Phase = 0
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 34564, "Anub'arak")
+    self.vb.Phase = 1
 	self.vb.Burrowed = false
 	timerAdds:Start(10-delay)
 	warnAdds:Schedule(10-delay)
 	self:ScheduleMethod(10-delay, "Adds")
-	warnSubmergeSoon:Schedule(70-delay)
-	timerSubmerge:Start(80-delay)
+	warnSubmergeSoon:Schedule(65-delay)
+	timerSubmerge:Start()
 	enrageTimer:Start(-delay)
 	timerFreezingSlash:Start(-delay)
 	table.wipe(PColdTargets)
@@ -70,6 +76,20 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 34564, "Anub'arak", wipe)
+end
+
+function mod:EmergeTest()
+	self:SetStage(1)
+	self.vb.Burrowed = false
+	timerEmerge:Cancel()
+	timerAdds:Start(5)
+	warnAdds:Schedule(5)
+	self:ScheduleMethod(5, "Adds")
+	warnEmerge:Show()
+	warnSubmergeSoon:Schedule(70)
+	timerSubmerge:Start()
+	self:ShadowStrikefix() -- прямиком в костыль, поскольку ShadowStrike() после выкапывания запускается позже на 10 сек
+	
 end
 
 function mod:Adds()
@@ -86,10 +106,24 @@ function mod:ShadowStrike()
 	self:UnscheduleMethod("ShadowStrike")
 	if self:IsInCombat() then
 		timerShadowStrike:Stop()
+		timerShadowStrikefix:Stop()
 		timerShadowStrike:Start()
 		preWarnShadowStrike:Cancel()
 		preWarnShadowStrike:Schedule(25.5)
 		self:ScheduleMethod(30.5, "ShadowStrike")
+	end
+end
+
+function mod:ShadowStrikefix() -- костыль для теневых
+	self:UnscheduleMethod("ShadowStrike")
+	if self:IsInCombat() then
+		timerShadowStrike:Stop()
+		timerShadowStrikefix:Stop()
+		timerShadowStrikefix:Start()
+		preWarnShadowStrike:Cancel()
+		preWarnShadowStrike:Schedule(15.5)
+		self:ScheduleMethod(20.5, "ShadowStrike")
+
 	end
 end
 
@@ -167,31 +201,47 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
-function mod:SPELL_CAST_START(args)
-	if args.spellId == 66118 then
+function mod:SPELL_CAST_START(args)    -- 3 фаза
+	if args.spellId == 66118 or args.spellId == 67630 or args.spellId == 68646 or args.spellId == 68647 then			-- Swarm (start p3)    
 		warnPhase3:Show()
 		warnEmergeSoon:Cancel()
 		warnSubmergeSoon:Cancel()
 		timerEmerge:Stop()
 		timerSubmerge:Stop()
-		if self:IsDifficulty("normal10", "normal25") then
-			timerAdds:Cancel()
-			warnAdds:Cancel()
+		if self.Options.RemoveBuffs then	
+			mod:ScheduleMethod(0.1, "RemoveBuffs")
+		end
+		if mod:IsDifficulty("normal10") or mod:IsDifficulty("normal25") then
+			timerAdds:Cancel() 
+			warnAdds:Cancel() 
 			self:UnscheduleMethod("Adds")
 		end
-	elseif args.spellId == 66134 then
-		self:UnscheduleMethod("ShadowStrike")
+	elseif args.spellId == 66134 then							-- Shadow Strike
 		self:ShadowStrike()
-		if self.Options.SpecWarn66134spell then
-			specWarnShadowStrike:Show()
-		else
-			warnShadowStrike:Show()
-		end
+		specWarnShadowStrike:Show()
+		warnShadowStrike:Show()
+	end
+end
+function mod:CHAT_MSG_MONSTER_YELL(msg) -- 
+	if msg and msg == L.YellBurrow then
+		self.vb.Phase = 2
+		self.vb.Burrowed = true
+		timerAdds:Cancel()
+		warnAdds:Cancel()
+		warnSubmerge:Show()
+		warnEmergeSoon:Schedule(58.5)
+		timerEmerge:Start()
+		timerFreezingSlash:Stop()
+		self:UnscheduleMethod("ShadowStrike")
+		timerShadowStrike:Cancel()
+		preWarnShadowStrike:Cancel()
+		self:ScheduleMethod(65, "EmergeTest")	-- костыль 
 	end
 end
 
 function mod:RAID_BOSS_EMOTE(msg)
 	if msg and msg:find(L.Burrow) then
+        self.vb.Phase = 2
 		self.vb.Burrowed = true
 		timerAdds:Cancel()
 		warnAdds:Cancel()
@@ -199,7 +249,10 @@ function mod:RAID_BOSS_EMOTE(msg)
 		warnEmergeSoon:Schedule(55)
 		timerEmerge:Start()
 		timerFreezingSlash:Stop()
+        self:ScheduleMethod(65, "EmergeTest")
 	elseif msg and msg:find(L.Emerge) then
+        self:UnscheduleMethod(65, "EmergeTest")
+        self.vb.Phase = 1
 		self.vb.Burrowed = false
 		timerAdds:Start(5)
 		warnAdds:Schedule(5)
@@ -214,4 +267,12 @@ function mod:RAID_BOSS_EMOTE(msg)
 			self:ScheduleMethod(5.5, "ShadowStrike")
 		end
 	end
+end
+
+function mod:RemoveBuffs() -- Убрать бафы перед 3 фазой
+	CancelUnitBuff("player", (GetSpellInfo(47440)))		-- Командирский крик
+	CancelUnitBuff("player", (GetSpellInfo(47439)))		-- Командирский крик(не апнутая)
+	CancelUnitBuff("player", (GetSpellInfo(48161)))		-- Слово силы: Стойкость
+	CancelUnitBuff("player", (GetSpellInfo(48162)))		-- Молитва стойкости
+	CancelUnitBuff("player", (GetSpellInfo(72590)))		-- Свиток стойкости
 end

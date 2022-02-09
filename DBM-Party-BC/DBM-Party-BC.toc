@@ -1,7 +1,7 @@
 ﻿## Interface: 30300
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Party-BC|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Групповые подземелья-BC|r
-## Author: Ritual
+## Author: Waini and stekolnyu
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
 ## SavedVariables: DBMPartyBC_AllSavedVars
@@ -17,40 +17,40 @@
 ## X-DBM-Mod-LoadZone: Auchenai Crypts, Hellfire Ramparts, Mana-Tombs, The Blood Furnace, Underbog, The Steamvault, The Shattered Halls, Sethekk Halls, The Slave Pens, The Arcatraz, Shadow Labyrinth, The Botanica, The Mechanar, Old Hillsbrad Foothills, Magisters' Terrace, Black Morass
 ## X-DBM-Mod-LoadZone-ruRU: Аукенайские гробницы, Бастионы Адского Пламени, Гробницы Маны, Кузня Крови, Нижетопь, Паровое подземелье, Разрушенные залы, Сетеккские залы, Узилище, Аркатрац, Темный лабиринт, Ботаника, Механар, Старые предгорья Хилсбрада, Терраса Магистров, Черные топи
 
+Hellfire_Ramparts\HRTrash.lua
+Hellfire_Ramparts\Omor.lua
+Hellfire_Ramparts\Vazruden.lua
+Hellfire_Ramparts\Watchkeeper.lua
+Hellfire_BloodFurnace\BFTrash.lua
+Hellfire_BloodFurnace\TheMaker.lua
+Hellfire_BloodFurnace\Kelidan.lua
+Hellfire_BloodFurnace\Broggok.lua
+Hellfire_ShatteredHalls\Kargath.lua
+Hellfire_ShatteredHalls\Nethekur.luase
+Hellfire_ShatteredHalls\O'mrogg.lua
+Hellfire_ShatteredHalls\Porung.lua
+Auct_Crypts\ACTrash.lua
+Auct_Crypts\Exarh.lua
+Auct_Crypts\Maladaar.lua
+Auct_Crypts\Shirrak.lua
+Auct_SethekkHalls\Anzu.lua
+Auct_SethekkHalls\Ikiss.lua
+Auct_SethekkHalls\SHTrash.lua
+Auct_SethekkHalls\Syth.lua
+Auct_Tombs\MTTrash.lua
+Auct_Tombs\Pandemonius.lua
+Auct_Tombs\Shaffar.lua
+Auct_Tombs\Tavarok.lua
+Auct_Tombs\Yor.lua
+Coil_Slavepens\Mennu.lua
+Coil_Slavepens\Quagmirran.lua
+Coil_Slavepens\Rokmar.lua
+Coil_Slavepens\SPTrash.lua
+Coil_Underbog\BlackStalker.lua
+Coil_Underbog\Ghazan.lua
+Coil_Underbog\Hungarfen.lua
+Coil_Underbog\Muselek.lua
+Coil_Underbog\UTrash.lua
+
 localization.en.lua
 localization.ru.lua
-
-AuchenaiCrypts\ACTrash.lua
-AuchenaiCrypts\Shirrak.lua
-AuchenaiCrypts\Exarh.lua
-HellfireRamparts\HRTrash.lua
-HellfireRamparts\Watchkeeper.lua
-HellfireRamparts\Omor.lua
-HellfireRamparts\Vazruden.lua
-ManaTombs\MTTrash.lua
-ManaTombs\Pandemonius.lua
-ManaTombs\Tavarok.lua
-ManaTombs\Yor.lua
-ManaTombs\Shaffar.lua
-TheBloodFurnace\BFTrash.lua
-TheBloodFurnace\TheMaker.lua
-TheBloodFurnace\Broggok.lua
-TheBloodFurnace\Kelidan.lua
-Underbog\UTrash.lua
-Underbog\Hungarfen.lua
-Underbog\Ghazan.lua
-Underbog\Muselek.lua
-Underbog\BlackStalker.lua
-SethekkHalls\SHTrash.lua
-SethekkHalls\Syth.lua
-SethekkHalls\Anzu.lua
-SethekkHalls\Ikiss.lua
-TheSlavePens\SPTrash.lua
-TheSlavePens\Mennu.lua
-TheSlavePens\Rokmar.lua
-TheSlavePens\Quagmirran.lua
-TheArcatraz\ArTrash.lua
-TheArcatraz\Zereketh.lua
-TheArcatraz\Dalliah.lua
-TheArcatraz\Soccothrates.lua
-TheArcatraz\Skyriss.lua

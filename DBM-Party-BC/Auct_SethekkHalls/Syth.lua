@@ -1,21 +1,26 @@
-local mod = DBM:NewMod("Syth", "DBM-Party-BC", 9)
-local L = mod:GetLocalizedStrings()
+local mod	= DBM:NewMod("Syth", "DBM-Party-BC", 8)
+local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 147 $"):sub(12, -3))
+mod:SetRevision(("$Revision: 2250 $"):sub(12, -3))
 
-mod:SetCreatureID(18472)
-mod:RegisterCombat("combat")
+mod:RegisterCombat("combat", 18472)
 
 mod:RegisterEvents(
-	"SPELL_SUMMON"
+	"SPELL_CAST_SUCCESS",
+	"CHAT_MSG_MONSTER_YELL"
 )
 
-local warnSummon = mod:NewAnnounce("SummonElementals", 3, 33539)
+local timerFroshShockCD = mod:NewCDTimer(10, 21401)
 
-local spam = 0
-function mod:SPELL_SUMMON(args)
-	if args:IsSpellID(33537, 33538, 33539, 33540) and GetTime() - spam > 3 then
-		warnSummon:Show()
-		spam = GetTime()
+
+function mod:SPELL_CAST_SUCCESS(args)
+	if args:IsSpellID(21401) then
+		timerFroshShockCD:Start()
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L.yellSummon then
+		timerFroshShockCD:Start()
 	end
 end

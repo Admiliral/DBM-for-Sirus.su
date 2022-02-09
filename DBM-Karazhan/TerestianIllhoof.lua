@@ -33,8 +33,11 @@ mod:RegisterEvents(
 
 local warningHandCast			= mod:NewCastAnnounce(305345, 3)
 local warnSound						= mod:NewSoundAnnounce()
+
 local timerHandCD				= mod:NewCDTimer(15, 305345)
 local timerMarkCD			    = mod:NewCDTimer(33, 305351)
+local timerSacrifice			= mod:NewCDTimer(42,30115)
+
 local WarnMark		            = mod:NewTargetAnnounce(305351, 3)
 local specWarnMark			    = mod:NewSpecialWarningYou(305351)
 local specWarnSeed	            = mod:NewSpecialWarningSpell(305360, "Tank")
@@ -94,10 +97,10 @@ function mod:resetTolik()
     self.vb.tolik = true
 end
 
-
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 15688, "Terestian Illhoof")
 	if mod:IsDifficulty("normal10") then
+		timerSacrifice:Start(28)
 	elseif mod:IsDifficulty("heroic10") then
 		self.vb.tolik = true
 		timerHandCD:Start()
@@ -114,8 +117,10 @@ function mod:SPELL_CAST_START(args)
 		warningHandCast:Show()
 		timerHandCD:Start()
 		if args:IsPlayer() then
-            warnSound:Play("fireinthe")           -- CS 1.6 (couter_terorrists_voice)
-        end
+            warnSound:Play("fireinthe")
+			if args:IsSpellID(30115) then 
+				timerSacrifice:start()
+        end end
 	end
 end
 

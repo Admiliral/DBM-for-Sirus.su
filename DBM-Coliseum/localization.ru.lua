@@ -24,6 +24,7 @@ L:SetMiscLocalization{
 
 L:SetOptionLocalization{
 	WarningSnobold				= "Предупреждение о призыве Снобольда-вассала",
+	specWarnHardMove			= "Спец-предупреждение людей от тяжелого шага",
 	SpecialWarningImpale3		= "Спец-предупреждение для Прокалывания (>= 3 стаков)",
 	SpecialWarningAnger3		= "Спец-предупреждение для Вскипающего гнева (>=3 стаков)",
 	SpecialWarningSilence		= "Спец-предупреждение для Сотрясающего топота (безмолвие)",
@@ -39,7 +40,8 @@ L:SetOptionLocalization{
 	TimerEmerge					= "Отсчет времени до появления",
 	TimerSubmerge				= "Отсчет времени до зарывания",
 	RangeFrame                  = "Показывать окно проверки дистанции в фазе 2",
-	IcehowlArrow				= "Показывать стрелку, когда Ледяной Рев готовится сделать рывок на цель рядом с вами"
+	IcehowlArrow				= "Показывать стрелку, когда Ледяной Рев готовится сделать рывок на цель рядом с вами",
+	SaySlackers					= "Включить анонс слакеров не убежавших от рева"
 }
 
 L:SetTimerLocalization{
@@ -195,7 +197,7 @@ L:SetOptionLocalization{
 	SpecialWarnOnDebuff			= "Спец-предупреждение, когда отрицательный эффект",
 	SetIconOnDebuffTarget		= "Установить метку на получившего отрицательный эффект (героический режим)",
 	WarningTouchDebuff			= "Объявлять цели, получившие отрицательный эффект",
-	WarningPoweroftheTwins2		= "Объявлять цель под воздействем Силы близнецов",
+	WarningPoweroftheTwins		= "Объявлять цель под воздействем Силы близнецов",
 	SpecWarnPoweroftheTwins		= "Спец-предупреждение, когда на вас Сила близнецов"
 }
 
@@ -229,8 +231,11 @@ L:SetMiscLocalization{
 	YellPull			= "Это место станет вашей могилой!",
 	Emerge				= "вылезает на поверхность!",
 	Burrow				= "зарывается в землю!",
+	YellBurrow			= "А вот и гости заявились, как и обещал господин.",
 	PcoldIconSet		= "Метка холода {rt%d} установлена на: %s",
-	PcoldIconRemoved	= "Метка холода снята с: %s"
+	PcoldIconRemoved	= "Метка холода снята с: %s",
+	Phase3				= "Стая поглотит вас!"
+	
 }
 
 L:SetOptionLocalization{
@@ -247,7 +252,7 @@ L:SetOptionLocalization{
 	PlaySoundOnPursue		= "Звуковой сигнал, если вас преследуют",
 	PursueIcon				= "Устанавливать метки на преследуемых",
 	--SpecWarnShadowStrike	= "Спец-предупреждение для $spell:66134 (для прерывания)",
-	RemoveHealthBuffsInP3	= "Удалять усиления здоровья в начале фазы 3",
+	RemoveBuffs	= "Удалять бафы здоровья в начале фазы 3",
 	SetIconsOnPCold         = "Устанавливать метки на цели заклинания $spell:68510",
 	AnnouncePColdIcons		= "Объявлять метки целей заклинания $spell:68510 в рейд-чат\n(требуются права лидера или помощника)",
 	AnnouncePColdIconsRemoved	= "Объявлять также о снятии меток с целей заклинания $spell:68510\n(требуется предыдущая опция)"

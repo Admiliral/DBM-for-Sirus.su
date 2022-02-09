@@ -39,20 +39,22 @@ local specWarnCharge		= mod:NewSpecialWarningRun(52311, nil, nil, nil, 4, 2)
 local specWarnChargeNear	= mod:NewSpecialWarningClose(52311, nil, nil, nil, 3, 2)
 local specWarnTranq			= mod:NewSpecialWarningDispel(66759, "RemoveEnrage", nil, nil, 1, 2)
 local specWarnFireBomb		= mod:NewSpecialWarningMove(66317, nil, nil, nil, 1, 2)
+local specWarnHardMove		= mod:NewSpecialWarningYou(52311, nil, nil, nil, 3, 2)
 
 local enrageTimer			= mod:NewBerserkTimer(223)
-local timerCombatStart		= mod:NewCombatTimer(13)
+local enrageTimerTest		= mod:NewBerserkTimer(223)
+local timerCombatStart		= mod:NewCombatTimer(11.5)
 local timerNextBoss			= mod:NewTimer(190, "TimerNextBoss", 2457, nil, nil, 1)
-local timerSubmerge			= mod:NewTimer(45, "TimerSubmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendBurrow.blp", nil, nil, 6)
+local timerSubmerge			= mod:NewTimer(40, "TimerSubmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendBurrow.blp", nil, nil, 6)
 local timerEmerge			= mod:NewTimer(10, "TimerEmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendUnBurrow.blp", nil, nil, 6)
 
-local timerBreath			= mod:NewCastTimer(5, 67650, nil, nil, nil, 3)
-local timerNextStomp		= mod:NewNextTimer(20, 66330, nil, nil, nil, 2)
+local timerBreath			= mod:NewCDTimer(23, 67650, nil, nil, nil, 3)
+local timerNextStomp		= mod:NewNextTimer(15, 66330, nil, nil, nil, 2)
 local timerNextImpale		= mod:NewNextTimer(10, 67477, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerRisingAnger      = mod:NewNextTimer(20.5, 66636, nil, nil, nil, 1)
 local timerStaggeredDaze	= mod:NewBuffActiveTimer(15, 66758, nil, nil, nil, 5, nil, DBM_CORE_DAMAGE_ICON)
-local timerNextCrash		= mod:NewCDTimer(55, 67662, nil, nil, nil, 2)
-local timerSweepCD			= mod:NewCDTimer(17, 66794, nil, "Melee", nil, 3)
+local timerNextCrash		= mod:NewCDTimer(35, 67662, nil, nil, nil, 2)
+local timerSweepCD			= mod:NewCDTimer(21, 66794, nil, "Melee", nil, 3)
 local timerSlimePoolCD		= mod:NewCDTimer(12, 66883, nil, "Melee", nil, 3)
 local timerAcidicSpewCD		= mod:NewCDTimer(21, 66819, nil, "Tank", 2, 5, nil, DBM_CORE_TANK_ICON)
 local timerMoltenSpewCD		= mod:NewCDTimer(21, 66820, nil, "Tank", 2, 5, nil, DBM_CORE_TANK_ICON)
@@ -67,15 +69,18 @@ mod:AddBoolOption("ClearIconsOnIceHowl", false)
 mod:AddBoolOption("IcehowlArrow")
 mod:AddBoolOption("PingCharge")
 mod:AddBoolOption("RangeFrame")
+mod:AddBoolOption("SaySlackers", false)
 
 local bileTargets			= {}
+local HardMoveSlack			= {}
 local toxinTargets			= {}
 local burnIcon				= 8
 local phases				= {}
 local DreadscaleActive		= true  	-- Is dreadscale moving?
 local DreadscaleDead	= false
 local AcidmawDead	= false
-
+local dead		= 0
+local enragescal		= 30
 mod.vb.phase = 1
 
 function mod:OnCombatStart(delay)
@@ -248,11 +253,20 @@ function mod:SPELL_DAMAGE(args)
 	elseif args:IsPlayer() and args:IsSpellID(66881, 67638, 67639, 67640) then							-- Slime Pool
 		specWarnSlimePool:Show()
 	end
+		if args:IsSpellID(66734) and self.Options.SaySlackers											-- слакер на реве
+			then
+				self:UnscheduleMethod("warnHardMove")
+				HardMoveSlack[#HardMoveSlack + 1] = args.destName
+			if args:IsPlayer() then
+				specWarnHardMove:Show()
+		end
+	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)
 	if msg:match(L.Charge) or msg:find(L.Charge) then
 		timerNextCrash:Start()
+		timerBreath:Start(30)
 		if self.Options.ClearIconsOnIceHowl then
 			self:ClearIcons()
 		end
@@ -289,7 +303,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerCombatStart:Start()
 	elseif msg == L.Phase2 or msg:find(L.Phase2) then
 		self:ScheduleMethod(17, "WormsEmerge")
-		timerCombatStart:Start(15)
+		timerCombatStart:Start(13)
 		self.vb.phase = 2
 		if self.Options.RangeFrame then
 			DBM.RangeCheck:Show(10)
@@ -298,9 +312,19 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self.vb.phase = 3
 		if self:IsDifficulty("heroic10", "heroic25") then
 			enrageTimer:Start()
+			timerBreath:Start(23)
+			enrageTimerTest:Start()
+			if enrageTimerTest:GetRemaining() then
+				local elapsed, total = enrageTimerTest:GetTime()
+				local extend = total-elapsed
+				local timerEnrage	= (dead * enragescal)
+				enrageTimerTest:Stop()
+				enrageTimerTest:Update(0, extend - timerEnrage)
+			end
 		end
 		self:UnscheduleMethod("WormsSubmerge")
 		timerNextCrash:Start(45)
+		timerBreath:Start(23)
 		timerNextBoss:Cancel()
 		timerSubmerge:Cancel()
 		if self.Options.RangeFrame then
@@ -310,6 +334,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:UNIT_DIED(args)
+	if UnitName("player") then
+		dead = dead + 1
+	end
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 34796 then
 		specWarnSilence:Cancel()
@@ -346,3 +373,4 @@ function mod:UNIT_DIED(args)
 		end
 	end
 end
+

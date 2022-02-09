@@ -1,4 +1,4 @@
-local mod	= DBM:NewMod("Skarloc", "DBM-Party-BC", 11)
+local mod	= DBM:NewMod("Skarloc", "DBM-Party-BC")
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision(("$Revision: 135 $"):sub(12, -3))

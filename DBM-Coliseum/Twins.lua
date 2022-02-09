@@ -62,15 +62,21 @@ function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 34497, "The Twin Val'kyr", wipe)
 end
 
-local lightEssence = GetSpellInfo(67223)
-local darkEssence = GetSpellInfo(67176)
+local lightEssence1 = GetSpellInfo(67223)
+local lightEssence2 = GetSpellInfo(67222)
+local lightEssence3 = GetSpellInfo(67224)
+local lightEssence4 = GetSpellInfo(65686)
+local darkEssence1 = GetSpellInfo(67176)
+local darkEssence2 = GetSpellInfo(67177)
+local darkEssence3 = GetSpellInfo(67178)
+local darkEssence4 = GetSpellInfo(65684)
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(66046, 67206, 67207, 67208) then 			-- Light Vortex
-		local debuff = UnitDebuff("player", lightEssence)
+		local debuff = UnitDebuff("player", lightEssence1 or lightEssence2 or lightEssence3 or lightEssence4)
 		self:SpecialAbility(debuff)
 	elseif args:IsSpellID(66058, 67182, 67183, 67184) then		-- Dark Vortex
-		local debuff = UnitDebuff("player", darkEssence)
+		local debuff = UnitDebuff("player", darkEssence1 or darkEssence2 or darkEssence3 or darkEssence4)
 		self:SpecialAbility(debuff)
 	elseif args:IsSpellID(65875, 67303, 67304, 67305) then 		-- Twin's Pact
 		timerHeal:Start()
