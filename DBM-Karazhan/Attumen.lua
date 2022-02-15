@@ -37,13 +37,11 @@ local timerTrampCD          = mod:NewCDTimer(15, 305264, nil, nil, nil, 3) -- М
 
 local warnSound						= mod:NewSoundAnnounce()
 
-mod:AddBoolOption("InvIcons", true)
 
 mod.vb.phase = 0
 mod.vb.lastCurse = 0
 mod.vb.phaseCounter = true
 mod.vb.cena = true
-
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 34972, "Attumen the Huntsman")
@@ -77,10 +75,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerSufferingCD:Start()
 		timerInvCD:Cancel()
 		warnPhase2:Show()
-	elseif args:IsSpellID(305252) then -- тест незримости - призрака
-		if self.Options.InvIcons then
-				self:SetIcon(args.destName, 8, 8)
-		end
 	end
 end
 
@@ -113,22 +107,8 @@ function mod:SPELL_CAST_START(args)
 		timerInvCD:Start()
 	elseif args:IsSpellID(305259) then -- муки
 		timerSufferingCD:Start()
-	elseif args:IsSpellID(305252) then -- тест незримости - призрака
-		if self.Options.InvIcons then
-				self:SetIcon(args.destName, 8, 8)
-			end
 	end
 end
---[[function mod:SPELL_AURA_DISPEL(args)
-	if args.spellId == 305252 then
-		if self.Options.AnnounceInvIcons then
-			self:SetIcon(args.destName, 0)
-			if self.Options.AnnounceInvIconsRemoved and DBM:GetRaidRank() > 0 then
-				SendChatMessage(L.InvIconRemoved:format(args.destName), "RAID")
-			end
-		end
-	end
---end]]
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.DBM_ATH_YELL_1 then -- 2 фаза

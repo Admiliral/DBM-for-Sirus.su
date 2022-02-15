@@ -6,19 +6,12 @@ mod:SetCreatureID(1)
 mod:RegisterCombat("yell", L.YellZluker)
 
 mod:RegisterEvents(
-	"SPELL_CAST_START",
-	"CHAT_MSG_MONSTER_YELL"
+	"SPELL_CAST_START"
 )
 
-local timerMagicCD					= mod:NewCDTimer(64, 305535)
-local timerCombatStart					= mod:NewCombatTimer(42)
-local warnSound						= mod:NewSoundAnnounce()
+local timerMagicCD          = mod:NewCDTimer(45, 305535)
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L.YellPull or msg:find(L.YellPull) then
-		timerCombatStart:Start()
-	end
-end
+local warnSound						= mod:NewSoundAnnounce()
 
 function mod:OnCombatStart(delay)
 	timerMagicCD:Start()

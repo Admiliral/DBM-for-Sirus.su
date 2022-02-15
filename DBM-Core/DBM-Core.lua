@@ -70,9 +70,9 @@ end
 
 
 DBM = {
-	Revision = parseCurseDate("20220209145400"),
-	DisplayVersion = "5.54.4", -- the string that is shown as version
-	ReleaseRevision = releaseDate(2022, 01, 09) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
+	Revision = parseCurseDate("20220215103600"),
+	DisplayVersion = "5.54.5", -- the string that is shown as version
+	ReleaseRevision = releaseDate(2022, 02, 15) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
 
@@ -3806,7 +3806,6 @@ do
 							if updateNotificationDisplayed < 3 then
 								updateNotificationDisplayed = 3
 								AddMsg(DBM, DBM_CORE_UPDATEREMINDER_DISABLE)
-								DBM:Disable(true)
 							end
 						end
 					end
