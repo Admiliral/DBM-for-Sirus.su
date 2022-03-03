@@ -198,10 +198,10 @@ do
 
 		if arg1 == L.BgStart60 then
 			startTimer:Start()
-
+--[[
 		elseif arg1 == L.BgStart30  then
 			startTimer:Update(30, 60)
-
+]]
 		elseif string.match(arg1, L.FlagReset) then
 			mod.AllyFlag = nil
 			mod.HordeFlag = nil

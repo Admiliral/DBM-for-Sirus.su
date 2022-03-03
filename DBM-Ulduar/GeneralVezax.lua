@@ -186,7 +186,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	end
 end
 
-function mod:RAID_BOSS_EMOTE(emote)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(emote)
 	if emote == L.EmoteSaroniteVapors or emote:find(L.EmoteSaroniteVapors) then
 		self.vb.vaporsCount = self.vb.vaporsCount + 1
 		if self.vb.vaporsCount < 6 then
