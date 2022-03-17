@@ -26,10 +26,11 @@
 --    * Share Alike. If you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one.
 --
 
-local Revision = ("$Revision: 55 $"):sub(12, -3)
+local Revision = ("$Revision: 56 $"):sub(12, -3)
 
 local default_bartext = "%spell: %player"
 local default_bartextwtarget = "%spell: от %player в %target"	-- Added by Florin Patan
+-- local default_Raid = SendChatMessage("%spell: от %player в %target", "SAY", nil, nil)
 local default_settings = {
 	enabled = true,
 	showlocal = true,
@@ -37,6 +38,7 @@ local default_settings = {
 	active_in_pvp = true,
 	own_bargroup = false,
 	show_portal = true,
+	say_in_raid = false,
 	spells = {
 		{ spell = 6346, bartext = default_bartext, cooldown = 180 },	-- Priest: Fear Ward
 		{ spell = 1161, bartext = default_bartext, cooldown = 180 },	-- Warrior: Challenging Shout (AE Taunt)
@@ -60,7 +62,7 @@ local default_settings = {
 		{ spell = 44389, bartext = default_bartext, cooldown = 600 }, 	-- Field Repair Bot 110G
 		{ spell = 54711, bartext = default_bartext, cooldown = 300 }, 	-- Scrapbot Construction Kit
 		{ spell = 67826, bartext = default_bartext, cooldown = 600 }, 	-- Jeeves
-
+		{ spell = 313104, bartext = default_bartextwtarget, cooldown = 60 },
 	},
 	portal_alliance = {
 		{ spell = 53142, bartext = default_bartext, cooldown = 60 }, 	-- Portal: Dalaran
@@ -98,6 +100,13 @@ local function rebuildSpellIDIndex()
 	end
 end
 
+local ChatOptions = {
+	{	text	= L.FilterChat,		value 	= "SAY"},
+	{	text	= L.FilterChat1,	value 	= "RAID"},
+	{	text	= L.FilterChat2,	value 	= "PARTY"},
+	{	text	= L.FilterChat3,	value 	= "RAID_WARNING"},
+}
+
 -- functions
 local addDefaultOptions, clearAllSpellBars
 do
@@ -105,7 +114,7 @@ do
 		local createnewentry
 		local CurCount = 0
 		local panel = DBM_GUI:CreateNewPanel(L.TabCategory_SpellsUsed, "option")
-		local generalarea = panel:CreateArea(L.AreaGeneral, nil, 175, true)
+		local generalarea = panel:CreateArea(L.AreaGeneral, nil, 215, true)
 		local auraarea = panel:CreateArea(L.AreaAuras, nil, 20, true)
 
 		local function regenerate()
@@ -143,6 +152,10 @@ do
 			showinraid:SetScript("OnShow", function(self) self:SetChecked(settings.only_from_raid) end)
 			showinraid:SetScript("OnClick", function(self) settings.only_from_raid = not not self:GetChecked() end)
 
+			local sayinraid = area:CreateCheckButton(L.Enable_AnnounceRaid, true)
+			sayinraid:SetScript("OnShow", function(self) self:SetChecked(settings.say_in_raid) end)
+			sayinraid:SetScript("OnClick", function(self) settings.say_in_raid = not not self:GetChecked() end)
+
 			local showinpvp = area:CreateCheckButton(L.Enable_inBattleground, true)
 			showinpvp:SetScript("OnShow", function(self) self:SetChecked(settings.active_in_pvp) end)
 			showinpvp:SetScript("OnClick", function(self) settings.active_in_pvp = not not self:GetChecked() end)
@@ -164,6 +177,11 @@ do
 				regenerate()
 				DBM_GUI_OptionsFrame:DisplayFrame(panel.frame)
 			end)
+
+			local SayDropDown		= area:CreateDropdown(L.SelectChat, ChatOptions, "DBM", "FilterChat", function(value)
+				DBM.Options.FilterChat = value
+			end)
+			SayDropDown:SetPoint("TOPLEFT", area.frame, "TOPLEFT", 300, -110)
 
 			local version = area:CreateText("r"..Revision, nil, nil, GameFontDisableSmall, "RIGHT")
 			version:SetPoint("BOTTOMRIGHT", area.frame, "BOTTOMRIGHT", -5, 5)
@@ -349,15 +367,18 @@ do
 
 			local guikey = SpellIDIndex[spellid]
 			local v = (guikey and settings.spells[guikey])
-			if v and v.enabled == true then
+
+			if v and v.enabled == true and DBM:AntiSpam(1, 1) then
 				if v.spell ~= spellid then
 					print("DBM-SpellTimers Index mismatch error! "..guikey.." "..spellid)
 				end
 
 				local spellinfo, _, icon = GetSpellInfo(spellid)
 				local bartext = v.bartext:gsub("%%spell", spellinfo):gsub("%%player", fromplayer):gsub("%%target", toplayer)	-- Changed by Florin Patan
+				if settings.say_in_raid then
+					SendChatMessage(bartext, DBM.Options.FilterChat)
+				end
 				SpellBarIndex[bartext] = SpellBars:CreateBar(v.cooldown, bartext, icon, nil, true)
-
 				if settings.showlocal then
 					local msg =  L.Local_CastMessage:format(bartext)
 					if not lastmsg or lastmsg ~= msg then

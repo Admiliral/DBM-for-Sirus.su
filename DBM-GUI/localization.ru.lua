@@ -18,7 +18,7 @@ L.TabCategory_WOTLK 		= "Гнев Короля Лича"
 L.TabCategory_BC 			= "Пылающий Легион"
 L.TabCategory_CLASSIC		= "Классическая игра"
 L.TabCategory_WORLD_BOSS    = "Мировые боссы"
-L.TabCategory_OTHER    		= "Другие боссы"
+L.TabCategory_OTHER    		= "Другое"
 
 L.BossModLoaded 			= "%s - статистика"
 L.BossModLoad_now 			= [[База данных для этих боссов не загружена.
@@ -403,3 +403,4 @@ L.SelectModProfileDelete	= "Удалить настройки модуля дл�
 
 -- Misc
 L.FontHeight	= 16
+
