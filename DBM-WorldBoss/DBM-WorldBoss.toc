@@ -12,12 +12,13 @@
 ## X-DBM-StatTypes: normal
 ## X-DBM-Mod-Name: Tol'Garod
 ## X-DBM-Mod-Name-ruRU: Тол'Гарод
+## X-DBM-Mod-SubCategories: Tol'GarodeNorigorn
+## X-DBM-Mod-SubCategories-ruRU: Тол'Гародский Норигорн
 ## X-DBM-Mod-Sort: 946
 ## X-DBM-Mod-LoadZoneID: 946
 ## X-DBM-Mod-LoadCID: 70010
 ## X-DBM-Mod-LoadZone: Tol'Garod
 ## X-DBM-Mod-LoadZone-ruRU: Тол'Гарод
+
 localization.ru.lua
-
-
 Tol'GarodeNorigorn\Norigorn.lua
