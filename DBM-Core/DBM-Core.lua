@@ -3985,7 +3985,7 @@ do
 
 		syncHandlers["GCB"] = function(sender, modId, ver, difficulty, name)
 			if not DBM.Options.ShowGuildMessages or not difficulty then return end
-			if not ver or not (ver == "2") then return end--Ignore old versions
+			if not ver or not (ver ~= "2") then return end--Ignore old versions
 			if DBM:AntiSpam(10, "GCB") then
 				if IsInInstance() then return end--Simple filter, if you are inside an instance, just filter it, if not in instance, good to go.
 				difficulty = tonumber(difficulty)
@@ -4007,7 +4007,7 @@ do
 
 		syncHandlers["GCE"] = function(sender, modId, ver, wipe, time, difficulty, name, wipeHP)
 			if not DBM.Options.ShowGuildMessages or not difficulty then return end
-			if not ver or not (ver == "5") then return end--Ignore old versions
+			if not ver or not (ver ~= "5") then return end--Ignore old versions
 			if DBM:AntiSpam(5, "GCE") then
 				if IsInInstance() then return end--Simple filter, if you are inside an instance, just filter it, if not in instance, good to go.
 				difficulty = tonumber(difficulty)
@@ -6444,9 +6444,9 @@ end
 
 function bossModPrototype:IsWeaponDependent(uId)
 	return playerClass == "ROGUE"
-		or (playerClass == "WARRIOR" and not (select(3, GetTalentTabInfo(3)) >= 20))
+		or (playerClass == "WARRIOR" and not (select(3, GetTalentTabInfo(3)) < 20))
 		or playerClass == "DEATHKNIGHT"
-		or (playerClass == "PALADIN" and not (select(3, GetTalentTabInfo(1)) >= 51))
+		or (playerClass == "PALADIN" and not (select(3, GetTalentTabInfo(1)) < 51))
 		or (playerClass == "SHAMAN" and (select(3, GetTalentTabInfo(2)) >= 50))
 end
 
@@ -7056,7 +7056,7 @@ do
 		if optionName then
 			obj.option = optionName
 			self:AddBoolOption(obj.option, optionDefault, "announce")
-		elseif not (optionName == false) then
+		elseif not (optionName ~= false) then
 			obj.option = text
 			self:AddBoolOption(obj.option, optionDefault, "announce")
 		end
@@ -7117,7 +7117,7 @@ do
 		if optionName then
 			obj.option = optionName
 			self:AddBoolOption(obj.option, optionDefault, catType)
-		elseif not (optionName == false) then
+		elseif not (optionName ~= false) then
 			obj.option = catType..spellId..announceType..(optionVersion or "")
 			self:AddBoolOption(obj.option, optionDefault, catType)
 			self.localization.options[obj.option] = DBM_CORE_AUTO_ANNOUNCE_OPTIONS[announceType]:format(spellId)
@@ -7267,7 +7267,7 @@ do
 		if optionName then
 			obj.option = optionName
 			self:AddBoolOption(obj.option, optionDefault, "yell")
-		elseif not (optionName == false) then
+		elseif not (optionName ~= false) then
 			obj.option = "Yell"..(spellId or yellText)..(yellType ~= "yell" and yellType or "")..(optionVersion or "")
 			self:AddBoolOption(obj.option, optionDefault, "yell")
 			self.localization.options[obj.option] = DBM_CORE_AUTO_YELL_OPTION_TEXT[yellType]:format(spellId)
@@ -7854,7 +7854,7 @@ do
 		)
 		if optionName then
 			obj.option = optionName
-		elseif not (optionName == false) then
+		elseif not (optionName ~= false) then
 			local difficultyIcon = ""
 			if difficulty then
 				--1 LFR, 2 Normal, 3 Heroic, 4 Mythic
