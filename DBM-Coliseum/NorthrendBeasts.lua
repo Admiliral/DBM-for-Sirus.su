@@ -117,7 +117,6 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 34797, "The Beasts of Northrend", wipe)
-	charge = 0
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Hide()
 	end
@@ -328,7 +327,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	elseif msg == L.Phase3 or msg:find(L.Phase3) then
 		self.vb.phase = 3
-		charge = 2
 		if self:IsDifficulty("heroic10", "heroic25") then
 			enrageTimer:Start()
 			timerBreath:Start(29)
