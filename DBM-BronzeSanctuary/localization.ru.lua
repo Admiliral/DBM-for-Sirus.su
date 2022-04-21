@@ -85,7 +85,8 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	BossHealthFrame		= "Показывать здоровье босса",
 	AnnounceFails		= "Объявлять игроков, попавших под $spell:317255, в рейд-чат\n(требуются права лидера или помощника)",
-	GibVr				= "Таймер каста $spell:317258 (Для хилов)"
+	GibVr				= "Таймер каста $spell:317258 (Для хилов)",
+	AnnounceFear		= "Анонс в белый чат фира (для миликов)"
 }
 
 L:SetMiscLocalization{

@@ -6,7 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(50609, 50610)
 mod:RegisterCombat("combat", 50609)
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6, 7, 8)
-
+--mod.respawnTime = 20
 
 mod:RegisterEvents(
 	"SPELL_CAST_START",
@@ -54,7 +54,7 @@ local yellTemporalCascadeFade				= mod:NewShortFadesYell(312206, nil, nil, nil, 
 local yellReverseCascadeFade				= mod:NewShortFadesYell(312208, nil, nil, nil, "YELL")
 
 local EraseCount							= mod:NewCDCountTimer(60, 312204, nil, nil, nil, 2)	--Слово силы: Стереть
-local ResonantScream						= mod:NewCDTimer(12, 312210, nil, "SpellCaster", nil, 2) --Резонирующий крик(кик)
+local ResonantScream						= mod:NewCDTimer(12, 312210, nil, "SpellCaster",nil, 1, nil, nil, nil, 1) --Резонирующий крик(кик)
 local ReplicCount							= mod:NewCDCountTimer(120, 312211, nil, nil, nil, 2) --Временные линии(копии)
 local ReturnCount							= mod:NewCDCountTimer(120, 312214, nil, nil, nil, 2) --Возврат
 local TemporalCascade						= mod:NewCDTimer(20, 312206, nil, nil, nil, 2) --Темпоральный каскад
@@ -68,6 +68,7 @@ mod:AddSetIconOption("SetIconOnErapTargets", 312204, true, false, {1, 2, 3})
 mod:AddBoolOption("AnnounceReverCasc", false)
 mod:AddBoolOption("AnnounceErap", false)
 mod:AddBoolOption("AnnounceTempCasc", false)
+mod:AddInfoFrameOption(312208, true)
 mod:AddBoolOption("BossHealthFrame", true, "misc")
 mod:AddBoolOption("RangeFrame", true)
 
@@ -126,7 +127,6 @@ function mod:OnCombatStart(delay)
 	self.vb.ErapCount = 0
 	TemporalCascade:Start()
 	ResonantScream:Start()
-	specWarnResonantScream:Schedule(11)
 	EraseCount:Start(66, self.vb.ErapCount+1)
 	enrage:Start()
     if mod:IsDifficulty("normal25") then
@@ -142,20 +142,25 @@ end
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd",50609 or 50610 or 50618, "Elonus", wipe)
     DBM.RangeCheck:Hide()
+	if self.Options.InfoFrame then
+		DBM.InfoFrame:Hide()
+	end
 end
+
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 312214 and self:AntiSpam(3, 6) then
 		self.vb.RetCount = self.vb.RetCount + 1
 		ReturnCount:Start(nil, self.vb.RetCount+1)
 		specWarnReturn:Show(args.sourceName)
+		ResonantScream:Stop()
 	elseif spellId == 312211 then
 		self.vb.RepCount = self.vb.RepCount + 1
 		warnReplicaSpawned:Show()
 		ReplicCount:Start(nil, self.vb.RepCount+1)
 	elseif spellId == 312210 then
 		ResonantScream:Start()
-		specWarnResonantScream:Schedule(11.5)
+		specWarnResonantScream:Show()
 	elseif spellId == 312204 or spellId == 317156 then
 		self.vb.ErapCount = self.vb.ErapCount + 1
 		EraseCount:Start(nil, self.vb.ErapCount+1)
@@ -168,6 +173,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		TemporalCascade:Start()
 		warnTemporalCascade:Show(args.destName)
 		TemporalCascadeBuff:Show(args.destName)
+		TimelessWhirlwinds:Start()
 		if args:IsPlayer() then
 			specWarnTemporalCascadeYou:Show()
 			yellTemporalCascade:Yell()
@@ -187,6 +193,10 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 312208 or spellId == 317160 then
 		RevCascTargets[#RevCascTargets + 1] = args.destName
 		ReverseCascadeBuff:Start()
+		if self.Options.InfoFrame and not DBM.InfoFrame:IsShown() then
+			DBM.InfoFrame:SetHeader(args.spellName)
+			DBM.InfoFrame:Show(10, "playerdebuffremaining", spellId)
+		end
 		if args:IsPlayer() then
 			specWarnReverseCascadeMoveAway:Show()
 			yellReverseCascade:Yell()
@@ -220,17 +230,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		ArcanePunishmentStack:Start()
 	elseif spellId == 312213 or spellId == 317163 then
-	setIncinerateTarget(self, args.destGUID, args.destName)
-    elseif spellId == 317158 then
-        TemporalCascade:Start()
-	    warnTemporalCascade:Show(args.destName)
-	    TemporalCascadeBuff:Show(args.destName)
-	    if args:IsPlayer() then
-		    specWarnTemporalCascadeYou:Show()
-		    yellTemporalCascade:Yell()
-		    yellTemporalCascadeFade:Countdown(spellId)
-        end
-        TimelessWhirlwinds:Start()
+		setIncinerateTarget(self, args.destGUID, args.destName)
     elseif spellId == 317165 and args:IsPlayer() then
         specWarnTimelessWhirlwindsGTFO:Show()
 	end
@@ -250,6 +250,9 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif spellId == 312206 or spellId == 317158 then
 		if self.Options.TempCascIcon then
 			self:SetIcon(args.destName, 0)
+		end
+		if self.Options.InfoFrame then
+			DBM.InfoFrame:Hide()
 		end
 		TempCascIcon = 8
 		if args:IsPlayer() then

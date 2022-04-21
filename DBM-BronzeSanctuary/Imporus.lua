@@ -6,6 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(50608)
 mod:RegisterCombat("combat", 50608)
 mod:SetUsedIcons(8)
+--mod.respawnTime = 20
 
 
 mod:RegisterEvents(

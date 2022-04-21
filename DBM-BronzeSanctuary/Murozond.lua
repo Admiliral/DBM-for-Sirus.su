@@ -6,7 +6,7 @@ mod:SetRevision("20211205212100")
 mod:SetCreatureID(50612)
 mod:RegisterCombat("combat", 50612)
 mod:SetUsedIcons()
-
+--mod.respawnTime = 20
 
 
 mod:RegisterEvents(
@@ -70,6 +70,7 @@ mod.vb.FearMili = 0
 mod:AddBoolOption("BossHealthFrame", true, "misc")
 mod:AddBoolOption("AnnounceFails", true, "announce")
 mod:AddBoolOption("GibVr", false)
+mod:AddBoolOption("AnnounceFear", false, "announce")
 local FearTargets	= {}
 
 function mod:OnCombatStart(delay)
@@ -96,6 +97,9 @@ function mod:OnCombatStart(delay)
 	if self.Options.BossHealthFrame then
 		DBM.BossHealth:Show(L.name)
 		DBM.BossHealth:AddBoss(50612, L.name)
+	end
+	if self.Options.AnnounceFear then
+		self:ScheduleMethod(38, "AnnonceF")
 	end
 	table.wipe(FearTargets)
 end
@@ -145,6 +149,9 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 313118 then
 		TerrifyingFuture:Start()
 		warnTerrifyingFuture:Show()
+		if self.Options.AnnounceFear then
+			self:ScheduleMethod(38, "AnnonceF")
+		end
 	elseif spellId == 313122 and not warned_preP2 then
 		self.vb.PreHuy = self.vb.PreHuy + 1
 		EndofTime:Start()
@@ -160,6 +167,9 @@ function mod:SPELL_CAST_START(args)
 		else
 			self:ScheduleMethod(0.1, "StopBossCast")
 		end
+		if self.Options.AnnounceFear then
+			self:UnscheduleMethod("AnnonceF")
+		end
 	end
 	-----------HM------------
 	if spellId == 317252 then
@@ -169,6 +179,9 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 317255 then
 		TerrifyingFutureHM:Start()
 		warnTerrifyingFuture:Show()
+		if self.Options.AnnounceFear then
+			self:ScheduleMethod(38, "AnnonceF")
+		end
 	elseif spellId == 317262 then
 		specwarnReflectSpells:Show()
 	end
@@ -185,6 +198,10 @@ function mod:Vremea()
 		GibVremea:Start()
 		self:ScheduleMethod(5, "Vremea")
 	end
+end
+
+function mod:AnnonceF()
+		SendChatMessage("Скоро Фир!", "SAY", nil, nil)
 end
 
 function mod:StopBossCastHM()

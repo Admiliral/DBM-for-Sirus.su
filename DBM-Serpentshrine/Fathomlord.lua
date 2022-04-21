@@ -37,6 +37,7 @@ local warnStrela            = mod:NewTargetAnnounce(309253, 3) -- Стрела �
 local specWarnStrela	    = mod:NewSpecialWarningYou(309253, nil, nil, nil, 3, 2)
 local specWarnHeal			= mod:NewSpecialWarningInterrupt(309256, "HasInterrupt", nil, 2, 1, 2)
 local specWarnZeml			= mod:NewSpecialWarningMoveAway(309289, nil, nil, nil, 3, 5)
+local SpecialWarningKata	= mod:NewSpecialWarning("SpecialWarningKata")
 
 local timerPhaseCast        = mod:NewCastTimer(60, 309292, nil, nil, nil, 6) -- Скользящий натиск
 local timerStrelaCast		= mod:NewCastTimer(6, 309253, nil, nil, nil, 3) -- Стрела катаклизма
@@ -58,6 +59,7 @@ mod:AddBoolOption("HealthFrameBoss", true)
 mod:AddSetIconOption("SetIconOnSvazTargets", 309261, true, true, {5, 6, 7})
 mod:AddSetIconOption("SetIconOnStrela", 309253, true, false, {8})
 mod:AddBoolOption("AnnounceSvaz", false)
+mod:AddBoolOption("CrashArrow")
 
 local SvazTargets = {}
 local SvazIcons = 7
@@ -152,6 +154,22 @@ function mod:strelafunc()
 		if targetname == UnitName("player") then
 			specWarnStrela:Show()
 			yellStrela:Yell()
+		elseif targetname then
+			local uId = DBM:GetRaidUnitId(targetname)
+			if uId then
+				local inRange = CheckInteractDistance(uId, 1)
+				local x, y = GetPlayerMapPosition(uId)
+				if x == 0 and y == 0 then
+					SetMapToCurrentZone()
+					x, y = GetPlayerMapPosition(uId)
+				end
+				if inRange then
+					SpecialWarningKata:Show()
+					if self.Options.CrashArrow then
+						DBM.Arrow:ShowRunAway(x, y, 15, 5)
+					end
+				end
+			end
 		end
 end
 

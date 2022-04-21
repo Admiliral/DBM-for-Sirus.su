@@ -35,9 +35,9 @@ local specWarnPCold			= mod:NewSpecialWarningYou(66013, false, nil, nil, 1, 2)
 
 --local timerTest			  = mod:NewTimer(55, "timerTest", 45419, nil, nil, 1)
 local timerAdds				= mod:NewTimer(45, "timerAdds", 45419, nil, nil, 1)
-local timerSubmerge			= mod:NewTimer(75, "TimerSubmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendBurrow.blp", nil, nil, 6)
+local timerSubmerge			= mod:NewTimer(80, "TimerSubmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendBurrow.blp", nil, nil, 6)
 local timerEmerge			= mod:NewTimer(55, "TimerEmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendUnBurrow.blp", nil, nil, 6)
-local timerFreezingSlash	= mod:NewCDTimer(20, 66012, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerFreezingSlash	= mod:NewCDTimer(15, 66012, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerPCold			= mod:NewBuffActiveTimer(20, 66013, nil, nil, nil, 5, nil, DBM_CORE_HEALER_ICON)
 local timerShadowStrike		= mod:NewNextTimer(30.5, 66134, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
 local timerShadowStrikefix	= mod:NewNextTimer(20.5, 66134, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- костыль
@@ -62,7 +62,7 @@ function mod:OnCombatStart(delay)
 	timerAdds:Start(10-delay)
 	warnAdds:Schedule(10-delay)
 	self:ScheduleMethod(10-delay, "Adds")
-	warnSubmergeSoon:Schedule(65-delay)
+	warnSubmergeSoon:Schedule(70-delay)
 	timerSubmerge:Start()
 	enrageTimer:Start(-delay)
 	timerFreezingSlash:Start(-delay)
@@ -82,13 +82,14 @@ function mod:EmergeTest()
 	self:SetStage(1)
 	self.vb.Burrowed = false
 	timerEmerge:Cancel()
-	timerAdds:Start(5)
-	warnAdds:Schedule(5)
-	self:ScheduleMethod(5, "Adds")
+	timerAdds:Start(10)
+	warnAdds:Schedule(9.5)
+	self:ScheduleMethod(10, "Adds")
 	warnEmerge:Show()
 	warnSubmergeSoon:Schedule(70)
 	timerSubmerge:Start()
 	self:ShadowStrikefix() -- прямиком в костыль, поскольку ShadowStrike() после выкапывания запускается позже на 10 сек
+	
 end
 
 function mod:Adds()
@@ -201,18 +202,18 @@ function mod:SPELL_AURA_REMOVED(args)
 end
 
 function mod:SPELL_CAST_START(args)    -- 3 фаза
-	if args.spellId == 66118 or args.spellId == 67630 or args.spellId == 68646 or args.spellId == 68647 then			-- Swarm (start p3)
+	if args.spellId == 66118 or args.spellId == 67630 or args.spellId == 68646 or args.spellId == 68647 then			-- Swarm (start p3)    
 		warnPhase3:Show()
 		warnEmergeSoon:Cancel()
 		warnSubmergeSoon:Cancel()
 		timerEmerge:Stop()
 		timerSubmerge:Stop()
-		if self.Options.RemoveBuffs then
+		if self.Options.RemoveBuffs then	
 			mod:ScheduleMethod(0.1, "RemoveBuffs")
 		end
 		if mod:IsDifficulty("normal10") or mod:IsDifficulty("normal25") then
-			timerAdds:Cancel()
-			warnAdds:Cancel()
+			timerAdds:Cancel() 
+			warnAdds:Cancel() 
 			self:UnscheduleMethod("Adds")
 		end
 	elseif args.spellId == 66134 then							-- Shadow Strike
@@ -221,20 +222,20 @@ function mod:SPELL_CAST_START(args)    -- 3 фаза
 		warnShadowStrike:Show()
 	end
 end
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg) -- 
 	if msg and msg == L.YellBurrow then
 		self.vb.Phase = 2
 		self.vb.Burrowed = true
 		timerAdds:Cancel()
 		warnAdds:Cancel()
 		warnSubmerge:Show()
-		warnEmergeSoon:Schedule(58.5)
+		warnEmergeSoon:Schedule(45)
 		timerEmerge:Start()
 		timerFreezingSlash:Stop()
 		self:UnscheduleMethod("ShadowStrike")
 		timerShadowStrike:Cancel()
 		preWarnShadowStrike:Cancel()
-		self:ScheduleMethod(65, "EmergeTest")	-- костыль
+		self:ScheduleMethod(55, "EmergeTest")	-- костыль
 	end
 end
 
@@ -245,17 +246,17 @@ function mod:RAID_BOSS_EMOTE(msg)
 		timerAdds:Cancel()
 		warnAdds:Cancel()
 		warnSubmerge:Show()
-		warnEmergeSoon:Schedule(55)
+		warnEmergeSoon:Schedule(45)
 		timerEmerge:Start()
 		timerFreezingSlash:Stop()
-        self:ScheduleMethod(65, "EmergeTest")
+        self:ScheduleMethod(55, "EmergeTest")
 	elseif msg and msg:find(L.Emerge) then
-        self:UnscheduleMethod(65, "EmergeTest")
+        self:UnscheduleMethod(55, "EmergeTest")
         self.vb.Phase = 1
 		self.vb.Burrowed = false
-		timerAdds:Start(5)
-		warnAdds:Schedule(5)
-		self:ScheduleMethod(5, "Adds")
+		timerAdds:Start(10)
+		warnAdds:Schedule(9.5)
+		self:ScheduleMethod(10, "Adds")
 		warnEmerge:Show()
 		warnSubmergeSoon:Schedule(65)
 		timerSubmerge:Start()

@@ -19,69 +19,81 @@ mod:RegisterEvents(
 	"UNIT_DIED"
 )
 
-local warnImpaleOn			= mod:NewTargetAnnounce(67478, 2, nil, "Tank|Healer")
-local warnFireBomb			= mod:NewSpellAnnounce(66317, 3, nil, false)
-local warnBreath			= mod:NewSpellAnnounce(67650, 2)
-local warnRage				= mod:NewSpellAnnounce(67657, 3)
-local warnSlimePool			= mod:NewSpellAnnounce(67643, 2, nil, "Melee")
-local warnToxin				= mod:NewTargetAnnounce(66823, 3)
-local warnBile				= mod:NewTargetAnnounce(66869, 3)
-local WarningSnobold		= mod:NewAnnounce("WarningSnobold", 4)
-local warnEnrageWorm		= mod:NewSpellAnnounce(68335, 3)
+-- Общее --
 
-local specWarnImpale3		= mod:NewSpecialWarningStack(66331, nil, 3, nil, nil, 1, 6)
-local specWarnAnger3		= mod:NewSpecialWarningStack(66636, "Tank|Healer", 3, nil, nil, 1, 6)
-local specWarnSlimePool		= mod:NewSpecialWarningMove(67640)
-local specWarnToxin			= mod:NewSpecialWarningMoveTo(67620, nil, nil, nil, 1, 2)
-local specWarnBile			= mod:NewSpecialWarningYou(66869, nil, nil, nil, 1, 2)
-local specWarnSilence		= mod:NewSpecialWarningSpell(66330, "SpellCaster", nil, nil, 1, 2)
-local specWarnCharge		= mod:NewSpecialWarningRun(52311, nil, nil, nil, 4, 2)
-local specWarnChargeNear	= mod:NewSpecialWarningClose(52311, nil, nil, nil, 3, 2)
-local specWarnTranq			= mod:NewSpecialWarningDispel(66759, "RemoveEnrage", nil, nil, 1, 2)
-local specWarnFireBomb		= mod:NewSpecialWarningMove(66317, nil, nil, nil, 1, 2)
-local specWarnHardMove		= mod:NewSpecialWarningYou(52311, nil, nil, nil, 3, 2)
+local timerCombatStart		= mod:NewCombatTimer(17.5) -- комбат пул
+local timerNextBoss			= mod:NewTimer(190, "TimerNextBoss", 2457, nil, nil, 1) -- следующее мясо
 
-local enrageTimer			= mod:NewBerserkTimer(223)
-local enrageTimerTest		= mod:NewBerserkTimer(223)
-local timerCombatStart		= mod:NewCombatTimer(11.5)
-local timerNextBoss			= mod:NewTimer(190, "TimerNextBoss", 2457, nil, nil, 1)
-local timerSubmerge			= mod:NewTimer(40, "TimerSubmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendBurrow.blp", nil, nil, 6)
-local timerEmerge			= mod:NewTimer(10, "TimerEmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendUnBurrow.blp", nil, nil, 6)
+-- Гормок --
 
-local timerBreath			= mod:NewCDTimer(23, 67650, nil, nil, nil, 3)
-local timerNextStomp		= mod:NewNextTimer(15, 66330, nil, nil, nil, 2)
-local timerNextImpale		= mod:NewNextTimer(10, 67477, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
-local timerRisingAnger      = mod:NewNextTimer(20.5, 66636, nil, nil, nil, 1)
-local timerStaggeredDaze	= mod:NewBuffActiveTimer(15, 66758, nil, nil, nil, 5, nil, DBM_CORE_DAMAGE_ICON)
-local timerNextCrash		= mod:NewCDTimer(35, 67662, nil, nil, nil, 2)
-local timerSweepCD			= mod:NewCDTimer(21, 66794, nil, "Melee", nil, 3)
-local timerSlimePoolCD		= mod:NewCDTimer(12, 66883, nil, "Melee", nil, 3)
-local timerAcidicSpewCD		= mod:NewCDTimer(21, 66819, nil, "Tank", 2, 5, nil, DBM_CORE_TANK_ICON)
-local timerMoltenSpewCD		= mod:NewCDTimer(21, 66820, nil, "Tank", 2, 5, nil, DBM_CORE_TANK_ICON)
-local timerParalyticSprayCD	= mod:NewCDTimer(21, 66901, nil, nil, nil, 3)
-local timerBurningSprayCD	= mod:NewCDTimer(21, 66902, nil, nil, nil, 3)
-local timerParalyticBiteCD	= mod:NewCDTimer(25, 66824, nil, "Melee", nil, 3)
-local timerBurningBiteCD	= mod:NewCDTimer(15, 66879, nil, "Melee", nil, 3)
+local warnImpaleOn			= mod:NewTargetAnnounce(67478, 2, nil, "Tank|Healer") -- Прокалывание
+local warnFireBomb			= mod:NewSpellAnnounce(66317, 3, nil, false)	-- Огненная бомба
+local WarningSnobold		= mod:NewAnnounce("WarningSnobold", 4) -- Снобольд
 
-mod:AddSetIconOption("SetIconOnChargeTarget", 52311)
-mod:AddSetIconOption("SetIconOnBileTarget", 66869, false)
-mod:AddBoolOption("ClearIconsOnIceHowl", false)
-mod:AddBoolOption("IcehowlArrow")
-mod:AddBoolOption("PingCharge")
-mod:AddBoolOption("RangeFrame")
-mod:AddBoolOption("SaySlackers", false)
+local specWarnImpale3		= mod:NewSpecialWarningStack(66331, nil, 3, nil, nil, 1, 6) -- Прокалывание
+local specWarnAnger3		= mod:NewSpecialWarningStack(66636, "Tank|Healer", 3, nil, nil, 1, 6) -- Вскипающий гнев на гормоке
+local specWarnFireBomb		= mod:NewSpecialWarningMove(66317, nil, nil, nil, 1, 2)	-- Огненная бомба
+local specWarnSilence		= mod:NewSpecialWarningSpell(66330, "SpellCaster", nil, nil, 1, 2) -- осторожно сало
+
+local timerNextStomp		= mod:NewNextTimer(15, 66330, nil, nil, nil, 2)	-- Сотрясающий топот
+local timerNextImpale		= mod:NewNextTimer(8.5, 67477, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)	-- Прокалывание
+local timerRisingAnger      = mod:NewNextTimer(20.5, 66636, nil, nil, nil, 1)	-- Вскипающий гнев
+
+-- Утробы --
+
+local warnSlimePool			= mod:NewSpellAnnounce(67643, 2, nil, "Melee") -- Появление лужи (утробы)
+local warnToxin				= mod:NewTargetAnnounce(66823, 3)	-- Паралитический токсин
+local warnBile				= mod:NewTargetAnnounce(66869, 3) -- Горящая желчь
+local warnEnrageWorm		= mod:NewSpellAnnounce(68335, 3)	-- червь в Исступление
+
+local specWarnSlimePool		= mod:NewSpecialWarningMove(67640) -- выбеги с лужи додик
+local specWarnToxin			= mod:NewSpecialWarningMoveTo(67620, nil, nil, nil, 1, 2)	-- Паралитический токсин на тебе
+local specWarnBile			= mod:NewSpecialWarningYou(66869, nil, nil, nil, 1, 2) -- Горящая желчь на тебе
+
+local timerSweepCD			= mod:NewCDTimer(21, 66794, nil, "Melee", nil, 3)	-- Сбивание(утроба)
+local timerSlimePoolCD		= mod:NewCDTimer(12, 66883, nil, "Melee", nil, 3)	-- Лужа жижи(утроба)
+local timerAcidicSpewCD		= mod:NewCDTimer(21, 66819, nil, "Tank", 2, 5, nil, DBM_CORE_TANK_ICON)	-- Кислотная рвота(утроба)
+local timerMoltenSpewCD		= mod:NewCDTimer(21, 66820, nil, "Tank", 2, 5, nil, DBM_CORE_TANK_ICON)	-- Жгучая рвота(утроба)
+local timerParalyticSprayCD	= mod:NewCDTimer(25, 66901, nil, nil, nil, 3)	-- Парализующие брызги(утроба)
+local timerBurningSprayCD	= mod:NewCDTimer(25, 66902, nil, nil, nil, 3)	-- Горящие брызги(утроба)
+local timerParalyticBiteCD	= mod:NewCDTimer(25, 66824, nil, "Melee", nil, 3)	-- Парализующий укус(утроба)
+local timerBurningBiteCD	= mod:NewCDTimer(15, 66879, nil, "Melee", nil, 3)	-- Обжигающий укус(утроба)
+
+local timerSubmerge			= mod:NewTimer(43, "TimerSubmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendBurrow.blp", nil, nil, 6) -- закопка
+local timerEmerge			= mod:NewTimer(5, "TimerEmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendUnBurrow.blp", nil, nil, 6) -- появление
+
+-- Ледяной рев --
+
+local warnBreath			= mod:NewSpellAnnounce(67650, 2)	-- Арктическое дыхание
+local warnRage				= mod:NewSpellAnnounce(67657, 3)	-- Кипящая ярость
+
+local specWarnCharge		= mod:NewSpecialWarningRun(52311, nil, nil, nil, 4, 2)	-- чардж беги
+local specWarnChargeNear	= mod:NewSpecialWarningClose(52311, nil, nil, nil, 3, 2) -- чардж рядом
+local specWarnTranq			= mod:NewSpecialWarningDispel(66759, "RemoveEnrage", nil, nil, 1, 2) -- диспел бафа рева
+
+local timerBreath			= mod:NewCDTimer(20, 67650, nil, nil, nil, 3)	-- Арктическое дыхание
+local timerStaggeredDaze	= mod:NewBuffActiveTimer(15, 66758, nil, nil, nil, 5, nil, DBM_CORE_DAMAGE_ICON)	-- Глубокое потрясение(рев)
+local timerNextCrash		= mod:NewCDTimer(50, 67662, nil, nil, nil, 2)	-- Могучее сокрушение(рев)
+
+local enrageTimer			= mod:NewBerserkTimer(223) 		-- берса рева
+
+
+mod:AddSetIconOption("SetIconOnChargeTarget", 52311) 		-- череп на цель чарджа
+mod:AddSetIconOption("SetIconOnBileTarget", 66869, false)	-- Иконки на людей с Горящая желчь
+mod:AddBoolOption("ClearIconsOnIceHowl", false)				-- Снимать все иконки перед Топотом
+mod:AddBoolOption("IcehowlArrow")							-- Показывать стрелку, когда Ледяной Рев готовится сделать рывок на цель рядом с вами
+mod:AddBoolOption("PingCharge")								-- Показать на миникарте место, куда попадает Ледяной Рев, если он избрал вас целью
+mod:AddBoolOption("RangeFrame")								-- Показывать окно проверки дистанции в фазе 2
 
 local bileTargets			= {}
-local HardMoveSlack			= {}
 local toxinTargets			= {}
 local burnIcon				= 8
 local phases				= {}
 local DreadscaleActive		= true  	-- Is dreadscale moving?
-local DreadscaleDead	= false
-local AcidmawDead	= false
-local dead		= 0
-local enragescal		= 30
-mod.vb.phase = 1
+local DreadscaleDead		= false
+local AcidmawDead			= false
+local dead					= 0
+mod.vb.phase 				= 1
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 34797, "The Beasts of Northrend")
@@ -98,13 +110,14 @@ function mod:OnCombatStart(delay)
 		timerNextBoss:Start(175 - delay)
 		timerNextBoss:Schedule(170)
 	end
-	timerNextStomp:Start(38-delay)
-	timerRisingAnger:Start(48-delay)
+	timerNextStomp:Start(26.5-delay)
+	timerRisingAnger:Start(38-delay)
 	timerCombatStart:Start(-delay)
 end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 34797, "The Beasts of Northrend", wipe)
+	charge = 0
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Hide()
 	end
@@ -121,13 +134,14 @@ function mod:warnBile()
 	burnIcon = 8
 end
 
-function mod:WormsEmerge()
+function mod:WormsEmerge()	-- Пока оставлю не тронутым, в будущем реворкну
 	timerSubmerge:Show()
 	if not AcidmawDead then
 		if DreadscaleActive then
 			timerSweepCD:Start(16)
-			timerParalyticSprayCD:Start(9)
+			timerParalyticSprayCD:Start(22)
 		else
+			timerSubmerge:Stop()
 			timerSlimePoolCD:Start(14)
 			timerParalyticBiteCD:Start(5)
 			timerAcidicSpewCD:Start(10)
@@ -139,14 +153,15 @@ function mod:WormsEmerge()
 			timerMoltenSpewCD:Start(10)
 			timerBurningBiteCD:Start(5)
 		else
+			timerSubmerge:Cancel()
 			timerSweepCD:Start(16)
 			timerBurningSprayCD:Start(17)
 		end
 	end
-	self:ScheduleMethod(45, "WormsSubmerge")
+	self:ScheduleMethod(43, "WormsSubmerge")
 end
 
-function mod:WormsSubmerge()
+function mod:WormsSubmerge()	-- Пока оставлю не тронутым, в будущем реворкну
 	timerEmerge:Show()
 	timerSweepCD:Cancel()
 	timerSlimePoolCD:Cancel()
@@ -240,6 +255,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(67641, 66883, 67642, 67643) then			-- Slime Pool Cloud Spawn
 		warnSlimePool:Show()
 		timerSlimePoolCD:Show()
+	elseif args:IsSpellID(66689, 67650, 67651, 67652) then		-- Arctic Breath
+		timerBreath:Start()
+		warnBreath:Show()
 	elseif args:IsSpellID(66824, 67612, 67613, 67614) then		-- Paralytic Bite
 		timerParalyticBiteCD:Start()
 	elseif args:IsSpellID(66879, 67624, 67625, 67626) then		-- Burning Bite
@@ -253,20 +271,12 @@ function mod:SPELL_DAMAGE(args)
 	elseif args:IsPlayer() and args:IsSpellID(66881, 67638, 67639, 67640) then							-- Slime Pool
 		specWarnSlimePool:Show()
 	end
-		if args:IsSpellID(66734) and self.Options.SaySlackers											-- слакер на реве
-			then
-				self:UnscheduleMethod("warnHardMove")
-				HardMoveSlack[#HardMoveSlack + 1] = args.destName
-			if args:IsPlayer() then
-				specWarnHardMove:Show()
-		end
-	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)
 	if msg:match(L.Charge) or msg:find(L.Charge) then
-		timerNextCrash:Start()
-		timerBreath:Start(30)
+		timerNextCrash:Start(45)
+		timerBreath:Start(27)
 		if self.Options.ClearIconsOnIceHowl then
 			self:ClearIcons()
 		end
@@ -296,6 +306,13 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)
 			self:SetIcon(target, 8, 5)
 		end
 	end
+	if msg:match(L.Rage) or msg:find(L.Rage) then
+		if	timerBreath:GetRemaining() then
+			local elapsed = timerBreath:GetTime()
+			timerBreath:Stop()
+			timerBreath:Update(0, 5 + elapsed)
+		end
+	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
@@ -303,29 +320,26 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerCombatStart:Start()
 	elseif msg == L.Phase2 or msg:find(L.Phase2) then
 		self:ScheduleMethod(17, "WormsEmerge")
-		timerCombatStart:Start(13)
+		timerNextBoss:Start(137)
+		timerCombatStart:Start(11.5)
 		self.vb.phase = 2
 		if self.Options.RangeFrame then
 			DBM.RangeCheck:Show(10)
 		end
 	elseif msg == L.Phase3 or msg:find(L.Phase3) then
 		self.vb.phase = 3
+		charge = 2
 		if self:IsDifficulty("heroic10", "heroic25") then
 			enrageTimer:Start()
+			timerBreath:Start(29)
+		end
+		if self:IsDifficulty("normal10", "normal25") then
 			timerBreath:Start(23)
-			enrageTimerTest:Start()
-			if enrageTimerTest:GetRemaining() then
-				local elapsed, total = enrageTimerTest:GetTime()
-				local extend = total-elapsed
-				local timerEnrage	= (dead * enragescal)
-				enrageTimerTest:Stop()
-				enrageTimerTest:Update(0, extend - timerEnrage)
-			end
 		end
 		self:UnscheduleMethod("WormsSubmerge")
-		timerNextCrash:Start(45)
-		timerBreath:Start(23)
+		timerNextCrash:Start(35)
 		timerNextBoss:Cancel()
+		timerEmerge:Cancel()
 		timerSubmerge:Cancel()
 		if self.Options.RangeFrame then
 			DBM.RangeCheck:Hide()
@@ -371,6 +385,9 @@ function mod:UNIT_DIED(args)
 			DBM.BossHealth:RemoveBoss(35144)
 			DBM.BossHealth:RemoveBoss(34799)
 		end
+	elseif cid == 34799 and cid == 35144 then
+		timerEmerge:Cancel()
+		timerSubmerge:Cancel()
 	end
 end
 

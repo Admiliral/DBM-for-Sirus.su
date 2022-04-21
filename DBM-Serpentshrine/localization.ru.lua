@@ -155,17 +155,19 @@ L:SetTimerLocalization{
 
 L:SetWarningLocalization{
 	WarnKaraTarget = "Каратес преследует %s",
-	SpecWarnKaraTarget = "Вас преследует Каратес - бегите"
+	SpecWarnKaraTarget = "Вас преследует Каратес - бегите",
+	SpecialWarningKata = "Стрела Катаклизма около вас - отбегите"
 }
 
 L:SetOptionLocalization{
-	HealthFrameBoss	= "Показывать здоровье боссов в фазе 1",
-	WarnPhase2Soon			= "Предупреждать заранее о переходе в фазу 2 (на ~52%)",
-	SetIconOnSvazTargets = "Устанавливать иконки на цели испепеления",
-	SetIconOnStrela	= "Устанавливать иконки на цель стрелы",
-	AnnounceSvaz			= "Объявлятьв игроков, на кого установлено $spell:309261, в рейд чат ",
-	WarnKaraTarget = "Обьявлять цели преследуемые Каратесом",
-	SpecWarnKaraTarget = "Спец. предупреждение для преследуемого Каратесом",
+	HealthFrameBoss			 = "Показывать здоровье боссов в фазе 1",
+	WarnPhase2Soon			 = "Предупреждать заранее о переходе в фазу 2 (на ~52%)",
+	SetIconOnSvazTargets	 = "Устанавливать иконки на цели испепеления",
+	SetIconOnStrela			 = "Устанавливать иконки на цель стрелы",
+	AnnounceSvaz			 = "Объявлятьв игроков, на кого установлено $spell:309261, в рейд чат ",
+	WarnKaraTarget			 = "Обьявлять цели преследуемые Каратесом",
+	SpecWarnKaraTarget		 = "Спец. предупреждение для преследуемого Каратесом",
+	CrashArrow				 = "Показывать стрелку, когда $spell:309253 около вас",
 	TimerKaraTarget          = "Отсчет времени до смены цели Каратеса"
 }
 
