@@ -70,9 +70,9 @@ end
 
 
 DBM = {
-	Revision = parseCurseDate("20220421165200"),
-	DisplayVersion = "5.54.8", -- the string that is shown as version
-	ReleaseRevision = releaseDate(2022, 04, 21) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
+	Revision = parseCurseDate("20220505143200"),
+	DisplayVersion = "5.54.9", -- the string that is shown as version
+	ReleaseRevision = releaseDate(2022, 05, 05) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
 

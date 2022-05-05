@@ -3,22 +3,23 @@
 ## LoadOnDemand: 1
 ## Author: Stekolnyu, Waini
 ## RequiredDeps: DBM-Core
-## SavedVariables: DBMTol'GarodeNorigorn_AllSavedVars
-## SavedVariablesPerCharacter: DBMTol'GarodeNorigorn_SavedStats
+## SavedVariables: DBMMir_AllSavedVars
+## SavedVariablesPerCharacter: DBMMir_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Type: RAID
 ## X-DBM-Mod-Category: WORLD_BOSS
 ## X-DBM-Mod-World-Boss: 0
 ## X-DBM-StatTypes: normal
-## X-DBM-Mod-Name: Tol'Garod
-## X-DBM-Mod-Name-ruRU: Тол'Гарод
-## X-DBM-Mod-SubCategories: Tol'GarodeNorigorn
-## X-DBM-Mod-SubCategories-ruRU: Тол'Гародский Норигорн
-## X-DBM-Mod-Sort: 946
-## X-DBM-Mod-LoadZoneID: 946
+## X-DBM-Mod-Name: Mir
+## X-DBM-Mod-Name-ruRU: Мир
+## X-DBM-Mod-SubCategories: Tol'GarodeNorigorn, A Waking Nightmare
+## X-DBM-Mod-SubCategories-ruRU: Тол'Гародский Норигорн, Кошмар Наяву
+## X-DBM-Mod-Sort: 946, 914
+## X-DBM-Mod-LoadZoneID: 946, 914
 ## X-DBM-Mod-LoadCID: 70010
-## X-DBM-Mod-LoadZone: Tol'Garod
-## X-DBM-Mod-LoadZone-ruRU: Тол'Гарод
+## X-DBM-Mod-LoadZone: Tol'Garod, A Waking Nightmare
+## X-DBM-Mod-LoadZone-ruRU: Тол'Гарод, Кошмар Наяву
 
 localization.ru.lua
 Tol'GarodeNorigorn\Norigorn.lua
+AWakingNightmare\Zort.lua

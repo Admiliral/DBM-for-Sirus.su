@@ -71,6 +71,7 @@ mod:AddBoolOption("BossHealthFrame", true, "misc")
 mod:AddBoolOption("AnnounceFails", true, "announce")
 mod:AddBoolOption("GibVr", false)
 mod:AddBoolOption("AnnounceFear", false, "announce")
+mod:AddBoolOption("AnnounceSfer", false, "announce")
 local FearTargets	= {}
 
 function mod:OnCombatStart(delay)
@@ -272,9 +273,13 @@ function mod:SPELL_AURA_APPLIED(args)
         warnBred:Show(args.destName, args.amount or 1)
 		timerBred:Start(args.destName)
 	elseif spellId == 313129 and args:IsPlayer() then
-		specwarnCern:Schedule(1)
+		if self.Options.AnnounceSfer then
+			specwarnCern:Schedule(1)
+		end
 	elseif spellId == 313130 and args:IsPlayer() then
-		specwarnBelay:Schedule(1)
+		if self.Options.AnnounceSfer then
+			specwarnBelay:Schedule(1)
+		end
 	end
 	-------------HM----------------
 	if spellId == 317262 then
