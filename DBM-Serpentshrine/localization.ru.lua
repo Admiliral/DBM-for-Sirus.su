@@ -64,6 +64,7 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	WarnMurlocksSoon= "Обьявлять о скором вызове мурлоков",
 	WarnGlobes      = "Объявлять о появлении глобул",
+	RangeFrame					= "Показывать окно проверки дистанции",
 	TimerMurlocks   = "Отсчет времени до вызова мурлоков"
 }
 

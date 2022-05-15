@@ -148,8 +148,7 @@ L:SetOptionLocalization{
 	RemoveWeaponOnMindControl   = "Убирать оружие на МК.",
 	SetIconOnMC = "Устанавливать иконки на цели заклинания $spell:36797",
 	VzrivIcon = DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(308797),
-	AnnounceVzriv			= "Объявлять игроков, на кого установлен взрыв, в рейд чат",
-	RemoveShadowResistanceBuffs = "Убирать шадоу-резист бафы."
+	AnnounceVzriv			= "Объявлять игроков, на кого установлен взрыв, в рейд чат"
 }
 
 L:SetMiscLocalization{

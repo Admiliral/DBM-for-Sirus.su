@@ -75,14 +75,14 @@ function mod:SPELL_CAST_START(args)
 		timerHeal:Start()
 		local debuff = UnitDebuff("player", darkEssence)
 		self:SpecialAbility(debuff)
-		if self:GetUnitCreatureId("target") == 34497 then	-- if lightbane, then switch to darkbane
+		if self:GetUnitCreatureId("target") == 34497 and mod:IsDifficulty("normal25", "normal10") then	-- if lightbane, then switch to darkbane
 			specWarnSwitch:Show()
 		end
 	elseif args:IsSpellID(65876, 67306, 67307, 67308) then		-- Light Pact
 		timerHeal:Start()
 		local debuff = UnitDebuff("player", lightEssence)
 		self:SpecialAbility(debuff)
-		if self:GetUnitCreatureId("target") == 34496 then	-- if darkbane, then switch to lightbane
+		if self:GetUnitCreatureId("target") == 34496 and mod:IsDifficulty("normal25", "normal10") then	-- if darkbane, then switch to lightbane
 			specWarnSwitch:Show()
 		end
 	end

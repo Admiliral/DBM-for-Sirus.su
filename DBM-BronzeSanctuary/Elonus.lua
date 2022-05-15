@@ -54,7 +54,7 @@ local yellTemporalCascadeFade				= mod:NewShortFadesYell(312206, nil, nil, nil, 
 local yellReverseCascadeFade				= mod:NewShortFadesYell(312208, nil, nil, nil, "YELL")
 
 local EraseCount							= mod:NewCDCountTimer(60, 312204, nil, nil, nil, 2)	--Слово силы: Стереть
-local ResonantScream						= mod:NewCDTimer(12, 312210, nil, "SpellCaster",nil, 1, nil, nil, nil, 1) --Резонирующий крик(кик)
+local ResonantScream						= mod:NewCDTimer(12, 312210, nil, "SpellCaster",nil, 1, nil, DBM_CORE_DEADLY_ICON, nil, 1) --Резонирующий крик(кик)
 local ReplicCount							= mod:NewCDCountTimer(120, 312211, nil, nil, nil, 2) --Временные линии(копии)
 local ReturnCount							= mod:NewCDCountTimer(120, 312214, nil, nil, nil, 2) --Возврат
 local TemporalCascade						= mod:NewCDTimer(20, 312206, nil, nil, nil, 2) --Темпоральный каскад
@@ -146,14 +146,13 @@ function mod:OnCombatEnd(wipe)
 		DBM.InfoFrame:Hide()
 	end
 end
-
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 312214 and self:AntiSpam(3, 6) then
 		self.vb.RetCount = self.vb.RetCount + 1
 		ReturnCount:Start(nil, self.vb.RetCount+1)
 		specWarnReturn:Show(args.sourceName)
-		ResonantScream:Stop()
+		ResonantScream:Cancel()
 	elseif spellId == 312211 then
 		self.vb.RepCount = self.vb.RepCount + 1
 		warnReplicaSpawned:Show()
@@ -193,7 +192,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 312208 or spellId == 317160 then
 		RevCascTargets[#RevCascTargets + 1] = args.destName
 		ReverseCascadeBuff:Start()
-		if self.Options.InfoFrame and not DBM.InfoFrame:IsShown() then
+		if self.Options.InfoFrame then
 			DBM.InfoFrame:SetHeader(args.spellName)
 			DBM.InfoFrame:Show(10, "playerdebuffremaining", spellId)
 		end
@@ -250,9 +249,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif spellId == 312206 or spellId == 317158 then
 		if self.Options.TempCascIcon then
 			self:SetIcon(args.destName, 0)
-		end
-		if self.Options.InfoFrame then
-			DBM.InfoFrame:Hide()
 		end
 		TempCascIcon = 8
 		if args:IsPlayer() then

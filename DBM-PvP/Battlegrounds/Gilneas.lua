@@ -3,7 +3,7 @@ local L			= mod:GetLocalizedStrings()
 
 mod:SetRevision("20200405141240")
 mod:SetZone(DBM_DISABLE_ZONE_DETECTION)
-
+--[[
 mod:RegisterEvents(
 	"ZONE_CHANGED_NEW_AREA",
 	"CHAT_MSG_BG_SYSTEM_HORDE",
@@ -165,6 +165,7 @@ do
 	mod.CHAT_MSG_BG_SYSTEM_NEUTRAL = schedule_check
 end
 
+
 do
 	local winner_is = 0 -- 0 = nobody 1 = alliance 2 = horde
 	local last_horde_score = 0
@@ -292,3 +293,4 @@ function mod:HideBasesToWin()
 		self.ScoreFrameToWinText:SetText("")
 	end
 end
+]]

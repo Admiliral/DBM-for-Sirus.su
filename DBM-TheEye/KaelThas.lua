@@ -206,7 +206,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			DBM.RangeCheck:Show(10)
 		elseif msg == L.YellPhase4  then
 			self.vb.phase = 4
-			if self.Options.RemoveShadowResistanceBuffs then
+			if self.Options.RemoveShadowResistanceBuffs and mod:IsDifficulty("normal25", "normal10") then
 				mod:ScheduleMethod(0.1, "RemoveBuffs")
 			end
 			warnPhase:Show(L.WarnPhase4)

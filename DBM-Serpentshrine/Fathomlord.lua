@@ -158,16 +158,8 @@ function mod:strelafunc()
 			local uId = DBM:GetRaidUnitId(targetname)
 			if uId then
 				local inRange = CheckInteractDistance(uId, 1)
-				local x, y = GetPlayerMapPosition(uId)
-				if x == 0 and y == 0 then
-					SetMapToCurrentZone()
-					x, y = GetPlayerMapPosition(uId)
-				end
-				if inRange and not self:IsMelee() and not targetname then
+				if inRange then -- and not self:IsMelee()
 					SpecialWarningKata:Show()
-					if self.Options.CrashArrow then
-						DBM.Arrow:ShowRunAway(x, y, 15, 5)
-					end
 				end
 			end
 		end

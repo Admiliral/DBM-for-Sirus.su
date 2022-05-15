@@ -47,6 +47,7 @@ local berserkTimer				= mod:NewBerserkTimer(600)
 mod:AddSetIconOption("SetIconOnSignTargets", 308471, true, true, {3, 4, 5, 6, 7, 8})
 mod:AddBoolOption("AnnounceSign", false)
 mod:AddBoolOption("RangeFrame", true)
+mod:AddInfoFrameOption(308471, true)
 
 local beaconIconTargets	= {}
 local MagnetTargets = {}
@@ -104,6 +105,9 @@ function mod:OnCombatEnd(wipe)
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Hide()
 	end
+	if self.Options.InfoFrame then
+		DBM.InfoFrame:Hide()
+	end
 end
 
 ----------------------об--------------------------------------
@@ -134,6 +138,10 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnSign:Show()
 			yellSign:Yell()
 			yellSignFades:Countdown(spellId)
+		end
+		if self.Options.InfoFrame and not DBM.InfoFrame:IsShown() then
+			DBM.InfoFrame:SetHeader(args.spellName)
+			DBM.InfoFrame:Show(8, "playerdebuffremaining", spellId)
 		end
 		SignTargets[#SignTargets + 1] = args.destName
 		self:UnscheduleMethod("SetSignIcons")

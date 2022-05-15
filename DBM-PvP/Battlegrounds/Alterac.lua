@@ -107,8 +107,8 @@ function Alterac:CHAT_MSG_BG_SYSTEM_NEUTRAL(arg1)
 	if not bgzone then return end
 	if arg1 == L.BgStart60 then
 		startTimer:Start()
-	elseif arg1 == L.BgStart30  then
-		startTimer:Update(30, 60)
+	--[[elseif arg1 == L.BgStart30  then
+		startTimer:Update(30, 60)]]
 	end
 	schedule_check(self)
 end

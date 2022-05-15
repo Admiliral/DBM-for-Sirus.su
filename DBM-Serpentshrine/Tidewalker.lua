@@ -104,7 +104,9 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 21213, "Morogrim Tidewalker", wipe)
-	DBM.RangeCheck:Hide()
+	if self.Options.RangeFrame then
+		DBM.RangeCheck:Hide()
+	end
 end
 
 function mod:UNIT_HEALTH(uId)
@@ -130,7 +132,9 @@ function mod:SPELL_CAST_START(args)
 		timerZemlaCast:Start()
 		timerZemlaCD:Start()
 		specWarnZemla:Show()
-		DBM.RangeCheck:Show(6)
+		if self.Options.RangeFrame then
+			DBM.RangeCheck:Show(8)
+		end
 	elseif spellId == 310151 then -- Землетрясение
 		specWarnKrik:Show()
 		warnKrik:Show()

@@ -14,7 +14,8 @@ mod:RegisterEvents(
 	"SPELL_CAST_START",
 	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED",
-	"SWING_DAMAGE"
+	"SWING_DAMAGE",
+	"UNIT_DEAD"
 )
 
 --------------------------нормал--------------------------
@@ -45,6 +46,8 @@ local yellWrathHOb		= mod:NewYell(42783, nil, nil, nil, "YELL")
 local yellWrathHFades	= mod:NewShortFadesYell(308548, nil, nil, nil, "YELL")
 local yellWrathHObFades	= mod:NewShortFadesYell(42783, nil, nil, nil, "YELL")
 
+
+local timerRing			= mod:NewCDTimer(20, 308562, nil, nil, nil, 1, nil, DBM_CORE_ENRAGE_ICON)
 local timerNextHelp		= mod:NewTimer(40, "TimerNextHelp", 308558, nil, nil, 3, DBM_CORE_TANK_ICON)
 local timerWrathH		= mod:NewTargetTimer(6, 308548, nil, "RemoveEnrage", nil, 1, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 5)
 local timerNextWrathH	= mod:NewCDTimer(43, 308548, nil, "RemoveEnrage", nil, 1, nil, DBM_CORE_ENRAGE_ICON)
@@ -116,7 +119,8 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 308562 then -- кольцо
-		warnRing:Schedule(0)
+		warnRing:Show()
+		timerRing:Start()
 	elseif spellId == 308558 then -- послушники
 		timerNextHelp:Schedule(80)
 		specWarnHelp:Show(args.sourceName)
@@ -215,13 +219,13 @@ function mod:SWING_DAMAGE(args)
 end
 
 function mod:UNIT_HEALTH(uId)
-	if self.vb.phase == 1 and not warned_preP1 and self:GetUnitCreatureId(uId) == 18805 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.37 then
+	if self.vb.phase == 1 and not warned_preP1 and self:GetUnitCreatureId(uId) == 18805 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.33 then
 		warned_preP1 = true
 		warnPhase2Soon:Show()
-	elseif not warned_preP2 and self:GetUnitCreatureId(uId) == 18805 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.35 then
+	elseif not warned_preP2 and self:GetUnitCreatureId(uId) == 18805 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.30 then
 		warned_preP2 = true
 		warnPhase2:Show()
-		timerAdds:Stop()
+		timerAdds:Cancel()
 	end
 end
 
