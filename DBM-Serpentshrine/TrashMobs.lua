@@ -21,7 +21,7 @@ local specWarnRange		= mod:NewSpecialWarningMoveAway(39042)
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(39042) then
-		DBM.RangeCheck:Show(8)
+		DBM.RangeCheck:Show(10)
 		if args:IsPlayer() and self:AntiSpam(4) then
 		specWarnRange:Show()
 		end

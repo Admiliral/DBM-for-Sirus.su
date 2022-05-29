@@ -2,16 +2,17 @@ local mod	= DBM:NewMod("Curator", "DBM-Karazhan")
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("20210502220000")
-mod:SetCreatureID(34438,34436,34437)
+mod:SetCreatureID(34438,34436,34437, 15691)
 --mod:SetCreatureID(15691)
 --mod:RegisterCombat("yell", L.DBM_CURA_YELL_PULL)
-mod:RegisterCombat("combat",34437)
+mod:RegisterCombat("combat", 34437, 15691)
 
 mod:RegisterEvents(
 	"SPELL_AURA_APPLIED",
 	"SPELL_AURA_REMOVED",
 	"SPELL_CAST_START",
-	"SPELL_INTERRUPT"
+	"SPELL_INTERRUPT",
+	"CHAT_MSG_MONSTER_YELL"
 )
 
 -- local warnEvoSoon		= mod:NewPreWarnAnnounce(30254, 10, 2)
@@ -56,17 +57,20 @@ mod:RegisterEvents(
 -- 	end
 -- end
 
+--обычка--
+local timerEvo					= mod:NewNextTimer(112, 30254)	-- Прилив сил
 
-local warnUnstableTar            = mod:NewAnnounce("WarnUnstableTar", 3, 305309)
+-- героик --
+local warnUnstableTar				= mod:NewAnnounce("WarnUnstableTar", 3, 305309)
 
-local specWarnAnnihilationKick   = mod:NewSpecialWarning("Прерывание")
-local specWarnCond               = mod:NewSpecialWarningYou(305305, nil, nil, nil, 1, 2)
-local specWarnRunes              = mod:NewSpecialWarningRun(305296, nil, nil, nil, 1, 2)
+local specWarnAnnihilationKick		= mod:NewSpecialWarning("Прерывание")
+local specWarnCond					= mod:NewSpecialWarningYou(305305, nil, nil, nil, 1, 2)
+local specWarnRunes					= mod:NewSpecialWarningRun(305296, nil, nil, nil, 1, 2)
 
-local timerAnnihilationCD        = mod:NewCDTimer(23, 305312, nil, nil, nil, 2)
-local timerCondCD                = mod:NewCDTimer(11, 305305, nil, nil, nil, 2)
-local timerRunesCD               = mod:NewCDTimer(25, 305296, nil, nil, nil, 1)
-local timerRunesBam              = mod:NewTimer(8, "TimerRunesBam", 305314, nil, nil, 2)
+local timerAnnihilationCD			= mod:NewCDTimer(23, 305312, nil, nil, nil, 2)	-- Анигиляция
+local timerCondCD					= mod:NewCDTimer(11, 305305, nil, nil, nil, 2)	-- Проводник молний
+local timerRunesCD					= mod:NewCDTimer(25, 305296, nil, nil, nil, 1)	-- руны
+local timerRunesBam					= mod:NewTimer(8, "TimerRunesBam", 305314, nil, nil, 2)	-- взрыв рун
 
 local warnSound						= mod:NewSoundAnnounce()
 
@@ -75,12 +79,11 @@ mod.vb.ter = true
 mod.vb.isinCombat = false
 
 
-function mod:bombDefused()
-    warnSound:Play("bomb_d")
-end
-
-
 function mod:OnCombatStart(delay)
+	if mod:IsDifficulty("normal10") then
+		DBM:FireCustomEvent("DBM_EncounterStart", 15691, "The Curator")
+		timerEvo:Start()
+	elseif mod:IsDifficulty("heroic10") then
 	DBM:FireCustomEvent("DBM_EncounterStart", 34437, "The Curator")
 	for i=1,3 do
 		if UnitAura("boss".. i,"Деактивация", nil, "HARMFUL") == nil then
@@ -95,6 +98,13 @@ function mod:OnCombatStart(delay)
 	self.vb.isinCombat = true
     self.vb.ter = true
 	table.wipe(unstableTargets)
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L.DBM_CURA_YELL_OOM then
+		timerEvo:Start(112)
+	end
 end
 
 function mod:OnCombatEnd(wipe)
@@ -150,22 +160,17 @@ end
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(305296) then
 		self.vb.ter = true
-		warnSound:Play("bomb_p")
-        self:ScheduleMethod(6 ,"bombDefused")
 		specWarnRunes:Show()
 		timerRunesCD:Start()
 		timerRunesBam:Start()
 	elseif args:IsSpellID(305312) then
-		warnSound:Play("optics_online")
 		timerAnnihilationCD:Start()
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
     if args:IsSpellID(305298) then
-        self:UnscheduleMethod("bombDefused")
         if self.vb.ter then
-            warnSound:Play("terror_wins")
             self.vb.ter = false
         end
     end

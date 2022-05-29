@@ -148,7 +148,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		if args:IsPlayer() then
 	        specWarnGround:Show()
-			warnSound:play("bochok")
 		end
 		if self.Options.GroundIcon then
 			self:SetIcon(args.destName, 8, 5)

@@ -161,7 +161,6 @@ function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(305382) then
 		if args:IsPlayer() then
 			specWarnPyromancer:Show()
-			warnSound:Play("welcome")
 		end
 		pyromancerTargets[#pyromancerTargets + 1] = args.destName
 		if #pyromancerTargets >= 3 and self.vb.isPyroFirst then
@@ -198,6 +197,5 @@ end
 	if msg == L.DBM_NB_EMOTE_PULL then
 		timerNightbane:Start()
 		self.vb.isStart = true
-		warnSound:Play("pike")
 	end
  end

@@ -17,6 +17,7 @@ mod:RegisterEventsInCombat(
 	"CHAT_MSG_MONSTER_YELL",
 	"SPELL_CAST_START",
 	"UNIT_HEALTH",
+	"SPELL_AURA_DISPELLED",
 	"CHAT_MSG_MONSTER_YELL"
 )
 
@@ -189,7 +190,12 @@ function mod:SPELL_AURA_REMOVED(args)
 		if self.Options.SetIconOnSklepTargets then
 			self:SetIcon(args.destName, 0)
 		end
-	elseif spellId == 309065 then
+	end
+end
+
+function mod:SPELL_AURA_DISPELLED(args)
+	local spellId = args.spellId
+	if spellId == 309065 then
 		if self.Options.SetIconOnKorTargets then
 			self:SetIcon(args.destName, 0)
 		end

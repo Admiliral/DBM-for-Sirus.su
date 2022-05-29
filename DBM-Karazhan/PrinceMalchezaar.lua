@@ -8,9 +8,15 @@ mod:RegisterCombat("combat", 15690)
 mod:RegisterEvents(
 	"SPELL_CAST_START",
 	"SPELL_AURA_APPLIED",
-	"UNIT_HEALTH"
+	"UNIT_HEALTH",
+	"CHAT_MSG_MONSTER_YELL"
 )
 
+--обычка--
+local warningInfernal			= mod:NewSpellAnnounce(37277, 2)
+local timerInfernal				= mod:NewCDTimer(45, 37277)		-- метеоры
+
+--хм--
 local warningNovaCast			= mod:NewCastAnnounce(30852, 3)
 local timerNovaCD				= mod:NewCDTimer(12, 305425)
 local timerFlameCD			    = mod:NewCDTimer(30, 305433)
@@ -34,17 +40,37 @@ local yellPorchFades			= mod:NewShortFadesYell(305429)
 local flameTargets = {}
 local PorchTargets = {}
 mod.vb.PorchIcons = 8
+mod.vb.phase = 0
+
 mod:AddBoolOption("AnnouncePorch", false)
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 15690, "Prince Malchezaar")
 	if mod:IsDifficulty("normal10") then
+		timerInfernal:Start(14.5-delay)
 	elseif mod:IsDifficulty("heroic10") then
 		self.vb.PorchIcons = 8
 		timerCurseCD:Start(20)
 		timerNovaCD:Start()
 		self.vb.phaseCounter = 1
 		table.wipe(flameTargets)
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L.DBM_PRINCE_YELL_INF1 or msg == L.DBM_PRINCE_YELL_INF2 then
+			warningInfernal:Show()
+			timerInfernal:Start()
+	elseif msg == L.DBM_PRINCE_YELL_P3 then
+			self:SendSync("Phase3")
+			self.vb.phase = 3
+	elseif msg == L.DBM_PRINCE_YELL_P2 then
+			self:SetStage(2)
+			warnPhase2:Show()
+		if  msg == L.DBM_PRINCE_YELL_INF1 or msg == L.DBM_PRINCE_YELL_INF2 and self.vb.phase == 3 then
+			warningInfernal:Show()
+			timerInfernal:Start(17)
+		end
 	end
 end
 
@@ -81,13 +107,9 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		if args:IsPlayer() then
 			specWarnFlame:Show()
-			warnSound:Play("impruved")
 		end
 	elseif args:IsSpellID(305435) then
 		timerCurseCD:Start(self.vb.phaseCounter == 2 and 30 or 20)
-		if args:IsPlayer() then
-			warnSound:Play("bomb_p")
-		end
 	elseif args:IsSpellID(305429) then
 		PorchTargets[#PorchTargets + 1] = args.destName
 		self:ScheduleMethod(0.1, "SetPorchIcons")
@@ -98,15 +120,12 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 
-function mod:SPELL_AURA_REMOVED(args)
-    if args:IsSpellID(305435) and args:IsPlayer() then
-        warnSound:Play("bomb_d")
-	end
-end
+
 
 
 function mod:UNIT_HEALTH(uId)
-	if self.vb.phaseCounter == 1 and self:GetUnitCreatureId(uId) == 15690 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.8 then
+	if mod:IsDifficulty("heroic10") then
+	elseif self.vb.phaseCounter == 1 and self:GetUnitCreatureId(uId) == 15690 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.8 then
 		self.vb.phaseCounter = self.vb.phaseCounter + 1
 		warnNextPhaseSoon:Show("2")
 		timerFlameCD:Start(20)
@@ -135,7 +154,6 @@ function mod:UNIT_HEALTH(uId)
 		timerCallofDeadCD:Cancel()
 		timerFlameCD:Start()
 	end
-
 end
 
 
@@ -165,4 +183,3 @@ do
 		end
 	end
 end
-

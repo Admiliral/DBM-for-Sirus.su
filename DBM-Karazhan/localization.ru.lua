@@ -2,7 +2,7 @@
 
 local L
 
---Attumen
+--Аттумен Охотник
 L = DBM:GetModLocalization("Attumen")
 
 L:SetGeneralLocalization{
@@ -14,16 +14,18 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
-	WarnPhase2Soon = "Предупреждать о переходе на пешую фазу"
+	WarnPhase2Soon = "Предупреждать о переходе на пешую фазу",
+	InvIcons         = "Устанавливать метки на цели заклинания $spell:305252"
 }
 
 L:SetMiscLocalization{
 	DBM_ATH_YELL_1		= "Давай, Полночь, разгоним этот сброд!",
-	KillAttumen			= "Always knew... someday I would become... the hunted."
+	KillAttumen			= "Всегда знал... когда-нибудь... я стану... добычей.",
+	YellInv				= "Диспел меня!"
 }
 
 
---Moroes
+--Мороуз
 L = DBM:GetModLocalization("Moroes")
 
 L:SetGeneralLocalization{
@@ -31,27 +33,29 @@ L:SetGeneralLocalization{
 }
 
 L:SetWarningLocalization{
-	DBM_MOROES_VANISH_FADED	= "Исчезновение рассеивается",
-	WarnPhase2Soon = "Скоро фаза 2",
+	DBM_MOROES_VANISH_FADED		= "Исчезновение рассеивается",
+	WarnPhase2Soon				= "Скоро фаза 2",
 }
 
 L:SetTimerLocalization{
-	Phase2 = "Фаза 2"
+	Phase2						= "Фаза 2",
+	Dance						= "Танцы",
+	Spree						= "Череда"
 }
 
 L:SetOptionLocalization{
-	DBM_MOROES_VANISH_FADED	= "Show vanish fade warning",
-	WarnPhase2Soon = "Предупреждать о приближении второй фазы",
-	WarnDeathMark = DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(305470, GetSpellInfo(305470) or "unknown"),
-	Phase2 = "Отсчитывать время до второй фазы."
+	DBM_MOROES_VANISH_FADED		= "Показывать предупреждение о ванише Мороуза",
+	WarnPhase2Soon				= "Предупреждать о приближении второй фазы",
+	WarnDeathMark				= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(305470, GetSpellInfo(305470) or "unknown"),
+	Phase2						= "Отсчитывать время до второй фазы."
 }
 
 L:SetMiscLocalization{
-	DBM_MOROES_YELL_START	= "Хмм, неожиданные посетители. Нужно подготовиться..."
+	DBM_MOROES_YELL_START		= "Хмм, неожиданные посетители. Нужно подготовиться..."
 }
 
 
--- Maiden of Virtue
+-- Благочестивая дева
 L = DBM:GetModLocalization("Maiden")
 
 L:SetGeneralLocalization{
@@ -62,15 +66,15 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
-	RangeFrame			= "Show range frame (10)",
-	HealthFrame         = "Отображать здоровье босса и прочность щита"
+	RangeFrame				= "Показывать рендж (10)",
+	HealthFrame         	= "Отображать здоровье босса и прочность щита"
 }
 
 L:SetMiscLocalization{
 }
 
 
--- Romulo and Julianne
+-- Ромуло и Джулианна
 L = DBM:GetModLocalization("RomuloAndJulianne")
 
 L:SetGeneralLocalization{
@@ -84,13 +88,13 @@ L:SetOptionLocalization{
 }
 
 L:SetMiscLocalization{
-	DBM_RJ_PHASE2_YELL	= "Ночь, добрая и строгая, приди! Верни мне моего Ромуло!",
-	Romulo				= "Ромуло",
-	Julianne			= "Джулианна"
+	DBM_RJ_PHASE2_YELL		= "Ночь, добрая и строгая, приди! Верни мне моего Ромуло!",
+	Romulo					= "Ромуло",
+	Julianne				= "Джулианна"
 }
 
 
--- Big Bad Wolf
+-- Злой и страшный серый волк
 L = DBM:GetModLocalization("BigBadWolf")
 
 L:SetGeneralLocalization{
@@ -101,7 +105,7 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
-	RRHIcon		= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(30753)
+	RRHIcon					= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(30753)
 }
 
 L:SetMiscLocalization{
@@ -117,17 +121,17 @@ L:SetGeneralLocalization{
 }
 
 L:SetWarningLocalization{
-	WarnUnstableTar = "Нестабильная энергия на >%s<"
+	WarnUnstableTar			= "Нестабильная энергия на >%s<"
 }
 
 L:SetTimerLocalization{
-	TimerRunesBam = "Взрыв!"
+	TimerRunesBam			= "Взрыв!"
 }
 
 L:SetOptionLocalization{
-	RangeFrame			= "Show range frame (10)",
-	WarnUnstableTar =   DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(305309, GetSpellInfo(305309) or "unknown"),
-	TimerRunesBam = "Отсчет времени до взрыва рун"
+	RangeFrame				= "Показывать рендж (10)",
+	WarnUnstableTar			=   DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(305309, GetSpellInfo(305309) or "unknown"),
+	TimerRunesBam			= "Отсчет времени до взрыва рун"
 }
 
 L:SetMiscLocalization{
@@ -155,7 +159,7 @@ L:SetOptionLocalization{
 L:SetMiscLocalization{
 	DBM_TI_YELL_PULL		= "А, вы как раз вовремя! Ритуалы скоро начнутся!",
 	Kilrek					= "Kil'rek",
-	DChains					= "Demon Chains"
+	DChains					= "Демонические цепи"
 }
 
 
@@ -177,7 +181,7 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-	DBM_ARAN_DO_NOT_MOVE	= "Show special warning for $spell:30004",
+	DBM_ARAN_DO_NOT_MOVE	= "Спец-предупреждение для $spell:30004",
 	TimerSpecialHeroic = "Отсчет времени до следующей спец-способности",
 	SpecWarnFreeze = "Предупреждение о том что вы будете заморожены",
 	WarnFreeze = "Обьявление замороженой цели"
@@ -192,7 +196,7 @@ L:SetMiscLocalization{
 L = DBM:GetModLocalization("Netherspite")
 
 L:SetGeneralLocalization{
-	name = "Пустогнев"
+	name = "Гнев пустоты"
 }
 
 L:SetWarningLocalization{
@@ -210,16 +214,17 @@ L:SetTimerLocalization{
 	TimerGhostPhase     = "Призрачная фаза",
 	TimerRepentance     = "Возмездие",
 	TimerPortals        = "Появление порталов",
-	TimerNormalPhase    = "Обычная фаза"
+	TimerNormalPhase    = "Обычная фаза",
+	timerVoid			= "Лужа"
 }
 
 L:SetOptionLocalization{
-	DBM_NS_WARN_PORTAL_SOON	= "Show pre-warning for Portal phase",
-	DBM_NS_WARN_BANISH_SOON	= "Show pre-warning for Banish phase",
-	warningPortal			= "Show warning for Portal phase",
-	warningBanish			= "Show warning for Banish phase",
-	timerPortalPhase		= "Show timer for Portal Phase duration",
-	timerBanishPhase		= "Show timer for Banish Phase duration",
+	DBM_NS_WARN_PORTAL_SOON	= "Показать предупреждение о приближении Portal phase",
+	DBM_NS_WARN_BANISH_SOON	= "Показать предупреждение о приближении Banish phase",
+	warningPortal			= "Показать предупреждение для Portal phase",
+	warningBanish			= "Показать предупреждение для Banish phase",
+	timerPortalPhase		= "Показать таймер длительности Portal Phase",
+	timerBanishPhase		= "Показать таймер длительности Banish Phase",
 	SpecWarnKickNow				= "Спец-предупреждение, когда вы должы прервать заклинание",
 	TimerGates          = "Зеленые лучи",
 	TimerGhostPhase     = "Призрачная фаза",
@@ -229,8 +234,8 @@ L:SetOptionLocalization{
 }
 
 L:SetMiscLocalization{
-	DBM_NS_EMOTE_PHASE_2	= "%s goes into a nether-fed rage!",
-	DBM_NS_EMOTE_PHASE_1	= "%s cries out in withdrawal, opening gates to the nether."
+	DBM_NS_EMOTE_PHASE_2	= "%s впадает в предельную ярость!",
+	DBM_NS_EMOTE_PHASE_1	= "%s издает крик, отступая, открывая путь Пустоте."
 }
 
 
@@ -321,8 +326,8 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-	AnnounceBosses			= "Show warnings for boss spawns",
-	ShowBossTimers			= "Show timers for boss spawns",
+	AnnounceBosses			= "Показать предупреждение для спавна босса",
+	ShowBossTimers			= "Показать таймер спавна босса",
 	DBM_OZ_OPTION_1			= "Показать область границы контроля в фазе 2"
 }
 
@@ -358,7 +363,8 @@ L:SetOptionLocalization{
 }
 
 L:SetMiscLocalization{
-	YellZluker = "Вместе мы неудержимы!"
+	YellZluker = "Вместе мы неудержимы!",
+	YellPull = "Обидишь нас - получишь в дукер! Об этом наша пьеса... Злюкер!"	--ковычки он не захотел читать пидор хз будет ли работать
 }
 
 
@@ -366,17 +372,17 @@ L:SetMiscLocalization{
 L = DBM:GetModLocalization("Shadikith")
 
 L:SetGeneralLocalization{
-	name = "Shadikith the Glider"
+	name = "Шадикит Скользящий"
 }
 
 L = DBM:GetModLocalization("Hyakiss")
 
 L:SetGeneralLocalization{
-	name = "Hyakiss the Lurker"
+	name = "Хиакисс Скрытень"
 }
 
 L = DBM:GetModLocalization("Rokad")
 
 L:SetGeneralLocalization{
-	name = "Rokad the Ravager"
+	name = "Рокад Опустошитель"
 }

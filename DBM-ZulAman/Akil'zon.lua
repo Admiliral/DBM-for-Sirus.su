@@ -19,7 +19,7 @@ local timerNextDisrupt		= mod:NewCDTimer(11, 43622)
 local warnWind				= mod:NewAnnounce("WarnWind", 4, 43621)
 local timerDisrupt			= mod:NewTargetTimer(20, 44008)
 local specWarnDisrupt		= mod:NewSpecialWarningYou(44008)
-local berserkTimer			= mod:NewBerserkTimer(600)
+local berserkTimer			= mod:NewBerserkTimer(480)
 
 mod:AddBoolOption("SetIconOnElectricStorm", true)
 mod:AddBoolOption("SayOnElectricStorm", true)
