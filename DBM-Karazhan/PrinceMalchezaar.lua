@@ -122,33 +122,33 @@ end
 
 
 
-If mod:IsDifficulty("heroic10") then
-function mod:UNIT_HEALTH(uId)
 
-	if self.vb.phaseCounter == 1 and self:GetUnitCreatureId(uId) == 15690 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.8 then
+
+function mod:UNIT_HEALTH(uId)
+	if self.vb.phaseCounter == 1 and self:GetUnitCreatureId(uId) == 15690 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.8 and mod:IsDifficulty("heroic10") then
 		self.vb.phaseCounter = self.vb.phaseCounter + 1
 		warnNextPhaseSoon:Show("2")
 		timerFlameCD:Start(20)
 		timerCurseCD:Start(20)
-	elseif self.vb.phaseCounter == 2 and self:GetUnitCreatureId(uId) == 15690 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.4 then
+	elseif self.vb.phaseCounter == 2 and self:GetUnitCreatureId(uId) == 15690 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.4 and mod:IsDifficulty("heroic10") then
 		self.vb.phaseCounter = self.vb.phaseCounter + 1
 		warnNextPhaseSoon:Show(L.FlameWorld)
 		timerCurseCD:Cancel()
 		timerNovaCD:Cancel()
 		timerFlameCD:Start(10)
-	elseif self.vb.phaseCounter == 3 and self:GetUnitCreatureId(uId) == 15690 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.3 then
+	elseif self.vb.phaseCounter == 3 and self:GetUnitCreatureId(uId) == 15690 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.3 and mod:IsDifficulty("heroic10") then
 		self.vb.phaseCounter = self.vb.phaseCounter + 1
 		warnNextPhaseSoon:Show(L.IceWorld)
 		timerFlameCD:Cancel()
 		timerIceSpikeCD:Start()
 		timerCurseCD:Start(20)
-	elseif self.vb.phaseCounter == 4 and self:GetUnitCreatureId(uId) == 15690 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.2 then
+	elseif self.vb.phaseCounter == 4 and self:GetUnitCreatureId(uId) == 15690 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.2 and mod:IsDifficulty("heroic10") then
 		self.vb.phaseCounter = self.vb.phaseCounter + 1
 		warnNextPhaseSoon:Show(L.BlackForest)
 		timerCurseCD:Cancel()
 		timerIceSpikeCD:Cancel()
 		timerCallofDeadCD:Start()
-	elseif self.vb.phaseCounter == 5 and self:GetUnitCreatureId(uId) == 15690 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.1 then
+	elseif self.vb.phaseCounter == 5 and self:GetUnitCreatureId(uId) == 15690 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.1 and mod:IsDifficulty("heroic10") then
 		self.vb.phaseCounter = self.vb.phaseCounter + 1
 		warnNextPhaseSoon:Show(L.LastPhase)
 		timerCallofDeadCD:Cancel()
