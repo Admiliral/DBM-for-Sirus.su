@@ -122,10 +122,10 @@ end
 
 
 
-
+If mod:IsDifficulty("heroic10") then
 function mod:UNIT_HEALTH(uId)
-	if mod:IsDifficulty("heroic10") then
-	elseif self.vb.phaseCounter == 1 and self:GetUnitCreatureId(uId) == 15690 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.8 then
+
+	if self.vb.phaseCounter == 1 and self:GetUnitCreatureId(uId) == 15690 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.8 then
 		self.vb.phaseCounter = self.vb.phaseCounter + 1
 		warnNextPhaseSoon:Show("2")
 		timerFlameCD:Start(20)
