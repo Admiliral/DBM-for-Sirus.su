@@ -63,6 +63,7 @@ mod:AddBoolOption("AnnounceKnopk", false)
 local SveazTargets = {}
 local FlameTargets = {}
 local FlameIcons = 2
+local SveazIcons = 7
 local warned_preP = false
 local warned_preP1 = false
 local warned_preP2 = false
@@ -137,7 +138,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerSveazi:Start()
 		if args:IsPlayer() and self:AntiSpam(2) then
 			yellSveazi:Yell()
-			specWarnSveaz:Show()		
+			specWarnSveaz:Show()
 		end
 	end
 end
@@ -197,7 +198,6 @@ do
 	function mod:SetSveazIcons()
 		if DBM:GetRaidRank() >= 0 then
 			table.sort(SveazTargets, sort_by_group)
-			local SveazIcons = 7
 			for i, v in ipairs(SveazTargets) do
 				if mod.Options.AnnounceSveaz then
 					if DBM:GetRaidRank() > 0 then
