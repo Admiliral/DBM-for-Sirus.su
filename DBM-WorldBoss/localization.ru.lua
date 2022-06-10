@@ -30,11 +30,13 @@ L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
+	KnopSv				= "Нажмите кнопку (Разорвать связь!)"
 }
 
 L:SetMiscLocalization{
 	Pechat				= "Печать: Предательство {rt%d} установлена на %s",
 	Flame				= "Пламя Кошмаров {rt%d} установлена на %s",
+	Razr				= "Разрываю цепь",
 	Sveaz				= "Кошмарная цепь {rt%d} установлена на %s"
 }
 L:SetOptionLocalization{
@@ -42,5 +44,6 @@ L:SetOptionLocalization{
 	SetIconOnFlameTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(307839),
 	AnnounceFlame			= "Объявлять игроков, на кого установлена метка $spell:307839, в рейд чат",
 	RangeFrame				= "Показывать окно проверки дистанции",
+	AnnounceKnopk			= "Сказать в белый чат об нажитии кнопки",
 	AnnounceSveaz			= "Объявить игрока на которого установлена метка $spell:314606, в рейд чат",
 }

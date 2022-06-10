@@ -70,9 +70,9 @@ end
 
 
 DBM = {
-	Revision = parseCurseDate("20220529151900"),
-	DisplayVersion = "5.54.11", -- the string that is shown as version
-	ReleaseRevision = releaseDate(2022, 05, 29) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
+	Revision = parseCurseDate("20220610140600"),
+	DisplayVersion = "5.54.12", -- the string that is shown as version
+	ReleaseRevision = releaseDate(2022, 06, 10) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
 
@@ -5770,6 +5770,7 @@ do
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_BN_WHISPER", filterIncoming)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_WARNING", filterRaidWarning)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY", filterRaidWarning)
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_SAY", filterRaidWarning)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_PARTY_LEADER", filterRaidWarning)
 end
 

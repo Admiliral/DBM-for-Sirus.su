@@ -24,20 +24,23 @@ mod:RegisterEvents(
 )
 
 
-local warnPhase2Soon   					= mod:NewPrePhaseAnnounce(2, 2)
-local warnPhase2     					= mod:NewPhaseAnnounce(2, 2)
+local warnPhase2Soon   					= mod:NewPrePhaseAnnounce(2)
+local warnPhase2     					= mod:NewPhaseAnnounce(2)
+local warnPhase3Soon   					= mod:NewPrePhaseAnnounce(3)
+local warnPhase3     					= mod:NewPhaseAnnounce(3)
 local warnPech							= mod:NewTargetAnnounce(307814, 2)
 local warnFlame							= mod:NewTargetAnnounce(307839, 2)
-local warnSveaz							= mod:NewTargetAnnounce(308516, 3)
+local warnSveaz							= mod:NewTargetAnnounce(308517, 3)
 local warnkik							= mod:NewCastAnnounce(307829, 1)
 local warnPriziv						= mod:NewCastAnnounce(307852, 3)
 local warnShkval						= mod:NewCastAnnounce(307821, 3)
 local warnTraitor						= mod:NewCountAnnounce(307814, 2, nil, false)
 
-local specWarnshkval					= mod:NewSpecialWarningCast(307821, nil, nil, nil, 1, 2)
-local specWarnTraitor					= mod:NewSpecialWarningStack(307814, nil, 4, nil, nil, 1, 6)
+local specWarnRazrsveaz 				= mod:NewSpecialWarning("KnopSv", 3)
+local specWarnshkval					= mod:NewSpecialWarningGTFO(307821, nil, nil, nil, 1, 2)
+local specWarnTraitor					= mod:NewSpecialWarningStack(307814, nil, 3, nil, nil, 1, 6)
 local specWarnReturnInterrupt			= mod:NewSpecialWarningInterrupt(307829, "HasInterrupt", nil, 2, 1, 2)
-local specWarnPechati					= mod:NewSpecialWarningCast(307814, nil, nil, nil, 5, 2) --предатель
+local specWarnPechati					= mod:NewSpecialWarningCast(307814, nil, nil, nil, 1, 2) --предатель
 local specWarnFlame						= mod:NewSpecialWarningMoveAway(307839, nil, nil, nil, 3, 2)
 local specWarnSveaz						= mod:NewSpecialWarningYou(308516, nil, nil, nil, 3, 2)
 local yellSveazi						= mod:NewYell(308516)
@@ -46,26 +49,31 @@ local yellFlameFade						= mod:NewShortFadesYell(307839, nil, nil, nil, "YELL")
 local yellCastsvFade					= mod:NewShortFadesYell(308520)
 
 
-local timerSveazi						= mod:NewCDTimer(20, 314606, nil, nil, nil, 2)
+local timerSveazi						= mod:NewCDTimer(30, 308517, nil, nil, nil, 2)
 local timerPriziv						= mod:NewCDTimer(60, 307852, nil, nil, nil, 4)
 local timerkik							= mod:NewCDTimer(15, 307829, nil, nil, nil, 3)
 local timerShkval						= mod:NewCDTimer(20, 307821, nil, nil, nil, 3)
 
-mod:AddSetIconOption("SetIconOnSveazTarget", 314606, true, true, {1, 2, 3})
-mod:AddSetIconOption("SetIconOnFlameTarget", 307839, true, true, {5, 6})
+mod:AddSetIconOption("SetIconOnSveazTarget", 314606, true, true, {5, 6, 7})
+mod:AddSetIconOption("SetIconOnFlameTarget", 307839, true, true, {1, 2})
 mod:AddBoolOption("AnnounceSveaz", false)
 mod:AddBoolOption("AnnounceFlame", false)
+mod:AddBoolOption("AnnounceKnopk", false)
 
 local SveazTargets = {}
 local FlameTargets = {}
-local SveazIcons = 3
-local FlameIcons = 6
+local FlameIcons = 2
+local warned_preP = false
 local warned_preP1 = false
 local warned_preP2 = false
+local warned_preP3 = false
+local ShupPletiAlive = true
+local LicAlive = true
+local ChudShupAlive = true
 
 function mod:OnCombatStart(delay)
 	mod:SetStage(1)
-	timerkik:start(-delay)
+	timerkik:Start(-delay)
 	timerShkval:Start(-delay)
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(10)
@@ -90,22 +98,30 @@ function mod:SPELL_CAST_START(args)
 		specWarnshkval:Show()
 	elseif spellId == 308520 then
 		yellCastsvFade:Countdown(spellId)
-	elseif spellId == 307852 then
+	elseif spellId == 307852 and self:AntiSpam(2) then
 		warnPriziv:Show()
 		timerPriziv:Start()
 	end
 end
 
+function mod:SPELL_CAST_SUCCESS(args)
+	local spellId = args.spellId
+	if spellId == 308520 then
+		if mod.Options.AnnounceKnopk then
+			SendChatMessage(L.Razr, "SAY")
+		end
+	end
+end
+
+
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 307814 then
-		if args:IsPlayer() then
-			specWarnPechati:Show()
-			warnTraitor:Show(args.amount or 1)
-			if ((args.amount or 1) >= 3) then
+	if spellId == 307815 then
+		if args:IsPlayer() and (args.amount or 1) >= 3 then
+			--specWarnPechati:Show()
+			--warnTraitor:Show(args.amount or 1)
 				specWarnTraitor:Show(args.amount)
 				specWarnTraitor:Play("stackhigh")
-			end
 		end
 	elseif spellId == 307839 then
 		FlameTargets[#FlameTargets + 1] = args.destName
@@ -115,13 +131,13 @@ function mod:SPELL_AURA_APPLIED(args)
 			yellFlame:Yell()
 			yellFlameFade:Countdown(spellId)
 		end
-	elseif spellId == 308516 or spellId == 308517 then
+	elseif spellId == 308517 then
 		SveazTargets[#SveazTargets + 1] = args.destName
 		self:ScheduleMethod(0.1, "SetSveazIcons")
 		timerSveazi:Start()
-		if args:IsPlayer() then
+		if args:IsPlayer() and self:AntiSpam(2) then
 			yellSveazi:Yell()
-			specWarnSveaz:Show()
+			specWarnSveaz:Show()		
 		end
 	end
 end
@@ -131,7 +147,7 @@ mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 307839 then
-		FlameIcons = 6
+		FlameIcons = 2
 		if self.Options.SetIconOnFlameTarget then
 			self:SetIcon(args.destName, 0)
 		end
@@ -142,17 +158,17 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
+function mod:CHAT_MSG_SAY(msg)
+	if strmatch(msg, L.Razr) then
+		specWarnRazrsveaz:Show()
+	end
+end
+
 function mod:SPELL_INTERRUPT(args)
 	local spellId = args.spellId
 	if spellId == 307829 then
 	timerkik:Start()
 	specWarnReturnInterrupt:Show()
-	end
-end
-function mod:SPELL_CAST_FAILED(args)
-	local spellId = args.spellId
-	if spellId == 308520 then
-		yellCastsvFade:Cancel()
 	end
 end
 
@@ -164,7 +180,7 @@ do
 		table.sort(FlameTargets, sort_by_group)
 		for i, v in ipairs(FlameTargets) do
 			if mod.Options.AnnounceFlame then
-				if DBM:GetRaidRank() > 0 then
+				if DBM:GetRaidRank() > 0 and self:AntiSpam(3) then
 					SendChatMessage(L.Flame:format(FlameIcons, UnitName(v)), "RAID_WARNING")
 				else
 					SendChatMessage(L.Flame:format(FlameIcons, UnitName(v)), "RAID")
@@ -179,47 +195,68 @@ do
 			table.wipe(FlameTargets)
 	end
 	function mod:SetSveazIcons()
-		table.sort(SveazTargets, sort_by_group)
-		for i, v in ipairs(SveazTargets) do
-			if mod.Options.AnnounceSveaz then
-				if DBM:GetRaidRank() > 0 then
-					SendChatMessage(L.Sveaz:format(SveazIcons, UnitName(v)), "RAID_WARNING")
-				else
-					SendChatMessage(L.Sveaz:format(SveazIcons, UnitName(v)), "RAID")
+		if DBM:GetRaidRank() >= 0 then
+			table.sort(SveazTargets, sort_by_group)
+			local SveazIcons = 7
+			for i, v in ipairs(SveazTargets) do
+				if mod.Options.AnnounceSveaz then
+					if DBM:GetRaidRank() > 0 then
+						SendChatMessage(L.Sveaz:format(SveazIcons, UnitName(v)), "RAID_WARNING")
+					else
+						SendChatMessage(L.Sveaz:format(SveazIcons, UnitName(v)), "RAID")
+					end
 				end
+				if self.Options.SetIconOnSveazTarget then
+					self:SetIcon(UnitName(v), SveazIcons, 10)
+				end
+				SveazIcons = SveazIcons - 1
 			end
-			if self.Options.SetIconOnSveazTarget then
-				self:SetIcon(UnitName(v), SveazIcons, 10)
-			end
-			SveazIcons = SveazIcons - 1
 		end
+		if #SveazTargets >= 3 then
 			warnSveaz:Show(table.concat(SveazTargets, "<, >"))
 			table.wipe(SveazTargets)
-			SveazIcons = 3
+			SveazIcons = 7
+		end
 	end
 end
 
 --[[
 function mod:UNIT_HEALTH(uId)
-		if self.vb.phase == 1 and not warned_preP1 and self:GetUnitCreatureId(uId) == 50715 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.53 then
-			warned_preP1 = true
+		if self.vb.phase == 1 and not warned_preP and self:GetUnitCreatureId(uId) == 50702 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.73 then
+			warned_preP = true
 			warnPhase2Soon:Show()
 		end
-		if self.vb.phase == 1 and not warned_preP2 and self:GetUnitCreatureId(uId) == 50702 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.50 then
-			warned_preP2 = true
+		if self.vb.phase == 1 and not warned_preP1 and self:GetUnitCreatureId(uId) == 50702 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.70 then
+			warned_preP1 = true
 			mod:SetStage(2)
 			warnPhase2:Show()
 		end
+		if self.vb.phase == 2 and not warned_preP2 and self:GetUnitCreatureId(uId) == 50702 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.43 then
+			warned_preP2 = true
+			warnPhase3Soon:Show()
+		end
+		if self.vb.phase == 2 and not warned_preP3 and self:GetUnitCreatureId(uId) == 50702 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.40 then
+			warned_preP3 = true
+			mod:SetStage(3)
+			warnPhase3:Show()
+		end
 end
-
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
-	if self.vb.phase == 1 and cid == 50715 then
-		mod:SetStage(2)
-	elseif self.vb.phase == 2 and cid == 50714 then
-		mod:SetStage(3)
-
+	if cid == 32867 then
+		ShupPletiAlive = false
+		if LicAlive and ChudShupAlive then
+		elseif LicAlive then
+		end
+	elseif cid == 32927 then
+		ChudShupAlive = false
+		if ShupPletiAlive and LicAlive then
+		end
+	elseif cid == 32857 then
+		LicAlive = false
+		if ShupPletiAlive and ChudShupAlive then
+		elseif ShupPletiAlive then
+		end
 	end
-end
-]]
+end]]
