@@ -37,13 +37,16 @@ L:SetMiscLocalization{
 	Pechat				= "Печать: Предательство {rt%d} установлена на %s",
 	Flame				= "Пламя Кошмаров {rt%d} установлена на %s",
 	Razr				= "Разрываю цепь",
-	Sveaz				= "Кошмарная цепь {rt%d} установлена на %s"
+	Sveaz				= "Кошмарная цепь {rt%d} установлена на %s",
+	Lic  				= "Лик Зорта",
+	Shup	 			= "Щупальце-плеть Зорта",
+	Cudo 				= "Чудовищное щупальце Зорта"
 }
 L:SetOptionLocalization{
-	SetIconOnSveazTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(314606),
-	SetIconOnFlameTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(307839),
+	SetIconOnSveazTarget	= "Устанавливать метки на цели заклинания $spell:314606",
+	SetIconOnFlameTarget	= "Устанавливать метки на цели заклинания $spell:307839",
 	AnnounceFlame			= "Объявлять игроков, на кого установлена метка $spell:307839, в рейд чат",
-	RangeFrame				= "Показывать окно проверки дистанции",
+	RangeFrame				= "Показывать окно проверки дистанции(6/12/20)",
 	AnnounceKnopk			= "Сказать в белый чат об нажитии кнопки",
 	AnnounceSveaz			= "Объявить игрока на которого установлена метка $spell:314606, в рейд чат",
 }
