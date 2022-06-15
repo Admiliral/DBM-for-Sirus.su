@@ -95,17 +95,17 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellId(307829) then
+	if args:IsSpellID(307829) then
 		warnkik:Show()
 		timerkik:Start()
 		specWarnReturnInterrupt:Show()
-	elseif args:IsSpellId(307820, 307818, 307817) then
+	elseif args:IsSpellID(307820, 307818, 307817) then
 		warnShkval:Show()
 		timerShkval:Start()
 		specWarnshkval:Show()
-	elseif args:IsSpellId(308520) then
+	elseif args:IsSpellID(308520) then
 		yellCastsvFade:Countdown(308520)
-	elseif  args:IsSpellId(307852) and self:AntiSpam(2) then
+	elseif  args:IsSpellID(307852) and self:AntiSpam(2) then
 		warnPriziv:Show()
 		timerPriziv:Start()
 	elseif args:IsSpellID(308512) then
@@ -117,7 +117,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellId(308520) then
+	if args:IsSpellID(308520) then
 		if mod.Options.AnnounceKnopk then
 			SendChatMessage(L.Razr, "SAY")
 		end
@@ -128,12 +128,12 @@ end
 
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellId(307815) then
+	if args:IsSpellID(307815) then
 		if args:IsPlayer() and (args.amount or 1) >= 2 then
 				specWarnTraitor:Show(args.amount)
 				specWarnTraitor:Play("stackhigh")
 		end
-	elseif args:IsSpellId(307839) then
+	elseif args:IsSpellID(307839) then
 		FlameTargets[#FlameTargets + 1] = args.destName
 		self:ScheduleMethod(0.1, "SetFlameIcons")
 		if args:IsPlayer() then
@@ -144,7 +144,7 @@ function mod:SPELL_AURA_APPLIED(args)
 				DBM.RangeCheck:Show(12)
 		 	end
 		end
-	elseif args:IsSpellId(308517) then
+	elseif args:IsSpellID(308517) then
 		SveazTargets[#SveazTargets + 1] = args.destName
 		self:ScheduleMethod(0.1, "SetSveazIcons")
 		timerSveazi:Start()
@@ -167,7 +167,7 @@ end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellId(307839) then
+	if args:IsSpellID(307839) then
 		FlameIcons = 2
 		if self.Options.SetIconOnFlameTarget then
 			self:SetIcon(args.destName, 0)
@@ -175,7 +175,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		if self.Options.RangeFrame then
 			DBM.RangeCheck:Hide()
 	 end
-	elseif args:IsSpellId(308516, 308517) then
+	elseif args:IsSpellID(308516, 308517) then
 		if self.Options.SetIconOnSveazTarget then
 			self:SetIcon(args.destName, 0)
 		end
@@ -189,7 +189,7 @@ function mod:CHAT_MSG_SAY(msg)
 end
 
 function mod:SPELL_INTERRUPT(args)
-	if  args:IsSpellId(307829) then
+	if  args:IsSpellID(307829) then
 	timerkik:Start()
 	specWarnReturnInterrupt:Show()
 	end
