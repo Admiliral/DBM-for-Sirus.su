@@ -172,9 +172,6 @@ function mod:SPELL_AURA_REMOVED(args)
 		if self.Options.SetIconOnFlameTarget then
 			self:SetIcon(args.destName, 0)
 		end
-		if self.Options.RangeFrame then
-			DBM.RangeCheck:Hide()
-		end
 	elseif args:IsSpellID(308517, 308620) then
 		if self.Options.SetIconOnSveazTarget then
 			self:SetIcon(args.destName, 0)
