@@ -71,9 +71,9 @@ local function showRealDate(curseDate)
 end
 
 DBM = {
-	Revision = parseCurseDate("20220630185100"),
-	DisplayVersion = "5.54.16", -- the string that is shown as version
-	ReleaseRevision = releaseDate(2022, 06, 30) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
+	Revision = parseCurseDate("20220707180000"),
+	DisplayVersion = "5.54.17 Last version", -- the string that is shown as version
+	ReleaseRevision = releaseDate(2022, 07, 07) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
 
@@ -1449,7 +1449,8 @@ do
 		for i, v in ipairs(callbacks[event]) do
 			local ok, err = pcall(v, event, ...)
 			if not ok then DBM:AddMsg(("Error while executing callback %s for event %s: %s"):format(tostring(v), tostring(event),
-				err)) end
+					err))
+			end
 		end
 	end
 
@@ -3909,10 +3910,10 @@ do
 					--					showConstantReminder = 1
 				elseif not noRaid and #newerVersionPerson == 3 and updateNotificationDisplayed < 3 then --The following code requires at least THREE people to send that higher revision. That should be more than adaquate
 					--Disable if revision grossly out of date even if not major patch.
-					if raid[ newerVersionPerson[1] ] and raid[ newerVersionPerson[2] ] and raid[ newerVersionPerson[3] ] then
-						local revDifference = mmin(((raid[ newerVersionPerson[1] ].revision or 0) - DBM.Revision),
-							((raid[ newerVersionPerson[2] ].revision or 0) - DBM.Revision),
-							((raid[ newerVersionPerson[3] ].revision or 0) - DBM.Revision))
+					if raid[newerVersionPerson[1]] and raid[newerVersionPerson[2]] and raid[newerVersionPerson[3]] then
+						local revDifference = mmin(((raid[newerVersionPerson[1]].revision or 0) - DBM.Revision),
+							((raid[newerVersionPerson[2]].revision or 0) - DBM.Revision),
+							((raid[newerVersionPerson[3]].revision or 0) - DBM.Revision))
 						if revDifference > 900000000 then --Approx 1 month old 20190416172622
 							if updateNotificationDisplayed < 3 then
 								updateNotificationDisplayed = 3
@@ -4057,8 +4058,13 @@ do
 			end
 			inspopuptext:SetText(DBM_REQ_INSTANCE_ID_PERMISSION:format(sender, sender))
 			buttonaccept:SetScript("OnClick",
-				function(f) savedSender = nil DBM:Unschedule(autoDecline) accessList[sender] = true syncHandlers["IR"](sender) f:
-					GetParent():Hide() end)
+				function(f) savedSender = nil
+					DBM:Unschedule(autoDecline)
+					accessList[sender] = true
+					syncHandlers["IR"](sender)
+					f:
+						GetParent():Hide()
+				end)
 			buttondecline:SetScript("OnClick", function(f) autoDecline(sender, 1) end)
 			DBM:PlaySound(850)
 			inspopup:Show()
@@ -5211,11 +5217,13 @@ do
 				local lastTime = mod.stats[statVarTable[savedDifficulty] .. "LastTime"]
 				local bestTime = mod.stats[statVarTable[savedDifficulty] .. "BestTime"]
 				if not mod.stats[statVarTable[savedDifficulty] .. "Kills"] or mod.stats[statVarTable[savedDifficulty] .. "Kills"] < 0 then mod
-					.stats[statVarTable[savedDifficulty] .. "Kills"] = 0 end
+						.stats[statVarTable[savedDifficulty] .. "Kills"] = 0
+				end
 				--Fix logical error i've seen where for some reason we have more kills then pulls for boss as seen by - stats for wipe messages.
 				mod.stats[statVarTable[savedDifficulty] .. "Kills"] = mod.stats[statVarTable[savedDifficulty] .. "Kills"] + 1
 				if mod.stats[statVarTable[savedDifficulty] .. "Kills"] > mod.stats[statVarTable[savedDifficulty] .. "Pulls"] then mod
-					.stats[statVarTable[savedDifficulty] .. "Kills"] = mod.stats[statVarTable[savedDifficulty] .. "Pulls"] end
+						.stats[statVarTable[savedDifficulty] .. "Kills"] = mod.stats[statVarTable[savedDifficulty] .. "Pulls"]
+				end
 				if not mod.ignoreBestkill and mod.combatInfo.pull then
 					mod.stats[statVarTable[savedDifficulty] .. "LastTime"] = thisTime
 					--Just to prevent pre mature end combat calls from broken mods from saving bad time stats.
@@ -6507,7 +6515,7 @@ function bossModPrototype:GetRoleFlagValue(flag)
 	local flags = { strsplit("|", flag) }
 	for i = 1, #flags do
 		local flagText = flags[i]
-		local flagFunc = specFlags[flagText] and self[ specFlags[flagText] ]
+		local flagFunc = specFlags[flagText] and self[specFlags[flagText]]
 		if flagFunc then
 			if flagText:match("^-") then
 				flagText = flagText:gsub("-", "")
@@ -6698,7 +6706,8 @@ function DBM:GetBossHP(cIdOrGUID)
 	--Target or Cached (if already called with this cid or GUID before)
 	if (self:GetCIDFromGUID(guid) == cIdOrGUID or guid == cIdOrGUID) and UnitHealthMax(uId) ~= 0 then
 		if bossHealth[cIdOrGUID] and (UnitHealth(uId) == 0 and not UnitIsDead(uId)) then return bossHealth[cIdOrGUID], uId,
-			UnitName(uId) end --Return last non 0 value if value is 0, since it's last valid value we had.
+				UnitName(uId)
+		end --Return last non 0 value if value is 0, since it's last valid value we had.
 		local hp = UnitHealth(uId) / UnitHealthMax(uId) * 100
 		bossHealth[cIdOrGUID] = hp
 		return hp, uId, UnitName(uId)
@@ -6706,7 +6715,8 @@ function DBM:GetBossHP(cIdOrGUID)
 	elseif (self:GetCIDFromGUID(UnitGUID("focus")) == cIdOrGUID or UnitGUID("focus") == cIdOrGUID) and
 		UnitHealthMax("focus") ~= 0 then
 		if bossHealth[cIdOrGUID] and (UnitHealth("focus") == 0 and not UnitIsDead("focus")) then return bossHealth[cIdOrGUID],
-			"focus", UnitName("focus") end --Return last non 0 value if value is 0, since it's last valid value we had.
+				"focus", UnitName("focus")
+		end --Return last non 0 value if value is 0, since it's last valid value we had.
 		local hp = UnitHealth("focus") / UnitHealthMax("focus") * 100
 		bossHealth[cIdOrGUID] = hp
 		return hp, "focus", UnitName("focus")
@@ -6717,7 +6727,8 @@ function DBM:GetBossHP(cIdOrGUID)
 			local bossguid = UnitGUID(unitID)
 			if (self:GetCIDFromGUID(bossguid) == cIdOrGUID or bossguid == cIdOrGUID) and UnitHealthMax(unitID) ~= 0 then
 				if bossHealth[cIdOrGUID] and (UnitHealth(unitID) == 0 and not UnitIsDead(unitID)) then return bossHealth[cIdOrGUID],
-					unitID, UnitName(unitID) end --Return last non 0 value if value is 0, since it's last valid value we had.
+						unitID, UnitName(unitID)
+				end --Return last non 0 value if value is 0, since it's last valid value we had.
 				local hp = UnitHealth(unitID) / UnitHealthMax(unitID) * 100
 				bossHealth[cIdOrGUID] = hp
 				bossHealthuIdCache[cIdOrGUID] = unitID
@@ -6731,7 +6742,8 @@ function DBM:GetBossHP(cIdOrGUID)
 			local bossguid = UnitGUID(unitId)
 			if (self:GetCIDFromGUID(bossguid) == cIdOrGUID or bossguid == cIdOrGUID) and UnitHealthMax(unitId) ~= 0 then
 				if bossHealth[cIdOrGUID] and (UnitHealth(unitId) == 0 and not UnitIsDead(unitId)) then return bossHealth[cIdOrGUID],
-					unitId, UnitName(unitId) end --Return last non 0 value if value is 0, since it's last valid value we had.
+						unitId, UnitName(unitId)
+				end --Return last non 0 value if value is 0, since it's last valid value we had.
 				local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 				bossHealth[cIdOrGUID] = hp
 				bossHealthuIdCache[cIdOrGUID] = unitId
@@ -9276,21 +9288,21 @@ function bossModPrototype:AddSetIconOption(name, spellId, default, isHostile, ic
 		for i = 1, #iconsUsed do
 			--Texture ID 137009 if direct calling RaidTargetingIcons stops working one day
 			if iconsUsed[i] == 1 then self.localization.options[name] = self.localization.options[name] ..
-				"|TInterface\\TargetingFrame\\UI-RaidTargetingIcons.blp:13:13:0:0:64:64:0:16:0:16|t"
+					"|TInterface\\TargetingFrame\\UI-RaidTargetingIcons.blp:13:13:0:0:64:64:0:16:0:16|t"
 			elseif iconsUsed[i] == 2 then self.localization.options[name] = self.localization.options[name] ..
-				"|TInterface\\TargetingFrame\\UI-RaidTargetingIcons.blp:13:13:0:0:64:64:16:32:0:16|t"
+					"|TInterface\\TargetingFrame\\UI-RaidTargetingIcons.blp:13:13:0:0:64:64:16:32:0:16|t"
 			elseif iconsUsed[i] == 3 then self.localization.options[name] = self.localization.options[name] ..
-				"|TInterface\\TargetingFrame\\UI-RaidTargetingIcons.blp:13:13:0:0:64:64:32:48:0:16|t"
+					"|TInterface\\TargetingFrame\\UI-RaidTargetingIcons.blp:13:13:0:0:64:64:32:48:0:16|t"
 			elseif iconsUsed[i] == 4 then self.localization.options[name] = self.localization.options[name] ..
-				"|TInterface\\TargetingFrame\\UI-RaidTargetingIcons.blp:13:13:0:0:64:64:48:64:0:16|t"
+					"|TInterface\\TargetingFrame\\UI-RaidTargetingIcons.blp:13:13:0:0:64:64:48:64:0:16|t"
 			elseif iconsUsed[i] == 5 then self.localization.options[name] = self.localization.options[name] ..
-				"|TInterface\\TargetingFrame\\UI-RaidTargetingIcons.blp:13:13:0:0:64:64:0:16:16:32|t"
+					"|TInterface\\TargetingFrame\\UI-RaidTargetingIcons.blp:13:13:0:0:64:64:0:16:16:32|t"
 			elseif iconsUsed[i] == 6 then self.localization.options[name] = self.localization.options[name] ..
-				"|TInterface\\TargetingFrame\\UI-RaidTargetingIcons.blp:13:13:0:0:64:64:16:32:16:32|t"
+					"|TInterface\\TargetingFrame\\UI-RaidTargetingIcons.blp:13:13:0:0:64:64:16:32:16:32|t"
 			elseif iconsUsed[i] == 7 then self.localization.options[name] = self.localization.options[name] ..
-				"|TInterface\\TargetingFrame\\UI-RaidTargetingIcons.blp:13:13:0:0:64:64:32:48:16:32|t"
+					"|TInterface\\TargetingFrame\\UI-RaidTargetingIcons.blp:13:13:0:0:64:64:32:48:16:32|t"
 			elseif iconsUsed[i] == 8 then self.localization.options[name] = self.localization.options[name] ..
-				"|TInterface\\TargetingFrame\\UI-RaidTargetingIcons.blp:13:13:0:0:64:64:48:64:16:32|t"
+					"|TInterface\\TargetingFrame\\UI-RaidTargetingIcons.blp:13:13:0:0:64:64:48:64:16:32|t"
 			end
 		end
 		self.localization.options[name] = self.localization.options[name] .. ")"
